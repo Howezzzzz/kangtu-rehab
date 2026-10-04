@@ -1,0 +1,12 @@
+files:
+  - source: /lib/l10n/app_en.arb
+    translation: /lib/l10n/app_%two_letters_code%.arb
+    languages_mapping:
+      two_letters_code:
+        zh-TW: zh_Hant
+      locale:
+        es-ES: es
+        pt-BR: pt
+        pt-PT: pt
+        zh-CN: zh
+        zh-TW: zh_Hant
