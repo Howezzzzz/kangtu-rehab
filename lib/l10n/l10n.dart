@@ -119,8 +119,29 @@ extension GymL10n on AppLocalizations {
         'abcde' => tplAbcde,
         'stronglifts' => tplStronglifts,
         'startingstrength' => tplStartingstrength,
+        'gzclp' => tplGzclp,
+        'bbb531' => tplBbb531,
+        'ppl6' => tplPpl6,
+        'phul' => tplPhul,
         'rr' => tplRr,
         _ => tplHome,
+      };
+
+  String templateName(String id, String fallback) => switch (id) {
+        'fullbody' => tplNameFullbody,
+        'ppl' => tplNamePpl,
+        'upperlower' => tplNameUpperlower,
+        'abcd' => tplNameAbcd,
+        'abcde' => tplNameAbcde,
+        'stronglifts' => tplNameStronglifts,
+        'startingstrength' => tplNameStartingstrength,
+        'gzclp' => tplNameGzclp,
+        'bbb531' => tplNameBbb531,
+        'ppl6' => tplNamePpl6,
+        'phul' => tplNamePhul,
+        'rr' => tplNameRr,
+        'home' => tplNameHome,
+        _ => fallback,
       };
 
   String toolDesc(String id) => switch (id) {

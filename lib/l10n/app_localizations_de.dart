@@ -1969,6 +1969,128 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => 'Ganzkörper';
+
+  @override
+  String get tplNamePpl => 'Push Pull Legs';
+
+  @override
+  String get tplNameUpperlower => 'Oberkörper / Unterkörper';
+
+  @override
+  String get tplNameAbcd => 'ABCD-Split';
+
+  @override
+  String get tplNameAbcde => 'ABCDE-Split';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 6 Tage';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'Empfohlene Routine';
+
+  @override
+  String get tplNameHome => 'Ohne Geräte';
+
+  @override
+  String get tplGzclp =>
+      'Schwere Stufe, Volumenstufe, Zubehörstufe – die klassische Drei-Stufen-Progression.';
+
+  @override
+  String get tplBbb531 =>
+      'Vier-Wochen-Wellen in Prozent deines Trainingsmaximums, plus 5×10 Back-off-Volumen.';
+
+  @override
+  String get tplPpl6 => 'Sechs Tage Push/Pull/Legs: lineare Grundübungen, Zubehör mit doppelter Progression.';
+
+  @override
+  String get tplPhul => 'Krafttage und Hypertrophietage im Wechsel, vier Tage pro Woche.';
+
+  @override
+  String get progBadge => 'Auto-Progression';
+
+  @override
+  String get progLinShort => 'Ziel erreicht → mehr Gewicht; wiederholt verfehlt → Deload';
+
+  @override
+  String get progDblShort => 'Wiederholungen steigen im Bereich, dann steigt das Gewicht';
+
+  @override
+  String get progRepsShort => 'Eigengewicht: pro Einheit eine Wiederholung mehr';
+
+  @override
+  String get progCycleShort => 'Wöchentliche Wellen in % deines Trainingsmaximums';
+
+  @override
+  String progCycleWeeks(int n) {
+    return '$n-Wochen-Wellen';
+  }
+
+  @override
+  String get tplStart => 'Dieses Programm starten';
+
+  @override
+  String get tmTitle => 'Trainingsmaximum (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0,9. Wöchentliche Gewichte werden als % des TM berechnet. Einheit: $unit.';
+  }
+
+  @override
+  String get progCardTitle => 'Auto-Progression';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → als Nächstes $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: wiederholt verfehlt – Deload auf $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: Ziel verfehlt ($n/$limit bis Deload)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → nächste Einheit $r Wdh.';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: $r Wdh. erreicht – versuche eine schwerere Variante oder mehr Gewicht';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'Zykluswoche $w';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: Trainingsmaximum auf $label erhöht';
+  }
+
+  @override
   String get logRpe => 'Anstrengung protokollieren (RPE)';
 
   @override

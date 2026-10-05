@@ -2030,6 +2030,127 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => 'Всё тело';
+
+  @override
+  String get tplNamePpl => 'Жим · Тяга · Ноги';
+
+  @override
+  String get tplNameUpperlower => 'Верх / Низ';
+
+  @override
+  String get tplNameAbcd => 'Сплит ABCD';
+
+  @override
+  String get tplNameAbcde => 'Сплит ABCDE';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 6 дней';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'Рекомендуемая программа';
+
+  @override
+  String get tplNameHome => 'Без снарядов';
+
+  @override
+  String get tplGzclp =>
+      'Тяжёлый уровень, объёмный уровень, подсобка — классическая трёхуровневая прогрессия.';
+
+  @override
+  String get tplBbb531 => 'Четырёхнедельные волны в процентах от тренировочного максимума плюс объём 5×10.';
+
+  @override
+  String get tplPpl6 => 'Шесть дней жим/тяга/ноги: линейный базовый, подсобка с двойной прогрессией.';
+
+  @override
+  String get tplPhul => 'Силовые и гипертрофийные дни поочерёдно, четыре дня в неделю.';
+
+  @override
+  String get progBadge => 'Автопрогрессия';
+
+  @override
+  String get progLinShort => 'Выполнил цель → добавь вес; повторные неудачи → разгрузка';
+
+  @override
+  String get progDblShort => 'Повторения растут в диапазоне, затем растёт вес';
+
+  @override
+  String get progRepsShort => 'С собственным весом: одно повторение больше за тренировку';
+
+  @override
+  String get progCycleShort => 'Недельные волны в % от тренировочного максимума';
+
+  @override
+  String progCycleWeeks(int n) {
+    return 'Волны по $n недель';
+  }
+
+  @override
+  String get tplStart => 'Начать эту программу';
+
+  @override
+  String get tmTitle => 'Тренировочный максимум (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0,9. Недельные веса считаются в % от TM. Единица: $unit.';
+  }
+
+  @override
+  String get progCardTitle => 'Автопрогрессия';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → далее $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: повторные неудачи — разгрузка до $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: цель не достигнута ($n/$limit до разгрузки)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → $r повторений в следующий раз';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: достигнуто $r повторений — попробуйте усложнённый вариант или добавьте вес';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'Неделя цикла $w';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: тренировочный максимум поднят до $label';
+  }
+
+  @override
   String get logRpe => 'Записывать усилие (RPE)';
 
   @override

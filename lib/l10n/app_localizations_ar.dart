@@ -1949,6 +1949,126 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => 'الجسم كامل';
+
+  @override
+  String get tplNamePpl => 'دفع · سحب · أرجل';
+
+  @override
+  String get tplNameUpperlower => 'أعلى / أسفل';
+
+  @override
+  String get tplNameAbcd => 'تقسيم ABCD';
+
+  @override
+  String get tplNameAbcde => 'تقسيم ABCDE';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 6 أيام';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'الروتين الموصى به';
+
+  @override
+  String get tplNameHome => 'بدون أدوات';
+
+  @override
+  String get tplGzclp => 'مستوى ثقيل، مستوى حجم، مستوى مساعد — التدرج الكلاسيكي على ثلاث مراحل.';
+
+  @override
+  String get tplBbb531 => 'موجات من أربعة أسابيع بنسب من الحد الأقصى التدريبي، مع حجم 5×10.';
+
+  @override
+  String get tplPpl6 => 'ستة أيام دفع/سحب/أرجل: الأساسية خطية، والمساعدة بتدرج مزدوج.';
+
+  @override
+  String get tplPhul => 'أيام قوة وأيام تضخيم بالتناوب، أربعة أيام في الأسبوع.';
+
+  @override
+  String get progBadge => 'تدرج تلقائي';
+
+  @override
+  String get progLinShort => 'حققت الهدف → زد الوزن؛ إخفاقات متكررة → تخفيف';
+
+  @override
+  String get progDblShort => 'التكرارات ترتفع ضمن المدى ثم يزيد الوزن';
+
+  @override
+  String get progRepsShort => 'بوزن الجسم: تكرار إضافي كل جلسة';
+
+  @override
+  String get progCycleShort => 'موجات أسبوعية بنسبة % من الحد الأقصى التدريبي';
+
+  @override
+  String progCycleWeeks(int n) {
+    return 'موجات كل $n أسابيع';
+  }
+
+  @override
+  String get tplStart => 'ابدأ هذا البرنامج';
+
+  @override
+  String get tmTitle => 'الحد الأقصى التدريبي (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0.9. تُحسب أوزان الأسبوع كنسبة % من TM. الوحدة: $unit.';
+  }
+
+  @override
+  String get progCardTitle => 'تدرج تلقائي';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex ← التالي $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: إخفاقات متكررة — تخفيف إلى $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: لم يتحقق الهدف ($n/$limit قبل التخفيف)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex ← $r تكرارات في المرة القادمة';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: وصلت إلى $r تكرارات — جرّب نسخة أصعب أو أضف وزنًا';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'الأسبوع $w من الدورة';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: ارتفع الحد الأقصى التدريبي إلى $label';
+  }
+
+  @override
   String get logRpe => 'تسجيل الجهد (RPE)';
 
   @override

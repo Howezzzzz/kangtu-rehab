@@ -1966,6 +1966,127 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => 'Full body';
+
+  @override
+  String get tplNamePpl => 'Push Pull Legs';
+
+  @override
+  String get tplNameUpperlower => 'Boven / Onder';
+
+  @override
+  String get tplNameAbcd => 'ABCD-split';
+
+  @override
+  String get tplNameAbcde => 'ABCDE-split';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 6 dagen';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'Aanbevolen routine';
+
+  @override
+  String get tplNameHome => 'Zonder materiaal';
+
+  @override
+  String get tplGzclp => 'Zware tier, volumetier, accessoiretier — de klassieke drietrapsprogressie.';
+
+  @override
+  String get tplBbb531 => 'Vierweekse golven in procenten van je trainingsmaximum, plus 5×10 back-offvolume.';
+
+  @override
+  String get tplPpl6 =>
+      'Zes dagen push/pull/legs: lineaire hoofdoefeningen, accessoires met dubbele progressie.';
+
+  @override
+  String get tplPhul => 'Kracht- en hypertrofiedagen afwisselend, vier dagen per week.';
+
+  @override
+  String get progBadge => 'Automatische progressie';
+
+  @override
+  String get progLinShort => 'Doel gehaald → meer gewicht; herhaald gemist → deload';
+
+  @override
+  String get progDblShort => 'Herhalingen stijgen binnen het bereik, daarna gaat het gewicht omhoog';
+
+  @override
+  String get progRepsShort => 'Lichaamsgewicht: één herhaling extra per sessie';
+
+  @override
+  String get progCycleShort => 'Wekelijkse golven in % van je trainingsmaximum';
+
+  @override
+  String progCycleWeeks(int n) {
+    return 'Golven van $n weken';
+  }
+
+  @override
+  String get tplStart => 'Dit programma starten';
+
+  @override
+  String get tmTitle => 'Trainingsmaximum (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0,9. Wekelijkse gewichten worden berekend als % van TM. Eenheid: $unit.';
+  }
+
+  @override
+  String get progCardTitle => 'Automatische progressie';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → volgende $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: herhaald gemist — deload naar $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: doel gemist ($n/$limit voor deload)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → $r herhalingen volgende keer';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: $r herhalingen gehaald — probeer een zwaardere variant of voeg gewicht toe';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'Cyclusweek $w';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: trainingsmaximum verhoogd naar $label';
+  }
+
+  @override
   String get logRpe => 'Inspanning loggen (RPE)';
 
   @override

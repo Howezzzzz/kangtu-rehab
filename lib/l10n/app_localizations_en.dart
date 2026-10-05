@@ -1958,6 +1958,126 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => 'Full Body';
+
+  @override
+  String get tplNamePpl => 'Push Pull Legs';
+
+  @override
+  String get tplNameUpperlower => 'Upper Lower';
+
+  @override
+  String get tplNameAbcd => 'ABCD Split';
+
+  @override
+  String get tplNameAbcde => 'ABCDE Split';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 6-Day';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'Recommended Routine';
+
+  @override
+  String get tplNameHome => 'No Kit';
+
+  @override
+  String get tplGzclp => 'Heavy tier, volume tier, accessory tier — the classic three-tier progression.';
+
+  @override
+  String get tplBbb531 => 'Four-week waves at percentages of your training max, plus 5×10 back-off volume.';
+
+  @override
+  String get tplPpl6 => 'Six-day push/pull/legs: linear main lifts, double-progression accessories.';
+
+  @override
+  String get tplPhul => 'Power days and hypertrophy days alternating, four days a week.';
+
+  @override
+  String get progBadge => 'Auto progression';
+
+  @override
+  String get progLinShort => 'Hit the target → add weight; repeated misses → deload';
+
+  @override
+  String get progDblShort => 'Reps climb within a range, then the weight goes up';
+
+  @override
+  String get progRepsShort => 'Bodyweight moves: add one rep per session';
+
+  @override
+  String get progCycleShort => 'Weekly waves at % of your training max';
+
+  @override
+  String progCycleWeeks(int n) {
+    return '$n-week waves';
+  }
+
+  @override
+  String get tplStart => 'Start this program';
+
+  @override
+  String get tmTitle => 'Training max (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0.9. Weekly weights are calculated as % of TM. Unit: $unit.';
+  }
+
+  @override
+  String get progCardTitle => 'Auto progression';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → next $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: repeated misses — deloading to $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: target missed ($n/$limit before deload)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → $r reps next time';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: $r reps reached — try a harder variation or add weight';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'Cycle week $w';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: training max up to $label';
+  }
+
+  @override
   String get logRpe => 'Log effort (RPE)';
 
   @override

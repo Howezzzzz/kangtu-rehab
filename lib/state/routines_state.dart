@@ -168,7 +168,11 @@ mixin RoutinesState on FitCore, LibraryState {
   }
 
   void _dropRoutine(String id) {
+    final doomedInst = _routine(id)?.progInst;
     routines.removeWhere((r) => r.id == id);
+    if (doomedInst != null && !routines.any((r) => r.progInst == doomedInst)) {
+      programStates.remove(doomedInst);
+    }
     weeklyPlan.removeWhere((_, v) => v == id);
     for (final extras in planExtras.values) {
       extras.remove(id);

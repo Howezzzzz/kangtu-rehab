@@ -1968,6 +1968,127 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => 'Tüm vücut';
+
+  @override
+  String get tplNamePpl => 'İtiş · Çekiş · Bacak';
+
+  @override
+  String get tplNameUpperlower => 'Üst / Alt';
+
+  @override
+  String get tplNameAbcd => 'ABCD Split';
+
+  @override
+  String get tplNameAbcde => 'ABCDE Split';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 6 gün';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'Önerilen rutin';
+
+  @override
+  String get tplNameHome => 'Ekipmansız';
+
+  @override
+  String get tplGzclp => 'Ağır kademe, hacim kademesi, yardımcı kademe — klasik üç kademeli ilerleme.';
+
+  @override
+  String get tplBbb531 =>
+      'Antrenman maksimumunun yüzdeleriyle dört haftalık dalgalar, artı 5×10 geri çekilme hacmi.';
+
+  @override
+  String get tplPpl6 => 'Altı gün itiş/çekiş/bacak: lineer ana hareketler, çift progresyonlu yardımcılar.';
+
+  @override
+  String get tplPhul => 'Güç ve hipertrofi günleri dönüşümlü, haftada dört gün.';
+
+  @override
+  String get progBadge => 'Otomatik ilerleme';
+
+  @override
+  String get progLinShort => 'Hedefi tuttur → ağırlığı artır; tekrarlanan ıska → deload';
+
+  @override
+  String get progDblShort => 'Tekrarlar aralıkta yükselir, sonra ağırlık artar';
+
+  @override
+  String get progRepsShort => 'Vücut ağırlığı: seans başına bir tekrar fazla';
+
+  @override
+  String get progCycleShort => 'Antrenman maksimumunun %\'siyle haftalık dalgalar';
+
+  @override
+  String progCycleWeeks(int n) {
+    return '$n haftalık dalgalar';
+  }
+
+  @override
+  String get tplStart => 'Bu programa başla';
+
+  @override
+  String get tmTitle => 'Antrenman maksimumu (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0,9. Haftalık ağırlıklar TM\'nin %\'si olarak hesaplanır. Birim: $unit.';
+  }
+
+  @override
+  String get progCardTitle => 'Otomatik ilerleme';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → sıradaki $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: tekrarlanan ıska — $label değerine deload';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: hedef tutmadı (deload öncesi $n/$limit)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → sonraki sefer $r tekrar';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: $r tekrara ulaşıldı — daha zor bir varyasyon dene veya ağırlık ekle';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'Döngü haftası $w';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: antrenman maksimumu $label değerine çıktı';
+  }
+
+  @override
   String get logRpe => 'Eforu kaydet (RPE)';
 
   @override

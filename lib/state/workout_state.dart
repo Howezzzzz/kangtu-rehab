@@ -282,6 +282,19 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
 
   ({double weightKg, int reps, bool up})? nextTarget(String id) {
     if (modeOf(id).isNotEmpty) return null;
+    // 计划动作:渐进引擎已把下次目标写进 plan,直接读
+    final pr = sessionRoutine;
+    if (pr != null && pr.prog.containsKey(id)) {
+      final planned = (pr.plan[id] ?? const [])
+          .where((p) => p.kind != SetKind.warmup && (p.reps ?? 0) > 0)
+          .toList();
+      if (planned.isNotEmpty && planned.first.reps != null) {
+        final w = planned.first.weightKg ?? 0;
+        if (w > 0 || isRepsOnly(id)) {
+          return (weightKg: w, reps: planned.first.reps!, up: false);
+        }
+      }
+    }
     final last = lastSetsFor(id).where((l) => l.counts).toList();
     if (last.isEmpty) return null;
     final reps = last.first.reps;
@@ -316,6 +329,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       Set<String> chained = const {},
       String? routineId,
       DateTime? on}) {
+    progFeedback = [];
     final s = WorkoutSession()..routineId = routineId;
     if (on != null) {
       s.loggedAt = DateTime(on.year, on.month, on.day, 12);
@@ -1168,8 +1182,11 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       _filed = entry;
       _computeSummaryHighlights(entry);
       _offerLevelUp(entry);
+      final progRoutine = sessionRoutine;
+      if (progRoutine != null) runProgression(this, progRoutine, entry);
     } else {
       _filed = null;
+      progFeedback = [];
       summaryPrs = 0;
       summaryVsLast = null;
       summaryLevelUp = null;

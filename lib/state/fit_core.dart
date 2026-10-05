@@ -57,6 +57,12 @@ abstract class FitCore extends ChangeNotifier {
 
   final Map<String, double> progressStep = {};
 
+  /// 计划实例状态(自动渐进引擎): instId -> ProgState
+  final Map<String, ProgState> programStates = {};
+
+  /// 本次训练结束后的渐进反馈(完成页展示,开练时清空)
+  List<String> progFeedback = [];
+
   final Set<String> autoWarmup = {};
 
   final Set<String> repsOnly = {};

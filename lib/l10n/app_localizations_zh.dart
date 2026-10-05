@@ -1875,6 +1875,126 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => '全身训练';
+
+  @override
+  String get tplNamePpl => '推拉腿（3 天）';
+
+  @override
+  String get tplNameUpperlower => '上下肢分化';
+
+  @override
+  String get tplNameAbcd => 'ABCD 四分化';
+
+  @override
+  String get tplNameAbcde => 'ABCDE 五分化';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => '力量起步 Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP 三期渐进';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 + BBB';
+
+  @override
+  String get tplNamePpl6 => '推拉腿（6 天）';
+
+  @override
+  String get tplNamePhul => 'PHUL 力量增肌';
+
+  @override
+  String get tplNameRr => '推荐徒手计划';
+
+  @override
+  String get tplNameHome => '无器械居家';
+
+  @override
+  String get tplGzclp => '大重量主项 + 容量组 + 辅助组，经典三段式结构，新手到中级都适用。';
+
+  @override
+  String get tplBbb531 => '经典四波浪周期：按训练最大值百分比自动排课，主项后接 5×10 补充组。';
+
+  @override
+  String get tplPpl6 => '推拉腿六天版：主项线性加重，辅助动作双渐进，适合有训练基础的人。';
+
+  @override
+  String get tplPhul => '力量日与增肌日交替，每周四练的经典组合。';
+
+  @override
+  String get progBadge => '自动渐进';
+
+  @override
+  String get progLinShort => '达标自动加重，连续失败自动降载';
+
+  @override
+  String get progDblShort => '次数在区间内递增，到顶后加重量';
+
+  @override
+  String get progRepsShort => '自重动作，达标每次 +1 次';
+
+  @override
+  String get progCycleShort => '按训练最大值百分比，每周自动波动';
+
+  @override
+  String progCycleWeeks(int n) {
+    return '$n 周波浪循环';
+  }
+
+  @override
+  String get tplStart => '开始这个计划';
+
+  @override
+  String get tmTitle => '训练最大值（TM）';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0.9。每周的组次重量按 TM 百分比自动计算。单位：$unit。';
+  }
+
+  @override
+  String get progCardTitle => '自动渐进';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → 下次 $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex：连续未达标，降载至 $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex：本次未达标（$n/$limit 次后降载）';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → 下次目标 $r 次';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex：已达 $r 次上限，可换更难变式或加负重';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return '进入周期第 $w 周';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex：训练最大值提升至 $label';
+  }
+
+  @override
   String get logRpe => '记录用力程度（RPE）';
 
   @override
@@ -5053,6 +5173,126 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String dayCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天', one: '$n 天');
     return '$_temp0';
+  }
+
+  @override
+  String get tplNameFullbody => '全身訓練';
+
+  @override
+  String get tplNamePpl => '推拉腿（3 天）';
+
+  @override
+  String get tplNameUpperlower => '上下肢分化';
+
+  @override
+  String get tplNameAbcd => 'ABCD 四分化';
+
+  @override
+  String get tplNameAbcde => 'ABCDE 五分化';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => '力量起步 Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP 三期漸進';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 + BBB';
+
+  @override
+  String get tplNamePpl6 => '推拉腿（6 天）';
+
+  @override
+  String get tplNamePhul => 'PHUL 力量增肌';
+
+  @override
+  String get tplNameRr => '推薦徒手計畫';
+
+  @override
+  String get tplNameHome => '無器械居家';
+
+  @override
+  String get tplGzclp => '大重量主項 + 容量組 + 輔助組，經典三段式結構，新手到中級都適用。';
+
+  @override
+  String get tplBbb531 => '經典四波浪週期：依訓練最大值百分比自動排課，主項後接 5×10 補充組。';
+
+  @override
+  String get tplPpl6 => '推拉腿六天版：主項線性加重，輔助動作雙漸進，適合有訓練基礎的人。';
+
+  @override
+  String get tplPhul => '力量日與增肌日交替，每週四練的經典組合。';
+
+  @override
+  String get progBadge => '自動漸進';
+
+  @override
+  String get progLinShort => '達標自動加重，連續失敗自動降載';
+
+  @override
+  String get progDblShort => '次數在區間內遞增，到頂後加重量';
+
+  @override
+  String get progRepsShort => '自重動作，達標每次 +1 次';
+
+  @override
+  String get progCycleShort => '依訓練最大值百分比，每週自動波動';
+
+  @override
+  String progCycleWeeks(int n) {
+    return '$n 週波浪循環';
+  }
+
+  @override
+  String get tplStart => '開始這個計畫';
+
+  @override
+  String get tmTitle => '訓練最大值（TM）';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0.9。每週的組次重量依 TM 百分比自動計算。單位：$unit。';
+  }
+
+  @override
+  String get progCardTitle => '自動漸進';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → 下次 $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex：連續未達標，降載至 $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex：本次未達標（$n/$limit 次後降載）';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → 下次目標 $r 次';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex：已達 $r 次上限，可換更難變式或加負重';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return '進入週期第 $w 週';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex：訓練最大值提升至 $label';
   }
 
   @override

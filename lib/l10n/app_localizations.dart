@@ -3556,6 +3556,210 @@ abstract class AppLocalizations {
   /// **'{n, plural, =1{{n} day} other{{n} days}}'**
   String dayCount(int n);
 
+  /// No description provided for @tplNameFullbody.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Body'**
+  String get tplNameFullbody;
+
+  /// No description provided for @tplNamePpl.
+  ///
+  /// In en, this message translates to:
+  /// **'Push Pull Legs'**
+  String get tplNamePpl;
+
+  /// No description provided for @tplNameUpperlower.
+  ///
+  /// In en, this message translates to:
+  /// **'Upper Lower'**
+  String get tplNameUpperlower;
+
+  /// No description provided for @tplNameAbcd.
+  ///
+  /// In en, this message translates to:
+  /// **'ABCD Split'**
+  String get tplNameAbcd;
+
+  /// No description provided for @tplNameAbcde.
+  ///
+  /// In en, this message translates to:
+  /// **'ABCDE Split'**
+  String get tplNameAbcde;
+
+  /// No description provided for @tplNameStronglifts.
+  ///
+  /// In en, this message translates to:
+  /// **'StrongLifts 5×5'**
+  String get tplNameStronglifts;
+
+  /// No description provided for @tplNameStartingstrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting Strength'**
+  String get tplNameStartingstrength;
+
+  /// No description provided for @tplNameGzclp.
+  ///
+  /// In en, this message translates to:
+  /// **'GZCLP'**
+  String get tplNameGzclp;
+
+  /// No description provided for @tplNameBbb531.
+  ///
+  /// In en, this message translates to:
+  /// **'5/3/1 Boring But Big'**
+  String get tplNameBbb531;
+
+  /// No description provided for @tplNamePpl6.
+  ///
+  /// In en, this message translates to:
+  /// **'PPL 6-Day'**
+  String get tplNamePpl6;
+
+  /// No description provided for @tplNamePhul.
+  ///
+  /// In en, this message translates to:
+  /// **'PHUL'**
+  String get tplNamePhul;
+
+  /// No description provided for @tplNameRr.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Routine'**
+  String get tplNameRr;
+
+  /// No description provided for @tplNameHome.
+  ///
+  /// In en, this message translates to:
+  /// **'No Kit'**
+  String get tplNameHome;
+
+  /// No description provided for @tplGzclp.
+  ///
+  /// In en, this message translates to:
+  /// **'Heavy tier, volume tier, accessory tier — the classic three-tier progression.'**
+  String get tplGzclp;
+
+  /// No description provided for @tplBbb531.
+  ///
+  /// In en, this message translates to:
+  /// **'Four-week waves at percentages of your training max, plus 5×10 back-off volume.'**
+  String get tplBbb531;
+
+  /// No description provided for @tplPpl6.
+  ///
+  /// In en, this message translates to:
+  /// **'Six-day push/pull/legs: linear main lifts, double-progression accessories.'**
+  String get tplPpl6;
+
+  /// No description provided for @tplPhul.
+  ///
+  /// In en, this message translates to:
+  /// **'Power days and hypertrophy days alternating, four days a week.'**
+  String get tplPhul;
+
+  /// No description provided for @progBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto progression'**
+  String get progBadge;
+
+  /// No description provided for @progLinShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Hit the target → add weight; repeated misses → deload'**
+  String get progLinShort;
+
+  /// No description provided for @progDblShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Reps climb within a range, then the weight goes up'**
+  String get progDblShort;
+
+  /// No description provided for @progRepsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Bodyweight moves: add one rep per session'**
+  String get progRepsShort;
+
+  /// No description provided for @progCycleShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly waves at % of your training max'**
+  String get progCycleShort;
+
+  /// No description provided for @progCycleWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}-week waves'**
+  String progCycleWeeks(int n);
+
+  /// No description provided for @tplStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start this program'**
+  String get tplStart;
+
+  /// No description provided for @tmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Training max (TM)'**
+  String get tmTitle;
+
+  /// No description provided for @tmHint.
+  ///
+  /// In en, this message translates to:
+  /// **'≈ 1RM × 0.9. Weekly weights are calculated as % of TM. Unit: {unit}.'**
+  String tmHint(String unit);
+
+  /// No description provided for @progCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto progression'**
+  String get progCardTitle;
+
+  /// No description provided for @progNext.
+  ///
+  /// In en, this message translates to:
+  /// **'{ex} → next {label}'**
+  String progNext(String ex, String label);
+
+  /// No description provided for @progDeloadFb.
+  ///
+  /// In en, this message translates to:
+  /// **'{ex}: repeated misses — deloading to {label}'**
+  String progDeloadFb(String ex, String label);
+
+  /// No description provided for @progMiss.
+  ///
+  /// In en, this message translates to:
+  /// **'{ex}: target missed ({n}/{limit} before deload)'**
+  String progMiss(String ex, int n, int limit);
+
+  /// No description provided for @progRepsNext.
+  ///
+  /// In en, this message translates to:
+  /// **'{ex} → {r} reps next time'**
+  String progRepsNext(String ex, int r);
+
+  /// No description provided for @progVarHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{ex}: {r} reps reached — try a harder variation or add weight'**
+  String progVarHint(String ex, int r);
+
+  /// No description provided for @progWeekN.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle week {w}'**
+  String progWeekN(int w);
+
+  /// No description provided for @progTmUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{ex}: training max up to {label}'**
+  String progTmUp(String ex, String label);
+
   /// No description provided for @logRpe.
   ///
   /// In en, this message translates to:

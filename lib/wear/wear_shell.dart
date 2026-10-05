@@ -567,7 +567,7 @@ class WearRoutines extends StatelessWidget {
               style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textTertiary)),
         ),
         const SizedBox(height: 8),
-        for (final p in kProgramTemplates) _row(gc, p.name, t.perWeek(p.days.length), PhosphorIconsBold.plus, false, () {
+        for (final p in kProgramTemplates) _row(gc, t.templateName(p.id, p.name), t.perWeek(p.days.length), PhosphorIconsBold.plus, false, () {
           fit.applyTemplate(p);
         }),
       ],

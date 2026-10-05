@@ -1,3 +1,5 @@
+import 'progression.dart';
+
 enum SetKind { normal, warmup, drop, failure, restPause }
 
 SetKind setKindFrom(Object? raw) {
@@ -179,12 +181,15 @@ class Routine {
       Set<String>? chained,
       Map<String, List<PlannedSet>>? plan,
       Map<String, int>? rest,
+      Map<String, ProgSpec>? prog,
+      this.progInst,
       this.group = '',
       this.color = -1})
       : sets = sets ?? {},
         chained = chained ?? {},
         plan = plan ?? {},
-        rest = rest ?? {};
+        rest = rest ?? {},
+        prog = prog ?? {};
   final String id;
   String name;
   String group;
@@ -194,6 +199,14 @@ class Routine {
   final Set<String> chained;
   final Map<String, List<PlannedSet>> plan;
   final Map<String, int> rest;
+
+  /// 每个动作的自动渐进规则(空 = 无自动渐进,行为与旧版一致)
+  final Map<String, ProgSpec> prog;
+
+  /// 所属计划实例 id(FitState.programStates 的 key;同模板生成的多个训练日共享)
+  String? progInst;
+
+  bool get hasProg => prog.isNotEmpty;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -206,6 +219,8 @@ class Routine {
         if (color >= 0) 'k': color,
         if (plan.isNotEmpty)
           'p': plan.map((k, v) => MapEntry(k, v.map((s) => s.toJson()).toList())),
+        if (prog.isNotEmpty) 'pr': prog.map((k, v) => MapEntry(k, v.toJson())),
+        if (progInst != null) 'pi': progInst,
       };
   factory Routine.fromJson(Map<String, dynamic> j) => Routine(
         j['id'] as String,
@@ -220,6 +235,9 @@ class Routine {
             )),
         rest: ((j['r'] as Map?) ?? const {})
             .map((k, v) => MapEntry(k as String, ((v as num).toInt()).clamp(0, 600))),
+        prog: ((j['pr'] as Map?) ?? const {})
+            .map((k, v) => MapEntry(k as String, ProgSpec.fromJson((v as Map).cast<String, dynamic>()))),
+        progInst: j['pi'] as String?,
         group: (j['g'] as String?) ?? '',
         color: (j['k'] as num?)?.toInt() ?? -1,
       );

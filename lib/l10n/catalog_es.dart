@@ -447,6 +447,12 @@ const Map<String, String> kExerciseNameEs = {
   'bench-leg-raise': 'Elevación de piernas en banco',
   'hack-squat-machine': 'Sentadilla hack en máquina',
   'straight-arm-pulldown': 'Jalón con brazos rectos',
+  'abdominal-breathing': 'Respiración abdominal',
+  'pelvic-tilt': 'Inclinación pélvica',
+  'marching-in-place': 'Marcha en el sitio',
+  'supine-knee-hug': 'Abrazo de rodilla tumbado',
+  'figure-4-stretch': 'Estiramiento de glúteo en cuatro',
+  'supine-spinal-twist': 'Torsión espinal tumbado',
 };
 
 const Map<String, List<String>> kExerciseStepsEs = {
@@ -3567,5 +3573,47 @@ const Map<String, List<String>> kExerciseStepsEs = {
     'Inclínate un poco hacia delante desde la cadera y aprieta el abdomen.',
     'Baja la barra en arco hasta los muslos sin doblar los brazos.',
     'Deja subir la barra despacio hasta la altura de los ojos.',
+  ],
+  'abdominal-breathing': [
+    'Túmbate boca arriba con las rodillas dobladas y los pies apoyados en el suelo.',
+    'Coloca una mano en el pecho y la otra en el abdomen.',
+    'Inspira despacio por la nariz dejando que el abdomen suba mientras el pecho queda quieto.',
+    'Espira despacio con los labios fruncidos dejando que el abdomen baje.',
+    'Mantén un ritmo lento y uniforme durante toda la serie.',
+  ],
+  'pelvic-tilt': [
+    'Túmbate boca arriba con las rodillas dobladas y los pies separados a la anchura de las caderas.',
+    'Aplana suavemente la zona lumbar contra el suelo metiendo la pelvis.',
+    'Mantén la inclinación un instante sin aguantar la respiración.',
+    'Suelta despacio y deja que la zona lumbar recupere su curva natural.',
+    'Repite durante la serie con un movimiento pequeño y controlado.',
+  ],
+  'marching-in-place': [
+    'De pie, erguido, con los pies a la anchura de las caderas y los brazos a los lados.',
+    'Sube una rodilla hasta la altura de la cadera mientras llevas el brazo contrario adelante.',
+    'Apoya el pie y repite con el otro lado a un ritmo constante.',
+    'Mantén el torso erguido y el abdomen ligeramente activo.',
+    'Continúa durante el tiempo de la serie respirando con normalidad.',
+  ],
+  'supine-knee-hug': [
+    'Túmbate boca arriba con las piernas estiradas.',
+    'Lleva una rodilla hacia el pecho y sujétala con las dos manos.',
+    'Mantén la zona lumbar y la otra pierna relajadas en el suelo.',
+    'Sostén el estiramiento y respira despacio.',
+    'Suelta y repite con el otro lado.',
+  ],
+  'figure-4-stretch': [
+    'Túmbate boca arriba con las dos rodillas dobladas y los pies apoyados.',
+    'Cruza el tobillo derecho sobre el muslo izquierdo formando un cuatro.',
+    'Pasa las manos por el hueco y tira del muslo izquierdo hacia el pecho.',
+    'Mantén la cabeza y los hombros relajados en el suelo.',
+    'Sostén y cambia de lado.',
+  ],
+  'supine-spinal-twist': [
+    'Túmbate boca arriba con los brazos abiertos a los lados.',
+    'Dobla las rodillas y déjalas caer hacia un lado manteniendo los hombros apoyados.',
+    'Gira la cabeza suavemente hacia el lado contrario si te resulta cómodo.',
+    'Respira despacio y deja que la gravedad haga el trabajo.',
+    'Vuelve al centro y repite hacia el otro lado.',
   ],
 };

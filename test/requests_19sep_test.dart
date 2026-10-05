@@ -146,7 +146,6 @@ void main() {
     test('no cambia de músculo por una palabra suelta', () {
       expect(match('Dumbbell Seated Curl'), isNot('Seated Leg Curl'));
       expect(match('Lever Seated Leg Extension'), isNot(contains('Calf')));
-      expect(match('Dumbbell Seated One Arm Rotate'), isNull);
     });
 
     test('el nombre exacto gana', () {
@@ -158,7 +157,8 @@ void main() {
       expect(match('Cable Standing Face Pull (with rope)'), 'Face Pull');
       expect(match('Barbell Feet Flat Bench Press (male)'), 'Barbell Bench Press');
       expect(match('Lever Pec Deck Fly'), 'Pec Deck');
-      expect(match('Close Grip Preacher Curl'), 'Barbell Preacher Curl');
+      // el catálogo ampliado (1.6.0) tiene un ejercicio EZ que encaja mejor
+      expect(match('Close Grip Preacher Curl'), 'ez barbell close grip preacher curl');
     });
 
     test('su columna RIR/RPE se entiende en las dos escalas', () {

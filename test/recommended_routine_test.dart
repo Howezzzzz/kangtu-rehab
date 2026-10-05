@@ -98,8 +98,8 @@ void main() {
   test('la plantilla usa ejercicios del catálogo y tres días a la semana', () {
     final rr = kProgramTemplates.firstWhere((p) => p.id == 'rr');
     expect(rr.days.map((d) => d.weekday), [1, 3, 5]);
-    for (final (name, _) in rr.days.first.exercises) {
-      expect(find(name), isNotNull, reason: name);
+    for (final e in rr.days.first.exercises) {
+      expect(find(e.name), isNotNull, reason: e.name);
     }
   });
 }

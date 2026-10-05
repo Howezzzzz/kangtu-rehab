@@ -3,6 +3,7 @@ import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 import '../catalog/program_templates.dart';
 import '../l10n/l10n.dart';
+import '../models/progression.dart';
 import '../models/workout.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
@@ -225,6 +226,7 @@ class RoutinesScreen extends StatelessWidget {
               const SizedBox(height: 16),
               for (final template in kProgramTemplates)
                 _templateCard(context, gc, sheet, template),
+              const SizedBox(height: 8),
             ],
           ),
         ),
@@ -237,11 +239,8 @@ class RoutinesScreen extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        final made = fit.applyTemplate(template);
         Navigator.pop(sheet);
-        if (made == 0 || !context.mounted) return;
-        showNotchToast(context, t.templateAdded(made),
-            subtitle: template.name, icon: PhosphorIconsFill.stack, accent: context.gc.sage);
+        _templateDetail(context, template);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
@@ -263,8 +262,30 @@ class RoutinesScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(template.name,
-                      style: AppTheme.f(15, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.5)),
+                  Row(children: [
+                    Flexible(
+                      child: Text(t.templateName(template.id, template.name),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTheme.f(15, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.5)),
+                    ),
+                    if (template.pro) ...[
+                      const SizedBox(width: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: gc.sage.withOpacity(0.14),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Row(mainAxisSize: MainAxisSize.min, children: [
+                          Icon(PhosphorIconsFill.lightning, size: 9, color: gc.sage),
+                          const SizedBox(width: 3),
+                          Text(t.progBadge,
+                              style: AppTheme.f(9, weight: FontWeight.w700, color: gc.sage, letterSpacing: 0.3)),
+                        ]),
+                      ),
+                    ],
+                  ]),
                   const SizedBox(height: 2),
                   Text(t.templateBlurb(template.id),
                       style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.35)),
@@ -280,6 +301,250 @@ class RoutinesScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // ---- 计划详情页(融合式:展示周结构/组次/渐进规则,一键开始) ----
+
+  void _templateDetail(BuildContext context, ProgramTemplate template) {
+    final gc = context.gc;
+    // 同名训练日合并展示(如 5×5 的 A 日周一/周五)
+    final dayNames = <String>[];
+    final dayWds = <String, List<int>>{};
+    final dayExs = <String, List<ProgramExercise>>{};
+    for (final d in template.days) {
+      if (!dayExs.containsKey(d.name)) {
+        dayNames.add(d.name);
+        dayExs[d.name] = d.exercises;
+        dayWds[d.name] = [];
+      }
+      if (d.weekday != null) dayWds[d.name]!.add(d.weekday!);
+    }
+    showAppSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (sheet) => Container(
+        padding: sheetPad(sheet),
+        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.88),
+        decoration: BoxDecoration(
+          color: gc.bgRaised,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SheetHandle(),
+              const SizedBox(height: 16),
+              SheetTitle(t.templateName(template.id, template.name),
+                  subtitle: t.templateBlurb(template.id)),
+              const SizedBox(height: 14),
+              if (template.pro) ...[_progBadges(context, gc, template), const SizedBox(height: 14)],
+              for (final name in dayNames) ...[
+                _dayDetailCard(context, gc, name, dayWds[name]!, dayExs[name]!),
+                const SizedBox(height: 10),
+              ],
+              const SizedBox(height: 6),
+              PrimaryButton(
+                label: t.tplStart,
+                onTap: () => _startProgram(context, sheet, template),
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _progBadges(BuildContext context, GymColors gc, ProgramTemplate template) {
+    final kinds = <ProgKind>{};
+    for (final d in template.days) {
+      for (final e in d.exercises) {
+        if (e.spec != null) kinds.add(e.spec!.kind);
+      }
+    }
+    String label(ProgKind k) => switch (k) {
+          ProgKind.linear => t.progLinShort,
+          ProgKind.dbl => t.progDblShort,
+          ProgKind.reps => t.progRepsShort,
+          ProgKind.cycle => t.progCycleShort,
+        };
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: gc.sage.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Icon(PhosphorIconsFill.lightning, size: 14, color: gc.sage),
+          const SizedBox(width: 6),
+          Text(t.progBadge, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.sage)),
+        ]),
+        const SizedBox(height: 6),
+        for (final k in kinds)
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Text('· ${label(k)}',
+                style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.4)),
+          ),
+      ]),
+    );
+  }
+
+  Widget _dayDetailCard(
+      BuildContext context, GymColors gc, String dayName, List<int> weekdays, List<ProgramExercise> exs) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: gc.bgRaised2,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Expanded(
+            child: Text(dayName,
+                style: AppTheme.f(14, weight: FontWeight.w700, color: gc.text)),
+          ),
+          if (weekdays.isNotEmpty)
+            Text(weekdays.map((w) => t.weekdayShort(w)).join(' · '),
+                style: AppTheme.f(11, weight: FontWeight.w600, color: gc.ember)),
+        ]),
+        const SizedBox(height: 8),
+        for (final pe in exs)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Row(children: [
+              Expanded(
+                child: Text(_tplExerciseName(pe.name),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTheme.f(13, weight: FontWeight.w500, color: gc.textSecondary)),
+              ),
+              const SizedBox(width: 8),
+              Text(_schemeLabel(pe),
+                  style: AppTheme.f(12, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.3)),
+            ]),
+          ),
+      ]),
+    );
+  }
+
+  String _tplExerciseName(String name) {
+    final ex = fit.matchExerciseByName(name);
+    if (ex == null) return name;
+    return t.catalogName(ex.id, ex.name);
+  }
+
+  String _schemeLabel(ProgramExercise pe) {
+    final s = pe.spec;
+    if (s == null) return '${pe.sets} ×';
+    return switch (s.kind) {
+      ProgKind.linear => '${s.sets}×${s.reps}',
+      ProgKind.dbl || ProgKind.reps => '${s.sets}×${s.repMin}-${s.repMax}',
+      ProgKind.cycle => t.progCycleWeeks(s.weeks.length),
+    };
+  }
+
+  Future<void> _startProgram(
+      BuildContext context, BuildContext sheet, ProgramTemplate template) async {
+    Map<String, double>? tm;
+    if (template.hasCycle) {
+      tm = await _askTrainingMax(context, template);
+      if (tm == null) return;
+    }
+    final made = fit.applyTemplate(template, tm: tm);
+    if (!context.mounted) return;
+    Navigator.pop(sheet);
+    if (made == 0) return;
+    showNotchToast(context, t.templateAdded(made),
+        subtitle: t.templateName(template.id, template.name),
+        icon: PhosphorIconsFill.stack,
+        accent: context.gc.sage);
+  }
+
+  Future<Map<String, double>?> _askTrainingMax(
+      BuildContext context, ProgramTemplate template) {
+    final gc = context.gc;
+    final lifts = template.cycleLifts;
+    final controllers = <String, TextEditingController>{};
+    for (final name in lifts) {
+      final ex = fit.matchExerciseByName(name);
+      final est = ex == null ? null : estimateTrainingMax(fit, ex.id);
+      final shown = fit.toDisplayWeight(est ?? 40);
+      controllers[name] = TextEditingController(
+          text: shown == shown.roundToDouble()
+              ? shown.toStringAsFixed(0)
+              : shown.toStringAsFixed(1));
+    }
+    return showDialog<Map<String, double>>(
+      context: context,
+      builder: (dlg) => AlertDialog(
+        backgroundColor: gc.bgRaised,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(t.tmTitle,
+            style: AppTheme.f(16, weight: FontWeight.w700, color: gc.text)),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(t.tmHint(fit.units),
+                  style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.45)),
+              const SizedBox(height: 14),
+              for (final name in lifts) ...[
+                Text(_tplExerciseName(name),
+                    style: AppTheme.f(13, weight: FontWeight.w600, color: gc.text)),
+                const SizedBox(height: 4),
+                TextField(
+                  controller: controllers[name],
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  style: AppTheme.f(14, weight: FontWeight.w600, color: gc.text),
+                  decoration: InputDecoration(
+                    isDense: true,
+                    suffixText: fit.units,
+                    suffixStyle: AppTheme.f(12, color: gc.textTertiary),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    filled: true,
+                    fillColor: gc.bgRaised2,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dlg),
+            child: Text(t.cancel,
+                style: AppTheme.f(13, weight: FontWeight.w600, color: gc.textSecondary)),
+          ),
+          TextButton(
+            onPressed: () {
+              final out = <String, double>{};
+              for (final e in controllers.entries) {
+                final v = double.tryParse(e.value.text.trim().replaceAll(',', '.'));
+                if (v != null && v > 0) out[e.key] = fit.fromDisplayWeight(v);
+              }
+              Navigator.pop(dlg, out);
+            },
+            child: Text(t.done,
+                style: AppTheme.f(13, weight: FontWeight.w700, color: gc.ember)),
+          ),
+        ],
+      ),
+    ).whenComplete(() {
+      for (final c in controllers.values) {
+        c.dispose();
+      }
+    });
   }
 
   Widget _dayRow(BuildContext context, GymColors gc, int i) {

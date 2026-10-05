@@ -17,6 +17,7 @@ import '../models/measure.dart';
 import '../models/note.dart';
 import '../models/place.dart';
 import '../models/profile.dart';
+import '../models/progression.dart';
 import '../models/progress_shot.dart';
 import '../models/workout.dart';
 import '../services/alarm_store.dart';
@@ -38,6 +39,7 @@ part 'measures_state.dart';
 part 'moments_state.dart';
 part 'notes_state.dart';
 part 'places_state.dart';
+part 'progression_state.dart';
 part 'routines_state.dart';
 part 'settings_state.dart';
 part 'stats_state.dart';
@@ -219,6 +221,10 @@ class FitState extends FitCore
     autoWarmup
       ..clear()
       ..addAll(((data['warmup'] as List?) ?? const []).cast<String>());
+    programStates
+      ..clear()
+      ..addAll(((data['progStates'] as Map?) ?? const {}).map((k, v) =>
+          MapEntry(k as String, ProgState.fromJson((v as Map).cast<String, dynamic>()))));
   }
 
   void _loadPlanExtras(Map<String, dynamic> data) {
@@ -409,6 +415,7 @@ class FitState extends FitCore
         'media': exerciseMedia,
         'exRest': exerciseRest,
         'progress': progressStep,
+        'progStates': programStates.map((k, v) => MapEntry(k, v.toJson())),
         'warmup': autoWarmup.toList(),
         'repsOnly': repsOnly.toList(),
         'repsOnlyOff': repsOnlyOff.toList(),
@@ -463,6 +470,8 @@ class FitState extends FitCore
     repsOnlyOff.clear();
     exerciseRest.clear();
     progressStep.clear();
+    programStates.clear();
+    progFeedback = [];
     autoWarmup.clear();
     noSuggest.clear();
     archived.clear();
@@ -648,19 +657,21 @@ class FitState extends FitCore
 
   Exercise? matchExerciseByName(String name) => matchExercise(name, allExercises);
 
-  int applyTemplate(ProgramTemplate template) {
+  int applyTemplate(ProgramTemplate template, {Map<String, double>? tm}) {
     final planWasEmpty = weeklyPlan.isEmpty;
     var made = 0;
+    final instId = 'pi${DateTime.now().millisecondsSinceEpoch}';
+    final inst = ProgState(tpl: template.id);
     final sameDay = <String, String>{};
     for (final day in template.days) {
-      final ids = <String, int>{};
-      for (final (name, sets) in day.exercises) {
-        final ex = matchExerciseByName(name);
-        if (ex == null || ids.containsKey(ex.id)) continue;
-        ids[ex.id] = sets;
+      final matched = <String, ProgramExercise>{};
+      for (final pe in day.exercises) {
+        final ex = matchExerciseByName(pe.name);
+        if (ex == null || matched.containsKey(ex.id)) continue;
+        matched[ex.id] = pe;
       }
-      if (ids.isEmpty) continue;
-      final key = '${day.name}|${ids.entries.map((e) => '${e.key}:${e.value}').join(',')}';
+      if (matched.isEmpty) continue;
+      final key = '${day.name}|${matched.entries.map((e) => '${e.key}:${e.value.sets}').join(',')}';
       final twin = sameDay[key];
       if (twin != null) {
         if (planWasEmpty && day.weekday != null) weeklyPlan[day.weekday!] = twin;
@@ -669,14 +680,30 @@ class FitState extends FitCore
       final id = createRoutine(day.name);
       sameDay[key] = id;
       setRoutineGroup(id, template.name);
-      for (final entry in ids.entries) {
-        toggleRoutineExercise(id, entry.key);
-        bumpRoutineSets(id, entry.key, entry.value - kDefaultRoutineSets);
+      final r = _routine(id)!;
+      if (template.pro) r.progInst = instId;
+      for (final entry in matched.entries) {
+        final exId = entry.key;
+        final pe = entry.value;
+        toggleRoutineExercise(id, exId);
+        final spec = pe.spec;
+        if (spec == null) {
+          bumpRoutineSets(id, exId, pe.sets - kDefaultRoutineSets);
+          continue;
+        }
+        r.prog[exId] = spec;
+        if (spec.kind == ProgKind.reps) repsOnly.add(exId);
+        if (spec.isCycle) {
+          inst.tm[exId] =
+              tm?[pe.name] ?? estimateTrainingMax(this, exId) ?? 40;
+        }
+        buildInitialPlan(r, exId, spec, inst);
       }
       if (planWasEmpty && day.weekday != null) weeklyPlan[day.weekday!] = id;
       made++;
     }
     if (made == 0) return 0;
+    if (template.pro) programStates[instId] = inst;
     persistNow();
     syncTrainReminder();
     notifyListeners();

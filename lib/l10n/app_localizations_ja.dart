@@ -1893,6 +1893,126 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => '全身';
+
+  @override
+  String get tplNamePpl => 'プッシュ・プル・レッグ';
+
+  @override
+  String get tplNameUpperlower => '上半身 / 下半身';
+
+  @override
+  String get tplNameAbcd => 'ABCD分割';
+
+  @override
+  String get tplNameAbcde => 'ABCDE分割';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 週6日';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'おすすめルーティン';
+
+  @override
+  String get tplNameHome => '器具なし';
+
+  @override
+  String get tplGzclp => 'ヘビー層・ボリューム層・補助層——古典的な三段階プログレッション。';
+
+  @override
+  String get tplBbb531 => 'トレーニングマックスの割合で回る4週間ウェーブ＋5×10のバックオフボリューム。';
+
+  @override
+  String get tplPpl6 => '週6日のプッシュ/プル/レッグ：メインはリニア、補助はダブルプログレッション。';
+
+  @override
+  String get tplPhul => 'パワーの日とハイパートロフィーの日を交互に、週4日。';
+
+  @override
+  String get progBadge => '自動プログレッション';
+
+  @override
+  String get progLinShort => '目標達成 → 重量アップ、連続失敗 → デロード';
+
+  @override
+  String get progDblShort => '回数がレンジ内で伸び、上限で重量アップ';
+
+  @override
+  String get progRepsShort => '自重種目：セッションごとに+1レップ';
+
+  @override
+  String get progCycleShort => 'トレーニングマックスの%で週ごとにウェーブ';
+
+  @override
+  String progCycleWeeks(int n) {
+    return '$n週間ウェーブ';
+  }
+
+  @override
+  String get tplStart => 'このプログラムを開始';
+
+  @override
+  String get tmTitle => 'トレーニングマックス（TM）';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0.9。週ごとの重量はTMの%で計算されます。単位：$unit。';
+  }
+
+  @override
+  String get progCardTitle => '自動プログレッション';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → 次回 $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex：連続失敗のため $label までデロード';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex：目標未達（デロードまで $n/$limit）';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → 次回 $r レップ';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex：$r レップ到達 — より難しいバリエーションか重量を追加';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'サイクル第$w週';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex：トレーニングマックスが $label にアップ';
+  }
+
+  @override
   String get logRpe => '強度を記録（RPE）';
 
   @override

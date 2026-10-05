@@ -288,9 +288,9 @@ void main() {
     test('cada ejercicio de cada plantilla existe en el catálogo', () {
       for (final template in kProgramTemplates) {
         for (final day in template.days) {
-          for (final (name, _) in day.exercises) {
-            expect(fit.matchExerciseByName(name), isNotNull,
-                reason: '${template.name} · $name');
+          for (final e in day.exercises) {
+            expect(fit.matchExerciseByName(e.name), isNotNull,
+                reason: '${template.name} · ${e.name}');
           }
         }
       }
@@ -314,7 +314,7 @@ void main() {
 
     test('coloca los días solo si el plan semanal estaba vacío', () {
       fit.applyTemplate(kProgramTemplates.firstWhere((x) => x.id == 'stronglifts'));
-      expect(fit.weeklyPlan.length, 2);
+      expect(fit.weeklyPlan.length, 3);
 
       final before = Map.of(fit.weeklyPlan);
       fit.applyTemplate(kProgramTemplates.firstWhere((x) => x.id == 'ppl'));

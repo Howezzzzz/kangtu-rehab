@@ -1949,6 +1949,126 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => 'تمام بدن';
+
+  @override
+  String get tplNamePpl => 'فشار · کشش · پا';
+
+  @override
+  String get tplNameUpperlower => 'بالاتنه / پایین‌تنه';
+
+  @override
+  String get tplNameAbcd => 'تقسیم ABCD';
+
+  @override
+  String get tplNameAbcde => 'تقسیم ABCDE';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL ۶ روز';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => 'روتین پیشنهادی';
+
+  @override
+  String get tplNameHome => 'بدون تجهیزات';
+
+  @override
+  String get tplGzclp => 'سطح سنگین، سطح حجم، سطح کمکی — پیشرفت کلاسیک سه‌سطحی.';
+
+  @override
+  String get tplBbb531 => 'موج‌های چهارهفته‌ای بر پایه درصد حداکثر تمرینی، به‌همراه حجم ۵×۱۰.';
+
+  @override
+  String get tplPpl6 => 'شش روز فشار/کشش/پا: حرکات اصلی خطی، کمکی‌ها با پیشرفت دوگانه.';
+
+  @override
+  String get tplPhul => 'روزهای قدرت و روزهای هایپرتروفی یکی‌درمیان، چهار روز در هفته.';
+
+  @override
+  String get progBadge => 'پیشرفت خودکار';
+
+  @override
+  String get progLinShort => 'هدف محقق شد → وزن را زیاد کن؛ شکست‌های پیاپی → دی‌لود';
+
+  @override
+  String get progDblShort => 'تکرارها در محدوده بالا می‌روند، سپس وزن زیاد می‌شود';
+
+  @override
+  String get progRepsShort => 'با وزن بدن: هر جلسه یک تکرار بیشتر';
+
+  @override
+  String get progCycleShort => 'موج‌های هفتگی بر پایه درصد حداکثر تمرینی';
+
+  @override
+  String progCycleWeeks(int n) {
+    return 'موج‌های $n هفته‌ای';
+  }
+
+  @override
+  String get tplStart => 'شروع این برنامه';
+
+  @override
+  String get tmTitle => 'حداکثر تمرینی (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0.9. وزن‌های هفتگی بر پایه درصد TM محاسبه می‌شوند. واحد: $unit.';
+  }
+
+  @override
+  String get progCardTitle => 'پیشرفت خودکار';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex ← بعدی $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: شکست‌های پیاپی — دی‌لود تا $label';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: هدف محقق نشد ($n/$limit تا دی‌لود)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex ← دفعه بعد $r تکرار';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: به $r تکرار رسیدی — نسخه سخت‌تر یا وزن بیشتر را امتحان کن';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return 'هفته $w چرخه';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: حداکثر تمرینی به $label افزایش یافت';
+  }
+
+  @override
   String get logRpe => 'ثبت تلاش (RPE)';
 
   @override

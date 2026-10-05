@@ -1238,6 +1238,32 @@ class SessionScreen extends StatelessWidget {
     );
   }
 
+  Widget _progFeedbackCard(GymColors gc) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: gc.bgRaised,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Icon(PhosphorIconsFill.lightning, size: 14, color: gc.sage),
+          const SizedBox(width: 6),
+          Text(t.progCardTitle,
+              style: AppTheme.f(13, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.4)),
+        ]),
+        const SizedBox(height: 8),
+        for (final line in fit.progFeedback)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Text(line,
+                style: AppTheme.f(12.5,
+                    weight: FontWeight.w500, color: gc.textSecondary, height: 1.35)),
+          ),
+      ]),
+    );
+  }
+
   Widget _complete(BuildContext context, GymColors gc) {
     final prs = fit.gamification ? fit.summaryPrs : 0;
     final streak = fit.currentStreak;
@@ -1271,6 +1297,10 @@ class SessionScreen extends StatelessWidget {
                 index: 2,
                 child: vsLast != null ? _vsLastCard(gc, vol, vsLast) : _firstTimeCard(gc),
               ),
+            ],
+            if (fit.progFeedback.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              Rise(index: 2, child: _progFeedbackCard(gc)),
             ],
             AnimatedSize(
               duration: const Duration(milliseconds: 280),

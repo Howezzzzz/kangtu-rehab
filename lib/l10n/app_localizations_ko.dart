@@ -1906,6 +1906,126 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get tplNameFullbody => '전신';
+
+  @override
+  String get tplNamePpl => '푸시 · 풀 · 레그';
+
+  @override
+  String get tplNameUpperlower => '상체 / 하체';
+
+  @override
+  String get tplNameAbcd => 'ABCD 분할';
+
+  @override
+  String get tplNameAbcde => 'ABCDE 분할';
+
+  @override
+  String get tplNameStronglifts => 'StrongLifts 5×5';
+
+  @override
+  String get tplNameStartingstrength => 'Starting Strength';
+
+  @override
+  String get tplNameGzclp => 'GZCLP';
+
+  @override
+  String get tplNameBbb531 => '5/3/1 Boring But Big';
+
+  @override
+  String get tplNamePpl6 => 'PPL 주 6일';
+
+  @override
+  String get tplNamePhul => 'PHUL';
+
+  @override
+  String get tplNameRr => '추천 루틴';
+
+  @override
+  String get tplNameHome => '맨몸';
+
+  @override
+  String get tplGzclp => '헤비 단계, 볼륨 단계, 보조 단계 — 전통적인 3단계 프로그레션.';
+
+  @override
+  String get tplBbb531 => '트레이닝 맥스의 퍼센트로 도는 4주 웨이브, 플러스 5×10 백오프 볼륨.';
+
+  @override
+  String get tplPpl6 => '주 6일 푸시/풀/레그: 메인 리프트는 선형, 보조는 더블 프로그레션.';
+
+  @override
+  String get tplPhul => '파워 데이와 하이퍼트로피 데이를 번갈아, 주 4일.';
+
+  @override
+  String get progBadge => '자동 프로그레션';
+
+  @override
+  String get progLinShort => '목표 달성 → 무게 증가, 연속 실패 → 디로드';
+
+  @override
+  String get progDblShort => '반복 수가 범위 안에서 늘고, 상한에서 무게가 오릅니다';
+
+  @override
+  String get progRepsShort => '맨몸 동작: 세션마다 1회 추가';
+
+  @override
+  String get progCycleShort => '트레이닝 맥스의 %로 주간 웨이브';
+
+  @override
+  String progCycleWeeks(int n) {
+    return '$n주 웨이브';
+  }
+
+  @override
+  String get tplStart => '이 프로그램 시작';
+
+  @override
+  String get tmTitle => '트레이닝 맥스 (TM)';
+
+  @override
+  String tmHint(String unit) {
+    return '≈ 1RM × 0.9. 주간 무게는 TM의 %로 계산됩니다. 단위: $unit.';
+  }
+
+  @override
+  String get progCardTitle => '자동 프로그레션';
+
+  @override
+  String progNext(String ex, String label) {
+    return '$ex → 다음 $label';
+  }
+
+  @override
+  String progDeloadFb(String ex, String label) {
+    return '$ex: 연속 실패 — $label까지 디로드';
+  }
+
+  @override
+  String progMiss(String ex, int n, int limit) {
+    return '$ex: 목표 미달 (디로드까지 $n/$limit)';
+  }
+
+  @override
+  String progRepsNext(String ex, int r) {
+    return '$ex → 다음번 $r회';
+  }
+
+  @override
+  String progVarHint(String ex, int r) {
+    return '$ex: $r회 도달 — 더 어려운 변형이나 무게 추가를 시도하세요';
+  }
+
+  @override
+  String progWeekN(int w) {
+    return '사이클 $w주차';
+  }
+
+  @override
+  String progTmUp(String ex, String label) {
+    return '$ex: 트레이닝 맥스가 $label로 상승';
+  }
+
+  @override
   String get logRpe => '운동 강도 기록(RPE)';
 
   @override
