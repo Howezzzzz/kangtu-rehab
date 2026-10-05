@@ -20,6 +20,7 @@ import '../models/place.dart';
 import '../models/profile.dart';
 import '../models/progression.dart';
 import '../models/progress_shot.dart';
+import '../models/rehab_episode.dart';
 import '../models/workout.dart';
 import '../services/alarm_store.dart';
 import '../services/beeper.dart';
@@ -28,6 +29,7 @@ import '../services/local_store.dart';
 import '../services/media_store.dart';
 import '../services/merged_ids.dart';
 import '../services/progress_reminder.dart';
+import '../services/rehab_intake.dart';
 import '../services/plan_share.dart';
 import '../services/rest_alarm.dart';
 import '../services/train_reminder.dart';
@@ -41,6 +43,7 @@ part 'moments_state.dart';
 part 'notes_state.dart';
 part 'places_state.dart';
 part 'progression_state.dart';
+part 'rehab_state.dart';
 part 'routines_state.dart';
 part 'settings_state.dart';
 part 'stats_state.dart';
@@ -49,10 +52,17 @@ part 'tools_state.dart';
 part 'workout_state.dart';
 
 class FitState extends FitCore
-    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, MeasuresState, MomentsState, TimelineState, StatsState, AwardsState, RoutinesState, WorkoutState {
+    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, MeasuresState, MomentsState, TimelineState, StatsState, AwardsState, RoutinesState, WorkoutState, RehabState {
   void loadFromStore() {
     final data = withMergedExercises(Store.instance.load());
     _loading = true;
+    if (data['rehabEp'] is List) {
+      rehabEpisodes
+        ..clear()
+        ..addAll((data['rehabEp'] as List)
+            .whereType<Map>()
+            .map((m) => RehabEpisode.fromJson(m.cast<String, dynamic>())));
+    }
     if (data['language'] == null) _adoptDeviceLanguage();
     if (data.isNotEmpty) {
       profile = Profile.fromJson((data['profile'] as Map?)?.cast<String, dynamic>() ?? {});
@@ -405,6 +415,7 @@ class FitState extends FitCore
         'onboarded': onboarded,
         'favorites': favorites,
         'notes': notes.map((n) => n.toJson()).toList(),
+        'rehabEp': rehabEpisodes.map((e) => e.toJson()).toList(),
         'places': places.map((p) => p.toJson()).toList(),
         'place': activePlaceId,
         'checkins': checkins.toList(),
@@ -865,6 +876,72 @@ class FitState extends FitCore
     return (routines: made, added: added, missed: missed);
   }
 
+  // ---- 康复档案：提示词 + 回复套用（放在 FitState 里，用得到目录/计划引擎）----
+
+  /// 生成给通用 AI 的康复提示词（手动复制/导出，App 不联网）。
+  String rehabPromptText(RehabEpisode ep) {
+    final month = DateTime.now().subtract(const Duration(days: 30));
+    final recent = sessions.where((s) => s.date.isAfter(month)).length;
+    final goals = ep.goals.map(rehabGoalLabel).join('、');
+    final gear = ep.equipment.isEmpty ? '徒手/自重为主' : ep.equipment.join('、');
+    final flags = ep.redFlags.map((k) => kRehabRedFlags[k] ?? k).join('；');
+    final lines = <String>[
+      '你是运动康复方向的助理。请根据下面的个人情况和困扰，给出一份循序渐进、可以自己执行的康复训练建议。',
+      '',
+      '【我的情况】',
+      '- 性别/年龄/身高/体重：${profile.sex == 'female' ? '女' : '男'}、${profile.age} 岁、${heightLabel(profile.heightCm)}、${weightLabel(profile.weightKg)}',
+      '- 近 30 天训练次数：$recent 次',
+      '- 每周可训练天数：${ep.daysPerWeek} 天',
+      '- 可用器材：$gear',
+      if (goals.isNotEmpty) '- 康复目标：$goals',
+      '',
+      '【本次困扰】',
+      '- 部位：${rehabAreaLabel(ep.area)}',
+      '- 病程：${rehabDurationLabel(ep.duration)}',
+      '- 当前不适程度：${ep.pain}/10',
+      if (ep.factors.trim().isNotEmpty) '- 加重 / 缓解因素：${ep.factors.trim()}',
+      if (flags.isEmpty) '- 安全筛查：未发现红旗征' else '- 安全筛查命中：$flags',
+      '',
+      '【输出要求】',
+      '1. 只输出一个 JSON 对象，不要额外解释文字。',
+      '2. 用 advice 字段写「注意事项 + 叫停规则」（字符串）。',
+      '3. 用 routines 字段给训练计划，结构照抄下面模板：',
+      FitState.planTemplate,
+      '4. 动作名尽量取自【动作库清单】里的英文名，这样能自动匹配到 App 的动作库。',
+      '5. 强度保守：以不加重症状为前提，训练中疼痛不超过 3/10；先活动度、再稳定性、最后力量。',
+      '6. advice 里必须包含：$kRehabStopRules',
+      '',
+      '【动作库清单】英文名 (中文名) | 肌群 | 器材 | 难度 | 模式',
+    ];
+    final pool = allExercises.where((e) => fitsHere(e) && !isArchived(e.id)).toList();
+    for (final ex in pool) {
+      final local = exerciseName(ex);
+      final label = local == ex.name ? ex.name : '${ex.name} ($local)';
+      final mode = modeOf(ex.id);
+      lines.add('$label | ${ex.primary} | ${ex.equipment} | ${ex.difficulty}${mode.isEmpty ? '' : ' | $mode'}');
+    }
+    return lines.join('\n');
+  }
+
+  /// 把 AI 回复套到档案上：建训练计划 + 存 advice。
+  ({int routines, int added, List<String> missed}) applyRehabReply(String episodeId, String raw) {
+    final ep = episodeById(episodeId);
+    if (ep == null) return (routines: 0, added: 0, missed: const <String>[]);
+    final plans = parsePlan(raw);
+    final before = routines.map((r) => r.id).toSet();
+    var out = (routines: 0, added: 0, missed: const <String>[]);
+    if (plans.isNotEmpty) {
+      final res = applyPlan(plans);
+      final fresh = routines.where((r) => !before.contains(r.id)).map((r) => r.id).toList();
+      out = (routines: res.routines, added: res.added, missed: res.missed);
+      if (fresh.isNotEmpty) ep.routineIds = [...ep.routineIds, ...fresh];
+    }
+    final advice = extractRehabAdvice(raw);
+    if (advice.isNotEmpty) ep.advice = advice;
+    updateEpisode(ep);
+    return out;
+  }
+
   List<PlannedSet> _plannedFrom(PlanItem item) {
     final explicit = [
       for (final p in item.plan)
@@ -1048,6 +1125,12 @@ class FitState extends FitCore
         backFromAwards();
       case 'ai-plan':
         backFromAiPlan();
+      case 'rehab-episodes':
+        backFromRehabEpisodes();
+      case 'rehab-episode-new':
+        backFromRehabNew();
+      case 'rehab-episode':
+        backFromRehabEpisode();
       case 'progress':
       case 'exercises':
       case 'settings':

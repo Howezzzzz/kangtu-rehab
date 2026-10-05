@@ -19,6 +19,8 @@ import '../screens/onboarding_screen.dart';
 import '../screens/places_screen.dart';
 import '../screens/plan_import_sheet.dart';
 import '../screens/progress_screen.dart';
+import '../screens/rehab_episode_screen.dart';
+import '../screens/rehab_episodes_screen.dart';
 import '../screens/rehab_screen.dart';
 import '../screens/routine_edit_screen.dart';
 import '../screens/routines_screen.dart';
@@ -368,6 +370,12 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
         return ProgressScreen();
       case 'rehab':
         return const RehabScreen();
+      case 'rehab-episodes':
+        return const RehabEpisodesScreen();
+      case 'rehab-episode-new':
+        return const RehabNewEpisodeScreen();
+      case 'rehab-episode':
+        return const RehabEpisodeScreen();
       case 'train':
         return TrainScreen();
       case 'session':
@@ -521,7 +529,12 @@ class _NavBarState extends State<_NavBar> {
     final i = _routes.indexOf(fit.route);
     if (i >= 0) return i;
     // 「康复」是「我的」页里的子页面，气泡应该停在“我的”上，而不是弹回首页
-    if (fit.route == 'rehab') return 3;
+    if (fit.route == 'rehab' ||
+        fit.route == 'rehab-episodes' ||
+        fit.route == 'rehab-episode-new' ||
+        fit.route == 'rehab-episode') {
+      return 3;
+    }
     return 0;
   }
 
