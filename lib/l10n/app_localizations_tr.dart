@@ -3167,6 +3167,33 @@ class AppLocalizationsTr extends AppLocalizations {
       'r/bodyweightfitness klasiği: haftada üç gün tüm vücut. Kolaylaşınca bir sonraki aşamaya geç.';
 
   @override
+  String get fbTitle => 'Antrenman notu';
+
+  @override
+  String get fbPrompt => 'Nasıl hissettirdi?';
+
+  @override
+  String get fbFeelEasy => 'Kolay';
+
+  @override
+  String get fbFeelOk => 'Tam kararında';
+
+  @override
+  String get fbFeelHard => 'Zor';
+
+  @override
+  String get fbFeelMax => 'Tüm gücünle';
+
+  @override
+  String get fbPain => 'Rahatsızlık';
+
+  @override
+  String get fbPainLevel => 'Rahatsızlık düzeyi';
+
+  @override
+  String get fbRehabHint => 'Aynı bölgede rahatsızlık — rehabilitasyon dosyana not et';
+
+  @override
   String get levelUpKicker => 'SONRAKİ ADIM';
 
   @override

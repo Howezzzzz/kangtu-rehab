@@ -5656,6 +5656,60 @@ abstract class AppLocalizations {
   /// **'The r/bodyweightfitness classic: full body three days a week. Move up a step when it gets easy.'**
   String get tplRr;
 
+  /// No description provided for @fbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout check-in'**
+  String get fbTitle;
+
+  /// No description provided for @fbPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'How did it feel?'**
+  String get fbPrompt;
+
+  /// No description provided for @fbFeelEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get fbFeelEasy;
+
+  /// No description provided for @fbFeelOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Just right'**
+  String get fbFeelOk;
+
+  /// No description provided for @fbFeelHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get fbFeelHard;
+
+  /// No description provided for @fbFeelMax.
+  ///
+  /// In en, this message translates to:
+  /// **'All out'**
+  String get fbFeelMax;
+
+  /// No description provided for @fbPain.
+  ///
+  /// In en, this message translates to:
+  /// **'Discomfort'**
+  String get fbPain;
+
+  /// No description provided for @fbPainLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Discomfort level'**
+  String get fbPainLevel;
+
+  /// No description provided for @fbRehabHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Same-area discomfort — jot it down in your rehab episode'**
+  String get fbRehabHint;
+
   /// No description provided for @levelUpKicker.
   ///
   /// In en, this message translates to:

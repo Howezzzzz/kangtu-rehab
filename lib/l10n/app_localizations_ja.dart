@@ -3071,6 +3071,33 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tplRr => 'r/bodyweightfitness の定番:週3日の全身トレーニング。楽になったら次の段階へ。';
 
   @override
+  String get fbTitle => 'トレーニング記録';
+
+  @override
+  String get fbPrompt => '今日の感覚は?';
+
+  @override
+  String get fbFeelEasy => '楽だった';
+
+  @override
+  String get fbFeelOk => 'ちょうどいい';
+
+  @override
+  String get fbFeelHard => 'きつい';
+
+  @override
+  String get fbFeelMax => '限界まで';
+
+  @override
+  String get fbPain => '違和感';
+
+  @override
+  String get fbPainLevel => '違和感の程度';
+
+  @override
+  String get fbRehabHint => '同じ部位の違和感はリハビリ記録に残しましょう';
+
+  @override
   String get levelUpKicker => '次のステップ';
 
   @override

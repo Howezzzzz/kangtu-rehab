@@ -3254,6 +3254,33 @@ class AppLocalizationsRu extends AppLocalizations {
       'Классика r/bodyweightfitness: всё тело три дня в неделю. Переходи на следующую ступень, когда станет легко.';
 
   @override
+  String get fbTitle => 'Отчёт о тренировке';
+
+  @override
+  String get fbPrompt => 'Как прошло?';
+
+  @override
+  String get fbFeelEasy => 'Легко';
+
+  @override
+  String get fbFeelOk => 'В самый раз';
+
+  @override
+  String get fbFeelHard => 'Тяжело';
+
+  @override
+  String get fbFeelMax => 'На пределе';
+
+  @override
+  String get fbPain => 'Дискомфорт';
+
+  @override
+  String get fbPainLevel => 'Уровень дискомфорта';
+
+  @override
+  String get fbRehabHint => 'Дискомфорт в той же зоне — отметьте в карточке реабилитации';
+
+  @override
   String get levelUpKicker => 'СЛЕДУЮЩИЙ ШАГ';
 
   @override

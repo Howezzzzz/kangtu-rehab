@@ -22,6 +22,7 @@ import '../widgets/liquid_notch.dart';
 import '../widgets/muscle_radar.dart';
 import '../widgets/rolling_text.dart';
 import '../widgets/ruler_picker.dart';
+import '../widgets/session_feedback.dart';
 import '../widgets/ui_kit.dart';
 import 'share_sheet.dart';
 import 'start_sheet.dart';
@@ -1328,6 +1329,8 @@ class _DaySheet extends StatelessWidget {
               const SizedBox(height: 10),
               for (final logged in fit.sessionsOn(date)) ...[
                 _sessionHeader(context, gc, logged),
+                SessionFeedbackCard(logged),
+                const SizedBox(height: 6),
                 for (final ex in [...logged.exercises]) _loggedRow(context, gc, logged, ex),
                 const SizedBox(height: 6),
               ],

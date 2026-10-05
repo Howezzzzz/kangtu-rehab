@@ -3167,6 +3167,33 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il classico di r/bodyweightfitness: tutto il corpo tre giorni a settimana. Passa al livello successivo quando diventa facile.';
 
   @override
+  String get fbTitle => 'Check finale';
+
+  @override
+  String get fbPrompt => 'Come è andata?';
+
+  @override
+  String get fbFeelEasy => 'Facile';
+
+  @override
+  String get fbFeelOk => 'Giusto';
+
+  @override
+  String get fbFeelHard => 'Duro';
+
+  @override
+  String get fbFeelMax => 'Al massimo';
+
+  @override
+  String get fbPain => 'Fastidio';
+
+  @override
+  String get fbPainLevel => 'Livello di fastidio';
+
+  @override
+  String get fbRehabHint => 'Fastidio nella stessa zona: annotalo nell\'episodio di riabilitazione';
+
+  @override
   String get levelUpKicker => 'PROSSIMO PASSO';
 
   @override

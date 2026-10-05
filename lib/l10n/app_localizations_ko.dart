@@ -3082,6 +3082,33 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tplRr => 'r/bodyweightfitness의 대표 루틴: 주 3일 전신 운동. 쉬워지면 다음 단계로 넘어가세요.';
 
   @override
+  String get fbTitle => '운동 기록';
+
+  @override
+  String get fbPrompt => '오늘 느낌은?';
+
+  @override
+  String get fbFeelEasy => '쉬웠어요';
+
+  @override
+  String get fbFeelOk => '딱 좋아요';
+
+  @override
+  String get fbFeelHard => '힘들었어요';
+
+  @override
+  String get fbFeelMax => '한계까지';
+
+  @override
+  String get fbPain => '불편함';
+
+  @override
+  String get fbPainLevel => '불편함 정도';
+
+  @override
+  String get fbRehabHint => '같은 부위 불편함은 재활 기록에 남겨 두세요';
+
+  @override
   String get levelUpKicker => '다음 단계';
 
   @override

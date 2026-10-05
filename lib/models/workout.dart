@@ -105,10 +105,25 @@ class LoggedExercise {
 }
 
 class LoggedSession {
-  LoggedSession(this.date, this.durationSec, this.exercises);
+  LoggedSession(this.date, this.durationSec, this.exercises,
+      {this.feel, this.painArea = '', this.painLevel = 0, this.note = ''});
   final DateTime date;
   final int durationSec;
   final List<LoggedExercise> exercises;
+
+  /// 训练后主观反馈：整体感觉 0=很轻松 1=刚好 2=吃力 3=拼到底（null 未记录）
+  int? feel;
+
+  /// 不适部位（kMuscles 的 id，空 = 没有不适）
+  String painArea;
+
+  /// 不适程度 0-10
+  int painLevel;
+
+  /// 一句话记录
+  String note;
+
+  bool get hasFeedback => feel != null || painArea.isNotEmpty || note.trim().isNotEmpty;
 
   double get volume => exercises.fold(0.0, (s, e) => s + e.volume);
   int get setCount => exercises.fold(0, (s, e) => s + e.workingSets.length);
@@ -117,11 +132,19 @@ class LoggedSession {
         'd': date.toIso8601String(),
         'dur': durationSec,
         'ex': exercises.map((e) => e.toJson()).toList(),
+        if (feel != null) 'feel': feel,
+        if (painArea.isNotEmpty) 'pa': painArea,
+        if (painLevel > 0) 'pl': painLevel,
+        if (note.trim().isNotEmpty) 'note': note,
       };
   factory LoggedSession.fromJson(Map<String, dynamic> j) => LoggedSession(
         DateTime.parse(j['d'] as String),
         (j['dur'] as num?)?.toInt() ?? 0,
         (j['ex'] as List).map((e) => LoggedExercise.fromJson(e as Map<String, dynamic>)).toList(),
+        feel: (j['feel'] as num?)?.toInt(),
+        painArea: (j['pa'] ?? '') as String,
+        painLevel: ((j['pl'] ?? 0) as num).toInt(),
+        note: (j['note'] ?? '') as String,
       );
 }
 

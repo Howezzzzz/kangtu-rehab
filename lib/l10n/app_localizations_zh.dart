@@ -3032,6 +3032,33 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tplRr => 'r/bodyweightfitness 的经典计划:每周三天全身训练。变轻松了就进阶到下一级。';
 
   @override
+  String get fbTitle => '训练反馈';
+
+  @override
+  String get fbPrompt => '今天感觉如何？';
+
+  @override
+  String get fbFeelEasy => '很轻松';
+
+  @override
+  String get fbFeelOk => '刚好';
+
+  @override
+  String get fbFeelHard => '吃力';
+
+  @override
+  String get fbFeelMax => '拼到底';
+
+  @override
+  String get fbPain => '有不舒服';
+
+  @override
+  String get fbPainLevel => '不适程度';
+
+  @override
+  String get fbRehabHint => '同部位不适，建议到康复档案里记一笔';
+
+  @override
   String get levelUpKicker => '下一步';
 
   @override
@@ -6345,6 +6372,33 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get tplRr => 'r/bodyweightfitness 的經典計畫:每週三天全身訓練。變輕鬆了就進階到下一級。';
+
+  @override
+  String get fbTitle => '訓練回饋';
+
+  @override
+  String get fbPrompt => '今天感覺如何？';
+
+  @override
+  String get fbFeelEasy => '很輕鬆';
+
+  @override
+  String get fbFeelOk => '剛好';
+
+  @override
+  String get fbFeelHard => '吃力';
+
+  @override
+  String get fbFeelMax => '拼到底';
+
+  @override
+  String get fbPain => '有不舒服';
+
+  @override
+  String get fbPainLevel => '不適程度';
+
+  @override
+  String get fbRehabHint => '同部位不適，建議到康復檔案記一筆';
 
   @override
   String get levelUpKicker => '下一步';

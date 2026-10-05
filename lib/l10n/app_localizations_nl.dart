@@ -3170,6 +3170,33 @@ class AppLocalizationsNl extends AppLocalizations {
       'De klassieker van r/bodyweightfitness: drie dagen per week het hele lichaam. Ga een stap verder als het makkelijk wordt.';
 
   @override
+  String get fbTitle => 'Trainingscheck';
+
+  @override
+  String get fbPrompt => 'Hoe voelde het?';
+
+  @override
+  String get fbFeelEasy => 'Makkelijk';
+
+  @override
+  String get fbFeelOk => 'Precies goed';
+
+  @override
+  String get fbFeelHard => 'Zwaar';
+
+  @override
+  String get fbFeelMax => 'Alles gegeven';
+
+  @override
+  String get fbPain => 'Ongemak';
+
+  @override
+  String get fbPainLevel => 'Mate van ongemak';
+
+  @override
+  String get fbRehabHint => 'Ongemak in dezelfde zone — noteer het in je revalidatiedossier';
+
+  @override
   String get levelUpKicker => 'VOLGENDE STAP';
 
   @override

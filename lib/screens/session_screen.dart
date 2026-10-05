@@ -22,6 +22,7 @@ import '../widgets/rolling_text.dart';
 import '../widgets/ruler_picker.dart';
 import '../widgets/svg_icon.dart';
 import '../widgets/timer_panel.dart';
+import '../widgets/session_feedback.dart';
 import '../widgets/ui_kit.dart';
 import 'exercises_screen.dart';
 import 'tool_detail_screen.dart';
@@ -1301,6 +1302,10 @@ class SessionScreen extends StatelessWidget {
             if (fit.progFeedback.isNotEmpty) ...[
               const SizedBox(height: 10),
               Rise(index: 2, child: _progFeedbackCard(gc)),
+            ],
+            if (fit.filedSession != null) ...[
+              const SizedBox(height: 10),
+              Rise(index: 2, child: SessionFeedbackCard(fit.filedSession!)),
             ],
             AnimatedSize(
               duration: const Duration(milliseconds: 280),

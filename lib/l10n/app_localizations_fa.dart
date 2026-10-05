@@ -3146,6 +3146,33 @@ class AppLocalizationsFa extends AppLocalizations {
       'روتین کلاسیک r/bodyweightfitness: کل بدن، سه روز در هفته. وقتی آسان شد یک پله بالاتر برو.';
 
   @override
+  String get fbTitle => 'ثبت تمرین';
+
+  @override
+  String get fbPrompt => 'امروز چطور بود؟';
+
+  @override
+  String get fbFeelEasy => 'راحت';
+
+  @override
+  String get fbFeelOk => 'دقیقاً مناسب';
+
+  @override
+  String get fbFeelHard => 'سخت';
+
+  @override
+  String get fbFeelMax => 'تا آخرین توان';
+
+  @override
+  String get fbPain => 'ناراحتی';
+
+  @override
+  String get fbPainLevel => 'میزان ناراحتی';
+
+  @override
+  String get fbRehabHint => 'ناراحتی در همان ناحیه — در پرونده توان‌بخشی ثبتش کن';
+
+  @override
   String get levelUpKicker => 'قدم بعدی';
 
   @override

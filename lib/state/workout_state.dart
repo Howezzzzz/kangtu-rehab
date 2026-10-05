@@ -1414,6 +1414,29 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
 
   LoggedSession? _filed;
 
+  /// 刚结束的那次训练（完成页用来写反馈）
+  LoggedSession? get filedSession => _filed;
+
+  /// 写入训练后反馈（完成页 / 历史详情共用）
+  void setSessionFeedback(LoggedSession s,
+      {int? feel, String? painArea, int? painLevel, String? note}) {
+    if (feel != null) s.feel = feel;
+    if (painArea != null) s.painArea = painArea;
+    if (painLevel != null) s.painLevel = painLevel;
+    if (note != null) s.note = note;
+    persistNow();
+    notifyListeners();
+  }
+
+  void clearSessionFeedback(LoggedSession s) {
+    s.feel = null;
+    s.painArea = '';
+    s.painLevel = 0;
+    s.note = '';
+    persistNow();
+    notifyListeners();
+  }
+
   void continueSession() {
     final s = session;
     if (s == null || !s.complete) return;
