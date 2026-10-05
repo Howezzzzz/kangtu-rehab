@@ -1177,6 +1177,15 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
         }
       }
       final entry = LoggedSession(s.loggedAt ?? DateTime.now(), s.summaryDuration ?? 0, logged);
+      final carried = _carriedFeedback;
+      if (carried != null && !entry.hasFeedback) {
+        entry
+          ..feel = carried.feel
+          ..painArea = carried.painArea
+          ..painLevel = carried.painLevel
+          ..note = carried.note;
+      }
+      _carriedFeedback = null;
       sessions.add(entry);
       sessions.sort((a, b) => a.date.compareTo(b.date));
       _filed = entry;
@@ -1413,16 +1422,24 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
   }
 
   LoggedSession? _filed;
+  /// FB-06：续训时暂存用户已填的反馈，等本次训练真正完成再写回新归档条目
+  LoggedSession? _carriedFeedback;
 
   /// 刚结束的那次训练（完成页用来写反馈）
   LoggedSession? get filedSession => _filed;
 
   /// 写入训练后反馈（完成页 / 历史详情共用）
+  /// FB-02：无部位时不留下孤立的 painLevel（避免存了却不显示的状态）
+  /// FB-04：clearFeel 用于「取消选中感觉档」——null 表示“不改”，不再被静默忽略
   void setSessionFeedback(LoggedSession s,
-      {int? feel, String? painArea, int? painLevel, String? note}) {
-    if (feel != null) s.feel = feel;
+      {int? feel, bool clearFeel = false, String? painArea, int? painLevel, String? note}) {
+    if (clearFeel) {
+      s.feel = null;
+    } else if (feel != null) {
+      s.feel = feel;
+    }
     if (painArea != null) s.painArea = painArea;
-    if (painLevel != null) s.painLevel = painLevel;
+    if (painLevel != null) s.painLevel = s.painArea.isEmpty ? 0 : painLevel;
     if (note != null) s.note = note;
     persistNow();
     notifyListeners();
@@ -1452,7 +1469,11 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       summaryLevelUp = null;
     }
     final filed = _filed;
-    if (filed != null) sessions.remove(filed);
+    if (filed != null) {
+      sessions.remove(filed);
+      // FB-06：续训不等于放弃，用户已填的反馈先存着
+      if (filed.hasFeedback) _carriedFeedback = filed;
+    }
     _filed = null;
     _elapsedBefore = s.summaryDuration ?? _elapsedBefore;
     s
@@ -1516,6 +1537,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     sessionLocked = false;
     session = null;
     _filed = null;
+    _carriedFeedback = null;
     selectedMuscles.clear();
     sessionPicks.clear();
     pickSeed.clear();

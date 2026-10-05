@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/l10n/l10n.dart';
+import 'package:gymmane/models/rehab_episode.dart';
 import 'package:gymmane/models/workout.dart';
 import 'package:gymmane/services/local_store.dart';
+import 'package:gymmane/services/rehab_intake.dart';
 import 'package:gymmane/state/fit_state.dart';
 import 'package:gymmane/widgets/session_feedback.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,6 +75,80 @@ void main() {
       expect(feelLabels().first, '很轻松');
       setAppLanguage('es');
       expect(feelLabels().length, 4);
+    });
+
+    // ---- 台账回归测试 ----
+
+    test('FB-01 康复提示只在命中活跃档案时出现', () {
+      // 没有档案 → 不提示
+      expect(rehabFeedbackHint('back', 8), isFalse);
+      // 建一个腰部档案(映射到 back)
+      fit.createEpisode(RehabEpisode(
+        id: 'ep1', title: '腰部康复', createdAt: DateTime.now(), area: 'lowback', status: 'active'));
+      expect(rehabFeedbackHint('back', 8), isTrue);
+      // 阈值以下不提示
+      expect(rehabFeedbackHint('back', 4), isFalse);
+      // 部位对不上不提示
+      expect(rehabFeedbackHint('calves', 9), isFalse);
+      // 档案收尾后不再提示
+      fit.updateEpisode(fit.episodeById('ep1')!..status = 'done');
+      expect(rehabFeedbackHint('back', 8), isFalse);
+    });
+
+    test('FB-02 没有部位时不留孤立的不适程度', () {
+      final s = session();
+      fit.setSessionFeedback(s, painLevel: 7);
+      expect(s.painLevel, 0);
+      expect(s.hasFeedback, isFalse);
+      fit.setSessionFeedback(s, painArea: 'back', painLevel: 7);
+      expect(s.painLevel, 7);
+      expect(s.hasFeedback, isTrue);
+    });
+
+    test('FB-03 部位映射覆盖全部康复部位(除“其他”)', () {
+      final missing = kRehabAreas.keys
+          .where((k) => k != 'other' && !kRehabAreaMuscle.containsKey(k))
+          .toList();
+      expect(missing, isEmpty, reason: '康复部位新增后必须同步 kRehabAreaMuscle');
+    });
+
+    test('FB-04 取消选中感觉档能真正清掉', () {
+      final s = session();
+      fit.setSessionFeedback(s, feel: 2);
+      expect(s.feel, 2);
+      // 弹层里再点一下同一档 = 取消选中(feel 变回 null),必须真清掉
+      fit.setSessionFeedback(s, feel: null, clearFeel: true);
+      expect(s.feel, isNull);
+      expect(s.hasFeedback, isFalse);
+    });
+
+    test('FB-06 续训不会丢掉已填反馈', () {
+      fit.sessions.clear();
+      fit.selectedMuscles.clear();
+      fit.startWorkout();
+      fit.toggleMuscle('chest');
+      fit.trainContinue();
+      fit.startSession();
+      for (final e in fit.session!.exercises) {
+        for (final st in e.sets) {
+          st.done = true;
+        }
+      }
+      fit.finishSession();
+      fit.setSessionFeedback(fit.filedSession!, feel: 3, note: '有点累');
+      // 继续训练 → 临时归档条目被移除
+      fit.continueSession();
+      expect(fit.sessions.any((x) => x.note == '有点累'), isFalse);
+      // 再次完成 → 反馈写回新的归档条目
+      for (final e in fit.session!.exercises) {
+        for (final st in e.sets) {
+          st.done = true;
+        }
+      }
+      fit.finishSession();
+      expect(fit.filedSession!.note, '有点累');
+      expect(fit.filedSession!.feel, 3);
+      fit.saveAndExit();
     });
   });
 }

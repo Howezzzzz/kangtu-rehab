@@ -34,7 +34,7 @@ const _feelIcons = [  PhosphorIconsRegular.smiley,
 ];
 
 /// 康复档案的「部位」→ 身体肌群 id（用来提示同部位不适）
-const Map<String, String> _rehabAreaMuscle = {
+const Map<String, String> kRehabAreaMuscle = {
   'lowback': 'back',
   'neck': 'trapezius',
   'shoulder': 'shoulders',
@@ -44,15 +44,22 @@ const Map<String, String> _rehabAreaMuscle = {
   'ankle': 'calves',
 };
 
-bool _rehabWorthMentioning(LoggedSession s) {
-  if (s.painArea.isEmpty || s.painLevel < 5) return false;
+/// 该部位是否命中某个活跃康复档案（FB-01：弹层与卡片共用同一判定）
+bool rehabAreaMatches(String painArea) {
+  if (painArea.isEmpty) return false;
   for (final ep in fit.rehabEpisodes) {
     if (ep.status != 'active') continue;
-    final want = _rehabAreaMuscle[ep.area];
-    if (want == null || want == s.painArea) return true;
+    final want = kRehabAreaMuscle[ep.area];
+    if (want == null || want == painArea) return true;
   }
   return false;
 }
+
+/// 是否值得提示「到康复档案里记一笔」：有不适 + 达到阈值 + 命中活跃档案
+bool rehabFeedbackHint(String painArea, int painLevel) =>
+    painArea.isNotEmpty && painLevel >= 5 && rehabAreaMatches(painArea);
+
+bool _rehabWorthMentioning(LoggedSession s) => rehabFeedbackHint(s.painArea, s.painLevel);
 
 Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) async {
   final gc = context.gc;
@@ -151,7 +158,7 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
                             borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
                       ),
                     ),
-                    if (painArea.isNotEmpty && pain >= 5) ...[
+                    if (rehabFeedbackHint(painArea, pain)) ...[
                       const SizedBox(height: 12),
                       Row(children: [
                         Icon(PhosphorIconsRegular.warning, size: 16, color: gc.danger),
@@ -168,6 +175,7 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
                       onTap: () {
                         fit.setSessionFeedback(s,
                             feel: feel,
+                            clearFeel: feel == null,
                             painArea: painArea,
                             painLevel: pain,
                             note: note.text.trim());
