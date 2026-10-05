@@ -7,6 +7,7 @@ import 'catalog_es.dart';
 import 'catalog_it.dart';
 import 'catalog_zh.dart';
 import 'catalog_zh_ext.dart';
+import 'catalog_zh_rep.dart';
 
 export 'app_localizations.dart';
 
@@ -17,8 +18,8 @@ String get decimalSeparator =>
 
 String decimalText(String s) => s.replaceFirst('.', decimalSeparator);
 
-const Map<String, Map<String, String>> _catalogNames = {'es': kExerciseNameEs, 'it': kExerciseNameIt, 'zh': {...kExerciseNameZh, ...kExerciseNameZhExt}};
-const Map<String, Map<String, List<String>>> _catalogSteps = {'es': kExerciseStepsEs, 'it': kExerciseStepsIt, 'zh': {...kExerciseStepsZh, ...kExerciseStepsZhExt}};
+const Map<String, Map<String, String>> _catalogNames = {'es': kExerciseNameEs, 'it': kExerciseNameIt, 'zh': {...kExerciseNameZh, ...kExerciseNameZhExt, ...kExerciseNameZhRep}};
+const Map<String, Map<String, List<String>>> _catalogSteps = {'es': kExerciseStepsEs, 'it': kExerciseStepsIt, 'zh': {...kExerciseStepsZh, ...kExerciseStepsZhExt, ...kExerciseStepsZhRep}};
 
 String appLanguage = 'en';
 AppLocalizations t = lookupAppLocalizations(const Locale('en'));

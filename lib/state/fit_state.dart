@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 
 import '../catalog/exercise_catalog.dart';
 import '../catalog/exercises_ext.dart';
+import '../catalog/exercises_rep.dart';
 import '../catalog/program_templates.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';

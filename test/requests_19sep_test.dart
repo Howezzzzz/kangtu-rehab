@@ -154,7 +154,8 @@ void main() {
     });
 
     test('encuentra el ejercicio aunque el nombre traiga más cosas', () {
-      expect(match('Cable Standing Face Pull (with rope)'), 'Face Pull');
+      // el catálogo RepDB (1.8.0) tiene "Cable Face Pull", que casa mejor con la consulta
+      expect(match('Cable Standing Face Pull (with rope)'), 'Cable Face Pull');
       expect(match('Barbell Feet Flat Bench Press (male)'), 'Barbell Bench Press');
       expect(match('Lever Pec Deck Fly'), 'Pec Deck');
       // el catálogo ampliado (1.6.0) tiene un ejercicio EZ que encaja mejor

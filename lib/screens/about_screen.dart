@@ -15,6 +15,7 @@ const _kAuthor = 'InlitX';
 const _kAuthorUrl = 'https://github.com/InlitX';
 const _kRepoUrl = 'https://github.com/InlitX/GymMane';
 const _kKofiUrl = 'https://ko-fi.com/inlitx';
+const _kRepdbUrl = 'https://repdb.co';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -187,6 +188,7 @@ class AboutScreen extends StatelessWidget {
       (PhosphorIconsFill.heart, t.madeWithLoveBy, _kAuthor, _kAuthorUrl, gc.accent),
       (PhosphorIconsRegular.githubLogo, t.sourceCode, 'InlitX/GymMane', _kRepoUrl, null),
       (PhosphorIconsRegular.coffee, t.buyCoffee, 'ko-fi.com/inlitx', _kKofiUrl, null),
+      (PhosphorIconsRegular.database, 'REPDB', 'Exercise data by RepDB (repdb.co)', _kRepdbUrl, null),
     ];
     return Container(
       clipBehavior: Clip.antiAlias,

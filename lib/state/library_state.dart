@@ -8,7 +8,7 @@ mixin LibraryState on FitCore {
   String? exKindFilter;
   String? activeExerciseId;
   int _customSeq = 0;
-  List<Exercise> get allExercises => [...kExercises, ...kExercisesExt, ...customExercises];
+  List<Exercise> get allExercises => [...kExercises, ...kExercisesExt, ...kExercisesRep, ...customExercises];
 
   bool fitsHere(Exercise ex) => true;
 
@@ -231,7 +231,7 @@ mixin LibraryState on FitCore {
     for (final e in customExercises) {
       if (e.id == id) return e.mode;
     }
-    return kExerciseModes[id] ?? kExerciseModesExt[id] ?? '';
+    return kExerciseModes[id] ?? kExerciseModesExt[id] ?? kExerciseModesRep[id] ?? '';
   }
 
   bool isCardio(String id) => modeOf(id) == 'cardio';
@@ -242,6 +242,7 @@ mixin LibraryState on FitCore {
     final base = customExercises.where((e) => e.id == id).map((e) => e.mode).firstOrNull ??
         kExerciseModes[id] ??
         kExerciseModesExt[id] ??
+        kExerciseModesRep[id] ??
         '';
     final wanted = mode == 'weight' ? '' : mode;
     if (wanted == base) {

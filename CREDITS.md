@@ -130,3 +130,16 @@ two lines instead of three.
 
 Nunito, by the Nunito Project Authors, under the SIL Open Font License
 (`assets/fonts/Nunito-OFL.txt`).
+
+## RepDB free-tier exercise data
+
+Exercise data by [RepDB](https://repdb.co). The 403 exercises under
+`lib/catalog/exercises_rep.dart` and their illustrations in `assets/rep/` come
+from the **RepDB free-tier dataset** (https://github.com/RepDB/exercise-dataset),
+licensed under the RepDB Free Tier License v1.0 (`LICENSE-DATA.md` upstream):
+free for personal and commercial use **inside applications**, with visible
+attribution (the "Exercise data by RepDB (repdb.co)" row in the About screen).
+The dataset may not be redistributed as a dataset, and its images may not be
+used as input for generative models. Images are used as-is (resized only).
+Upstream descriptions, names and instructions are English; the Chinese names and
+steps were translated for this app.
