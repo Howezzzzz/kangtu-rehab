@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -92,7 +93,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String exerciseCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 项动作', one: '$n 项动作');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 项动作',
+      one: '$n 项动作',
+    );
     return '$_temp0';
   }
 
@@ -160,7 +166,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String startCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 项动作', one: '$n 项动作');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 项动作',
+      one: '$n 项动作',
+    );
     return '开始 · $_temp0';
   }
 
@@ -233,7 +244,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String finishBodyPr(int prs) {
-    String _temp0 = intl.Intl.pluralLogic(prs, locale: localeName, other: '$prs 项动作', one: '1 项动作');
+    String _temp0 = intl.Intl.pluralLogic(
+      prs,
+      locale: localeName,
+      other: '$prs 项动作',
+      one: '1 项动作',
+    );
     return '你在 $_temp0 中突破了个人最佳纪录，已记入历史成绩。';
   }
 
@@ -256,7 +272,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String prCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 项新纪录', one: '$n 项新纪录');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 项新纪录',
+      one: '$n 项新纪录',
+    );
     return '$_temp0';
   }
 
@@ -332,7 +353,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String sessionsLogged(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已记录 $n 次训练', one: '已记录 $n 次训练');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已记录 $n 次训练',
+      one: '已记录 $n 次训练',
+    );
     return '$_temp0';
   }
 
@@ -426,7 +452,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String libraryCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '动作库共有 $n 项动作', one: '动作库共有 $n 项动作');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '动作库共有 $n 项动作',
+      one: '动作库共有 $n 项动作',
+    );
     return '$_temp0';
   }
 
@@ -588,7 +619,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String noteCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 条备忘', one: '1 条备忘', zero: '暂无备忘');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 条备忘',
+      one: '1 条备忘',
+      zero: '暂无备忘',
+    );
     return '$_temp0';
   }
 
@@ -699,7 +736,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String measureCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次记录', one: '1 次记录', zero: '暂无记录');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 次记录',
+      one: '1 次记录',
+      zero: '暂无记录',
+    );
     return '$_temp0';
   }
 
@@ -750,7 +793,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String photoCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 张照片', one: '1 张照片', zero: '暂无照片');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 张照片',
+      one: '1 张照片',
+      zero: '暂无照片',
+    );
     return '$_temp0';
   }
 
@@ -782,7 +831,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String photoNextIn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天后拍摄身材照', one: '明天该拍照啦');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 天后拍摄身材照',
+      one: '明天该拍照啦',
+    );
     return '$_temp0';
   }
 
@@ -845,7 +899,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String sessionCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次训练', one: '1 次训练', zero: '暂无训练');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 次训练',
+      one: '1 次训练',
+      zero: '暂无训练',
+    );
     return '$_temp0';
   }
 
@@ -945,7 +1005,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String setCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 组', one: '$n 组');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 组',
+      one: '$n 组',
+    );
     return '$_temp0';
   }
 
@@ -1158,7 +1223,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String importWeights(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已导入 $n 条体重记录', one: '已导入 $n 条体重记录');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已导入 $n 条体重记录',
+      one: '已导入 $n 条体重记录',
+    );
     return '$_temp0';
   }
 
@@ -1176,7 +1246,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String importDone(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已导入 $n 次训练记录', one: '已导入 $n 次训练记录');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已导入 $n 次训练记录',
+      one: '已导入 $n 次训练记录',
+    );
     return '$_temp0';
   }
 
@@ -1392,6 +1467,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get muscleBack => '背部';
 
   @override
+  String get muscleLowerBack => '下背';
+
+  @override
   String get muscleShoulders => '肩部';
 
   @override
@@ -1522,10 +1600,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exercisesInsideWhy => '全部配有动作动画和分步图文指导。';
 
   @override
-  String get calculatorsInside => '8 款实用计算器';
+  String get calculatorsInside => '10 款实用计算器';
 
   @override
-  String get calculatorsInsideWhy => '涵盖 1RM、杠铃片、BMI、热量、体脂率、热身、RPE 负重和 DOTS 力量水平推算。';
+  String get calculatorsInsideWhy =>
+      '涵盖 1RM、杠铃片、BMI、热量、体脂率、FFMI、热身、RPE 负重以及 DOTS 和 Wilks 力量评分。';
 
   @override
   String get mathInside => '真实可信的数据';
@@ -1538,7 +1617,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String daysUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '天', one: '天');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '天',
+      one: '天',
+    );
     return '$_temp0';
   }
 
@@ -1582,7 +1666,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String perWeek(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '每周 $n 次', one: '每周 $n 次');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '每周 $n 次',
+      one: '每周 $n 次',
+    );
     return '$_temp0';
   }
 
@@ -2013,7 +2102,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aiRoutine => '用 AI 生成计划';
 
   @override
-  String get aiIntro => '康途 不会和任何 AI 通信。你把动作清单导出，粘贴给你惯用的助手，再把它的回答导回来。手机不会自己往外发任何东西。';
+  String get aiIntro =>
+      '康途 不会和任何 AI 通信。你把动作清单导出，粘贴给你惯用的助手，再把它的回答导回来。手机不会自己往外发任何东西。';
 
   @override
   String aiMissing(int n) {
@@ -2282,7 +2372,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String badgeName(String id) {
-    String _temp0 = intl.Intl.selectLogic(id, {'gold': '金色', 'blue': '蓝色', 'green': '绿色', 'other': '徽章'});
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gold': '金色',
+      'blue': '蓝色',
+      'green': '绿色',
+      'other': '徽章',
+    });
     return '$_temp0';
   }
 
@@ -2765,7 +2860,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareIntroTitle => '分享这个计划';
 
   @override
-  String get shareIntroBody => '发给你的伴侣、朋友或家人。他们会收到一个小文件，用 康途 打开，一点就能加入，组数和重量都在。';
+  String get shareIntroBody =>
+      '发给你的伴侣、朋友或家人。他们会收到一个小文件，用 康途 打开，一点就能加入，组数和重量都在。';
 
   @override
   String get removedFromRoutine => '已从计划中移除';
@@ -2800,7 +2896,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get effortSetting => '记录每组强度';
 
   @override
-  String get effortHint => 'RPE：10 表示一次都做不动了，8 表示还能再做两次。RIR 表示还剩几次。记录后，估算 1RM 会使用 RPE 表。';
+  String get effortHint =>
+      'RPE：10 表示一次都做不动了，8 表示还能再做两次。RIR 表示还剩几次。记录后，估算 1RM 会使用 RPE 表。';
 
   @override
   String get rirHint => '0 表示一次都做不动了，2 表示还能再做两次。';
@@ -2813,7 +2910,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String repCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次', one: '$n 次');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 次',
+      one: '$n 次',
+    );
     return '$_temp0';
   }
 
@@ -2838,7 +2940,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get saveChangesBody => '下次这个训练计划会按这样开始。';
+  String get saveChangesBody => '下次开始时，训练计划会包含这些更改。';
 
   @override
   String get routineOrderChanged => '新的动作顺序';
@@ -2923,6 +3025,9 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get nextToday => '今天的下一个';
+
+  @override
   String get planAboutMe => '关于我：';
 
   @override
@@ -2953,7 +3058,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get planBestLifts => '最近的最佳组';
 
   @override
-  String get planAskFirst => '如果你不知道我的目标（力量、增肌、减脂或一般体能）或每次能练多久，请先用一条简短消息问我。知道后只用 JSON 回答。';
+  String get planAskFirst =>
+      '如果你不知道我的目标（力量、增肌、减脂或一般体能）或每次能练多久，请先用一条简短消息问我。知道后只用 JSON 回答。';
 
   @override
   String get backToTop => '回到顶部';
@@ -2967,7 +3073,8 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get exportForStravaHint => '请在浏览器中打开 strava.com/upload/select 上传（Strava 应用无法导入文件），会显示为带组数的力量训练。';
+  String get exportForStravaHint =>
+      '请在浏览器中打开 strava.com/upload/select 上传（Strava 应用无法导入文件），会显示为带组数的力量训练。';
 
   @override
   String get manualStartTime => '开始时间';
@@ -3121,7 +3228,11 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String goalDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '还剩 $n 天');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '还剩 $n 天',
+    );
     return '$_temp0';
   }
 
@@ -3156,7 +3267,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String inRoutines(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已在 $n 个计划中', zero: '还没加入任何计划');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已在 $n 个计划中',
+      zero: '还没加入任何计划',
+    );
     return '$_temp0';
   }
 
@@ -3296,6 +3412,53 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dotsLevel4 => '精英';
 
   @override
+  String get toolNameWilks => 'Wilks';
+
+  @override
+  String get toolTitleWilks => 'Wilks 系数';
+
+  @override
+  String get toolDescWilks => '力量举的经典评分';
+
+  @override
+  String get wilksExplain => '力量举的经典公式。2020 年被 DOTS 取代，但很多比赛和排名仍在使用。';
+
+  @override
+  String get toolNameFfmi => 'FFMI';
+
+  @override
+  String get toolTitleFfmi => '去脂体重指数';
+
+  @override
+  String get toolDescFfmi => '相对身高的肌肉量';
+
+  @override
+  String get ffmiBodyFat => '体脂率';
+
+  @override
+  String ffmiLeanLine(String value) {
+    return '去脂体重：$value';
+  }
+
+  @override
+  String get ffmiExplain => '类似 BMI，但不算脂肪：只计算去脂体重，并按身高校正，让高个子和矮个子能公平比较。';
+
+  @override
+  String get ffmiLevel0 => '低于平均';
+
+  @override
+  String get ffmiLevel1 => '平均';
+
+  @override
+  String get ffmiLevel2 => '高于平均';
+
+  @override
+  String get ffmiLevel3 => '优秀';
+
+  @override
+  String get ffmiLevel4 => '卓越';
+
+  @override
   String get rpeEffortLabel => '强度（RPE）';
 
   @override
@@ -3417,7 +3580,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String exerciseCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個動作', one: '$n 個動作');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 個動作',
+      one: '$n 個動作',
+    );
     return '$_temp0';
   }
 
@@ -3485,7 +3653,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String startCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個動作', one: '$n 個動作');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 個動作',
+      one: '$n 個動作',
+    );
     return '開始 · $_temp0';
   }
 
@@ -3558,7 +3731,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String finishBodyPr(int prs) {
-    String _temp0 = intl.Intl.pluralLogic(prs, locale: localeName, other: '$prs 個動作', one: '1 個動作');
+    String _temp0 = intl.Intl.pluralLogic(
+      prs,
+      locale: localeName,
+      other: '$prs 個動作',
+      one: '1 個動作',
+    );
     return '你在 $_temp0中舉出了新高。已記錄下來。';
   }
 
@@ -3581,7 +3759,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String prCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個新紀錄', one: '$n 個新紀錄');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 個新紀錄',
+      one: '$n 個新紀錄',
+    );
     return '$_temp0';
   }
 
@@ -3657,7 +3840,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String sessionsLogged(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已記錄 $n 次訓練', one: '已記錄 $n 次訓練');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已記錄 $n 次訓練',
+      one: '已記錄 $n 次訓練',
+    );
     return '$_temp0';
   }
 
@@ -3751,7 +3939,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String libraryCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '資料庫中有 $n 個動作', one: '資料庫中有 $n 個動作');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '資料庫中有 $n 個動作',
+      one: '資料庫中有 $n 個動作',
+    );
     return '$_temp0';
   }
 
@@ -3913,7 +4106,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String noteCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 則筆記', one: '1 則筆記', zero: '沒有筆記');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 則筆記',
+      one: '1 則筆記',
+      zero: '沒有筆記',
+    );
     return '$_temp0';
   }
 
@@ -4024,7 +4223,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String measureCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 筆測量', one: '1 筆測量', zero: '沒有測量');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 筆測量',
+      one: '1 筆測量',
+      zero: '沒有測量',
+    );
     return '$_temp0';
   }
 
@@ -4075,7 +4280,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String photoCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 張照片', one: '1 張照片', zero: '沒有照片');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 張照片',
+      one: '1 張照片',
+      zero: '沒有照片',
+    );
     return '$_temp0';
   }
 
@@ -4107,7 +4318,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String photoNextIn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '距下一張照片還有 $n 天', one: '下一張照片是明天');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '距下一張照片還有 $n 天',
+      one: '下一張照片是明天',
+    );
     return '$_temp0';
   }
 
@@ -4170,7 +4386,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String sessionCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次訓練', one: '1 次訓練', zero: '沒有訓練');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 次訓練',
+      one: '1 次訓練',
+      zero: '沒有訓練',
+    );
     return '$_temp0';
   }
 
@@ -4270,7 +4492,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String setCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 組', one: '$n 組');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 組',
+      one: '$n 組',
+    );
     return '$_temp0';
   }
 
@@ -4483,7 +4710,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String importWeights(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已匯入 $n 筆體重紀錄', one: '已匯入 $n 筆體重紀錄');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已匯入 $n 筆體重紀錄',
+      one: '已匯入 $n 筆體重紀錄',
+    );
     return '$_temp0';
   }
 
@@ -4501,7 +4733,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String importDone(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已匯入 $n 次訓練', one: '已匯入 $n 次訓練');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已匯入 $n 次訓練',
+      one: '已匯入 $n 次訓練',
+    );
     return '$_temp0';
   }
 
@@ -4717,6 +4954,9 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get muscleBack => '背';
 
   @override
+  String get muscleLowerBack => '下背';
+
+  @override
   String get muscleShoulders => '肩';
 
   @override
@@ -4847,10 +5087,11 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get exercisesInsideWhy => '每個動作都有動畫與逐步說明。';
 
   @override
-  String get calculatorsInside => '8 個計算器';
+  String get calculatorsInside => '10 個計算器';
 
   @override
-  String get calculatorsInsideWhy => '1RM、槓片、BMI、卡路里、體脂、暖身、RPE 重量與 DOTS 力量等級 — 全都基於公開公式。';
+  String get calculatorsInsideWhy =>
+      '1RM、槓片、BMI、卡路里、體脂、FFMI、暖身、RPE 重量與 DOTS、Wilks 力量評分 — 全都基於公開公式。';
 
   @override
   String get mathInside => '透明計算';
@@ -4863,7 +5104,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String daysUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '天', one: '天');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '天',
+      one: '天',
+    );
     return '$_temp0';
   }
 
@@ -4907,7 +5153,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String perWeek(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '每週 $n 次訓練', one: '每週 $n 次訓練');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '每週 $n 次訓練',
+      one: '每週 $n 次訓練',
+    );
     return '$_temp0';
   }
 
@@ -5027,7 +5278,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String platesOwned(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 種尺寸', one: '$n 種尺寸');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 種尺寸',
+      one: '$n 種尺寸',
+    );
     return '$_temp0';
   }
 
@@ -5174,7 +5430,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String templateAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已新增 $n 個課表', one: '已新增 $n 個課表');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已新增 $n 個課表',
+      one: '已新增 $n 個課表',
+    );
     return '$_temp0';
   }
 
@@ -5198,7 +5459,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String dayCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天', one: '$n 天');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 天',
+      one: '$n 天',
+    );
     return '$_temp0';
   }
 
@@ -5341,7 +5607,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get aiRoutine => 'AI 課表';
 
   @override
-  String get aiIntro => '康途 絕不直接與 AI 通訊。你先匯出動作清單，貼到你已在使用的 AI 助手，再把回覆匯入。任何資料都不會自行離開手機。';
+  String get aiIntro =>
+      '康途 絕不直接與 AI 通訊。你先匯出動作清單，貼到你已在使用的 AI 助手，再把回覆匯入。任何資料都不會自行離開手機。';
 
   @override
   String aiMissing(int n) {
@@ -5616,7 +5883,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String badgeName(String id) {
-    String _temp0 = intl.Intl.selectLogic(id, {'gold': '金色', 'blue': '藍色', 'green': '綠色', 'other': '徽章'});
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gold': '金色',
+      'blue': '藍色',
+      'green': '綠色',
+      'other': '徽章',
+    });
     return '$_temp0';
   }
 
@@ -5948,7 +6220,11 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String routineCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個課表');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 個課表',
+    );
     return '$_temp0';
   }
 
@@ -5963,7 +6239,11 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String routinesAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已加入 $n 個課表');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已加入 $n 個課表',
+    );
     return '$_temp0';
   }
 
@@ -6107,7 +6387,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get shareIntroTitle => '分享這個課表';
 
   @override
-  String get shareIntroBody => '傳給你的伴侶、朋友或家人。他們會收到一個小檔案，用 康途 開啟，一點就能加入，組數和重量都在。';
+  String get shareIntroBody =>
+      '傳給你的伴侶、朋友或家人。他們會收到一個小檔案，用 康途 開啟，一點就能加入，組數和重量都在。';
 
   @override
   String get removedFromRoutine => '已從課表移除';
@@ -6142,7 +6423,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get effortSetting => '記錄每組強度';
 
   @override
-  String get effortHint => 'RPE：10 表示一次都做不動了，8 表示還能再做兩次。RIR 表示還剩幾次。記錄後，估算 1RM 會使用 RPE 表。';
+  String get effortHint =>
+      'RPE：10 表示一次都做不動了，8 表示還能再做兩次。RIR 表示還剩幾次。記錄後，估算 1RM 會使用 RPE 表。';
 
   @override
   String get rirHint => '0 表示一次都做不動了，2 表示還能再做兩次。';
@@ -6155,7 +6437,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String repCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次', one: '$n 次');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 次',
+      one: '$n 次',
+    );
     return '$_temp0';
   }
 
@@ -6180,7 +6467,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get saveChangesBody => '下次這個課表會照這樣開始。';
+  String get saveChangesBody => '下次開始時，課表會包含這些變更。';
 
   @override
   String get routineOrderChanged => '新的動作順序';
@@ -6265,6 +6552,9 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
+  String get nextToday => '今天的下一個';
+
+  @override
   String get planAboutMe => '關於我：';
 
   @override
@@ -6295,7 +6585,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get planBestLifts => '最近的最佳組';
 
   @override
-  String get planAskFirst => '如果你不知道我的目標（力量、增肌、減脂或一般體能）或每次能練多久，請先用一則簡短訊息問我。知道後只用 JSON 回答。';
+  String get planAskFirst =>
+      '如果你不知道我的目標（力量、增肌、減脂或一般體能）或每次能練多久，請先用一則簡短訊息問我。知道後只用 JSON 回答。';
 
   @override
   String get backToTop => '回到頂端';
@@ -6309,7 +6600,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get exportForStravaHint => '請在瀏覽器中開啟 strava.com/upload/select 上傳（Strava App 無法匯入檔案），會顯示為含組數的重量訓練。';
+  String get exportForStravaHint =>
+      '請在瀏覽器中開啟 strava.com/upload/select 上傳（Strava App 無法匯入檔案），會顯示為含組數的重量訓練。';
 
   @override
   String get manualStartTime => '開始時間';
@@ -6463,7 +6755,11 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String goalDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '還剩 $n 天');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '還剩 $n 天',
+    );
     return '$_temp0';
   }
 
@@ -6498,7 +6794,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String inRoutines(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已在 $n 個課表中', zero: '還沒加入任何課表');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已在 $n 個課表中',
+      zero: '還沒加入任何課表',
+    );
     return '$_temp0';
   }
 
@@ -6636,6 +6937,53 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get dotsLevel4 => '菁英';
+
+  @override
+  String get toolNameWilks => 'Wilks';
+
+  @override
+  String get toolTitleWilks => 'Wilks 係數';
+
+  @override
+  String get toolDescWilks => '健力的經典評分';
+
+  @override
+  String get wilksExplain => '健力的經典公式。2020 年被 DOTS 取代，但許多比賽和排名仍在使用。';
+
+  @override
+  String get toolNameFfmi => 'FFMI';
+
+  @override
+  String get toolTitleFfmi => '去脂體重指數';
+
+  @override
+  String get toolDescFfmi => '相對身高的肌肉量';
+
+  @override
+  String get ffmiBodyFat => '體脂';
+
+  @override
+  String ffmiLeanLine(String value) {
+    return '去脂體重：$value';
+  }
+
+  @override
+  String get ffmiExplain => '類似 BMI，但不算脂肪：只計算去脂體重，並依身高校正，讓高個子和矮個子能公平比較。';
+
+  @override
+  String get ffmiLevel0 => '低於平均';
+
+  @override
+  String get ffmiLevel1 => '平均';
+
+  @override
+  String get ffmiLevel2 => '高於平均';
+
+  @override
+  String get ffmiLevel3 => '優秀';
+
+  @override
+  String get ffmiLevel4 => '卓越';
 
   @override
   String get rpeEffortLabel => '強度（RPE）';

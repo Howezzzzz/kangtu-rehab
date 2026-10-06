@@ -76,7 +76,8 @@ import 'app_localizations_zh.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -84,7 +85,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -96,12 +98,13 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -2650,6 +2653,12 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get muscleBack;
 
+  /// No description provided for @muscleLowerBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower back'**
+  String get muscleLowerBack;
+
   /// No description provided for @muscleShoulders.
   ///
   /// In en, this message translates to:
@@ -2905,13 +2914,13 @@ abstract class AppLocalizations {
   /// No description provided for @calculatorsInside.
   ///
   /// In en, this message translates to:
-  /// **'8 calculators'**
+  /// **'10 calculators'**
   String get calculatorsInside;
 
   /// No description provided for @calculatorsInsideWhy.
   ///
   /// In en, this message translates to:
-  /// **'1RM, plates, BMI, calories, body fat, warm-up, RPE load and DOTS strength level — all with published formulas.'**
+  /// **'1RM, plates, BMI, calories, body fat, FFMI, warm-up, RPE load, and DOTS and Wilks strength scores — all with published formulas.'**
   String get calculatorsInsideWhy;
 
   /// No description provided for @mathInside.
@@ -5317,7 +5326,7 @@ abstract class AppLocalizations {
   /// No description provided for @saveChangesBody.
   ///
   /// In en, this message translates to:
-  /// **'Next time this routine starts like this.'**
+  /// **'Next time you start it, the routine will have these changes.'**
   String get saveChangesBody;
 
   /// No description provided for @routineOrderChanged.
@@ -5475,6 +5484,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} of {total} today'**
   String routineOfDay(int n, int total);
+
+  /// No description provided for @nextToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Next today'**
+  String get nextToday;
 
   /// No description provided for @planAboutMe.
   ///
@@ -6124,6 +6139,96 @@ abstract class AppLocalizations {
   /// **'Elite'**
   String get dotsLevel4;
 
+  /// No description provided for @toolNameWilks.
+  ///
+  /// In en, this message translates to:
+  /// **'Wilks'**
+  String get toolNameWilks;
+
+  /// No description provided for @toolTitleWilks.
+  ///
+  /// In en, this message translates to:
+  /// **'Wilks score'**
+  String get toolTitleWilks;
+
+  /// No description provided for @toolDescWilks.
+  ///
+  /// In en, this message translates to:
+  /// **'The classic powerlifting score'**
+  String get toolDescWilks;
+
+  /// No description provided for @wilksExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'The classic powerlifting formula. DOTS replaced it in 2020, but many meets and rankings still use it.'**
+  String get wilksExplain;
+
+  /// No description provided for @toolNameFfmi.
+  ///
+  /// In en, this message translates to:
+  /// **'FFMI'**
+  String get toolNameFfmi;
+
+  /// No description provided for @toolTitleFfmi.
+  ///
+  /// In en, this message translates to:
+  /// **'Fat-free mass index'**
+  String get toolTitleFfmi;
+
+  /// No description provided for @toolDescFfmi.
+  ///
+  /// In en, this message translates to:
+  /// **'How much muscle for your height'**
+  String get toolDescFfmi;
+
+  /// No description provided for @ffmiBodyFat.
+  ///
+  /// In en, this message translates to:
+  /// **'BODY FAT'**
+  String get ffmiBodyFat;
+
+  /// No description provided for @ffmiLeanLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Lean mass: {value}'**
+  String ffmiLeanLine(String value);
+
+  /// No description provided for @ffmiExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'Like BMI, but without the fat: it only counts your lean mass. Adjusted to your height so tall and short people compare fairly.'**
+  String get ffmiExplain;
+
+  /// No description provided for @ffmiLevel0.
+  ///
+  /// In en, this message translates to:
+  /// **'Below average'**
+  String get ffmiLevel0;
+
+  /// No description provided for @ffmiLevel1.
+  ///
+  /// In en, this message translates to:
+  /// **'Average'**
+  String get ffmiLevel1;
+
+  /// No description provided for @ffmiLevel2.
+  ///
+  /// In en, this message translates to:
+  /// **'Above average'**
+  String get ffmiLevel2;
+
+  /// No description provided for @ffmiLevel3.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get ffmiLevel3;
+
+  /// No description provided for @ffmiLevel4.
+  ///
+  /// In en, this message translates to:
+  /// **'Exceptional'**
+  String get ffmiLevel4;
+
   /// No description provided for @rpeEffortLabel.
   ///
   /// In en, this message translates to:
@@ -6191,7 +6296,8 @@ abstract class AppLocalizations {
   String get recommendedRowHint;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override

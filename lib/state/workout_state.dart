@@ -430,8 +430,24 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
   }
 
   bool get todayPlanDone {
-    final planned = routinesOn(DateTime.now()).length;
-    return planned > 1 ? sessionsOn(DateTime.now()).length >= planned : isDayDone(todayIndex);
+    final now = DateTime.now();
+    return routinesOn(now).length > 1 ? pendingRoutinesOn(now).isEmpty : isDayDone(todayIndex);
+  }
+
+  Routine? get nextRoutineToday {
+    final s = session;
+    if (s == null || s.manual) return null;
+    for (final r in pendingRoutinesOn(DateTime.now())) {
+      if (r.id != s.routineId && r.exerciseIds.isNotEmpty) return r;
+    }
+    return null;
+  }
+
+  void startNextRoutine() {
+    final r = nextRoutineToday;
+    if (r == null) return;
+    saveAndExit();
+    startRoutine(r);
   }
 
   bool get sessionParked => session != null && !session!.complete && route != 'session';
@@ -1176,7 +1192,8 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
           logged.add(LoggedExercise(e.id, e.name, e.primary, doneSets));
         }
       }
-      final entry = LoggedSession(s.loggedAt ?? DateTime.now(), s.summaryDuration ?? 0, logged);
+      final entry = LoggedSession(s.loggedAt ?? DateTime.now(), s.summaryDuration ?? 0, logged, routineId: s.routineId);
+
       final carried = _carriedFeedback;
       if (carried != null && !entry.hasFeedback) {
         entry
@@ -1495,6 +1512,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final s = WorkoutSession()
       ..loggedAt = ls.date
       ..manual = _dayKey(ls.date) != _dayKey(DateTime.now())
+      ..routineId = ls.routineId
       ..exercises = ls.exercises
           .map((e) => SessionExercise(
               e.id,

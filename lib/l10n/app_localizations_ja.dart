@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -92,7 +93,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String exerciseCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 種目', one: '$n 種目');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 種目',
+      one: '$n 種目',
+    );
     return '$_temp0';
   }
 
@@ -160,7 +166,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String startCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 種目', one: '$n 種目');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 種目',
+      one: '$n 種目',
+    );
     return '開始 · $_temp0';
   }
 
@@ -233,7 +244,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String finishBodyPr(int prs) {
-    String _temp0 = intl.Intl.pluralLogic(prs, locale: localeName, other: '$prs種目', one: '1種目');
+    String _temp0 = intl.Intl.pluralLogic(
+      prs,
+      locale: localeName,
+      other: '$prs種目',
+      one: '1種目',
+    );
     return '$_temp0で過去最高を更新しました。記録に保存されました。';
   }
 
@@ -256,7 +272,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String prCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n件の新記録', one: '$n件の新記録');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n件の新記録',
+      one: '$n件の新記録',
+    );
     return '$_temp0';
   }
 
@@ -431,7 +452,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String libraryCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'ライブラリに$n種目', one: 'ライブラリに$n種目');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ライブラリに$n種目',
+      one: 'ライブラリに$n種目',
+    );
     return '$_temp0';
   }
 
@@ -593,7 +619,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String noteCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'メモ$n件', one: 'メモ1件', zero: 'メモなし');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'メモ$n件',
+      one: 'メモ1件',
+      zero: 'メモなし',
+    );
     return '$_temp0';
   }
 
@@ -704,7 +736,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String measureCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '測定$n件', one: '測定1件', zero: '測定なし');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '測定$n件',
+      one: '測定1件',
+      zero: '測定なし',
+    );
     return '$_temp0';
   }
 
@@ -755,7 +793,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String photoCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '写真$n枚', one: '写真1枚', zero: '写真なし');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '写真$n枚',
+      one: '写真1枚',
+      zero: '写真なし',
+    );
     return '$_temp0';
   }
 
@@ -787,7 +831,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String photoNextIn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '次の写真まであと$n日', one: '次の写真は明日');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '次の写真まであと$n日',
+      one: '次の写真は明日',
+    );
     return '$_temp0';
   }
 
@@ -815,7 +864,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String daysApart(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n日間隔', one: '1日間隔', zero: '同じ日');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日間隔',
+      one: '1日間隔',
+      zero: '同じ日',
+    );
     return '$_temp0';
   }
 
@@ -950,7 +1005,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String setCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$nセット', one: '$nセット');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nセット',
+      one: '$nセット',
+    );
     return '$_temp0';
   }
 
@@ -1028,7 +1088,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resetTitle => 'すべて削除しますか？';
 
   @override
-  String get resetBody => 'ワークアウト、記録、ルーティン、メモ、プロフィールをすべて削除します。元に戻せません — 必要なら先にバックアップを書き出してください。';
+  String get resetBody =>
+      'ワークアウト、記録、ルーティン、メモ、プロフィールをすべて削除します。元に戻せません — 必要なら先にバックアップを書き出してください。';
 
   @override
   String get resetConfirm => 'すべて削除';
@@ -1144,7 +1205,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get importBackup => 'バックアップを読み込む';
 
   @override
-  String get importHint => 'Kangtuから書き出した.zip（または旧.json）バックアップを選択してください。メディアを含む現在のデータが置き換わります。';
+  String get importHint =>
+      'Kangtuから書き出した.zip（または旧.json）バックアップを選択してください。メディアを含む現在のデータが置き換わります。';
 
   @override
   String get import => '読み込む';
@@ -1407,6 +1469,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get muscleBack => '背中';
 
   @override
+  String get muscleLowerBack => '腰';
+
+  @override
   String get muscleShoulders => '肩';
 
   @override
@@ -1537,10 +1602,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exercisesInsideWhy => 'すべてにアニメーションと手順説明があります。';
 
   @override
-  String get calculatorsInside => '8個の計算ツール';
+  String get calculatorsInside => '10個の計算ツール';
 
   @override
-  String get calculatorsInsideWhy => '1RM、プレート、BMI、カロリー、体脂肪、ウォームアップ、RPE重量、DOTS筋力レベル — すべて公開済みの式に基づきます。';
+  String get calculatorsInsideWhy =>
+      '1RM、プレート、BMI、カロリー、体脂肪、FFMI、ウォームアップ、RPE重量、DOTSとWilksの筋力スコア — すべて公開済みの式に基づきます。';
 
   @override
   String get mathInside => '透明な計算';
@@ -1553,7 +1619,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String daysUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '日', one: '日');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '日',
+      one: '日',
+    );
     return '$_temp0';
   }
 
@@ -1597,7 +1668,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String perWeek(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '週$n回', one: '週$n回');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '週$n回',
+      one: '週$n回',
+    );
     return '$_temp0';
   }
 
@@ -1644,7 +1720,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get continueWorkout => '続ける';
 
   @override
-  String get continueWorkoutBody => 'チェック済みのセットを保持したままワークアウトを再開します。再度終了すると元の日付で保存されます。';
+  String get continueWorkoutBody =>
+      'チェック済みのセットを保持したままワークアウトを再開します。再度終了すると元の日付で保存されます。';
 
   @override
   String get addBodyWidget => '筋肉マップウィジェットを追加';
@@ -1717,7 +1794,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String platesOwned(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$nサイズ', one: '$nサイズ');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nサイズ',
+      one: '$nサイズ',
+    );
     return '$_temp0';
   }
 
@@ -1832,7 +1914,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get reminderFixed => '固定時刻';
 
   @override
-  String get reminderSmartHint => '実際にトレーニングする曜日と時刻を学習し、その日に既にトレーニング済みなら通知しません。';
+  String get reminderSmartHint =>
+      '実際にトレーニングする曜日と時刻を学習し、その日に既にトレーニング済みなら通知しません。';
 
   @override
   String get reminderSmartEmpty => '習慣を学習するため、もう数回ワークアウトを記録してください。';
@@ -1864,7 +1947,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String templateAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'ルーティン$n件追加', one: 'ルーティン$n件追加');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ルーティン$n件追加',
+      one: 'ルーティン$n件追加',
+    );
     return '$_temp0';
   }
 
@@ -1888,7 +1976,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String dayCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n日', one: '$n日');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日',
+      one: '$n日',
+    );
     return '$_temp0';
   }
 
@@ -2380,7 +2473,8 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get momentsEmptyHint => 'ジム、ホワイトボード、プレートを付けたバーなど、残しておきたいものを撮影。写真は端末内に残り、自分だけが見られます。';
+  String get momentsEmptyHint =>
+      'ジム、ホワイトボード、プレートを付けたバーなど、残しておきたいものを撮影。写真は端末内に残り、自分だけが見られます。';
 
   @override
   String get awardStreak100Line => '100日連続。もうモチベーションではなく習慣です。';
@@ -2499,7 +2593,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get alarmStyleVibrate => 'バイブのみ';
 
   @override
-  String get alarmStyleHint => '「常に鳴らす」はマナーモードでもアラーム音量で鳴ります。「マナーモードに従う」は通知音量を使い、消音中はバイブだけになります。';
+  String get alarmStyleHint =>
+      '「常に鳴らす」はマナーモードでもアラーム音量で鳴ります。「マナーモードに従う」は通知音量を使い、消音中はバイブだけになります。';
 
   @override
   String get suggestedPicks => 'あなたへのおすすめ';
@@ -2565,7 +2660,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get typeCardio => '距離と時間';
 
   @override
-  String get exerciseTypeHint => 'ランニングや水泳などの有酸素は距離と時間を記録します。プランクのようなキープ系は時間を記録します。';
+  String get exerciseTypeHint =>
+      'ランニングや水泳などの有酸素は距離と時間を記録します。プランクのようなキープ系は時間を記録します。';
 
   @override
   String get howToLabel => 'やり方（任意）';
@@ -2598,7 +2694,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get setTypeDropInfo => 'セット直後に重量を下げ、休まずに続けます。';
 
   @override
-  String get setTypeFailureInfo => '正しいフォームでもう1回もできなくなるまで続けます。実際にできた回数を記録しましょう。';
+  String get setTypeFailureInfo =>
+      '正しいフォームでもう1回もできなくなるまで続けます。実際にできた回数を記録しましょう。';
 
   @override
   String get setTypeRestPauseInfo => 'セット後に10〜20秒休み、さらに数回絞り出します。';
@@ -2637,14 +2734,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get importRoutines => 'ルーティンを読み込む';
 
   @override
-  String get importPasteHint => 'ここにルーティンを貼り付け：Kangtu から共有されたもの、AIの回答、JSON、CSV。';
+  String get importPasteHint =>
+      'ここにルーティンを貼り付け：Kangtu から共有されたもの、AIの回答、JSON、CSV。';
 
   @override
   String get pasteAction => '貼り付け';
 
   @override
   String routineCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 件のルーティン');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 件のルーティン',
+    );
     return '$_temp0';
   }
 
@@ -2659,7 +2761,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String routinesAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 件のルーティンを追加しました');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 件のルーティンを追加しました',
+    );
     return '$_temp0';
   }
 
@@ -2716,7 +2822,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get recoveryFresh => '回復済み';
 
   @override
-  String get recoveryHint => '筋肉をタップすると回復度が分かります。最近のセットほど、そしてきついセット（RPE）ほど重く数えます。';
+  String get recoveryHint =>
+      '筋肉をタップすると回復度が分かります。最近のセットほど、そしてきついセット（RPE）ほど重く数えます。';
 
   @override
   String recoveryPct(int pct) {
@@ -2803,7 +2910,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareIntroTitle => 'このルーティンを共有';
 
   @override
-  String get shareIntroBody => 'パートナーや友だち、家族に送りましょう。Kangtu で開ける小さなファイルが届き、セットや重量ごとワンタップで追加できます。';
+  String get shareIntroBody =>
+      'パートナーや友だち、家族に送りましょう。Kangtu で開ける小さなファイルが届き、セットや重量ごとワンタップで追加できます。';
 
   @override
   String get removedFromRoutine => 'ルーティンから外しました';
@@ -2838,7 +2946,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get effortSetting => 'セットごとの強度を記録';
 
   @override
-  String get effortHint => 'RPE：10 はもう 1 回もできない、8 はあと 2 回できた状態。RIR は残っていた回数。記録したセットは、推定 1RM に RPE 表を使います。';
+  String get effortHint =>
+      'RPE：10 はもう 1 回もできない、8 はあと 2 回できた状態。RIR は残っていた回数。記録したセットは、推定 1RM に RPE 表を使います。';
 
   @override
   String get rirHint => '0 はもう 1 回もできない、2 はあと 2 回できた状態。';
@@ -2851,7 +2960,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String repCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n回', one: '$n回');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n回',
+      one: '$n回',
+    );
     return '$_temp0';
   }
 
@@ -2876,7 +2990,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get saveChangesBody => '次回からこのルーティンはこの内容で始まります。';
+  String get saveChangesBody => '次に始めるとき、ルーティンにはこれらの変更が反映されます。';
 
   @override
   String get routineOrderChanged => '新しい種目の順番';
@@ -2961,6 +3075,9 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get nextToday => '今日の次のルーティン';
+
+  @override
   String get planAboutMe => '私について：';
 
   @override
@@ -2991,7 +3108,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get planBestLifts => '最近のベストセット';
 
   @override
-  String get planAskFirst => '目標（筋力、筋肥大、減量、体力づくり）や1回の時間が分からなければ、まず短いメッセージで質問してください。分かったらJSONだけで答えてください。';
+  String get planAskFirst =>
+      '目標（筋力、筋肥大、減量、体力づくり）や1回の時間が分からなければ、まず短いメッセージで質問してください。分かったらJSONだけで答えてください。';
 
   @override
   String get backToTop => '先頭へ戻る';
@@ -3160,7 +3278,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String goalDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '残り$n日');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '残り$n日',
+    );
     return '$_temp0';
   }
 
@@ -3338,6 +3460,55 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dotsLevel4 => 'エリート';
+
+  @override
+  String get toolNameWilks => 'Wilks';
+
+  @override
+  String get toolTitleWilks => 'Wilksスコア';
+
+  @override
+  String get toolDescWilks => 'パワーリフティングの定番スコア';
+
+  @override
+  String get wilksExplain =>
+      'パワーリフティングの定番の式。2020年にDOTSに置き換えられましたが、今も多くの大会やランキングで使われています。';
+
+  @override
+  String get toolNameFfmi => 'FFMI';
+
+  @override
+  String get toolTitleFfmi => '除脂肪量指数';
+
+  @override
+  String get toolDescFfmi => '身長に対する筋肉量';
+
+  @override
+  String get ffmiBodyFat => '体脂肪率';
+
+  @override
+  String ffmiLeanLine(String value) {
+    return '除脂肪量：$value';
+  }
+
+  @override
+  String get ffmiExplain =>
+      'BMIに似ていますが脂肪を除き、除脂肪量だけを数えます。身長で補正しているので、背の高い人も低い人も公平に比べられます。';
+
+  @override
+  String get ffmiLevel0 => '平均以下';
+
+  @override
+  String get ffmiLevel1 => '平均';
+
+  @override
+  String get ffmiLevel2 => '平均以上';
+
+  @override
+  String get ffmiLevel3 => '優秀';
+
+  @override
+  String get ffmiLevel4 => '傑出';
 
   @override
   String get rpeEffortLabel => '強度（RPE）';

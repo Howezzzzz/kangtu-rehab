@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -92,7 +93,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String exerciseCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n개 운동', one: '$n개 운동');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n개 운동',
+      one: '$n개 운동',
+    );
     return '$_temp0';
   }
 
@@ -160,7 +166,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String startCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n개 운동', one: '$n개 운동');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n개 운동',
+      one: '$n개 운동',
+    );
     return '시작 · $_temp0';
   }
 
@@ -233,7 +244,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String finishBodyPr(int prs) {
-    String _temp0 = intl.Intl.pluralLogic(prs, locale: localeName, other: '$prs개 운동', one: '1개 운동');
+    String _temp0 = intl.Intl.pluralLogic(
+      prs,
+      locale: localeName,
+      other: '$prs개 운동',
+      one: '1개 운동',
+    );
     return '$_temp0에서 역대 최고 중량을 들었습니다. 기록에 저장됐습니다.';
   }
 
@@ -256,7 +272,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String prCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '새 기록 $n개', one: '새 기록 $n개');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '새 기록 $n개',
+      one: '새 기록 $n개',
+    );
     return '$_temp0';
   }
 
@@ -332,7 +353,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String sessionsLogged(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '운동 $n회 기록', one: '운동 $n회 기록');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '운동 $n회 기록',
+      one: '운동 $n회 기록',
+    );
     return '$_temp0';
   }
 
@@ -631,7 +657,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get noteEmptyTitle => '아직 작성된 내용이 없습니다';
 
   @override
-  String get noteEmptyBody => '팁, 다음 계획, 운동 느낌 등을 기록하세요 — 원하면 사진이나 동영상도 첨부할 수 있습니다.';
+  String get noteEmptyBody =>
+      '팁, 다음 계획, 운동 느낌 등을 기록하세요 — 원하면 사진이나 동영상도 첨부할 수 있습니다.';
 
   @override
   String get noteNoneForExercise => '이 운동에 대한 메모가 아직 없습니다.';
@@ -805,7 +832,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String photoNextIn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '다음 사진까지 $n일', one: '다음 사진은 내일');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '다음 사진까지 $n일',
+      one: '다음 사진은 내일',
+    );
     return '$_temp0';
   }
 
@@ -833,7 +865,13 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String daysApart(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n일 간격', one: '1일 간격', zero: '같은 날');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 간격',
+      one: '1일 간격',
+      zero: '같은 날',
+    );
     return '$_temp0';
   }
 
@@ -902,7 +940,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get shareCompare => '전 / 후';
 
   @override
-  String get shareHint => '카드는 휴대전화에서 생성됩니다. 공유할 곳을 선택하기 전까지 아무것도 밖으로 나가지 않습니다.';
+  String get shareHint =>
+      '카드는 휴대전화에서 생성됩니다. 공유할 곳을 선택하기 전까지 아무것도 밖으로 나가지 않습니다.';
 
   @override
   String get shareFailed => '카드를 만들 수 없습니다';
@@ -968,7 +1007,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String setCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n세트', one: '$n세트');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n세트',
+      one: '$n세트',
+    );
     return '$_temp0';
   }
 
@@ -1046,7 +1090,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get resetTitle => '모두 삭제할까요?';
 
   @override
-  String get resetBody => '운동, 기록, 루틴, 메모, 프로필이 모두 삭제됩니다. 되돌릴 수 없으니 필요하다면 먼저 백업을 내보내세요.';
+  String get resetBody =>
+      '운동, 기록, 루틴, 메모, 프로필이 모두 삭제됩니다. 되돌릴 수 없으니 필요하다면 먼저 백업을 내보내세요.';
 
   @override
   String get resetConfirm => '모두 삭제';
@@ -1162,7 +1207,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get importBackup => '백업 가져오기';
 
   @override
-  String get importHint => 'Kangtu에서 내보낸 .zip(또는 이전 .json) 백업을 선택하세요. 미디어를 포함한 현재 데이터가 대체됩니다.';
+  String get importHint =>
+      'Kangtu에서 내보낸 .zip(또는 이전 .json) 백업을 선택하세요. 미디어를 포함한 현재 데이터가 대체됩니다.';
 
   @override
   String get import => '가져오기';
@@ -1204,7 +1250,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String importDone(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '운동 $n회 가져옴', one: '운동 $n회 가져옴');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '운동 $n회 가져옴',
+      one: '운동 $n회 가져옴',
+    );
     return '$_temp0';
   }
 
@@ -1420,6 +1471,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get muscleBack => '등';
 
   @override
+  String get muscleLowerBack => '허리';
+
+  @override
   String get muscleShoulders => '어깨';
 
   @override
@@ -1550,10 +1604,11 @@ class AppLocalizationsKo extends AppLocalizations {
   String get exercisesInsideWhy => '각 운동에 애니메이션과 단계별 설명이 있습니다.';
 
   @override
-  String get calculatorsInside => '계산기 8개';
+  String get calculatorsInside => '계산기 10개';
 
   @override
-  String get calculatorsInsideWhy => '1RM, 원판, BMI, 칼로리, 체지방, 워밍업, RPE 중량, DOTS 근력 수준 — 모두 공개된 공식에 기반합니다.';
+  String get calculatorsInsideWhy =>
+      '1RM, 원판, BMI, 칼로리, 체지방, FFMI, 워밍업, RPE 중량, DOTS·Wilks 근력 점수 — 모두 공개된 공식에 기반합니다.';
 
   @override
   String get mathInside => '투명한 계산';
@@ -1566,7 +1621,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String daysUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '일', one: '일');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '일',
+      one: '일',
+    );
     return '$_temp0';
   }
 
@@ -1610,7 +1670,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String perWeek(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '주 $n회', one: '주 $n회');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '주 $n회',
+      one: '주 $n회',
+    );
     return '$_temp0';
   }
 
@@ -1657,7 +1722,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get continueWorkout => '계속하기';
 
   @override
-  String get continueWorkoutBody => '체크된 세트를 유지한 채 운동이 다시 진행됩니다. 다시 종료하면 원래 날짜로 저장됩니다.';
+  String get continueWorkoutBody =>
+      '체크된 세트를 유지한 채 운동이 다시 진행됩니다. 다시 종료하면 원래 날짜로 저장됩니다.';
 
   @override
   String get addBodyWidget => '근육 지도 위젯 추가';
@@ -1730,7 +1796,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String platesOwned(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n개 크기', one: '$n개 크기');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n개 크기',
+      one: '$n개 크기',
+    );
     return '$_temp0';
   }
 
@@ -1845,7 +1916,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reminderFixed => '고정 시간';
 
   @override
-  String get reminderSmartHint => '실제로 운동하는 요일과 시간을 사용하며 그날 이미 운동했다면 알림을 보내지 않습니다.';
+  String get reminderSmartHint =>
+      '실제로 운동하는 요일과 시간을 사용하며 그날 이미 운동했다면 알림을 보내지 않습니다.';
 
   @override
   String get reminderSmartEmpty => '습관을 학습할 수 있도록 운동을 몇 번 더 기록하세요.';
@@ -1877,7 +1949,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String templateAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '루틴 $n개 추가됨', one: '루틴 $n개 추가됨');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '루틴 $n개 추가됨',
+      one: '루틴 $n개 추가됨',
+    );
     return '$_temp0';
   }
 
@@ -1901,7 +1978,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String dayCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n일', one: '$n일');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일',
+      one: '$n일',
+    );
     return '$_temp0';
   }
 
@@ -2320,7 +2402,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String badgeName(String id) {
-    String _temp0 = intl.Intl.selectLogic(id, {'gold': '골드', 'blue': '블루', 'green': '그린', 'other': '배지'});
+    String _temp0 = intl.Intl.selectLogic(id, {
+      'gold': '골드',
+      'blue': '블루',
+      'green': '그린',
+      'other': '배지',
+    });
     return '$_temp0';
   }
 
@@ -2388,7 +2475,8 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get momentsEmptyHint => '헬스장, 보드, 원판을 끼운 바 등 기억하고 싶은 것을 촬영하세요. 사진은 휴대전화에만 남고 본인만 볼 수 있습니다.';
+  String get momentsEmptyHint =>
+      '헬스장, 보드, 원판을 끼운 바 등 기억하고 싶은 것을 촬영하세요. 사진은 휴대전화에만 남고 본인만 볼 수 있습니다.';
 
   @override
   String get awardStreak100Line => '100일 연속. 이제 동기가 아니라 습관입니다.';
@@ -2574,7 +2662,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get typeCardio => '거리와 시간';
 
   @override
-  String get exerciseTypeHint => '달리기나 수영 같은 유산소는 거리와 시간을 기록해요. 플랭크 같은 버티기 운동은 시간을 기록해요.';
+  String get exerciseTypeHint =>
+      '달리기나 수영 같은 유산소는 거리와 시간을 기록해요. 플랭크 같은 버티기 운동은 시간을 기록해요.';
 
   @override
   String get howToLabel => '운동 방법(선택)';
@@ -2607,7 +2696,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get setTypeDropInfo => '세트 직후 무게를 낮추고 쉬지 않고 이어갑니다.';
 
   @override
-  String get setTypeFailureInfo => '바른 자세로 한 번도 더 못 할 때까지 계속합니다. 실제로 한 횟수를 기록하세요.';
+  String get setTypeFailureInfo =>
+      '바른 자세로 한 번도 더 못 할 때까지 계속합니다. 실제로 한 횟수를 기록하세요.';
 
   @override
   String get setTypeRestPauseInfo => '세트 후 10~20초 쉬고 몇 회를 더 짜냅니다.';
@@ -2620,7 +2710,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get planSets => '세트 계획';
 
   @override
-  String get planSetsHint => '각 세트의 종류, 횟수, 무게를 고르세요. 무게를 자동으로 두면 지난 운동에서 시작해요.';
+  String get planSetsHint =>
+      '각 세트의 종류, 횟수, 무게를 고르세요. 무게를 자동으로 두면 지난 운동에서 시작해요.';
 
   @override
   String get autoValue => '자동';
@@ -2646,14 +2737,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get importRoutines => '루틴 가져오기';
 
   @override
-  String get importPasteHint => '여기에 루틴을 붙여 넣으세요: Kangtu에서 공유한 루틴, AI 답변, JSON 또는 CSV.';
+  String get importPasteHint =>
+      '여기에 루틴을 붙여 넣으세요: Kangtu에서 공유한 루틴, AI 답변, JSON 또는 CSV.';
 
   @override
   String get pasteAction => '붙여 넣기';
 
   @override
   String routineCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '루틴 $n개');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '루틴 $n개',
+    );
     return '$_temp0';
   }
 
@@ -2668,7 +2764,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String routinesAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '루틴 $n개를 추가했어요');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '루틴 $n개를 추가했어요',
+    );
     return '$_temp0';
   }
 
@@ -2725,7 +2825,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get recoveryFresh => '회복됨';
 
   @override
-  String get recoveryHint => '근육을 탭하면 회복 정도를 볼 수 있어요. 최근 세트일수록, 더 힘든 세트(RPE)일수록 더 크게 반영돼요.';
+  String get recoveryHint =>
+      '근육을 탭하면 회복 정도를 볼 수 있어요. 최근 세트일수록, 더 힘든 세트(RPE)일수록 더 크게 반영돼요.';
 
   @override
   String recoveryPct(int pct) {
@@ -2812,7 +2913,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get shareIntroTitle => '이 루틴 공유하기';
 
   @override
-  String get shareIntroBody => '연인, 친구, 가족에게 보내 보세요. Kangtu으로 열리는 작은 파일이 가고, 세트와 무게까지 한 번에 추가돼요.';
+  String get shareIntroBody =>
+      '연인, 친구, 가족에게 보내 보세요. Kangtu으로 열리는 작은 파일이 가고, 세트와 무게까지 한 번에 추가돼요.';
 
   @override
   String get removedFromRoutine => '루틴에서 뺐어요';
@@ -2861,7 +2963,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String repCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n회', one: '$n회');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n회',
+      one: '$n회',
+    );
     return '$_temp0';
   }
 
@@ -2886,7 +2993,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get saveChangesBody => '다음부터 이 루틴은 이렇게 시작돼요.';
+  String get saveChangesBody => '다음에 시작하면 루틴에 이 변경 사항이 반영돼요.';
 
   @override
   String get routineOrderChanged => '새 운동 순서';
@@ -2969,6 +3076,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String routineOfDay(int n, int total) {
     return '오늘 $n/$total';
   }
+
+  @override
+  String get nextToday => '오늘 다음 루틴';
 
   @override
   String get planAboutMe => '나에 대해:';
@@ -3079,7 +3189,8 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get tplRr => 'r/bodyweightfitness의 대표 루틴: 주 3일 전신 운동. 쉬워지면 다음 단계로 넘어가세요.';
+  String get tplRr =>
+      'r/bodyweightfitness의 대표 루틴: 주 3일 전신 운동. 쉬워지면 다음 단계로 넘어가세요.';
 
   @override
   String get fbTitle => '운동 기록';
@@ -3171,7 +3282,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String goalDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n일 남음');
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 남음',
+    );
     return '$_temp0';
   }
 
@@ -3349,6 +3464,55 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get dotsLevel4 => '엘리트';
+
+  @override
+  String get toolNameWilks => 'Wilks';
+
+  @override
+  String get toolTitleWilks => 'Wilks 점수';
+
+  @override
+  String get toolDescWilks => '파워리프팅의 전통 점수';
+
+  @override
+  String get wilksExplain =>
+      '파워리프팅의 전통적인 공식입니다. 2020년에 DOTS로 대체됐지만 여전히 많은 대회와 순위에서 쓰입니다.';
+
+  @override
+  String get toolNameFfmi => 'FFMI';
+
+  @override
+  String get toolTitleFfmi => '제지방량 지수';
+
+  @override
+  String get toolDescFfmi => '키 대비 근육량';
+
+  @override
+  String get ffmiBodyFat => '체지방';
+
+  @override
+  String ffmiLeanLine(String value) {
+    return '제지방량: $value';
+  }
+
+  @override
+  String get ffmiExplain =>
+      'BMI와 비슷하지만 지방을 뺀 제지방량만 계산합니다. 키에 맞춰 보정해 키가 크든 작든 공정하게 비교할 수 있어요.';
+
+  @override
+  String get ffmiLevel0 => '평균 이하';
+
+  @override
+  String get ffmiLevel1 => '평균';
+
+  @override
+  String get ffmiLevel2 => '평균 이상';
+
+  @override
+  String get ffmiLevel3 => '우수';
+
+  @override
+  String get ffmiLevel4 => '최상위';
 
   @override
   String get rpeEffortLabel => '강도 (RPE)';

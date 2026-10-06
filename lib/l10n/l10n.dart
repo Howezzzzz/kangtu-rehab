@@ -90,6 +90,8 @@ extension GymL10n on AppLocalizations {
         'plate' => toolNamePlate,
         'rpe' => toolNameRpe,
         'dots' => toolNameDots,
+        'wilks' => toolNameWilks,
+        'ffmi' => toolNameFfmi,
         _ => toolNameWarmup,
       };
 
@@ -101,6 +103,8 @@ extension GymL10n on AppLocalizations {
         'plate' => toolTitlePlate,
         'rpe' => toolTitleRpe,
         'dots' => toolTitleDots,
+        'wilks' => toolTitleWilks,
+        'ffmi' => toolTitleFfmi,
         _ => toolTitleWarmup,
       };
 
@@ -153,6 +157,8 @@ extension GymL10n on AppLocalizations {
         'plate' => toolDescPlate,
         'rpe' => toolDescRpe,
         'dots' => toolDescDots,
+        'wilks' => toolDescWilks,
+        'ffmi' => toolDescFfmi,
         _ => toolDescWarmup,
       };
 
@@ -162,6 +168,14 @@ extension GymL10n on AppLocalizations {
         2 => dotsLevel2,
         3 => dotsLevel3,
         _ => dotsLevel4,
+      };
+
+  String ffmiLevelName(int level) => switch (level) {
+        0 => ffmiLevel0,
+        1 => ffmiLevel1,
+        2 => ffmiLevel2,
+        3 => ffmiLevel3,
+        _ => ffmiLevel4,
       };
 
   String bmiCategory(String key) => switch (key) {
@@ -181,6 +195,7 @@ extension GymL10n on AppLocalizations {
   String muscle(String id) => switch (id) {
         'chest' => muscleChest,
         'back' => muscleBack,
+        'lowerback' => muscleLowerBack,
         'shoulders' => muscleShoulders,
         'biceps' => muscleBiceps,
         'triceps' => muscleTriceps,
