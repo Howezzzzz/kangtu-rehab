@@ -14,7 +14,7 @@ class WearApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: fit,
       builder: (context, _) => MaterialApp(
-        title: 'GymMane',
+        title: '康途',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.dark,
         darkTheme: AppTheme.dark,

@@ -277,7 +277,7 @@ class _SaveCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(28, 36, 28, 32),
               child: Column(
                 children: [
-                  Text('GymMane', style: AppTheme.f(17, weight: FontWeight.w800, color: gc.text)),
+                  Text('康途', style: AppTheme.f(17, weight: FontWeight.w800, color: gc.text)),
                   const Spacer(),
                   Medal(id: id, size: 208),
                   const SizedBox(height: 36),

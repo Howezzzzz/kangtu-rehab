@@ -1199,7 +1199,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get importHint =>
-      'Wähle ein aus GymMane exportiertes .zip- (oder älteres .json-) Backup. Es ersetzt deine aktuellen Daten, einschließlich Medien.';
+      'Wähle ein aus Kangtu exportiertes .zip- (oder älteres .json-) Backup. Es ersetzt deine aktuellen Daten, einschließlich Medien.';
 
   @override
   String get import => 'Importieren';
@@ -1252,7 +1252,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get aboutGymmane => 'Über GymMane';
+  String get aboutGymmane => 'Über Kangtu';
 
   @override
   String get yourProfile => 'DEIN PROFIL';
@@ -2111,7 +2111,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get aiIntro =>
-      'GymMane spricht nie mit einer KI. Du exportierst deine Übungsliste, fügst sie in einen Assistenten deiner Wahl ein und importierst dessen Antwort wieder. Dein Handy sendet von selbst nichts nach außen.';
+      'Kangtu spricht nie mit einer KI. Du exportierst deine Übungsliste, fügst sie in einen Assistenten deiner Wahl ein und importierst dessen Antwort wieder. Dein Handy sendet von selbst nichts nach außen.';
 
   @override
   String aiMissing(int n) {
@@ -2137,7 +2137,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get awardFirstStepName => 'Erster Schritt';
 
   @override
-  String get awardFirstStepLine => 'Willkommen bei GymMane. Das hier geht aufs haus.';
+  String get awardFirstStepLine => 'Willkommen bei Kangtu. Das hier geht aufs haus.';
 
   @override
   String get awardFirstWorkoutName => 'Erstes Training';
@@ -2720,7 +2720,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String shareMessage(String name) {
-    return '$name — öffne die Datei mit GymMane, um sie hinzuzufügen.';
+    return '$name — öffne die Datei mit Kangtu, um sie hinzuzufügen.';
   }
 
   @override
@@ -2728,7 +2728,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get importPasteHint =>
-      'Füge hier eine Routine ein: aus GymMane geteilt, eine KI-Antwort, JSON oder CSV.';
+      'Füge hier eine Routine ein: aus Kangtu geteilt, eine KI-Antwort, JSON oder CSV.';
 
   @override
   String get pasteAction => 'Einfügen';
@@ -2760,11 +2760,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get nothingToImport => 'Hier ist nichts, was GymMane importieren kann';
+  String get nothingToImport => 'Hier ist nichts, was Kangtu importieren kann';
 
   @override
   String get aiStepCopy =>
-      'Kopiere die Anfrage. Sie enthält deine Übungsliste und das Format, das GymMane liest.';
+      'Kopiere die Anfrage. Sie enthält deine Übungsliste und das Format, das Kangtu liest.';
 
   @override
   String get aiStepAsk =>
@@ -2903,7 +2903,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get shareIntroBody =>
-      'Schick ihn deinem Partner, einem Freund oder deiner Familie. Sie bekommen eine kleine Datei, die sich in GymMane öffnet und ihn mit einem Tipp hinzufügt, samt Sätzen und Gewichten.';
+      'Schick ihn deinem Partner, einem Freund oder deiner Familie. Sie bekommen eine kleine Datei, die sich in Kangtu öffnet und ihn mit einem Tipp hinzufügt, samt Sätzen und Gewichten.';
 
   @override
   String get removedFromRoutine => 'Aus dem Plan entfernt';

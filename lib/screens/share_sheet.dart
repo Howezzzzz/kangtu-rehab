@@ -65,7 +65,7 @@ class _ShareSheetState extends State<_ShareSheet> {
       final file = File('${dir.path}/gymmane-${_kind.name}.png');
       await file.writeAsBytes(data.buffer.asUint8List(), flush: true);
       if (!mounted) return;
-      await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], subject: 'GymMane'));
+      await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], subject: '康途'));
     } catch (_) {
       if (mounted) {
         showNotchToast(context, t.shareFailed, icon: PhosphorIconsFill.warningCircle, accent: context.gc.warn);

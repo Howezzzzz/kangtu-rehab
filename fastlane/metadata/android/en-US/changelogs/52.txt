@@ -1,4 +1,4 @@
-GymMane 1.4.0
+Kangtu 1.4.0
 
 • A "Next step" tip when an exercise gets easy
 • Warm-up and cardio sessions, and the r/bodyweightfitness Recommended Routine

@@ -1144,7 +1144,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get importBackup => 'バックアップを読み込む';
 
   @override
-  String get importHint => 'GymManeから書き出した.zip（または旧.json）バックアップを選択してください。メディアを含む現在のデータが置き換わります。';
+  String get importHint => 'Kangtuから書き出した.zip（または旧.json）バックアップを選択してください。メディアを含む現在のデータが置き換わります。';
 
   @override
   String get import => '読み込む';
@@ -1196,7 +1196,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get aboutGymmane => 'GymManeについて';
+  String get aboutGymmane => 'Kangtuについて';
 
   @override
   String get yourProfile => 'プロフィール';
@@ -1772,7 +1772,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get planNothing => 'このファイルの種目はライブラリに一致しません';
 
   @override
-  String get planFailed => 'このファイルはGymManeが読み込めるルーティンではありません';
+  String get planFailed => 'このファイルはKangtuが読み込めるルーティンではありません';
 
   @override
   String get routineGroup => 'グループ';
@@ -2032,7 +2032,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get aiIntro =>
-      'GymManeがAIと直接通信することはありません。種目リストを書き出し、普段使っているAIアシスタントに貼り付け、その回答を読み込みます。端末から自動で送信されるものはありません。';
+      'KangtuがAIと直接通信することはありません。種目リストを書き出し、普段使っているAIアシスタントに貼り付け、その回答を読み込みます。端末から自動で送信されるものはありません。';
 
   @override
   String aiMissing(int n) {
@@ -2058,7 +2058,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get awardFirstStepName => '最初の一歩';
 
   @override
-  String get awardFirstStepLine => 'GymManeへようこそ。これはプレゼントです。';
+  String get awardFirstStepLine => 'Kangtuへようこそ。これはプレゼントです。';
 
   @override
   String get awardFirstWorkoutName => '最初のワークアウト';
@@ -2630,14 +2630,14 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String shareMessage(String name) {
-    return '$name — GymMane でファイルを開いて追加してください。';
+    return '$name — Kangtu でファイルを開いて追加してください。';
   }
 
   @override
   String get importRoutines => 'ルーティンを読み込む';
 
   @override
-  String get importPasteHint => 'ここにルーティンを貼り付け：GymMane から共有されたもの、AIの回答、JSON、CSV。';
+  String get importPasteHint => 'ここにルーティンを貼り付け：Kangtu から共有されたもの、AIの回答、JSON、CSV。';
 
   @override
   String get pasteAction => '貼り付け';
@@ -2664,10 +2664,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get nothingToImport => 'GymMane が読み込めるものがありません';
+  String get nothingToImport => 'Kangtu が読み込めるものがありません';
 
   @override
-  String get aiStepCopy => '依頼文をコピーします。あなたの種目リストと GymMane が読む形式が入っています。';
+  String get aiStepCopy => '依頼文をコピーします。あなたの種目リストと Kangtu が読む形式が入っています。';
 
   @override
   String get aiStepAsk => '好きなAIに貼り付けて、希望を伝えましょう：週の日数、目標、何週間か。';
@@ -2803,7 +2803,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareIntroTitle => 'このルーティンを共有';
 
   @override
-  String get shareIntroBody => 'パートナーや友だち、家族に送りましょう。GymMane で開ける小さなファイルが届き、セットや重量ごとワンタップで追加できます。';
+  String get shareIntroBody => 'パートナーや友だち、家族に送りましょう。Kangtu で開ける小さなファイルが届き、セットや重量ごとワンタップで追加できます。';
 
   @override
   String get removedFromRoutine => 'ルーティンから外しました';

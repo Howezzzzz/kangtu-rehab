@@ -1,4 +1,4 @@
-GymMane 1.4.0
+Kangtu 1.4.0
 
 • Un aviso de "Siguiente paso" cuando un ejercicio se queda corto
 • Calentamiento y cardio, y la Recommended Routine de r/bodyweightfitness

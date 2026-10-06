@@ -1,4 +1,4 @@
-GymMane 1.3.0
+Kangtu 1.3.0
 
 • A cleaner, calmer design
 • A live notification with the rest countdown

@@ -1,12 +1,12 @@
 <div align="center">
 
-<img src="../screenshots/banner-en.png" alt="GymMane — Solleva. Registra. Cresci." width="860" />
+<img src="../screenshots/banner-en.png" alt="Kangtu — Solleva. Registra. Cresci." width="860" />
 
 <br/>
 
-<img src="../screenshots/icon.png" width="94" alt="GymMane" />
+<img src="../screenshots/icon.png" width="94" alt="Kangtu" />
 
-# GymMane
+# Kangtu
 
 Un diario da palestra gratuito e offline per Android.<br/>
 Tocca i muscoli che vuoi allenare, registra le serie e guarda crescere i tuoi numeri.
@@ -18,11 +18,11 @@ Tocca i muscoli che vuoi allenare, registra le serie e guarda crescere i tuoi nu
   <img alt="License GPLv3" src="https://img.shields.io/badge/Code-GPLv3-C2410C?style=flat&logo=gnu&logoColor=white" />
   <img alt="Art CC BY-SA 4.0" src="https://img.shields.io/badge/Art-CC%20BY--SA%204.0-8A6B41?style=flat&logo=creativecommons&logoColor=white" />
   <a href="https://crowdin.com/project/gymmane"><img alt="Crowdin" src="https://badges.crowdin.net/gymmane/localized.svg" /></a>
-  <a href="https://github.com/InlitX/GymMane/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/InlitX/GymMane?style=flat&color=D9A184&labelColor=181717&logo=github" /></a>
+  <a href="https://github.com/InlitX/Kangtu/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/InlitX/Kangtu?style=flat&color=D9A184&labelColor=181717&logo=github" /></a>
 </p>
 
 <p>
-  <a href="https://trendshift.io/repositories/107197?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-107197" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/107197/daily?language=Dart" alt="InlitX%2FGymMane | Trendshift" width="250" height="55"/></a>
+  <a href="https://trendshift.io/repositories/107197?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-107197" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/107197/daily?language=Dart" alt="InlitX%2FKangtu | Trendshift" width="250" height="55"/></a>
 </p>
 
 <a href="https://f-droid.org/packages/com.gymmane.app/"><img alt="Get it on F-Droid" src="../badges/get-it-on-fdroid.png" height="60" /></a>
@@ -31,9 +31,9 @@ Tocca i muscoli che vuoi allenare, registra le serie e guarda crescere i tuoi nu
 &nbsp;
 <a href="https://www.openapk.net/gymmane/com.gymmane.app/"><img alt="Get it on OpenAPK" src="../badges/get-it-on-openapk.png" height="60" /></a>
 &nbsp;
-<a href="https://github.com/InlitX/GymMane/releases"><img alt="Get it on GitHub" src="../badges/get-it-on-github.png" height="60" /></a>
+<a href="https://github.com/InlitX/Kangtu/releases"><img alt="Get it on GitHub" src="../badges/get-it-on-github.png" height="60" /></a>
 &nbsp;
-<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.gymmane.app%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2FInlitX%2FGymMane%22%2C%22author%22%3A%22InlitX%22%2C%22name%22%3A%22GymMane%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Atrue%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22GymMane%20is%20an%20open%20source%20gym%20log%20for%20Android.%20Pick%20your%20muscles%20on%20a%20body%20map%2C%20log%20your%20sets%2C%20and%20watch%20your%20numbers%20grow.%20No%20accounts%2C%20no%20ads%2C%20no%20tracking%2C%20no%20internet%20permission.%5C%22%7D%22%2C%22overrideSource%22%3Anull%7D"><img alt="Get it on Obtainium" src="../badges/get-it-on-obtainium.png" height="60" /></a>
+<a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.gymmane.app%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2FInlitX%2FKangtu%22%2C%22author%22%3A%22InlitX%22%2C%22name%22%3A%22Kangtu%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Atrue%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22Kangtu%20is%20an%20open%20source%20gym%20log%20for%20Android.%20Pick%20your%20muscles%20on%20a%20body%20map%2C%20log%20your%20sets%2C%20and%20watch%20your%20numbers%20grow.%20No%20accounts%2C%20no%20ads%2C%20no%20tracking%2C%20no%20internet%20permission.%5C%22%7D%22%2C%22overrideSource%22%3Anull%7D"><img alt="Get it on Obtainium" src="../badges/get-it-on-obtainium.png" height="60" /></a>
 
 <sub><a href="../../README.md">English</a> · <a href="README.es.md">Español</a> · <b>Italiano</b> · <a href="README.zh.md">简体中文</a></sub>
 
@@ -156,7 +156,7 @@ Tocca i muscoli che vuoi allenare, registra le serie e guarda crescere i tuoi nu
 ## Download
 
 Scaricala da F-Droid, IzzyOnDroid, OpenAPK, Obtainium o dalle
-[release di GitHub](https://github.com/InlitX/GymMane/releases/latest). Su GitHub, se non
+[release di GitHub](https://github.com/InlitX/Kangtu/releases/latest). Su GitHub, se non
 sai quale APK scegliere, prendi `arm64-v8a`.
 
 | Piattaforma | Stato |
@@ -168,7 +168,7 @@ sai quale APK scegliere, prendi `arm64-v8a`.
 
 ## Privacy
 
-Nessun account, niente pubblicità e niente analisi. GymMane non ha nemmeno il
+Nessun account, niente pubblicità e niente analisi. Kangtu non ha nemmeno il
 permesso internet, quindi i tuoi allenamenti restano sul telefono. I permessi
 che chiede servono per il timer di recupero, la sua notifica e i widget.
 
@@ -181,15 +181,15 @@ grosso, apri prima una issue. Le traduzioni si fanno su
 <a href="https://crowdin.com/project/gymmane"><picture><source media="(prefers-color-scheme: dark)" srcset="https://badges.crowdin.net/badge/light/crowdin-on-dark@2x.png" /><img alt="Crowdin | Agile localization for tech companies" src="https://badges.crowdin.net/badge/dark/crowdin-on-light@2x.png" height="40" /></picture></a>
 
 ```bash
-git clone https://github.com/InlitX/GymMane.git
-cd GymMane
+git clone https://github.com/InlitX/Kangtu.git
+cd Kangtu
 flutter pub get
 flutter build apk --release
 ```
 
 ## Supporto
 
-GymMane è gratuita e resterà così. Una stella, una traduzione o una buona
+Kangtu è gratuita e resterà così. Una stella, una traduzione o una buona
 segnalazione di bug aiutano molto. Se vuoi offrirmi un caffè:
 
 <div align="center">
@@ -220,8 +220,8 @@ segnalazione di bug aiutano molto. Se vuoi offrirmi un caffè:
 ## Licenza
 
 Il codice è [GPL-3.0](../../LICENSE), con un [termine aggiuntivo](../../ADDITIONAL_TERMS.md)
-secondo la sua sezione 7(b): le opere basate su GymMane devono indicare "Based on
-GymMane by InlitX". Le illustrazioni degli esercizi vengono
+secondo la sua sezione 7(b): le opere basate su Kangtu devono indicare "Based on
+Kangtu by InlitX". Le illustrazioni degli esercizi vengono
 da [Workout Guide](https://github.com/bryllim/workout-guide) di Bryl Lim e da
 [Everkinetic](https://github.com/everkinetic/data), i disegni su cui si basa
 Workout Guide, e sono

@@ -1,6 +1,6 @@
 <div align="center">
 
-# Translating GymMane
+# Translating Kangtu
 
 Translations happen on
 **[Crowdin](https://crowdin.com/project/gymmane)**, right in the browser.
@@ -43,7 +43,7 @@ The exercise catalogue is separate and optional — see below.
 - **Shorter wins.** Most of these strings sit on buttons, chips and tabs on a
   phone. If yours runs much longer than the English, find a tighter wording.
 - **CAPS stay CAPS.** Strings written in capitals are section headers in the UI.
-- **"GymMane" stays "GymMane".** The app name isn't translated.
+- **"康途" stays "康途" (Kangtu in English UI).** The app name isn't translated.
 - **Address the user informally** — "du" rather than "Sie", "tú" rather than
   "usted".
 - **You don't have to finish.** Anything you leave out simply shows in English,
