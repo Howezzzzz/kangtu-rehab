@@ -128,6 +128,14 @@ void main() {
       final text = fit.rehabPromptText(episode());
       expect(text, contains('无训练反馈记录'));
     });
+
+    test('感觉档 2/3（吃力/拼到底）也写进反馈行', () {
+      logSession(daysAgo: 1, feel: 2);
+      logSession(daysAgo: 0, feel: 3);
+      final text = fit.rehabPromptText(episode());
+      expect(text, contains('吃力'));
+      expect(text, contains('拼到底'));
+    });
   });
 
   group('提示词：输出要求含 adjust 规格', () {
@@ -239,6 +247,16 @@ void main() {
       expect(fit.routineRest(routineA().id, benchId()), 90);
     });
 
+    test('set reps：只改工作组的次数，warmup 不动', () {
+      linked();
+      fit.applyRehabAdjust('re1', [
+        const RehabAdjust(action: 'set', exercise: 'Barbell Bench Press', field: 'reps', value: 6),
+      ]);
+      final planned = fit.plannedSets(routineA(), benchId());
+      expect(planned.where((p) => p.kind != SetKind.warmup).every((p) => p.reps == 6), isTrue);
+      expect(planned.firstWhere((p) => p.kind == SetKind.warmup).reps, 12);
+    });
+
     test('set 动作名匹配不到时进 missed', () {
       linked();
       final res = fit.applyRehabAdjust('re1', [
@@ -263,6 +281,15 @@ void main() {
       expect(r.sets.containsKey(bridgeId()), isFalse);
       expect(r.plan.containsKey(bridgeId()), isFalse);
       expect(r.rest.containsKey(bridgeId()), isFalse);
+    });
+
+    test('remove：动作名匹配不到时进 missed', () {
+      linked();
+      final res = fit.applyRehabAdjust('re1', [
+        const RehabAdjust(action: 'remove', exercise: '不存在的动作'),
+      ]);
+      expect(res.adjusted, 0);
+      expect(res.missed, ['不存在的动作']);
     });
 
     test('add：匹配动作库追加，带 sets/reps 时建 plan', () {
