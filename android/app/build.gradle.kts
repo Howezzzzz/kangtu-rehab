@@ -1,5 +1,6 @@
 import java.util.Properties
 import java.io.FileInputStream
+import java.util.Base64
 import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
@@ -19,9 +20,9 @@ if (keystorePropertiesFile.exists()) {
 val envKeystoreBase64 = System.getenv("KEYSTORE_BASE64")
 val useEnvKeystore = !envKeystoreBase64.isNullOrEmpty()
 val signingKeystoreFile = if (useEnvKeystore) {
-    val f = File(rootProject.buildDir, "keystore/upload-keystore.jks")
+    val f = File(rootProject.projectDir, "build/keystore/upload-keystore.jks")
     f.parentFile.mkdirs()
-    f.writeBytes(java.util.Base64.getDecoder().decode(envKeystoreBase64))
+    f.writeBytes(Base64.getDecoder().decode(envKeystoreBase64))
     f
 } else {
     null
