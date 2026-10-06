@@ -885,8 +885,10 @@ class FitState extends FitCore
     final goals = ep.goals.map(rehabGoalLabel).join('、');
     final gear = ep.equipment.isEmpty ? '徒手/自重为主' : ep.equipment.join('、');
     final flags = ep.redFlags.map((k) => kRehabRedFlags[k] ?? k).join('；');
+    final linked = routines.where((r) => ep.routineIds.contains(r.id)).toList();
+    final feedback = rehabFeedbackSessions();
     final lines = <String>[
-      '你是运动康复方向的助理。请根据下面的个人情况和困扰，给出一份循序渐进、可以自己执行的康复训练建议。',
+      '你是运动康复方向的助理。请根据下面的个人情况、当前计划和近期训练反馈，给出一份循序渐进、可以自己执行的康复训练建议；已有计划时，直接对当前计划做调整。',
       '',
       '【我的情况】',
       '- 性别/年龄/身高/体重：${profile.sex == 'female' ? '女' : '男'}、${profile.age} 岁、${heightLabel(profile.heightCm)}、${weightLabel(profile.weightKg)}',
@@ -902,14 +904,33 @@ class FitState extends FitCore
       if (ep.factors.trim().isNotEmpty) '- 加重 / 缓解因素：${ep.factors.trim()}',
       if (flags.isEmpty) '- 安全筛查：未发现红旗征' else '- 安全筛查命中：$flags',
       '',
+      '【当前计划】',
+      if (linked.isEmpty) '暂无计划（请按输出要求用 routines 字段新建）' else exportPlanJson(linked, withSchedule: false),
+      '',
+      '【近期训练反馈】',
+      if (feedback.isEmpty)
+        '无训练反馈记录'
+      else
+        for (final s in feedback) rehabFeedbackLine(s),
+      '',
       '【输出要求】',
       '1. 只输出一个 JSON 对象，不要额外解释文字。',
       '2. 用 advice 字段写「注意事项 + 叫停规则」（字符串）。',
-      '3. 用 routines 字段给训练计划，结构照抄下面模板：',
+      '3. 【当前计划】为空时，用 routines 字段给整套新计划，结构照抄下面模板：',
       FitState.planTemplate,
-      '4. 动作名尽量取自【动作库清单】里的英文名，这样能自动匹配到 App 的动作库。',
-      '5. 强度保守：以不加重症状为前提，训练中疼痛不超过 3/10；先活动度、再稳定性、最后力量。',
-      '6. advice 里必须包含：$kRehabStopRules',
+      '4. 【当前计划】非空时，用 adjust 数组给「对当前计划的修改指令」（不需要修改就给空数组 []），结构照抄：',
+      '[{"action":"set","routine":"康复 A","exercise":"动作英文名","field":"weight","value":45},',
+      ' {"action":"set","exercise":"动作英文名","field":"sets","value":3},',
+      ' {"action":"remove","exercise":"动作英文名"},',
+      ' {"action":"add","routine":"康复 A","exercise":"动作英文名","sets":3,"reps":12}]',
+      '   - set：field 只允许 weight / sets / reps / rest 四种；value 是目标新值。',
+      '   - remove：把该动作从计划里删掉。',
+      '   - add：往计划里加动作，可带 sets / reps / weight。',
+      '   - routine 可省略（省略 = 应用到全部当前计划）。',
+      '5. 动作名尽量取自【动作库清单】里的英文名，这样能自动匹配到 App 的动作库。',
+      '6. 强度保守：以不加重症状为前提，训练中疼痛不超过 3/10；先活动度、再稳定性、最后力量。',
+      '7. advice 里必须包含：$kRehabStopRules',
+      '8. 未通过安全门时，只给 advice，routines 与 adjust 都不要输出。',
       '',
       '【动作库清单】英文名 (中文名) | 肌群 | 器材 | 难度 | 模式',
     ];
@@ -923,23 +944,203 @@ class FitState extends FitCore
     return lines.join('\n');
   }
 
-  /// 把 AI 回复套到档案上：建训练计划 + 存 advice。
-  ({int routines, int added, List<String> missed}) applyRehabReply(String episodeId, String raw) {
+  /// 近期训练反馈：近 [days] 天内带反馈的记录（按时间新→旧）；
+  /// 若一条都没有，回退到最近 [fallback] 次有反馈的。
+  /// N=7 的依据：临床疼痛回顾（BPI「过去一周」）与运动科学急性负荷窗口（ACWR 7 天）取公约数。
+  List<LoggedSession> rehabFeedbackSessions({int days = 7, int fallback = 3}) {
+    final since = DateTime.now().subtract(Duration(days: days));
+    final recent = sessions.where((s) => s.hasFeedback && s.date.isAfter(since)).toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+    if (recent.isNotEmpty) return recent;
+    final older = sessions.where((s) => s.hasFeedback).toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+    return older.take(fallback).toList();
+  }
+
+  /// 把一条训练反馈写成提示词里的一行。
+  String rehabFeedbackLine(LoggedSession s) {
+    final parts = <String>[];
+    if (s.feel != null) parts.add(_feelText(s.feel!));
+    if (s.painArea.isNotEmpty || s.painLevel > 0) {
+      final area = s.painArea.isEmpty ? '不适' : muscleLabel(s.painArea);
+      parts.add(s.painLevel > 0 ? '$area ${s.painLevel}/10 不适' : area);
+    }
+    if (s.note.trim().isNotEmpty) parts.add('备注：${s.note.trim()}');
+    final mm = s.date.month.toString().padLeft(2, '0');
+    final dd = s.date.day.toString().padLeft(2, '0');
+    return '- $mm/$dd：${parts.isEmpty ? '（无具体记录）' : parts.join('；')}';
+  }
+
+  String _feelText(int i) => switch (i) {
+        0 => t.fbFeelEasy,
+        1 => t.fbFeelOk,
+        2 => t.fbFeelHard,
+        _ => t.fbFeelMax,
+      };
+
+  /// 把 AI 回复里的 adjust 指令套到档案关联的计划上。
+  /// 安全门未通过 / 无关联计划时不动。返回实际应用的条数 + 未处理项说明。
+  ({int adjusted, List<String> missed}) applyRehabAdjust(
+      String episodeId, List<RehabAdjust> adjusts) {
     final ep = episodeById(episodeId);
-    if (ep == null) return (routines: 0, added: 0, missed: const <String>[]);
+    if (ep == null || adjusts.isEmpty) return (adjusted: 0, missed: const <String>[]);
+    if (!ep.safe) return (adjusted: 0, missed: const ['未通过安全门，已忽略全部计划调整']);
+    final rs = routines.where((r) => ep.routineIds.contains(r.id)).toList();
+    if (rs.isEmpty) return (adjusted: 0, missed: const ['档案没有关联计划，无法套用调整']);
+    var n = 0;
+    final missed = <String>[];
+    for (final a in adjusts) {
+      final targets = a.target.isEmpty ? rs : rs.where((r) => r.name == a.target).toList();
+      if (targets.isEmpty) {
+        missed.add('计划「${a.target}」不存在');
+        continue;
+      }
+      for (final r in targets) {
+        final ok = switch (a.action) {
+          'set' => _rehabSet(r, a, missed),
+          'remove' => _rehabRemove(r, a, missed),
+          _ => _rehabAdd(r, a, missed),
+        };
+        if (ok) n++;
+      }
+    }
+    if (n > 0) persistNow();
+    return (adjusted: n, missed: missed.toSet().toList());
+  }
+
+  bool _rehabSet(Routine r, RehabAdjust a, List<String> missed) {
+    final ex = matchExerciseByName(a.exercise);
+    if (ex == null) {
+      missed.add(a.exercise);
+      return false;
+    }
+    if (!r.exerciseIds.contains(ex.id)) return false; // 该计划里本来没这个动作，静默跳过
+    final value = a.value!;
+    switch (a.field) {
+      case 'rest':
+        setRoutineRest(r.id, ex.id, value.toInt());
+      case 'sets':
+        _rehabSetCount(r, ex.id, value.toInt());
+      case 'weight':
+        _rehabSetField(r, ex.id, 'weight', value);
+      case 'reps':
+        _rehabSetField(r, ex.id, 'reps', value);
+    }
+    return true;
+  }
+
+  /// 改组数：无 plan 时走简单模式；有 plan 时补 / 删工作组（warmup 不动）。
+  void _rehabSetCount(Routine r, String exId, int n) {
+    final count = n.clamp(1, 20);
+    final planned = r.plan[exId];
+    if (planned == null || planned.isEmpty) {
+      setRoutineSetCount(r.id, exId, count);
+      return;
+    }
+    final next = [...planned];
+    final working = [for (var i = 0; i < next.length; i++) if (next[i].kind != SetKind.warmup) i];
+    final delta = count - working.length;
+    if (delta > 0) {
+      final base = working.isEmpty ? const PlannedSet() : next[working.first];
+      for (var i = 0; i < delta && next.length < 20; i++) {
+        next.add(PlannedSet(reps: base.reps, weightKg: base.weightKg));
+      }
+    } else {
+      for (var i = 0; i < -delta; i++) {
+        final idx = next.lastIndexWhere((p) => p.kind != SetKind.warmup);
+        if (idx < 0) break;
+        next.removeAt(idx);
+      }
+    }
+    setPlannedSets(r.id, exId, next);
+  }
+
+  /// 改重量 / 次数：只改工作组（warmup 不动）；无 plan 时先建出工作组。
+  void _rehabSetField(Routine r, String exId, String field, num value) {
+    final planned = r.plan[exId];
+    var next = planned == null ? <PlannedSet>[] : [...planned];
+    if (next.isEmpty) {
+      final count = routineSets(r, exId).clamp(1, 20);
+      next = [for (var i = 0; i < count; i++) const PlannedSet()];
+    }
+    for (var i = 0; i < next.length; i++) {
+      if (next[i].kind == SetKind.warmup) continue;
+      next[i] = field == 'weight'
+          ? next[i].copyWith(weightKg: value.toDouble())
+          : next[i].copyWith(reps: value.toInt());
+    }
+    setPlannedSets(r.id, exId, next);
+  }
+
+  bool _rehabRemove(Routine r, RehabAdjust a, List<String> missed) {
+    final ex = matchExerciseByName(a.exercise);
+    if (ex == null) {
+      missed.add(a.exercise);
+      return false;
+    }
+    if (!r.exerciseIds.remove(ex.id)) return false;
+    r.sets.remove(ex.id);
+    r.plan.remove(ex.id);
+    r.rest.remove(ex.id);
+    r.chained.remove(ex.id);
+    return true;
+  }
+
+  bool _rehabAdd(Routine r, RehabAdjust a, List<String> missed) {
+    final ex = matchExerciseByName(a.exercise);
+    if (ex == null) {
+      missed.add(a.exercise);
+      return false;
+    }
+    if (!r.exerciseIds.contains(ex.id)) r.exerciseIds.add(ex.id);
+    final sets = a.addSets?.clamp(1, 20);
+    if (sets != null) r.sets[ex.id] = sets;
+    if (a.addReps != null || a.addWeight != null) {
+      final count = (sets ?? r.sets[ex.id] ?? kDefaultRoutineSets).clamp(1, 20);
+      setPlannedSets(r.id, ex.id, [
+        for (var i = 0; i < count; i++)
+          PlannedSet(reps: a.addReps, weightKg: a.addWeight?.toDouble()),
+      ]);
+    }
+    return true;
+  }
+
+  /// 把 AI 回复套到档案上：建训练计划 + 修改现有计划 + 存 advice。
+  ({int routines, int added, int adjusted, List<String> missed}) applyRehabReply(
+      String episodeId, String raw) {
+    final ep = episodeById(episodeId);
+    if (ep == null) return (routines: 0, added: 0, adjusted: 0, missed: const <String>[]);
+    if (!ep.safe) {
+      // 安全门未通过：只保留 advice，不建计划、不套调整（与提示词规则 8 一致）
+      final advice = extractRehabAdvice(raw);
+      if (advice.isNotEmpty) ep.advice = advice;
+      updateEpisode(ep);
+      return (routines: 0, added: 0, adjusted: 0, missed: const ['未通过安全门，已忽略计划与调整']);
+    }
     final plans = parsePlan(raw);
     final before = routines.map((r) => r.id).toSet();
-    var out = (routines: 0, added: 0, missed: const <String>[]);
+    var made = 0;
+    var added = 0;
+    final missed = <String>[];
     if (plans.isNotEmpty) {
       final res = applyPlan(plans);
       final fresh = routines.where((r) => !before.contains(r.id)).map((r) => r.id).toList();
-      out = (routines: res.routines, added: res.added, missed: res.missed);
+      made = res.routines;
+      added = res.added;
+      missed.addAll(res.missed);
       if (fresh.isNotEmpty) ep.routineIds = [...ep.routineIds, ...fresh];
+    }
+    final adjusts = extractRehabAdjust(raw);
+    var adjusted = 0;
+    if (adjusts.isNotEmpty) {
+      final adj = applyRehabAdjust(episodeId, adjusts);
+      adjusted = adj.adjusted;
+      missed.addAll(adj.missed);
     }
     final advice = extractRehabAdvice(raw);
     if (advice.isNotEmpty) ep.advice = advice;
     updateEpisode(ep);
-    return out;
+    return (routines: made, added: added, adjusted: adjusted, missed: missed.toSet().toList());
   }
 
   List<PlannedSet> _plannedFrom(PlanItem item) {

@@ -32,6 +32,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
   String? _epId;
   int _added = 0;
   int _routines = 0;
+  int _adjusted = 0;
   List<String> _missed = const [];
   bool _unreadable = false;
 
@@ -233,7 +234,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
             fg: _reply.text.trim().isEmpty ? gc.textTertiary : gc.onEmber,
             onTap: () => _import(ep),
           ),
-          if (_unreadable || _added > 0 || _missed.isNotEmpty) ...[
+          if (_unreadable || _added > 0 || _adjusted > 0 || _missed.isNotEmpty) ...[
             const SizedBox(height: 12),
             _importResult(gc),
           ],
@@ -253,7 +254,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
   bool _showFormat = false;
 
   Widget _importResult(GymColors gc) {
-    final good = _added > 0;
+    final good = _added > 0 || _adjusted > 0;
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -268,7 +269,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
             _unreadable
                 ? '没读懂这段内容，确认贴的是智能助手的回复（要含计划数据）'
                 : good
-                    ? '已生成 $_routines 个计划 · 动作 $_added 个'
+                    ? '已生成 $_routines 个计划 · 动作 $_added 个 · 调整 $_adjusted 处'
                     : '没找到可用的训练计划',
             style: AppTheme.f(13, weight: FontWeight.w600, color: good ? gc.sage : gc.text),
           ),
@@ -406,9 +407,10 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
     FocusScope.of(context).unfocus();
     final res = fit.applyRehabReply(ep.id, raw);
     setState(() {
-      _unreadable = res.routines == 0 && res.added == 0;
+      _unreadable = res.routines == 0 && res.added == 0 && res.adjusted == 0;
       _routines = res.routines;
       _added = res.added;
+      _adjusted = res.adjusted;
       _missed = res.missed;
       _epId = null; // 触发下一次 build 重新读档案（advice 可能已更新）
     });

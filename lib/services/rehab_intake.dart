@@ -103,3 +103,83 @@ String extractRehabAdvice(String raw) {
       .toList();
   return lines.length > 12 ? lines.sublist(lines.length - 12).join('\n') : lines.join('\n');
 }
+
+/// 单条计划调整指令（AI 回复里 adjust 数组的一项）。
+/// 融合进 GymMane（GPLv3），随本体一同以 GPLv3 分发。
+class RehabAdjust {
+  const RehabAdjust({
+    required this.action,
+    this.target = '',
+    required this.exercise,
+    this.field = '',
+    this.value,
+    this.addSets,
+    this.addReps,
+    this.addWeight,
+  });
+
+  /// set | remove | add
+  final String action;
+
+  /// 目标计划名（空 = 应用到全部关联计划）
+  final String target;
+
+  /// 动作名（优先英文名，套用时按名字匹配动作库）
+  final String exercise;
+
+  /// set 的字段：weight | sets | reps | rest
+  final String field;
+
+  /// set 时的新值
+  final num? value;
+
+  /// add 时的组数 / 次数 / 重量
+  final int? addSets;
+  final int? addReps;
+  final num? addWeight;
+
+  static const _actions = {'set', 'remove', 'add'};
+  static const _fields = {'weight', 'sets', 'reps', 'rest'};
+
+  /// 解析一条指令；非法 / 字段残缺的条目返回 null（由调用方过滤）。
+  static RehabAdjust? tryParse(Object? raw) {
+    if (raw is! Map) return null;
+    final action = '${raw['action'] ?? ''}'.trim().toLowerCase();
+    if (!_actions.contains(action)) return null;
+    final exercise = '${raw['exercise'] ?? raw['name'] ?? ''}'.trim();
+    if (exercise.isEmpty) return null;
+    final target = '${raw['routine'] ?? raw['plan'] ?? ''}'.trim();
+    if (action == 'add') {
+      final sets = raw['sets'];
+      final reps = raw['reps'];
+      final weight = raw['weight'];
+      return RehabAdjust(
+        action: action,
+        target: target,
+        exercise: exercise,
+        addSets: sets is num ? sets.toInt() : null,
+        addReps: reps is num ? reps.toInt() : null,
+        addWeight: weight is num ? weight : null,
+      );
+    }
+    if (action == 'remove') {
+      return RehabAdjust(action: action, target: target, exercise: exercise);
+    }
+    // set
+    final field = '${raw['field'] ?? ''}'.trim().toLowerCase();
+    if (!_fields.contains(field)) return null;
+    final value = raw['value'];
+    if (value is! num) return null;
+    return RehabAdjust(action: action, target: target, exercise: exercise, field: field, value: value);
+  }
+}
+
+/// 从 AI 回复里取计划调整指令（adjust / adjustments / changes 数组）。
+/// 没有 / 非法条目一律过滤，返回空列表。
+List<RehabAdjust> extractRehabAdjust(String raw) {
+  final obj = extractJsonObject(raw);
+  if (obj == null) return const [];
+  final list = obj['adjust'] ?? obj['adjustments'] ?? obj['changes'];
+  if (list is! List) return const [];
+  return [for (final e in list) ?RehabAdjust.tryParse(e)];
+}
