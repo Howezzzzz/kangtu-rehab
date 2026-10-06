@@ -44,13 +44,18 @@ const Map<String, String> kRehabAreaMuscle = {
   'ankle': 'calves',
 };
 
+/// 同一部位可能出现在多个肌群标签下（上游动作库把下背单独标为 lowerback）。
+final Set<String> _kLowbackLabels = {'back', 'lowerback'};
+
 /// 该部位是否命中某个活跃康复档案（FB-01：弹层与卡片共用同一判定）
 bool rehabAreaMatches(String painArea) {
   if (painArea.isEmpty) return false;
   for (final ep in fit.rehabEpisodes) {
     if (ep.status != 'active') continue;
     final want = kRehabAreaMuscle[ep.area];
-    if (want == null || want == painArea) return true;
+    if (want == null) return true;
+    if (want == painArea) return true;
+    if (want == 'back' && _kLowbackLabels.contains(painArea)) return true;
   }
   return false;
 }

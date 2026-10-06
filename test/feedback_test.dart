@@ -105,6 +105,19 @@ void main() {
       expect(s.hasFeedback, isTrue);
     });
 
+    test('FB-05 腰背用 lowerback 肌群标签时仍命中腰部康复档案', () {
+      // 上游把下背动作重标为 lowerback 后，反馈选择器会给出 lowerback 标签；
+      // 它必须与 kRehabAreaMuscle['lowback']='back' 同义命中（回归：上游融合引入断层）
+      fit.createEpisode(RehabEpisode(
+        id: 'ep-low2', title: '腰部康复', createdAt: DateTime.now(), area: 'lowback', status: 'active'));
+      expect(rehabAreaMatches('lowerback'), isTrue);
+      expect(rehabFeedbackHint('lowerback', 8), isTrue);
+      // 旧的 back 标签仍然命中
+      expect(rehabAreaMatches('back'), isTrue);
+      // 其他部位仍不误命中
+      expect(rehabAreaMatches('calves'), isFalse);
+    });
+
     test('FB-03 部位映射覆盖全部康复部位(除“其他”)', () {
       final missing = kRehabAreas.keys
           .where((k) => k != 'other' && !kRehabAreaMuscle.containsKey(k))
