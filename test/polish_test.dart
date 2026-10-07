@@ -165,9 +165,11 @@ void main() {
 
     double warmth(Color c) => (c.r - c.b) * 255;
 
-    test('light neutrals are warm, not cold grey', () {
+    // The identity mark's field is a pale *mint* gradient (#EEF9F7 → #D2EDE9),
+    // so the light neutrals are deliberately cool (blue ≥ red), not warm bone.
+    test('light neutrals sit on the mint field', () {
       for (final c in [GymColors.light.bg, GymColors.light.bgRaised2, GymColors.light.border]) {
-        expect(warmth(c), greaterThan(6), reason: 'neutro frío: $c');
+        expect(warmth(c), lessThan(0), reason: 'no es menta: $c');
       }
     });
 
