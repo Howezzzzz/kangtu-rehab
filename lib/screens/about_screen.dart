@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
+import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
 
@@ -107,7 +108,7 @@ class AboutScreen extends StatelessWidget {
             bottom: 14,
             child: Opacity(
               opacity: 0.6,
-              child: Image.asset('assets/img/runner.png', fit: BoxFit.fitHeight),
+              child: BrandMark(fit: BoxFit.fitHeight),
             ),
           ),
           Padding(

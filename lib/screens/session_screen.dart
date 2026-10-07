@@ -9,6 +9,7 @@ import '../models/workout.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
+import '../widgets/brand_mark.dart';
 import '../widgets/celebration.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/entrance.dart';
@@ -1518,7 +1519,7 @@ class SessionScreen extends StatelessWidget {
               bottom: -6,
               child: Opacity(
                 opacity: 0.45,
-                child: Image.asset('assets/img/runner.png', fit: BoxFit.fitHeight),
+                child: BrandMark(fit: BoxFit.fitHeight),
               ),
             ),
             Padding(

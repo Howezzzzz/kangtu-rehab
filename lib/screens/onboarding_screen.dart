@@ -8,6 +8,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_background.dart';
 import '../widgets/body_rulers.dart';
+import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
 
@@ -239,8 +240,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               _in(
                 0,
                 Center(
-                  child: Image.asset('assets/img/runner.png',
-                      height: 196, opacity: const AlwaysStoppedAnimation(0.9)),
+                  child: BrandMark(
+                      height: 196, opacity: 0.9),
                 ),
               ),
               const SizedBox(height: 26),
