@@ -106,9 +106,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
             child: Column(
               children: [
-                _rehabEntry(gc, '康复档案', '问诊 · 安全门 · 智能建议', fit.goRehab),
+                _rehabEntry(gc, t.rehabArchiveTitle, t.rehabArchiveBlurb, fit.goRehab),
                 const SizedBox(height: 10),
-                _rehabEntry(gc, '康复手册', '12 周腰痛康复 · 离线可用', fit.goRehabBook),
+                _rehabEntry(gc, t.rehabBookTitle, t.rehabBookBlurbShort, fit.goRehabBook),
               ],
             ),
           ),
@@ -283,7 +283,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              Text('进入', style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
+              Text(t.rehabEnter, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
             ],
           ),
         ),

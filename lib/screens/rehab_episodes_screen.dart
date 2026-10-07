@@ -31,7 +31,7 @@ class RehabEpisodesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ScreenHeader(title: '康复档案', onBack: fit.backFromRehabEpisodes, titleSize: 22),
+            ScreenHeader(title: t.rehabArchiveTitle, onBack: fit.backFromRehabEpisodes, titleSize: 22),
             const SizedBox(height: 16),
             const RehabEpisodesBody(),
           ],
@@ -60,26 +60,24 @@ class RehabEpisodesBody extends StatelessWidget {
                   Row(children: [
                     Icon(PhosphorIconsRegular.shieldCheck, size: 18, color: gc.sage),
                     const SizedBox(width: 10),
-                    Text('本地保存 · 不上传',
+                    Text(t.rehabKeepLocal,
                         style: AppTheme.f(12, weight: FontWeight.w700, color: gc.sage, letterSpacing: 1.2)),
                   ]),
                   const SizedBox(height: 10),
                   Text(
-                    '一个困扰 = 一个档案。填一次问诊信息，先过「安全门」筛查，'
-                    '再让通用智能助手给出康复建议（复制提示词 → 贴给它 → 粘回套用），'
-                    '计划、注意事项和备注都会留在这个档案里。',
+                    t.rehabIntro,
                     style: AppTheme.f(13, weight: FontWeight.w500, color: gc.textSecondary, height: 1.5),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-            PrimaryButton(label: '新建康复档案', onTap: fit.newRehabEpisode),
+            PrimaryButton(label: t.rehabNew, onTap: fit.newRehabEpisode),
             const SizedBox(height: 18),
             if (list.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 26),
-                child: Text('还没有档案。比如「腰疼」「肩痛」都可以开一个。',
+                child: Text(t.rehabEmpty,
                     textAlign: TextAlign.center,
                     style: AppTheme.f(13, weight: FontWeight.w500, color: gc.textTertiary)),
               ),
@@ -117,14 +115,14 @@ class _EpisodeCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(color: color.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(100)),
-                child: Text(safe ? '已通过安全门' : '建议先就医',
+                child: Text(safe ? t.rehabSafePass : t.rehabSeeDoctor,
                     style: AppTheme.f(10.5, weight: FontWeight.w700, color: color)),
               ),
             ]),
             const SizedBox(height: 6),
             Text(
-              '${rehabAreaLabel(ep.area)} · ${rehabDurationLabel(ep.duration)} · 不适 ${ep.pain}/10'
-              ' · 计划 ${ep.routineIds.length} 个',
+              t.rehabEpisodeMeta(rehabAreaLabel(ep.area), rehabDurationLabel(ep.duration), ep.pain,
+                  ep.routineIds.length),
               style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary),
             ),
           ],
@@ -172,21 +170,22 @@ class _RehabNewEpisodeScreenState extends State<RehabNewEpisodeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ScreenHeader(title: '新建康复档案', onBack: fit.backFromRehabNew, titleSize: 22),
+            ScreenHeader(title: t.rehabNew, onBack: fit.backFromRehabNew, titleSize: 22),
             const SizedBox(height: 16),
-            _label(gc, '哪里不舒服'),
+            _label(gc, t.rehabLabelArea),
             _chips<String>(
               gc,
-              kRehabAreas,
+              {for (final k in kRehabAreaIds) k: t.rehabArea(k)},
               {_area},
               false,
               (k) => setState(() => _area = k),
             ),
             const SizedBox(height: 18),
-            _label(gc, '多久了'),
-            _chips<String>(gc, kRehabDurations, {_duration}, false, (k) => setState(() => _duration = k)),
+            _label(gc, t.rehabLabelDuration),
+            _chips<String>(gc, {for (final k in kRehabDurationIds) k: t.rehabDuration(k)}, {_duration}, false,
+                (k) => setState(() => _duration = k)),
             const SizedBox(height: 18),
-            _label(gc, '现在的不适程度：$_pain / 10'),
+            _label(gc, t.rehabPainNow(_pain)),
             Slider(
               value: _pain.toDouble(),
               min: 0,
@@ -197,26 +196,26 @@ class _RehabNewEpisodeScreenState extends State<RehabNewEpisodeScreen> {
               onChanged: (v) => setState(() => _pain = v.round()),
             ),
             const SizedBox(height: 10),
-            _label(gc, '有没有下列情况（有就勾上，我们只做筛查不做诊断）'),
-            for (final e in kRehabRedFlags.entries)
-              _checkRow(gc, e.value, _flags.contains(e.key), () {
-                setState(() => _flags.contains(e.key) ? _flags.remove(e.key) : _flags.add(e.key));
+            _label(gc, t.rehabLabelRedFlags),
+            for (final id in kRehabRedFlagIds)
+              _checkRow(gc, t.rehabRedFlag(id), _flags.contains(id), () {
+                setState(() => _flags.contains(id) ? _flags.remove(id) : _flags.add(id));
               }, warn: true),
             const SizedBox(height: 18),
-            _label(gc, '什么情况会加重 / 缓解'),
-            _text(gc, _factors, '例如：久坐后加重，躺下缓解；弯腰取物时疼'),
+            _label(gc, t.rehabLabelFactors),
+            _text(gc, _factors, t.rehabFactorsHint),
             const SizedBox(height: 18),
-            _label(gc, '康复目标'),
-            _chips<String>(gc, kRehabGoals, _goals, true, (k) => setState(() {
+            _label(gc, t.rehabLabelGoals),
+            _chips<String>(gc, {for (final k in kRehabGoalIds) k: t.rehabGoal(k)}, _goals, true, (k) => setState(() {
                   _goals.contains(k) ? _goals.remove(k) : _goals.add(k);
                 })),
             const SizedBox(height: 18),
-            _label(gc, '有什么器材'),
+            _label(gc, t.rehabLabelGear),
             _chips<String>(gc, {for (final g in _kWearableGear) g: t.equipment(g)}, _gear, true, (k) => setState(() {
                   _gear.contains(k) ? _gear.remove(k) : _gear.add(k);
                 })),
             const SizedBox(height: 18),
-            _label(gc, '每周能练几天：$_days'),
+            _label(gc, t.rehabLabelDays(_days)),
             Row(children: [
               for (final d in [2, 3, 4, 5, 6])
                 Padding(
@@ -239,7 +238,7 @@ class _RehabNewEpisodeScreenState extends State<RehabNewEpisodeScreen> {
                 ),
             ]),
             const SizedBox(height: 24),
-            PrimaryButton(label: '保存并检查安全门', onTap: _save),
+            PrimaryButton(label: t.rehabSaveGate, onTap: _save),
           ],
         ),
       ),
@@ -249,7 +248,7 @@ class _RehabNewEpisodeScreenState extends State<RehabNewEpisodeScreen> {
   Future<void> _save() async {
     final ep = RehabEpisode(
       id: 're${DateTime.now().millisecondsSinceEpoch}',
-      title: '${rehabAreaLabel(_area)}康复',
+      title: t.rehabAutoTitle(rehabAreaLabel(_area)),
       createdAt: DateTime.now(),
       area: _area,
       duration: _duration,
@@ -265,10 +264,9 @@ class _RehabNewEpisodeScreenState extends State<RehabNewEpisodeScreen> {
     if (!ep.safe) {
       await askConfirm(
         context,
-        title: '安全门未通过',
-        body: '勾选的这些情况建议先找医生或康复治疗师当面评估。\n\n'
-            '档案已保存，可以做记录、存医生建议，但本 App 不再提供训练建议。',
-        confirmLabel: '知道了',
+        title: t.rehabGateFailTitle,
+        body: t.rehabGateFailBody,
+        confirmLabel: t.rehabOk,
       );
     }
     if (!mounted) return;

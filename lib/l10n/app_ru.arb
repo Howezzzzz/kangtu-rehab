@@ -1,24 +1,21 @@
 {
   "@@locale": "ru",
-
   "languageName": "Русский",
-  "@languageName": { "description": "This language, written in itself. Shown in the language picker." },
-
+  "@languageName": {
+    "description": "This language, written in itself. Shown in the language picker."
+  },
   "vsLastMonthLabel": "{pct}% к прошлому месяцу",
   "levelStreakLabel": "Уровень {level} · {streak}",
-
   "save": "СОХРАНИТЬ",
   "cancel": "Отмена",
   "cancelCaps": "ОТМЕНА",
   "deleteCaps": "УДАЛИТЬ",
   "done": "ГОТОВО",
   "set": "Задать",
-
   "home": "ГЛАВНАЯ",
   "progress": "ПРОГРЕСС",
   "exercises": "УПРАЖНЕНИЯ",
   "settings": "НАСТРОЙКИ",
-
   "today": "СЕГОДНЯ",
   "thisWeek": "ЭТА НЕДЕЛЯ",
   "recommended": "РЕКОМЕНДУЕМ",
@@ -33,14 +30,12 @@
   "tools": "ИНСТРУМЕНТЫ",
   "firstSessionHint": "Выбери мышцы и запиши первую тренировку",
   "exerciseCount": "{n, plural, one{{n} упражнение} few{{n} упражнения} many{{n} упражнений} other{{n} упражнения}}",
-
   "pushDay": "ЖИМОВОЙ ДЕНЬ",
   "pullDay": "ТЯГОВЫЙ ДЕНЬ",
   "legDay": "ДЕНЬ НОГ",
   "pushFocus": "Грудь · Плечи · Трицепс",
   "pullFocus": "Спина · Бицепс · Трапеции",
   "legFocus": "Квадрицепс · Бицепс бедра · Ягодицы",
-
   "train": "ТРЕНИРОВКА",
   "step1": "ШАГ 1 ИЗ 2",
   "step2": "ШАГ 2 ИЗ 2",
@@ -56,7 +51,6 @@
   "noExercisesMatch": "Ничего не найдено",
   "createItInstead": "Создать своё упражнение",
   "startCount": "СТАРТ · {n, plural, one{{n} УПРАЖНЕНИЕ} few{{n} УПРАЖНЕНИЯ} many{{n} УПРАЖНЕНИЙ} other{{n} УПРАЖНЕНИЯ}}",
-
   "inProgress": "ИДЁТ",
   "paused": "ПАУЗА",
   "last": "ПРОШЛЫЙ",
@@ -74,7 +68,6 @@
   "repsTitle": "ПОВТОРЫ",
   "weightTitle": "ВЕС ({unit})",
   "sessionComplete": "ТРЕНИРОВКА ЗАПИСАНА",
-
   "finishHeadlinePr": "Новый личный рекорд",
   "finishHeadlineGoal": "Недельная цель взята",
   "finishHeadlineStreak": "Серия жива",
@@ -83,7 +76,6 @@
   "finishBodyGoal": "Ты сделал столько тренировок, сколько наметил на эту неделю.",
   "finishBodyStreak": "{streak} дней подряд. Самое трудное — не останавливаться.",
   "finishBodyDefault": "Записано и учтено. Цифры двигает регулярность.",
-
   "vsLastTime": "ПРОТИВ ПРОШЛОГО РАЗА",
   "firstTime": "Записано впервые",
   "prCount": "{n, plural, one{{n} новый рекорд} few{{n} новых рекорда} many{{n} новых рекордов} other{{n} новых рекорда}}",
@@ -99,19 +91,15 @@
   "discardBody": "Подходы этой тренировки будут потеряны.",
   "keepTraining": "Продолжить",
   "discard": "Отменить",
-
   "notifRestChannel": "Таймер отдыха",
   "notifRestChannelWhy": "Сообщает, когда отдых между подходами закончился",
   "notifAlertChannel": "Таймер отдыха (сигнал)",
   "notifAlertChannelWhy": "Показывает баннер, как только отдых закончился",
-
   "restOverTitle": "Отдых окончен",
   "restOverBody": "Возвращайся — следующий подход ждёт.",
-
   "allTimeSessions": "ТРЕНИРОВОК",
   "allTimeTime": "ВРЕМЯ",
   "allTimeSets": "ПОДХОДОВ",
-
   "consistency": "РЕГУЛЯРНОСТЬ",
   "sessionsLogged": "{n, plural, one{записана {n} тренировка} few{записано {n} тренировки} many{записано {n} тренировок} other{записано {n} тренировки}}",
   "streakDays": "серия {n} дн.",
@@ -140,7 +128,6 @@
   "bodyweightHistory": "ИСТОРИЯ",
   "exercisesCaps": "УПРАЖНЕНИЯ",
   "timeCaps": "ВРЕМЯ",
-
   "libraryCount": "{n, plural, one{{n} упражнение в твоей библиотеке} few{{n} упражнения в твоей библиотеке} many{{n} упражнений в твоей библиотеке} other{{n} упражнения в твоей библиотеке}}",
   "searchExercises": "Поиск упражнений",
   "muscleFilter": "МЫШЦА",
@@ -166,13 +153,11 @@
   "clearFilters": "Сбросить фильтры",
   "noExercisesFound": "Упражнения не найдены",
   "noExercisesHint": "Попробуй другой запрос или сбрось фильтры.",
-
   "personalRecord": "ЛИЧНЫЙ РЕКОРД",
   "history": "ИСТОРИЯ",
   "noHistory": "Тренировок пока нет. Потренируй это упражнение, чтобы набрать историю.",
   "notes": "ЗАМЕТКИ",
   "notePlaceholder": "Подсказки, настройка, ощущения…",
-
   "notHere": "Нет «{gear}» в «{place}»",
   "notHereWhy": "Замени на то, что действительно можешь взять сегодня.",
   "altHere": "ЧТО МОЖНО ДЕЛАТЬ ЗДЕСЬ",
@@ -193,7 +178,6 @@
   "placeFilterLabel": "МЕСТО",
   "noGearOnly": "Без инвентаря",
   "placeActive": "Тренируешься здесь: {name}",
-
   "journal": "ДНЕВНИК",
   "noteCount": "{n, plural, =0{Нет заметок} one{{n} заметка} few{{n} заметки} many{{n} заметок} other{{n} заметки}}",
   "noteKindNote": "Заметка",
@@ -226,7 +210,6 @@
   "notePrevMonth": "Предыдущий месяц",
   "noteNextMonth": "Следующий месяц",
   "noteMonthCount": "{n, plural, =0{В этом месяце нет заметок} one{{n} заметка в этом месяце} few{{n} заметки в этом месяце} many{{n} заметок в этом месяце} other{{n} заметки в этом месяце}}",
-
   "measures": "ЗАМЕРЫ",
   "measuresHint": "От шеи до икр — следи, как меняется тело, а не только штанга.",
   "measureCount": "{n, plural, =0{Ничего не записано} one{{n} замер} few{{n} замера} many{{n} замеров} other{{n} замера}}",
@@ -242,7 +225,6 @@
   "measureThigh": "Бедро",
   "measureCalf": "Икра",
   "measureBodyfat": "Жир",
-
   "timeline": "ЛЕНТА",
   "timelineHint": "Та же поза, то же место, тот же свет. Через год сам не поверишь.",
   "timelineEmptyTitle": "Первое фото запускает отсчёт",
@@ -275,7 +257,6 @@
   "notifPhotoChannelWhy": "Напоминание, когда пора сделать следующее фото прогресса.",
   "notifPhotoTitle": "Пора сделать фото прогресса",
   "notifPhotoBody": "{n} дн. с прошлого раза. Та же поза, тот же свет.",
-
   "share": "ПОДЕЛИТЬСЯ",
   "sharePick": "Что показать?",
   "shareStreak": "Серию и регулярность",
@@ -287,11 +268,9 @@
   "shareStreakLabel": "ДНЕЙ ПОДРЯД",
   "shareSessionsLabel": "ТРЕНИРОВОК",
   "shareVolumeLabel": "ОБЪЁМ",
-
   "restForExercise": "ОТДЫХ ДЛЯ ЭТОГО УПРАЖНЕНИЯ",
   "restUsingDefault": "Как по умолчанию",
   "restCustom": "Только для этого",
-
   "setType": "ТИП ПОДХОДА",
   "setTypeNormal": "Рабочий",
   "setTypeWarmup": "Разминочный",
@@ -306,7 +285,6 @@
   "none": "Нет",
   "setCount": "{n, plural, one{{n} подход} few{{n} подхода} many{{n} подходов} other{{n} подхода}}",
   "volumeSuffix": "объём {v}",
-
   "weeklyPlan": "ПЛАН НА НЕДЕЛЮ",
   "yourRoutines": "ТВОИ ПРОГРАММЫ",
   "noRoutines": "Программ пока нет. Создай одну и добавь упражнения.",
@@ -322,17 +300,14 @@
   "dragToReorder": "Потяните за ручку с точками, чтобы изменить порядок — в нём вы тренируетесь.",
   "reorderHandle": "Переместить {name}",
   "removeFromRoutine": "Убрать из программы",
-
   "dropExercise": "Убрать это упражнение?",
   "dropExerciseBody": "«{name}» уйдёт из этой тренировки. Ничего записанного не потеряется.",
   "drop": "Убрать",
-
   "resetData": "Удалить все мои данные",
   "resetTitle": "Удалить всё?",
   "resetBody": "Тренировки, рекорды, программы, заметки и профиль. Это необратимо — сначала выгрузи резервную копию, если она может понадобиться.",
   "resetConfirm": "Удалить всё",
   "resetDone": "Все данные удалены",
-
   "support": "ПОДДЕРЖКА",
   "reportBug": "Сообщить об ошибке",
   "requestFeature": "Предложить функцию",
@@ -402,7 +377,6 @@
   "backupImported": "Резервная копия загружена",
   "backupFailed": "Не удалось прочитать эту копию",
   "nothingToExport": "Выгружать пока нечего — сначала запиши тренировку",
-
   "calculatorsCount": "Калькуляторов для твоих тренировок: {n}",
   "result": "РЕЗУЛЬТАТ",
   "weightLifted": "ПОДНЯТЫЙ ВЕС",
@@ -417,7 +391,6 @@
   "perSide": "НА СТОРОНУ",
   "justTheBar": "Только гриф.",
   "perSideCount": "× {n} на сторону",
-
   "toolNameRm": "1ПМ",
   "toolNameBmi": "ИМТ",
   "toolNameCal": "Калории",
@@ -441,17 +414,14 @@
   "toolDescBf": "Процент жира в теле",
   "toolDescPlate": "Расчёт блинов на штангу",
   "toolDescWarmup": "Подводящие подходы",
-
   "bmiUnderweight": "Недовес",
   "bmiNormal": "Норма",
   "bmiOverweight": "Избыток",
   "bmiObese": "Ожирение",
-
   "actSedentary": "Сидячая",
   "actLight": "Лёгкая",
   "actActive": "Высокая",
   "actModerate": "Умеренная",
-
   "muscleChest": "Грудь",
   "muscleBack": "Спина",
   "muscleLowerBack": "Поясница",
@@ -466,14 +436,12 @@
   "muscleHamstrings": "Бицепс бедра",
   "muscleGlutes": "Ягодицы",
   "muscleCalves": "Икры",
-
   "mgChest": "Грудь",
   "mgBack": "Спина",
   "mgLegs": "Ноги",
   "mgShoulders": "Плечи",
   "mgArms": "Руки",
   "mgCore": "Кор",
-
   "equipBarbell": "Штанга",
   "equipDumbbell": "Гантели",
   "equipCable": "Блок",
@@ -484,11 +452,9 @@
   "equipKettlebell": "Гиря",
   "equipRings": "Кольца",
   "equipOther": "Другое",
-
   "diffBeginner": "Новичок",
   "diffAdvanced": "Продвинутый",
   "diffIntermediate": "Средний",
-
   "about": "О ПРИЛОЖЕНИИ",
   "version": "Версия {v}",
   "aboutBlurb": "Сделано теми, кто тягает, для тех, кто тягает.",
@@ -508,7 +474,6 @@
   "streakCaps": "СЕРИЯ",
   "daysUnit": "{n, plural, one{день} few{дня} many{дней} other{дня}}",
   "reset": "СБРОС",
-
   "welcomeKicker": "ДОБРО ПОЖАЛОВАТЬ В",
   "welcomeBlurb": "Всё остаётся на твоём телефоне. Без аккаунта, без интернета, без оплаты.",
   "welcomeStart": "НАЧАТЬ",
@@ -527,7 +492,6 @@
   "skip2": "Пропустить",
   "madeWithLoveBy": "СДЕЛАНО С ЛЮБОВЬЮ",
   "sourceCode": "ИСХОДНЫЙ КОД",
-
   "suggested": "ПОДБОРКА",
   "results": "РЕЗУЛЬТАТЫ",
   "noMatches": "По этому запросу упражнений нет.",
@@ -556,14 +520,32 @@
   "autoAdvanceHint": "Когда отметишь последний подход упражнения, тренировка перейдёт к следующему.",
   "autoProgress": "Добавлять вес сам",
   "autoProgressHint": "Сделаешь все повторения — следующая тренировка начнётся на {w} тяжелее.",
-  "@autoProgressHint": { "placeholders": { "w": { "type": "String" } } },
+  "@autoProgressHint": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      }
+    }
+  },
   "placePlates": "Блины и гриф",
   "platesAll": "Всё доступно",
   "platesOwned": "{n, plural, one{{n} размер} few{{n} размера} many{{n} размеров} other{{n} размера}}",
-  "@platesOwned": { "placeholders": { "n": { "type": "int" } } },
+  "@platesOwned": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "platePairs": "ПАРЫ",
   "plateAchievable": "Ближайший вес, который соберётся: {w}",
-  "@plateAchievable": { "placeholders": { "w": { "type": "String" } } },
+  "@plateAchievable": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      }
+    }
+  },
   "autoWarmup": "Начинать с разминки",
   "autoWarmupHint": "Добавляет разминочные подходы при открытии тренировки.",
   "trainReminder": "Напоминание о тренировке",
@@ -601,16 +583,34 @@
   "reminderSmartHint": "Берёт дни и время, когда ты реально тренируешься, и молчит, если в этот день ты уже потренировался.",
   "reminderSmartEmpty": "Запиши ещё несколько тренировок, и оно выучит твои дни.",
   "habitFocus": "что ты обычно тренируешь в {day}",
-  "@habitFocus": { "placeholders": { "day": { "type": "String" } } },
+  "@habitFocus": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "duplicateRoutine": "Дублировать программу",
   "copySuffix": "{name} (копия)",
-  "@copySuffix": { "placeholders": { "name": { "type": "String" } } },
+  "@copySuffix": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "saveAsRoutine": "СОХРАНИТЬ КАК ПРОГРАММУ",
   "savedAsRoutine": "Сохранено как программа",
   "templates": "Готовые программы",
   "templatesHint": "Классические программы, собранные из твоей библиотеки. Потом можно поменять что угодно.",
   "templateAdded": "{n, plural, one{добавлена {n} программа} few{добавлено {n} программы} many{добавлено {n} программ} other{добавлено {n} программы}}",
-  "@templateAdded": { "placeholders": { "n": { "type": "int" } } },
+  "@templateAdded": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "tplFullbody": "Три дня в неделю на всё тело. С этого и начинают.",
   "tplPpl": "Жим, тяга и ноги. Три или шесть дней в неделю.",
   "tplUpperlower": "Верх и низ, четыре дня в неделю.",
@@ -618,7 +618,13 @@
   "tplStartingstrength": "Присед каждый раз, две чередующиеся тренировки.",
   "tplHome": "Только перекладина и пол.",
   "dayCount": "{n, plural, one{{n} день} few{{n} дня} many{{n} дней} other{{n} дня}}",
-  "@dayCount": { "placeholders": { "n": { "type": "int" } } },
+  "@dayCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "logRpe": "Записывать усилие (RPE)",
   "rpeHint": "10 — больше ни одного повторения; 8 — оставалось ещё два.",
   "superset": "Суперсет",
@@ -627,7 +633,13 @@
   "aiRoutine": "Программа с ИИ",
   "aiIntro": "Kangtu ни с каким ИИ не общается. Ты сам выгружаешь список упражнений, вставляешь его в тот ассистент, которым уже пользуешься, и приносишь ответ обратно. С телефона само ничего не уходит.",
   "aiMissing": "{n, plural, one{{n} название не нашлось в твоей библиотеке} few{{n} названия не нашлись в твоей библиотеке} many{{n} названий не нашлось в твоей библиотеке} other{{n} названий не нашлось в твоей библиотеке}}",
-  "@aiMissing": { "placeholders": { "n": { "type": "int" } } },
+  "@aiMissing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "importApps": "Какие приложения читает",
   "importOtherCsv": "Любой другой CSV с датой, упражнением, повторениями и весом",
   "importAskApp": "Нужно другое приложение? Попроси",
@@ -714,27 +726,93 @@
   "awardHours100Name": "Сто часов",
   "awardHours100Line": "Сто часов под штангой, с секундомером в руке.",
   "awardWonOn": "Получена {date}",
-  "@awardWonOn": { "placeholders": { "date": { "type": "String" } } },
+  "@awardWonOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "badgeName": "{id, select, gold{Золотой} blue{Синий} green{Зелёный} other{Значок}}",
-  "@badgeName": { "placeholders": { "id": { "type": "String" } } },
+  "@badgeName": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
   "memberSince": "С {date}",
-  "@memberSince": { "placeholders": { "date": { "type": "String" } } },
+  "@memberSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "levelShort": "Уровень {n}",
-  "@levelShort": { "placeholders": { "n": { "type": "int" } } },
+  "@levelShort": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "levelToNext": "{n, plural, one{{n} тренировка до уровня {next}} few{{n} тренировки до уровня {next}} many{{n} тренировок до уровня {next}} other{{n} тренировки до уровня {next}}}",
-  "@levelToNext": { "placeholders": { "n": { "type": "int" }, "next": { "type": "int" } } },
+  "@levelToNext": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
   "heightCm": "{n} см",
-  "@heightCm": { "placeholders": { "n": { "type": "int" } } },
+  "@heightCm": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "heatToneName": "{id, select, ember{Уголь} green{Зелёный} blue{Синий} mono{Серый} other{Цвет}}",
-  "@heatToneName": { "placeholders": { "id": { "type": "String" } } },
+  "@heatToneName": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
   "setsThisWeek": "подходов: {n}",
-  "@setsThisWeek": { "placeholders": { "n": { "type": "int" } } },
+  "@setsThisWeek": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "weekOfGoal": "{n} из {goal} на этой неделе",
-  "@weekOfGoal": { "placeholders": { "n": { "type": "int" }, "goal": { "type": "int" } } },
+  "@weekOfGoal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
   "momentCount": "{n} фото",
   "photosSelected": "Выбрано: {n}",
   "deletePhotosTitle": "Удалить фото ({n})?",
-  "@momentCount": { "placeholders": { "n": { "type": "int" } } },
+  "@momentCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "momentsEmptyHint": "Сфотографируй зал, доску, как ты набрал блины — всё, что хочешь запомнить. Они останутся в телефоне, и видишь их только ты.",
   "awardStreak100Line": "Сто дней подряд. Это уже не мотивация, это ты.",
   "coverLabel": "ОБЛОЖКА",
@@ -749,7 +827,6 @@
   "logWorkoutAction": "ЗАПИСАТЬ ТРЕНИРОВКУ",
   "logging": "ЗАПИСЬ",
   "placesLabel": "Мои места",
-
   "undo": "Отменить",
   "deleteSet": "Удалить подход",
   "setDeleted": "Подход удалён",
@@ -780,7 +857,6 @@
   "moreOptions": "Ещё варианты",
   "suggestInWorkouts": "Предлагать в быстрых тренировках",
   "suggestInWorkoutsHint": "Если выключить, упражнение не попадёт в подборку. Добавить его вручную всё равно можно.",
-
   "onbPlaceTitle": "Где ты тренируешься?",
   "onbPlaceWhy": "Отметь все места, где тренируешься. Предложим только то, что можно сделать в каждом.",
   "onbPlaceGear": "Что у тебя там есть?",
@@ -803,7 +879,6 @@
   "saveChanges": "Сохранить",
   "noStepsYet": "Шагов пока нет. Запиши свои, чтобы не забыть, как ты это делаешь.",
   "addSteps": "Записать шаги",
-
   "setTypeRestPause": "Отдых-пауза",
   "setTypeNormalInfo": "Обычный подход. Учитывается в объёме и рекордах.",
   "setTypeWarmupInfo": "Лёгкие подходы для разминки. Не учитываются в объёме и рекордах.",
@@ -837,7 +912,6 @@
   "importAction": "Импортировать",
   "showFormat": "Показать формат",
   "shareAsFile": "Отправить файлом",
-
   "recoveryTab": "Восстановление",
   "recoveryOverall": "Тело восстановлено на {pct}%",
   "recoveryAllFresh": "Всё восстановлено. Хороший день, чтобы тренировать что угодно.",
@@ -847,23 +921,18 @@
   "recoveryHint": "Нажми на мышцу, чтобы увидеть, насколько она восстановилась. Недавние подходы весят больше, а тяжёлые (по RPE) — ещё больше.",
   "recoveryPct": "восстановлено на {pct}%",
   "readyInHours": "готово через ~{h} ч",
-
   "tplAbcd": "Четыре дня: грудь и трицепс, спина и бицепс, ноги, плечи и пресс.",
   "tplAbcde": "Пять дней, по группе мышц на каждый: грудь, спина, ноги, плечи, руки.",
-
   "elapsedCaps": "ПРОШЛО",
   "tapToSkip": "Нажми, чтобы пропустить",
-
   "screenLocked": "Экран заблокирован",
   "lockedHint": "Нажми и удерживай отпечаток сверху, чтобы разблокировать",
-
   "liveDoneSet": "Подход готов",
   "liveSkipRest": "Пропустить отдых",
   "livePause": "Пауза",
   "liveResume": "Продолжить",
   "liveNext": "Дальше",
   "liveUpNext": "Дальше: {name}",
-
   "stickerOpen": "Поделиться на фото",
   "stickerNoPhoto": "Без фото",
   "stickerWorkout": "Тренировка",
@@ -872,32 +941,25 @@
   "stickerHint": "Перетащи, чтобы сдвинуть, и сведи пальцы, чтобы изменить размер или повернуть",
   "stickerSaved": "Сохранено в галерею",
   "stickerWeek": "Эта неделя",
-
   "getReady": "Приготовься",
-
   "stickerGallery": "Галерея",
   "stickerCamera": "Камера",
   "shareIntroTitle": "Поделись этой программой",
   "shareIntroBody": "Отправь её партнёру, другу или семье. Они получат небольшой файл, который открывается в Kangtu и добавляет программу одним касанием, с подходами и весами.",
   "removedFromRoutine": "Убрано из программы",
-
   "radarTitle": "Последние 30 дней",
   "radarHint": "Посмотри, каким зонам нужно больше работы",
   "radarEmpty": "Потренируйтесь несколько дней, чтобы увидеть баланс",
   "radarBalanced": "Пока всё сбалансировано",
   "radarFocus": "Нужно больше: {list}",
-
   "countdownReady": "Приготовься",
   "countdownSkip": "Нажми, чтобы начать сразу",
   "countdownSetting": "Обратный отсчёт перед стартом",
-
   "effortSetting": "Отмечать усилие",
   "effortHint": "RPE: 10 — больше ни одного повтора, 8 — оставалось два. RIR — сколько повторов оставалось в запасе. Если у подхода есть оценка, 1ПМ считается по таблице RPE.",
   "rirHint": "0 — больше ни одного повтора, 2 — оставалось два.",
   "addWeekWidget": "Добавить виджет недели",
-
   "gamificationSetting": "Медали и уровни",
-
   "repCount": "{n, plural, one{{n} повтор} few{{n} повтора} many{{n} повторов} other{{n} повтора}}",
   "prBestSet": "Лучший подход",
   "weekStartSetting": "Неделя начинается с",
@@ -1100,5 +1162,132 @@
   "trainReminderRowHint": "Напоминание в дни тренировок.",
   "alarmSoundRowHint": "Что звучит в конце отдыха.",
   "alarmStyleRowHint": "Звонит ли в беззвучном режиме.",
-  "recommendedRowHint": "Упражнения, которые мы предлагаем на главной."
+  "recommendedRowHint": "Упражнения, которые мы предлагаем на главной.",
+  "rehabTitle": "Rehab",
+  "rehabModuleSubtitle": "Case files · safety gate · AI advice · offline",
+  "rehabArchiveTitle": "Rehab case files",
+  "rehabArchiveBlurb": "Intake · safety gate · AI advice",
+  "rehabBookTitle": "Rehab handbook",
+  "rehabBookBlurb": "12-week low-back programme · offline reference",
+  "rehabBookBlurbShort": "12-week low-back programme · offline",
+  "rehabEnter": "Open",
+  "rehabCardBlurb": "Case files · safety gate · AI advice",
+  "rehabKeepLocal": "Saved on device · never uploaded",
+  "rehabIntro": "One problem, one case file. Fill the intake once, clear the safety gate, then let a general AI assistant suggest a rehab plan (copy the prompt → paste it there → paste the answer back). Plans, cautions and notes all stay in this file.",
+  "rehabNew": "New case file",
+  "rehabEmpty": "No case files yet. A sore back or a painful shoulder is enough to start one.",
+  "rehabSafePass": "Safety gate passed",
+  "rehabSeeDoctor": "See a doctor first",
+  "rehabLabelArea": "Where does it hurt?",
+  "rehabLabelDuration": "How long?",
+  "rehabLabelRedFlags": "Any of these? (tick to flag — this is screening, not diagnosis)",
+  "rehabLabelFactors": "What makes it worse or better",
+  "rehabFactorsHint": "e.g. worse after sitting, better lying down; hurts when bending to pick something up",
+  "rehabLabelGoals": "Rehab goals",
+  "rehabLabelGear": "What kit do you have?",
+  "rehabSaveGate": "Save and run the safety gate",
+  "rehabGateFailTitle": "Safety gate not passed",
+  "rehabGateFailBody": "The items you ticked are best assessed in person by a doctor or physiotherapist.\n\nYour case file is saved — keep notes, store your doctor's advice — but the app will not offer training advice for it.",
+  "rehabOk": "Got it",
+  "rehabDeleteFile": "Delete this case file",
+  "rehabGatePassedNote": "Nothing in your intake suggests you need to see a doctor first. The advice below is for self-management only — stop any time symptoms get worse.",
+  "rehabGateFailedNote": "You ticked items that need an in-person assessment. This file keeps records only; the app will not offer training advice.",
+  "rehabFieldArea": "Area",
+  "rehabFieldDuration": "Duration",
+  "rehabFieldPain": "Pain",
+  "rehabFieldFactors": "Worse / better",
+  "rehabFieldGoals": "Goals",
+  "rehabFieldGear": "Kit",
+  "rehabFieldDays": "Days a week",
+  "rehabGearBodyweight": "Mostly bodyweight",
+  "rehabMySituation": "My situation",
+  "rehabAiTitle": "AI rehab advice (manual, local)",
+  "rehabAiBlurb": "The app never goes online and never uploads anything — everything is copy and paste by hand.",
+  "rehabCopyPrompt": "Copy the prompt to an AI assistant",
+  "rehabExportPrompt": "Export the prompt as a file",
+  "rehabPasteHint": "Paste the assistant's whole answer here (plan data included)",
+  "rehabPaste": "Paste",
+  "rehabSeeFormat": "See the output format",
+  "rehabImportAdvice": "Import the advice",
+  "rehabCautions": "Cautions",
+  "rehabUnreadable": "Could not read that — make sure it is the assistant's answer (with plan data in it)",
+  "rehabNoPlan": "No usable training plan found",
+  "rehabRehabPlans": "Rehab plans",
+  "rehabNoAdviceYet": "Nothing imported yet. Run the assistant flow above and it will appear here.",
+  "rehabGateBlocksPlan": "Safety gate not passed — no training advice for now.",
+  "rehabNotes": "Notes / doctor's advice",
+  "rehabNotesHint": "Jot things down: what the doctor said, which days hurt more, what helps…",
+  "rehabSaveNotes": "Save notes",
+  "rehabNotesSaved": "Notes saved",
+  "rehabPromptCopied": "Prompt copied",
+  "rehabPromptCopiedHint": "Paste it into any AI assistant, then paste the answer back",
+  "rehabDeleteTitle": "Delete the case file?",
+  "rehabDeleteBody": "Only the file goes — training plans it created are kept.",
+  "rehabDelete": "Delete",
+  "rehabTabToday": "Today",
+  "rehabTabPlan": "Schedule",
+  "rehabTabLog": "Log",
+  "rehabTabBook": "Handbook",
+  "rehabHandTitle": "Rehab handbook",
+  "rehabHandTarget": "Who it is for",
+  "rehabHandGoal": "Training goal",
+  "rehabHandPrinciple": "Principles",
+  "rehabHandTimeline": "Timeline",
+  "rehabHandTimelineSub": "The full arc from injury to now",
+  "rehabHandSchedule": "12-week schedule",
+  "rehabHandScheduleSub": "4+1 phases · 28 sessions",
+  "rehabHandPhaseDetail": "Phase detail",
+  "rehabHandExpand": "Tap to expand",
+  "rehabHandTraffic": "Traffic-light cheat sheet",
+  "rehabHandTrafficSub": "One line after each session · stored locally",
+  "rehabHandMaintain": "Maintenance",
+  "rehabHandFeel": "Feel / pain score (optional)",
+  "rehabHandSaveLog": "Save entry",
+  "rehabHandHistory": "History",
+  "rehabHandNoLog": "No entries yet",
+  "rehabHandTrafficGreen": "Green",
+  "rehabHandTrafficYellow": "Amber",
+  "rehabHandTrafficRed": "Red",
+  "rehabHandFaq": "FAQ",
+  "rehabHandDelete": "Del",
+  "rehabAreaLowback": "Lower back",
+  "rehabAreaNeck": "Neck / upper back",
+  "rehabAreaShoulder": "Shoulder",
+  "rehabAreaElbow": "Elbow / wrist",
+  "rehabAreaHip": "Hip",
+  "rehabAreaKnee": "Knee",
+  "rehabAreaAnkle": "Ankle / foot",
+  "rehabAreaOther": "Other / not sure",
+  "rehabDurAcute": "Under a week",
+  "rehabDurSub": "1–4 weeks",
+  "rehabDurChronic": "1–3 months",
+  "rehabDurLong": "Over 3 months",
+  "rehabGoalPain": "Ease the pain",
+  "rehabGoalMobility": "Restore mobility",
+  "rehabGoalStrength": "Build strength",
+  "rehabGoalReturn": "Get back to training",
+  "rehabGoalDaily": "Day-to-day function (sitting, bending, stairs)",
+  "rehabFlagBladder": "Bladder or bowel changes, saddle numbness",
+  "rehabFlagWeakness": "Progressive leg weakness, unsteady or dragging walk",
+  "rehabFlagTrauma": "A recent fall or impact",
+  "rehabFlagFever": "Fever, chills, or local heat and swelling",
+  "rehabFlagNight": "Night pain at rest, unexplained weight loss",
+  "rehabFlagCancer": "Cancer, TB or severe osteoporosis",
+  "rehabFlagPregnant": "Pregnant or early post-partum",
+  "rehabFlagSurgery": "Surgery in the last 3 months",
+  "rehabStopRules": "Stop and see a doctor if: pain keeps getting worse during training; new numbness, weakness or bladder/bowel changes; dizziness, chest tightness or palpitations; pain clearly worse the next day.",
+  "rehabPlanCount": "{n} programmes",
+  "rehabPainNow": "Pain right now: {pain} / 10",
+  "rehabLabelDays": "Days per week: {days}",
+  "rehabEpisodeMeta": "{area} · {duration} · pain {pain}/10 · {plans} programmes",
+  "rehabAutoTitle": "{area} rehab",
+  "rehabRoutinesMade": "Made {routines} programmes · {added} exercises · {adjusted} adjusted",
+  "rehabMissedActions": "Not matched: {list}",
+  "rehabExerciseCount": "{n} exercises",
+  "rehabDaysCount": "{n} days",
+  "rehabLogStage": "Phase {n}",
+  "rehabLogCount": "{n} entries",
+  "rehabPhaseN": "Phase {n}",
+  "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
+  "rehabGateFailedShort": "Gate not passed · see a doctor first"
 }

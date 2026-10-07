@@ -14,6 +14,7 @@ import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui_kit.dart';
+import '../l10n/l10n.dart';
 
 const _kLogKey = 'rehab_log_v1';
 
@@ -42,7 +43,7 @@ class _RehabScreenState extends State<RehabScreen> {
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
-    const labels = ['今天', '课表', '日志', '手册'];
+    final labels = [t.rehabTabToday, t.rehabTabPlan, t.rehabTabLog, t.rehabTabBook];
     return SafeArea(
       bottom: false,
       child: SingleChildScrollView(
@@ -52,7 +53,7 @@ class _RehabScreenState extends State<RehabScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ScreenHeader(
-              title: '康复手册',
+              title: t.rehabBookTitle,
               onBack: fit.backFromRehabBook,
               titleSize: 22,
               subtitle: RehabData.meta()['subtitle']?.toString(),
@@ -217,15 +218,15 @@ class _TodaySection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('训练对象', style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
+              Text(t.rehabHandTarget, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
               const SizedBox(height: 4),
               _Rich(meta['target']?.toString() ?? ''),
               const Divider(height: 22),
-              Text('训练目标', style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
+              Text(t.rehabHandGoal, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
               const SizedBox(height: 4),
               _Rich(meta['goals']?.toString() ?? ''),
               const Divider(height: 22),
-              Text('总原则', style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
+              Text(t.rehabHandPrinciple, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
               const SizedBox(height: 4),
               _Rich(meta['principle']?.toString() ?? ''),
             ],
@@ -253,7 +254,7 @@ class _TodaySection extends StatelessWidget {
           ),
         ],
         if (story.isNotEmpty) ...[
-          const _SectionHead('01', '病程时间线', sub: '从受伤到现在的完整脉络'),
+          _SectionHead('01', t.rehabHandTimeline, sub: t.rehabHandTimelineSub),
           SoftCard(
             child: Column(
               children: [
@@ -333,7 +334,7 @@ class _PlanSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionHead('02', '12 周训练课表', sub: '4+1 阶段 · 28 次训练'),
+        _SectionHead('02', t.rehabHandSchedule, sub: t.rehabHandScheduleSub),
         for (final p in phases) ...[
           SoftCard(
             child: Column(
@@ -359,7 +360,7 @@ class _PlanSection extends StatelessWidget {
           ),
           const SizedBox(height: 10),
         ],
-        const _SectionHead('03', '每阶段课表明细', sub: '点开展开'),
+        _SectionHead('03', t.rehabHandPhaseDetail, sub: t.rehabHandExpand),
         for (final s in sessions) ...[
           _sessionCard(context, s as Map),
           const SizedBox(height: 8),
@@ -382,7 +383,7 @@ class _PlanSection extends StatelessWidget {
           childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
           iconColor: gc.textSecondary,
           collapsedIconColor: gc.textSecondary,
-          title: Text('阶段${s['phase']} · ${s['title'] ?? ''}',
+          title: Text('${t.rehabLogStage('${s['phase']}')} · ${s['title'] ?? ''}',
               style: AppTheme.f(13.5, weight: FontWeight.w800, color: gc.text)),
           subtitle: Text('${s['range'] ?? ''} · ${s['meta'] ?? ''}',
               style: AppTheme.f(11, weight: FontWeight.w500, color: gc.textSecondary)),
@@ -486,14 +487,14 @@ class _LogSectionState extends State<_LogSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionHead('08', '红绿灯速记', sub: '练完记一行 · 存本地'),
+        _SectionHead('08', t.rehabHandTraffic, sub: t.rehabHandTrafficSub),
         SoftCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Wrap(spacing: 6, children: [
                 for (final ph in const [0, 1, 2, 3, 4])
-                  _Chip(ph == 0 ? '阶段0' : (ph == 4 ? '维持期' : '阶段$ph'),
+                  _Chip(ph == 4 ? t.rehabHandMaintain : t.rehabPhaseN('$ph'),
                       color: _phase == ph ? gc.ember : gc.textTertiary),
               ]),
               const SizedBox(height: 4),
@@ -528,7 +529,7 @@ class _LogSectionState extends State<_LogSection> {
                 maxLines: 2,
                 style: AppTheme.f(13, weight: FontWeight.w500, color: gc.text),
                 decoration: InputDecoration(
-                  hintText: '感受 / 疼痛分数（可空）',
+                  hintText: t.rehabHandFeel,
                   hintStyle: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textTertiary),
                   filled: true,
                   fillColor: gc.mutedFill,
@@ -539,13 +540,13 @@ class _LogSectionState extends State<_LogSection> {
               const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
-                child: PrimaryButton(label: '保存记录', onTap: _save),
+                child: PrimaryButton(label: t.rehabHandSaveLog, onTap: _save),
               ),
             ],
           ),
         ),
-        _SectionHead('09', '历史记录',
-            sub: _entries.isEmpty ? '还没有记录' : '共 ${_entries.length} 条'),
+        _SectionHead('09', t.rehabHandHistory,
+            sub: _entries.isEmpty ? t.rehabHandNoLog : t.rehabLogCount(_entries.length)),
         for (var i = 0; i < _entries.length; i++)
           Padding(
             padding: const EdgeInsets.only(bottom: 6),
@@ -560,7 +561,7 @@ class _LogSectionState extends State<_LogSection> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    '${_entries[i]['date']} · 阶段${_entries[i]['phase']} · ${_lightLabel('${_entries[i]['light']}')}'
+                    '${_entries[i]['date']} · ${t.rehabLogStage('${_entries[i]['phase']}')} · ${_lightLabel('${_entries[i]['light']}')}'
                     '${'${_entries[i]['feel'] ?? ''}'.isEmpty ? '' : ' · ${_entries[i]['feel']}'}',
                     style: AppTheme.f(12, weight: FontWeight.w600, color: gc.text),
                   ),
@@ -571,7 +572,7 @@ class _LogSectionState extends State<_LogSection> {
                     final prefs = await SharedPreferences.getInstance();
                     await prefs.setString(_kLogKey, jsonEncode(_entries));
                   },
-                  child: Text('删', style: AppTheme.f(12, weight: FontWeight.w700, color: gc.danger)),
+                  child: Text(t.rehabHandDelete, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.danger)),
                 ),
               ]),
             ),
@@ -580,7 +581,7 @@ class _LogSectionState extends State<_LogSection> {
     );
   }
 
-  String _lightLabel(String c) => c == 'g' ? '绿灯' : (c == 'y' ? '黄灯' : '红灯');
+  String _lightLabel(String c) => c == 'g' ? t.rehabHandTrafficGreen : (c == 'y' ? t.rehabHandTrafficYellow : t.rehabHandTrafficRed);
 
   Color _lightColor(String? c) {
     final gc = context.gc;
@@ -695,7 +696,7 @@ class _BookSection extends StatelessWidget {
             ],
           ),
         ),
-        _SectionHead('14', 'FAQ · 常见疑问'),
+        _SectionHead('14', t.rehabHandFaq),
         for (final f in faq) ...[
           SoftCard(
             padding: EdgeInsets.zero,

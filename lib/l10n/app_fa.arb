@@ -1444,19 +1444,37 @@
   "addWeekWidget": "افزودن ویجت هفته",
   "gamificationSetting": "مدال‌ها و سطوح",
   "repCount": "{n, plural, =1{۱ تکرار} other{{n} تکرار}}",
-  "@repCount": {"placeholders": {"n": {"type": "int"}}},
+  "@repCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "prBestSet": "بهترین ست",
   "weekStartSetting": "شروع هفته",
   "stepOutOfWorkout": "مکث و خروج",
   "saveToRoutine": "ذخیره تغییرات در روتین",
   "routineUpdated": "روتین به‌روز شد",
   "saveChangesTitle": "تغییرات «{name}» ذخیره شود؟",
-  "@saveChangesTitle": {"placeholders": {"name": {"type": "String"}}},
+  "@saveChangesTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "saveChangesBody": "دفعه بعد که شروعش کنی، روتین این تغییرات را خواهد داشت.",
   "routineOrderChanged": "ترتیب جدید حرکات",
   "mineOnly": "ساخته خودت",
   "createNamed": "اینجا نیست؟ «{name}» را بساز",
-  "@createNamed": {"placeholders": {"name": {"type": "String"}}},
+  "@createNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "orStartWith": "یا شروع با",
   "warmupFocus": "گرم کردن",
   "warmupFocusHint": "تحرک و فعال‌سازی، با وسیله یا بدون آن",
@@ -1480,16 +1498,52 @@
   "multiPlanSetting": "چند روتین در روز",
   "multiPlanHint": "هر روتین این روز را لمس کن. به ترتیبی که اضافه می‌کنی می‌آیند.",
   "routineOfDay": "{n} از {total} امروز",
-  "@routineOfDay": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}}},
+  "@routineOfDay": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "nextToday": "بعدی امروز",
   "planAboutMe": "درباره من:",
   "planBody": "{sex}، {age} ساله، قد {height}، وزن {weight}.",
-  "@planBody": {"placeholders": {"sex": {"type": "String"}, "age": {"type": "int"}, "height": {"type": "String"}, "weight": {"type": "String"}}},
+  "@planBody": {
+    "placeholders": {
+      "sex": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      },
+      "height": {
+        "type": "String"
+      },
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
   "planDays": "می‌خواهم هفته‌ای {n} روز تمرین کنم.",
-  "@planDays": {"placeholders": {"n": {"type": "int"}}},
+  "@planDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "planNoHistory": "هنوز تمرینی ثبت نشده: من را مبتدی حساب کن و حجم و وزن‌ها را محافظه‌کارانه نگه دار.",
   "planHistory": "{n, plural, =1{۱ تمرین در ۳۰ روز اخیر ثبت شده.} other{{n} تمرین در ۳۰ روز اخیر ثبت شده.}}",
-  "@planHistory": {"placeholders": {"n": {"type": "int"}}},
+  "@planHistory": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "planBestLifts": "بهترین ست‌های اخیر",
   "planAskFirst": "اگر هدفم (قدرت، عضله، چربی‌سوزی یا آمادگی عمومی) یا مدت هر جلسه را نمی‌دانی، اول در یک پیام کوتاه بپرس. وقتی داشتی، فقط با JSON جواب بده.",
   "backToTop": "بازگشت به بالا",
@@ -1652,5 +1706,132 @@
   "trainReminderRowHint": "یادآوری در روزهای تمرین.",
   "alarmSoundRowHint": "صدایی که پایان استراحت پخش می‌شود.",
   "alarmStyleRowHint": "آیا در حالت بی‌صدا زنگ بزند.",
-  "recommendedRowHint": "حرکت‌هایی که در خانه پیشنهاد می‌دهیم."
+  "recommendedRowHint": "حرکت‌هایی که در خانه پیشنهاد می‌دهیم.",
+  "rehabTitle": "Rehab",
+  "rehabModuleSubtitle": "Case files · safety gate · AI advice · offline",
+  "rehabArchiveTitle": "Rehab case files",
+  "rehabArchiveBlurb": "Intake · safety gate · AI advice",
+  "rehabBookTitle": "Rehab handbook",
+  "rehabBookBlurb": "12-week low-back programme · offline reference",
+  "rehabBookBlurbShort": "12-week low-back programme · offline",
+  "rehabEnter": "Open",
+  "rehabCardBlurb": "Case files · safety gate · AI advice",
+  "rehabKeepLocal": "Saved on device · never uploaded",
+  "rehabIntro": "One problem, one case file. Fill the intake once, clear the safety gate, then let a general AI assistant suggest a rehab plan (copy the prompt → paste it there → paste the answer back). Plans, cautions and notes all stay in this file.",
+  "rehabNew": "New case file",
+  "rehabEmpty": "No case files yet. A sore back or a painful shoulder is enough to start one.",
+  "rehabSafePass": "Safety gate passed",
+  "rehabSeeDoctor": "See a doctor first",
+  "rehabLabelArea": "Where does it hurt?",
+  "rehabLabelDuration": "How long?",
+  "rehabLabelRedFlags": "Any of these? (tick to flag — this is screening, not diagnosis)",
+  "rehabLabelFactors": "What makes it worse or better",
+  "rehabFactorsHint": "e.g. worse after sitting, better lying down; hurts when bending to pick something up",
+  "rehabLabelGoals": "Rehab goals",
+  "rehabLabelGear": "What kit do you have?",
+  "rehabSaveGate": "Save and run the safety gate",
+  "rehabGateFailTitle": "Safety gate not passed",
+  "rehabGateFailBody": "The items you ticked are best assessed in person by a doctor or physiotherapist.\n\nYour case file is saved — keep notes, store your doctor's advice — but the app will not offer training advice for it.",
+  "rehabOk": "Got it",
+  "rehabDeleteFile": "Delete this case file",
+  "rehabGatePassedNote": "Nothing in your intake suggests you need to see a doctor first. The advice below is for self-management only — stop any time symptoms get worse.",
+  "rehabGateFailedNote": "You ticked items that need an in-person assessment. This file keeps records only; the app will not offer training advice.",
+  "rehabFieldArea": "Area",
+  "rehabFieldDuration": "Duration",
+  "rehabFieldPain": "Pain",
+  "rehabFieldFactors": "Worse / better",
+  "rehabFieldGoals": "Goals",
+  "rehabFieldGear": "Kit",
+  "rehabFieldDays": "Days a week",
+  "rehabGearBodyweight": "Mostly bodyweight",
+  "rehabMySituation": "My situation",
+  "rehabAiTitle": "AI rehab advice (manual, local)",
+  "rehabAiBlurb": "The app never goes online and never uploads anything — everything is copy and paste by hand.",
+  "rehabCopyPrompt": "Copy the prompt to an AI assistant",
+  "rehabExportPrompt": "Export the prompt as a file",
+  "rehabPasteHint": "Paste the assistant's whole answer here (plan data included)",
+  "rehabPaste": "Paste",
+  "rehabSeeFormat": "See the output format",
+  "rehabImportAdvice": "Import the advice",
+  "rehabCautions": "Cautions",
+  "rehabUnreadable": "Could not read that — make sure it is the assistant's answer (with plan data in it)",
+  "rehabNoPlan": "No usable training plan found",
+  "rehabRehabPlans": "Rehab plans",
+  "rehabNoAdviceYet": "Nothing imported yet. Run the assistant flow above and it will appear here.",
+  "rehabGateBlocksPlan": "Safety gate not passed — no training advice for now.",
+  "rehabNotes": "Notes / doctor's advice",
+  "rehabNotesHint": "Jot things down: what the doctor said, which days hurt more, what helps…",
+  "rehabSaveNotes": "Save notes",
+  "rehabNotesSaved": "Notes saved",
+  "rehabPromptCopied": "Prompt copied",
+  "rehabPromptCopiedHint": "Paste it into any AI assistant, then paste the answer back",
+  "rehabDeleteTitle": "Delete the case file?",
+  "rehabDeleteBody": "Only the file goes — training plans it created are kept.",
+  "rehabDelete": "Delete",
+  "rehabTabToday": "Today",
+  "rehabTabPlan": "Schedule",
+  "rehabTabLog": "Log",
+  "rehabTabBook": "Handbook",
+  "rehabHandTitle": "Rehab handbook",
+  "rehabHandTarget": "Who it is for",
+  "rehabHandGoal": "Training goal",
+  "rehabHandPrinciple": "Principles",
+  "rehabHandTimeline": "Timeline",
+  "rehabHandTimelineSub": "The full arc from injury to now",
+  "rehabHandSchedule": "12-week schedule",
+  "rehabHandScheduleSub": "4+1 phases · 28 sessions",
+  "rehabHandPhaseDetail": "Phase detail",
+  "rehabHandExpand": "Tap to expand",
+  "rehabHandTraffic": "Traffic-light cheat sheet",
+  "rehabHandTrafficSub": "One line after each session · stored locally",
+  "rehabHandMaintain": "Maintenance",
+  "rehabHandFeel": "Feel / pain score (optional)",
+  "rehabHandSaveLog": "Save entry",
+  "rehabHandHistory": "History",
+  "rehabHandNoLog": "No entries yet",
+  "rehabHandTrafficGreen": "Green",
+  "rehabHandTrafficYellow": "Amber",
+  "rehabHandTrafficRed": "Red",
+  "rehabHandFaq": "FAQ",
+  "rehabHandDelete": "Del",
+  "rehabAreaLowback": "Lower back",
+  "rehabAreaNeck": "Neck / upper back",
+  "rehabAreaShoulder": "Shoulder",
+  "rehabAreaElbow": "Elbow / wrist",
+  "rehabAreaHip": "Hip",
+  "rehabAreaKnee": "Knee",
+  "rehabAreaAnkle": "Ankle / foot",
+  "rehabAreaOther": "Other / not sure",
+  "rehabDurAcute": "Under a week",
+  "rehabDurSub": "1–4 weeks",
+  "rehabDurChronic": "1–3 months",
+  "rehabDurLong": "Over 3 months",
+  "rehabGoalPain": "Ease the pain",
+  "rehabGoalMobility": "Restore mobility",
+  "rehabGoalStrength": "Build strength",
+  "rehabGoalReturn": "Get back to training",
+  "rehabGoalDaily": "Day-to-day function (sitting, bending, stairs)",
+  "rehabFlagBladder": "Bladder or bowel changes, saddle numbness",
+  "rehabFlagWeakness": "Progressive leg weakness, unsteady or dragging walk",
+  "rehabFlagTrauma": "A recent fall or impact",
+  "rehabFlagFever": "Fever, chills, or local heat and swelling",
+  "rehabFlagNight": "Night pain at rest, unexplained weight loss",
+  "rehabFlagCancer": "Cancer, TB or severe osteoporosis",
+  "rehabFlagPregnant": "Pregnant or early post-partum",
+  "rehabFlagSurgery": "Surgery in the last 3 months",
+  "rehabStopRules": "Stop and see a doctor if: pain keeps getting worse during training; new numbness, weakness or bladder/bowel changes; dizziness, chest tightness or palpitations; pain clearly worse the next day.",
+  "rehabPlanCount": "{n} programmes",
+  "rehabPainNow": "Pain right now: {pain} / 10",
+  "rehabLabelDays": "Days per week: {days}",
+  "rehabEpisodeMeta": "{area} · {duration} · pain {pain}/10 · {plans} programmes",
+  "rehabAutoTitle": "{area} rehab",
+  "rehabRoutinesMade": "Made {routines} programmes · {added} exercises · {adjusted} adjusted",
+  "rehabMissedActions": "Not matched: {list}",
+  "rehabExerciseCount": "{n} exercises",
+  "rehabDaysCount": "{n} days",
+  "rehabLogStage": "Phase {n}",
+  "rehabLogCount": "{n} entries",
+  "rehabPhaseN": "Phase {n}",
+  "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
+  "rehabGateFailedShort": "Gate not passed · see a doctor first"
 }

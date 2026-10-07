@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/models/rehab_episode.dart';
 import 'package:gymmane/services/local_store.dart';
+import 'package:gymmane/l10n/l10n.dart';
 import 'package:gymmane/services/rehab_intake.dart';
 import 'package:gymmane/state/fit_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ void main() {
     await Store.instance.init();
     fit.resetAllData();
     fit.setUnits('kg');
+    setAppLanguage('zh');
   });
 
   RehabEpisode episode({List<String> flags = const []}) => RehabEpisode(

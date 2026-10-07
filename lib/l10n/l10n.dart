@@ -260,6 +260,44 @@ extension GymL10n on AppLocalizations {
         _ => equipOther,
       };
 
+  // ---- 康复模块 ----
+  String rehabArea(String id) => switch (id) {
+        'lowback' => rehabAreaLowback,
+        'neck' => rehabAreaNeck,
+        'shoulder' => rehabAreaShoulder,
+        'elbow' => rehabAreaElbow,
+        'hip' => rehabAreaHip,
+        'knee' => rehabAreaKnee,
+        'ankle' => rehabAreaAnkle,
+        _ => rehabAreaOther,
+      };
+
+  String rehabDuration(String id) => switch (id) {
+        'acute' => rehabDurAcute,
+        'sub' => rehabDurSub,
+        'chronic' => rehabDurChronic,
+        _ => rehabDurLong,
+      };
+
+  String rehabGoal(String id) => switch (id) {
+        'pain' => rehabGoalPain,
+        'mobility' => rehabGoalMobility,
+        'strength' => rehabGoalStrength,
+        'return' => rehabGoalReturn,
+        _ => rehabGoalDaily,
+      };
+
+  String rehabRedFlag(String id) => switch (id) {
+        'bladder' => rehabFlagBladder,
+        'weakness' => rehabFlagWeakness,
+        'trauma' => rehabFlagTrauma,
+        'fever' => rehabFlagFever,
+        'night' => rehabFlagNight,
+        'cancer' => rehabFlagCancer,
+        'pregnant' => rehabFlagPregnant,
+        _ => rehabFlagSurgery,
+      };
+
   String exerciseKind(String id) => switch (id) {
         'calisthenics' => kindCalisthenics,
         'cardio' => kindCardio,

@@ -10,6 +10,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui_kit.dart';
 import 'rehab_episodes_screen.dart';
+import '../l10n/l10n.dart';
 
 class RehabHomeScreen extends StatelessWidget {
   const RehabHomeScreen({super.key});
@@ -26,10 +27,10 @@ class RehabHomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ScreenHeader(
-              title: '康复',
+              title: t.rehabTitle,
               onBack: fit.backFromRehabHome,
               titleSize: 22,
-              subtitle: '康复档案 · 安全门 · 智能建议 · 离线',
+              subtitle: t.rehabModuleSubtitle,
             ),
             const SizedBox(height: 16),
             // —— 康复档案（主）
@@ -53,16 +54,16 @@ class RehabHomeScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('康复手册',
+                          Text(t.rehabBookTitle,
                               style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
                           const SizedBox(height: 2),
-                          Text('12 周腰痛康复 · 离线可看的参考内容',
+                          Text(t.rehabBookBlurb,
                               style: AppTheme.f(12,
                                   weight: FontWeight.w500, color: gc.textSecondary)),
                         ],
                       ),
                     ),
-                    Text('进入', style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
+                    Text(t.rehabEnter, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
                   ],
                 ),
               ),

@@ -883,8 +883,8 @@ class FitState extends FitCore
     final month = DateTime.now().subtract(const Duration(days: 30));
     final recent = sessions.where((s) => s.date.isAfter(month)).length;
     final goals = ep.goals.map(rehabGoalLabel).join('、');
-    final gear = ep.equipment.isEmpty ? '徒手/自重为主' : ep.equipment.join('、');
-    final flags = ep.redFlags.map((k) => kRehabRedFlags[k] ?? k).join('；');
+    final gear = ep.equipment.isEmpty ? t.rehabGearBodyweight : ep.equipment.join('、');
+    final flags = ep.redFlags.map((k) => t.rehabRedFlag(k)).join('；');
     final linked = routines.where((r) => ep.routineIds.contains(r.id)).toList();
     final feedback = rehabFeedbackSessions();
     final lines = <String>[
@@ -929,7 +929,7 @@ class FitState extends FitCore
       '   - routine 可省略（省略 = 应用到全部当前计划）。',
       '5. 动作名尽量取自【动作库清单】里的英文名，这样能自动匹配到 App 的动作库。',
       '6. 强度保守：以不加重症状为前提，训练中疼痛不超过 3/10；先活动度、再稳定性、最后力量。',
-      '7. advice 里必须包含：$kRehabStopRules',
+      '7. advice 里必须包含：${t.rehabStopRules}',
       '8. 未通过安全门时，只给 advice，routines 与 adjust 都不要输出。',
       '',
       '【动作库清单】英文名 (中文名) | 肌群 | 器材 | 难度 | 模式',

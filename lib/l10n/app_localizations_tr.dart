@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -93,12 +92,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String exerciseCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n egzersiz',
-      one: '$n egzersiz',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n egzersiz', one: '$n egzersiz');
     return '$_temp0';
   }
 
@@ -145,8 +139,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get nothingForFocus => 'Bu odak için egzersiz yok';
 
   @override
-  String get goBackPick =>
-      'Geri dön ve kütüphanende egzersizi olan bir kas seç.';
+  String get goBackPick => 'Geri dön ve kütüphanende egzersizi olan bir kas seç.';
 
   @override
   String pickedHint(int n) {
@@ -167,12 +160,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String startCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n EGZERSİZ',
-      one: '$n EGZERSİZ',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n EGZERSİZ', one: '$n EGZERSİZ');
     return 'BAŞLA · $_temp0';
   }
 
@@ -255,8 +243,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get finishBodyGoal =>
-      'Bu hafta planladığın antrenman sayısına ulaştın.';
+  String get finishBodyGoal => 'Bu hafta planladığın antrenman sayısına ulaştın.';
 
   @override
   String finishBodyStreak(int streak) {
@@ -264,8 +251,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get finishBodyDefault =>
-      'Kaydedildi ve hesaba katıldı. İlerlemenin sırrı istikrar.';
+  String get finishBodyDefault => 'Kaydedildi ve hesaba katıldı. İlerlemenin sırrı istikrar.';
 
   @override
   String get vsLastTime => 'SON SEFERE GÖRE';
@@ -328,15 +314,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get notifRestChannel => 'Dinlenme zamanlayıcısı';
 
   @override
-  String get notifRestChannelWhy =>
-      'Setler arasındaki dinlenme süren bittiğinde haber verir';
+  String get notifRestChannelWhy => 'Setler arasındaki dinlenme süren bittiğinde haber verir';
 
   @override
   String get notifAlertChannel => 'Dinlenme zamanlayıcısı (uyarı)';
 
   @override
-  String get notifAlertChannelWhy =>
-      'Dinlenmen biter bitmez bir bildirim gösterir';
+  String get notifAlertChannelWhy => 'Dinlenmen biter bitmez bir bildirim gösterir';
 
   @override
   String get restOverTitle => 'Dinlenme bitti';
@@ -397,12 +381,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get heatHigh => 'Maksimum hacim';
 
   @override
-  String get muscleMapEmpty =>
-      'Bir antrenman kaydet, vücudun burada renklenmeye başlasın.';
+  String get muscleMapEmpty => 'Bir antrenman kaydet, vücudun burada renklenmeye başlasın.';
 
   @override
-  String get muscleMapHint =>
-      'Ne kadar çalıştığını görmek için bir kasa dokun.';
+  String get muscleMapHint => 'Ne kadar çalıştığını görmek için bir kasa dokun.';
 
   @override
   String muscleMapBehind(String names) {
@@ -424,8 +406,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get strength1rm => 'GÜÇ · TAH. 1RM';
 
   @override
-  String get strengthEmpty =>
-      'Bir egzersizi iki kez kaydet, güç eğrisi burada görünsün.';
+  String get strengthEmpty => 'Bir egzersizi iki kez kaydet, güç eğrisi burada görünsün.';
 
   @override
   String oneRmEst(String w) {
@@ -530,8 +511,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noFavouritesYet => 'Henüz favori yok';
 
   @override
-  String get noFavouritesHint =>
-      'Burada tutmak için egzersizin yıldızına dokun.';
+  String get noFavouritesHint => 'Burada tutmak için egzersizin yıldızına dokun.';
 
   @override
   String get clearFilters => 'Filtreleri temizle';
@@ -540,8 +520,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noExercisesFound => 'Egzersiz bulunamadı';
 
   @override
-  String get noExercisesHint =>
-      'Farklı bir arama dene veya filtreleri temizle.';
+  String get noExercisesHint => 'Farklı bir arama dene veya filtreleri temizle.';
 
   @override
   String get personalRecord => 'KİŞİSEL REKOR';
@@ -550,8 +529,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get history => 'GEÇMİŞ';
 
   @override
-  String get noHistory =>
-      'Henüz antrenman kaydı yok. Geçmiş oluşturmak için bu egzersizi yap.';
+  String get noHistory => 'Henüz antrenman kaydı yok. Geçmiş oluşturmak için bu egzersizi yap.';
 
   @override
   String get notes => 'NOTLAR';
@@ -565,8 +543,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get notHereWhy =>
-      'Bugün gerçekten kullanabileceğin bir şeyle değiştir.';
+  String get notHereWhy => 'Bugün gerçekten kullanabileceğin bir şeyle değiştir.';
 
   @override
   String get altHere => 'BURADA YAPABİLECEKLERİN';
@@ -606,8 +583,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get placeDeleteTitle => 'Yeri sil';
 
   @override
-  String get placeDeleteBody =>
-      'Yalnızca yer silinir — egzersizlerin ve antrenmanların kalır.';
+  String get placeDeleteBody => 'Yalnızca yer silinir — egzersizlerin ve antrenmanların kalır.';
 
   @override
   String get placeGym => 'Spor salonu';
@@ -748,8 +724,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get measures => 'ÖLÇÜLER';
 
   @override
-  String get measuresHint =>
-      'Boyundan baldıra — yalnızca barı değil, vücudundaki değişimi de izle.';
+  String get measuresHint => 'Boyundan baldıra — yalnızca barı değil, vücudundaki değişimi de izle.';
 
   @override
   String measureCount(int n) {
@@ -803,8 +778,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get timeline => 'ZAMAN ÇİZELGESİ';
 
   @override
-  String get timelineHint =>
-      'Aynı poz, aynı yer, aynı ışık. Bir yıl sonra inanamayacaksın.';
+  String get timelineHint => 'Aynı poz, aynı yer, aynı ışık. Bir yıl sonra inanamayacaksın.';
 
   @override
   String get timelineEmptyTitle => 'İlk fotoğrafın takibi başlatır';
@@ -873,8 +847,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get compare => 'KARŞILAŞTIR';
 
   @override
-  String get compareNeedTwo =>
-      'Aynı pozu iki farklı günde çek, burada karşılaştırabilirsin.';
+  String get compareNeedTwo => 'Aynı pozu iki farklı günde çek, burada karşılaştırabilirsin.';
 
   @override
   String dayNumber(int n) {
@@ -910,8 +883,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bir antrenman kaydet, kas haritan burada dolmaya başlasın — fotoğrafa gerek yok.';
 
   @override
-  String get timelineBodyHint =>
-      'Kendi setlerinden oluşturulur — internete hiçbir şey yüklenmez.';
+  String get timelineBodyHint => 'Kendi setlerinden oluşturulur — internete hiçbir şey yüklenmez.';
 
   @override
   String timelineWindow(String from, String to) {
@@ -934,8 +906,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get notifPhotoChannel => 'İlerleme fotoğrafları';
 
   @override
-  String get notifPhotoChannelWhy =>
-      'Bir sonraki ilerleme fotoğrafının zamanı geldiğinde hatırlatır.';
+  String get notifPhotoChannelWhy => 'Bir sonraki ilerleme fotoğrafının zamanı geldiğinde hatırlatır.';
 
   @override
   String get notifPhotoTitle => 'İlerleme fotoğrafı zamanı';
@@ -1028,12 +999,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String setCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n set',
-      one: '$n set',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n set', one: '$n set');
     return '$_temp0';
   }
 
@@ -1049,8 +1015,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get yourRoutines => 'PROGRAMLARIN';
 
   @override
-  String get noRoutines =>
-      'Henüz program yok. Bir tane oluştur ve egzersizlerini ekle.';
+  String get noRoutines => 'Henüz program yok. Bir tane oluştur ve egzersizlerini ekle.';
 
   @override
   String get newRoutine => 'YENİ PROGRAM';
@@ -1084,8 +1049,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get newRoutineName => 'Yeni program';
 
   @override
-  String get dragToReorder =>
-      'Sıralamak için noktalı tutamacı sürükle — antrenman sırası budur.';
+  String get dragToReorder => 'Sıralamak için noktalı tutamacı sürükle — antrenman sırası budur.';
 
   @override
   String reorderHandle(String name) {
@@ -1243,8 +1207,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get importFromApp => 'Başka bir uygulamadan içe aktar';
 
   @override
-  String get importUnknownFormat =>
-      'Bu dosya tarih, egzersiz, tekrar ve ağırlık sütunlarını içermeli';
+  String get importUnknownFormat => 'Bu dosya tarih, egzersiz, tekrar ve ağırlık sütunlarını içermeli';
 
   @override
   String get importZipNoWeights => 'Bu zip içinde ağırlık dosyası yok';
@@ -1347,8 +1310,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get backupFailed => 'Bu yedek okunamadı';
 
   @override
-  String get nothingToExport =>
-      'Henüz dışa aktarılacak bir şey yok — önce bir antrenman kaydet';
+  String get nothingToExport => 'Henüz dışa aktarılacak bir şey yok — önce bir antrenman kaydet';
 
   @override
   String calculatorsCount(int n) {
@@ -1597,8 +1559,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get aboutBlurb =>
-      'Spor yapanlar tarafından, spor yapanlar için geliştirildi.';
+  String get aboutBlurb => 'Spor yapanlar tarafından, spor yapanlar için geliştirildi.';
 
   @override
   String get freeForever => 'Sonsuza kadar ücretsiz';
@@ -1610,15 +1571,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fullyOffline => '%100 çevrimdışı';
 
   @override
-  String get fullyOfflineWhy =>
-      'Hesap yok, sunucu yok. Antrenman verilerin bu telefondan asla çıkmaz.';
+  String get fullyOfflineWhy => 'Hesap yok, sunucu yok. Antrenman verilerin bu telefondan asla çıkmaz.';
 
   @override
   String get yoursToTake => 'Verilerin sana ait';
 
   @override
-  String get yoursToTakeWhy =>
-      'İstediğin zaman CSV olarak dışa aktar ve her şeyi tek dokunuşla sil.';
+  String get yoursToTakeWhy => 'İstediğin zaman CSV olarak dışa aktar ve her şeyi tek dokunuşla sil.';
 
   @override
   String get whatsInside => 'İÇERİK';
@@ -1629,8 +1588,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get exercisesInsideWhy =>
-      'Her birinde animasyon ve adım adım talimat var.';
+  String get exercisesInsideWhy => 'Her birinde animasyon ve adım adım talimat var.';
 
   @override
   String get calculatorsInside => '10 hesaplayıcı';
@@ -1651,12 +1609,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String daysUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'gün',
-      one: 'gün',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'gün', one: 'gün');
     return '$_temp0';
   }
 
@@ -1667,8 +1620,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get welcomeKicker => 'HOŞ GELDİN';
 
   @override
-  String get welcomeBlurb =>
-      'Her şey telefonunda kalır. Hesap yok, internet yok, ödeme yok.';
+  String get welcomeBlurb => 'Her şey telefonunda kalır. Hesap yok, internet yok, ödeme yok.';
 
   @override
   String get welcomeStart => 'BAŞLA';
@@ -1685,22 +1637,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get onbNameHint => 'Adın';
 
   @override
-  String get onbNameWhy =>
-      'Yalnızca sana hitap etmek için kullanılır. Telefonundan asla çıkmaz.';
+  String get onbNameWhy => 'Yalnızca sana hitap etmek için kullanılır. Telefonundan asla çıkmaz.';
 
   @override
   String get onbBodyTitle => 'Birkaç bilgi';
 
   @override
-  String get onbBodyWhy =>
-      'Hesaplayıcılarda kullanılır. Ayarlar\'dan istediğin zaman değiştirebilirsin.';
+  String get onbBodyWhy => 'Hesaplayıcılarda kullanılır. Ayarlar\'dan istediğin zaman değiştirebilirsin.';
 
   @override
   String get onbGoalTitle => 'Ne sıklıkla antrenman yapıyorsun?';
 
   @override
-  String get onbGoalWhy =>
-      'Haftalık hedef halkasını belirler. İddialı değil, gerçekçi ol.';
+  String get onbGoalWhy => 'Haftalık hedef halkasını belirler. İddialı değil, gerçekçi ol.';
 
   @override
   String perWeek(int n) {
@@ -1741,15 +1690,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noMatches => 'Bu aramayla eşleşen egzersiz yok.';
 
   @override
-  String get tapToEdit =>
-      'Bir kaydı düzeltmek için kaleme, silmek için çöp kutusuna dokun.';
+  String get tapToEdit => 'Bir kaydı düzeltmek için kaleme, silmek için çöp kutusuna dokun.';
 
   @override
   String get editEntry => 'Düzenle';
 
   @override
-  String get editEntryHint =>
-      'Herhangi bir setin tekrarını veya ağırlığını düzelt.';
+  String get editEntryHint => 'Herhangi bir setin tekrarını veya ağırlığını düzelt.';
 
   @override
   String get removeSet => 'Seti sil';
@@ -1800,8 +1747,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get liveChannel => 'Devam eden antrenman';
 
   @override
-  String get liveChannelWhy =>
-      'Antrenman sırasında mevcut egzersizi, seti ve dinlenme sayacını gösterir';
+  String get liveChannelWhy => 'Antrenman sırasında mevcut egzersizi, seti ve dinlenme sayacını gösterir';
 
   @override
   String liveSet(int n, int total) {
@@ -1855,15 +1801,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get autoWarmup => 'Isınma setleriyle başla';
 
   @override
-  String get autoWarmupHint =>
-      'Antrenman açıldığında kademeli ısınma setleri ekler.';
+  String get autoWarmupHint => 'Antrenman açıldığında kademeli ısınma setleri ekler.';
 
   @override
   String get trainReminder => 'Antrenman hatırlatıcısı';
 
   @override
-  String get trainReminderHint =>
-      'Yalnızca programının olduğu günlerde bu saatte hatırlatır.';
+  String get trainReminderHint => 'Yalnızca programının olduğu günlerde bu saatte hatırlatır.';
 
   @override
   String get reminderExactTime => 'Tam saat';
@@ -1878,8 +1822,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get notifTrainChannel => 'Antrenman hatırlatıcısı';
 
   @override
-  String get notifTrainChannelWhy =>
-      'Planladığın günlerde antrenman yapman için hatırlatma.';
+  String get notifTrainChannelWhy => 'Planladığın günlerde antrenman yapman için hatırlatma.';
 
   @override
   String get notifTrainTitle => 'Antrenman zamanı';
@@ -1895,12 +1838,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get planFormat => 'Yalnızca şu biçimde JSON olarak yanıt ver:';
 
   @override
-  String get planNothing =>
-      'Bu dosyadaki hiçbir egzersiz kütüphanenle eşleşmedi';
+  String get planNothing => 'Bu dosyadaki hiçbir egzersiz kütüphanenle eşleşmedi';
 
   @override
-  String get planFailed =>
-      'Bu dosya Kangtu\'in okuyabileceği bir program içermiyor';
+  String get planFailed => 'Bu dosya Kangtu\'in okuyabileceği bir program içermiyor';
 
   @override
   String get routineGroup => 'Grup';
@@ -1966,8 +1907,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Gerçekte antrenman yaptığın gün ve saatleri kullanır; o gün zaten antrenman yaptıysan sessiz kalır.';
 
   @override
-  String get reminderSmartEmpty =>
-      'Alışkanlıklarını öğrenmesi için birkaç antrenman daha kaydet.';
+  String get reminderSmartEmpty => 'Alışkanlıklarını öğrenmesi için birkaç antrenman daha kaydet.';
 
   @override
   String habitFocus(String day) {
@@ -2007,8 +1947,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get tplFullbody =>
-      'Haftada üç tam vücut antrenmanı. Başlangıç için ideal.';
+  String get tplFullbody => 'Haftada üç tam vücut antrenmanı. Başlangıç için ideal.';
 
   @override
   String get tplPpl => 'İtiş, çekiş ve bacak. Haftada üç veya altı gün.';
@@ -2017,24 +1956,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tplUpperlower => 'Üst ve alt vücut, haftada dört gün.';
 
   @override
-  String get tplStronglifts =>
-      'Dönüşümlü iki antrenman; beş tekrardan beş set.';
+  String get tplStronglifts => 'Dönüşümlü iki antrenman; beş tekrardan beş set.';
 
   @override
-  String get tplStartingstrength =>
-      'Her antrenmanda squat yapılan, dönüşümlü iki antrenman.';
+  String get tplStartingstrength => 'Her antrenmanda squat yapılan, dönüşümlü iki antrenman.';
 
   @override
   String get tplHome => 'Barfiks demiri ve zemin dışında hiçbir şey yok.';
 
   @override
   String dayCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n gün',
-      one: '$n gün',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n gün', one: '$n gün');
     return '$_temp0';
   }
 
@@ -2078,27 +2010,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tplNameHome => 'Ekipmansız';
 
   @override
-  String get tplGzclp =>
-      'Ağır kademe, hacim kademesi, yardımcı kademe — klasik üç kademeli ilerleme.';
+  String get tplGzclp => 'Ağır kademe, hacim kademesi, yardımcı kademe — klasik üç kademeli ilerleme.';
 
   @override
   String get tplBbb531 =>
       'Antrenman maksimumunun yüzdeleriyle dört haftalık dalgalar, artı 5×10 geri çekilme hacmi.';
 
   @override
-  String get tplPpl6 =>
-      'Altı gün itiş/çekiş/bacak: lineer ana hareketler, çift progresyonlu yardımcılar.';
+  String get tplPpl6 => 'Altı gün itiş/çekiş/bacak: lineer ana hareketler, çift progresyonlu yardımcılar.';
 
   @override
-  String get tplPhul =>
-      'Güç ve hipertrofi günleri dönüşümlü, haftada dört gün.';
+  String get tplPhul => 'Güç ve hipertrofi günleri dönüşümlü, haftada dört gün.';
 
   @override
   String get progBadge => 'Otomatik ilerleme';
 
   @override
-  String get progLinShort =>
-      'Hedefi tuttur → ağırlığı artır; tekrarlanan ıska → deload';
+  String get progLinShort => 'Hedefi tuttur → ağırlığı artır; tekrarlanan ıska → deload';
 
   @override
   String get progDblShort => 'Tekrarlar aralıkta yükselir, sonra ağırlık artar';
@@ -2107,8 +2035,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get progRepsShort => 'Vücut ağırlığı: seans başına bir tekrar fazla';
 
   @override
-  String get progCycleShort =>
-      'Antrenman maksimumunun %\'siyle haftalık dalgalar';
+  String get progCycleShort => 'Antrenman maksimumunun %\'siyle haftalık dalgalar';
 
   @override
   String progCycleWeeks(int n) {
@@ -2168,8 +2095,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get logRpe => 'Eforu kaydet (RPE)';
 
   @override
-  String get rpeHint =>
-      '10 = artık tekrar yok; 8 = yaklaşık iki tekrar yedekte.';
+  String get rpeHint => '10 = artık tekrar yok; 8 = yaklaşık iki tekrar yedekte.';
 
   @override
   String get superset => 'Süperset';
@@ -2178,8 +2104,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get supersetLink => 'Sonrakiyle eşleştir';
 
   @override
-  String get supersetHint =>
-      'Bağlı egzersizler arasında dinlenme yok — doğrudan sonrakine geçersin.';
+  String get supersetHint => 'Bağlı egzersizler arasında dinlenme yok — doğrudan sonrakine geçersin.';
 
   @override
   String get aiRoutine => 'Yapay zekâ ile program';
@@ -2203,12 +2128,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get importApps => 'Desteklenen uygulamalar';
 
   @override
-  String get importOtherCsv =>
-      'Tarih, egzersiz, tekrar ve ağırlık içeren başka herhangi bir CSV';
+  String get importOtherCsv => 'Tarih, egzersiz, tekrar ve ağırlık içeren başka herhangi bir CSV';
 
   @override
-  String get importAskApp =>
-      'Başka bir uygulamaya mı ihtiyacın var? Eklenmesini iste';
+  String get importAskApp => 'Başka bir uygulamaya mı ihtiyacın var? Eklenmesini iste';
 
   @override
   String get awardFirstStepName => 'İlk adım';
@@ -2226,8 +2149,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get awardFirstRoutineName => 'İlk program';
 
   @override
-  String get awardFirstRoutineLine =>
-      'Artık geri dönebileceğin bir planın var.';
+  String get awardFirstRoutineLine => 'Artık geri dönebileceğin bir planın var.';
 
   @override
   String get awardFirstRecordName => 'İlk rekor';
@@ -2320,8 +2242,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get awardTonnes100Name => 'Yüz ton';
 
   @override
-  String get awardTonnes100Line =>
-      'Kaldırdığın her şey toplam 100.000 kg\'a ulaştı.';
+  String get awardTonnes100Line => 'Kaldırdığın her şey toplam 100.000 kg\'a ulaştı.';
 
   @override
   String get awardSets1000Name => 'Bin set';
@@ -2381,12 +2302,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get handleLabel => 'Kullanıcı adı';
 
   @override
-  String get setupTitle =>
-      'Bu bilgileri doldur, sayfanın geri kalanı otomatik dolsun';
+  String get setupTitle => 'Bu bilgileri doldur, sayfanın geri kalanı otomatik dolsun';
 
   @override
-  String get setupHint =>
-      'Buradaki her sayı kaydettiklerinden gelir. Hiçbir şey hiçbir yere gönderilmez.';
+  String get setupHint => 'Buradaki her sayı kaydettiklerinden gelir. Hiçbir şey hiçbir yere gönderilmez.';
 
   @override
   String get setupWorkout => 'İlk antrenmanını kaydet';
@@ -2413,8 +2332,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get heatToneTitle => 'Isı haritası rengi';
 
   @override
-  String get heatToneHint =>
-      'Yalnızca ızgaranın ve vücudun rengini değiştirir.';
+  String get heatToneHint => 'Yalnızca ızgaranın ve vücudun rengini değiştirir.';
 
   @override
   String get thisWeekTitle => 'Bu hafta';
@@ -2447,8 +2365,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get awardWorkouts365Name => 'Üç yüz altmış beş';
 
   @override
-  String get awardWorkouts365Line =>
-      'Bir yılın her günü için bir antrenman, teker teker kaydedildi.';
+  String get awardWorkouts365Line => 'Bir yılın her günü için bir antrenman, teker teker kaydedildi.';
 
   @override
   String get awardTonnes10Name => 'On ton';
@@ -2460,8 +2377,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get awardHours100Name => 'Yüz saat';
 
   @override
-  String get awardHours100Line =>
-      'Barın altında, kronometre çalışırken yüz saat.';
+  String get awardHours100Line => 'Barın altında, kronometre çalışırken yüz saat.';
 
   @override
   String awardWonOn(String date) {
@@ -2547,8 +2463,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Spor salonunun, tahtanın, yüklü bir barın fotoğrafını çek — hatırlamak istediğin her şey olabilir. Telefonda kalır ve yalnızca sen görürsün.';
 
   @override
-  String get awardStreak100Line =>
-      'Yüz gün üst üste. Bu artık motivasyon değil, alışkanlık.';
+  String get awardStreak100Line => 'Yüz gün üst üste. Bu artık motivasyon değil, alışkanlık.';
 
   @override
   String get coverLabel => 'KAPAK';
@@ -2619,8 +2534,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deleteWorkout => 'Antrenmanı sil';
 
   @override
-  String get deleteWorkoutBody =>
-      'Bu antrenman ve tüm setleri geçmişinden silinecek.';
+  String get deleteWorkoutBody => 'Bu antrenman ve tüm setleri geçmişinden silinecek.';
 
   @override
   String get themeAuto => 'Otomatik';
@@ -2679,15 +2593,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get suggestInWorkouts => 'Hızlı antrenmanlarda öner';
 
   @override
-  String get suggestInWorkoutsHint =>
-      'Kapalıyken önerilerde çıkmaz. Yine de elle ekleyebilirsin.';
+  String get suggestInWorkoutsHint => 'Kapalıyken önerilerde çıkmaz. Yine de elle ekleyebilirsin.';
 
   @override
   String get onbPlaceTitle => 'Nerede antrenman yapıyorsun?';
 
   @override
-  String get onbPlaceWhy =>
-      'Antrenman yaptığın tüm yerleri seç. Her birinde yapabileceklerini önereceğiz.';
+  String get onbPlaceWhy => 'Antrenman yaptığın tüm yerleri seç. Her birinde yapabileceklerini önereceğiz.';
 
   @override
   String get onbPlaceGear => 'Orada neyin var?';
@@ -2751,8 +2663,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get saveChanges => 'Değişiklikleri kaydet';
 
   @override
-  String get noStepsYet =>
-      'Henüz adım yok. Nasıl yaptığını hatırlamak için kendi adımlarını yaz.';
+  String get noStepsYet => 'Henüz adım yok. Nasıl yaptığını hatırlamak için kendi adımlarını yaz.';
 
   @override
   String get addSteps => 'Adımları yaz';
@@ -2761,24 +2672,20 @@ class AppLocalizationsTr extends AppLocalizations {
   String get setTypeRestPause => 'Rest-pause';
 
   @override
-  String get setTypeNormalInfo =>
-      'Normal bir set. Hacmine ve rekorlarına sayılır.';
+  String get setTypeNormalInfo => 'Normal bir set. Hacmine ve rekorlarına sayılır.';
 
   @override
-  String get setTypeWarmupInfo =>
-      'Isınmak için hafif setler. Hacme ve rekorlara sayılmaz.';
+  String get setTypeWarmupInfo => 'Isınmak için hafif setler. Hacme ve rekorlara sayılmaz.';
 
   @override
-  String get setTypeDropInfo =>
-      'Setin hemen ardından ağırlığı düşür ve dinlenmeden devam et.';
+  String get setTypeDropInfo => 'Setin hemen ardından ağırlığı düşür ve dinlenmeden devam et.';
 
   @override
   String get setTypeFailureInfo =>
       'Temiz bir tekrar daha yapamayana kadar devam et. Gerçekten yaptığın tekrarları kaydet.';
 
   @override
-  String get setTypeRestPauseInfo =>
-      'Setten sonra 10-20 saniye dinlen, sonra birkaç tekrar daha çıkar.';
+  String get setTypeRestPauseInfo => 'Setten sonra 10-20 saniye dinlen, sonra birkaç tekrar daha çıkar.';
 
   @override
   String get planFormatNotes =>
@@ -2804,8 +2711,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareWeek => 'Haftamı paylaş';
 
   @override
-  String get shareWeekHint =>
-      'Tüm programların ve her birinin planlandığı gün.';
+  String get shareWeekHint => 'Tüm programların ve her birinin planlandığı gün.';
 
   @override
   String shareMessage(String name) {
@@ -2824,12 +2730,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String routineCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n program',
-      one: '1 program',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n program', one: '1 program');
     return '$_temp0';
   }
 
@@ -2837,8 +2738,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get useTheirSchedule => 'Haftalık planını da kullan';
 
   @override
-  String get useTheirScheduleHint =>
-      'Getirdiği günler, o günlerde planladıklarının yerine geçer.';
+  String get useTheirScheduleHint => 'Getirdiği günler, o günlerde planladıklarının yerine geçer.';
 
   @override
   String get addToMyRoutines => 'Programlarıma ekle';
@@ -2855,20 +2755,17 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get nothingToImport =>
-      'Burada Kangtu\'in içe aktarabileceği bir şey yok';
+  String get nothingToImport => 'Burada Kangtu\'in içe aktarabileceği bir şey yok';
 
   @override
-  String get aiStepCopy =>
-      'İsteği kopyala. Egzersiz listeni ve Kangtu\'in okuduğu biçimi içerir.';
+  String get aiStepCopy => 'İsteği kopyala. Egzersiz listeni ve Kangtu\'in okuduğu biçimi içerir.';
 
   @override
   String get aiStepAsk =>
       'Herhangi bir yapay zekâya yapıştır ve ne istediğini söyle: haftada kaç gün, hedef, kaç hafta.';
 
   @override
-  String get aiStepPaste =>
-      'Yanıtını aşağıya yapıştır ve içe aktar. Dosya gerekmez.';
+  String get aiStepPaste => 'Yanıtını aşağıya yapıştır ve içe aktar. Dosya gerekmez.';
 
   @override
   String get copyForAi => 'Yapay zekâ için kopyala';
@@ -2897,8 +2794,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get recoveryAllFresh =>
-      'Her şey toparlandı. Her şeyi çalışmak için iyi bir gün.';
+  String get recoveryAllFresh => 'Her şey toparlandı. Her şeyi çalışmak için iyi bir gün.';
 
   @override
   String recoveryStill(String muscles) {
@@ -2926,12 +2822,10 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get tplAbcd =>
-      'Dört gün: göğüs ve arka kol, sırt ve ön kol, bacak, omuz ve karın.';
+  String get tplAbcd => 'Dört gün: göğüs ve arka kol, sırt ve ön kol, bacak, omuz ve karın.';
 
   @override
-  String get tplAbcde =>
-      'Beş gün, her gün bir kas grubu: göğüs, sırt, bacak, omuz, kol.';
+  String get tplAbcde => 'Beş gün, her gün bir kas grubu: göğüs, sırt, bacak, omuz, kol.';
 
   @override
   String get elapsedCaps => 'GEÇEN SÜRE';
@@ -3013,8 +2907,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get radarTitle => 'Son 30 gün';
 
   @override
-  String get radarHint =>
-      'Hangi bölgelerin daha fazla çalışmaya ihtiyacı olduğunu gör';
+  String get radarHint => 'Hangi bölgelerin daha fazla çalışmaya ihtiyacı olduğunu gör';
 
   @override
   String get radarEmpty => 'Dengeni görmek için birkaç gün çalış';
@@ -3044,8 +2937,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'RPE: 10 bir tekrar daha yapamamak, 8 iki tekrar daha yapabilmek demek. RIR kalan tekrarları sayar. Sette varsa tahmini 1RM, RPE tablosunu kullanır.';
 
   @override
-  String get rirHint =>
-      '0 bir tekrar daha yapamamak, 2 iki tekrar daha yapabilmek demek.';
+  String get rirHint => '0 bir tekrar daha yapamamak, 2 iki tekrar daha yapabilmek demek.';
 
   @override
   String get addWeekWidget => 'Hafta widget\'ı ekle';
@@ -3055,12 +2947,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String repCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n tekrar',
-      one: '$n tekrar',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n tekrar', one: '$n tekrar');
     return '$_temp0';
   }
 
@@ -3085,8 +2972,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get saveChangesBody =>
-      'Bir dahaki sefere başlattığında program bu değişiklikleri içerecek.';
+  String get saveChangesBody => 'Bir dahaki sefere başlattığında program bu değişiklikleri içerecek.';
 
   @override
   String get routineOrderChanged => 'Yeni egzersiz sırası';
@@ -3106,15 +2992,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get warmupFocus => 'Isınma';
 
   @override
-  String get warmupFocusHint =>
-      'Ekipmanlı ya da ekipmansız mobilite ve aktivasyon';
+  String get warmupFocusHint => 'Ekipmanlı ya da ekipmansız mobilite ve aktivasyon';
 
   @override
   String get cardioFocus => 'Kardiyo';
 
   @override
-  String get cardioFocusHint =>
-      'Koşu, bisiklet, kürek ya da ip, mesafe ve süreyle';
+  String get cardioFocusHint => 'Koşu, bisiklet, kürek ya da ip, mesafe ve süreyle';
 
   @override
   String get homeRecommended => 'Ana ekranda öneriler';
@@ -3135,12 +3019,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get archivedToastHint => 'Egzersizler › Arşivlenenler altında';
 
   @override
-  String get archivedBanner =>
-      'Arşivlendi. Listelerde ve önerilerde çıkmaz; geçmişin korunur.';
+  String get archivedBanner => 'Arşivlendi. Listelerde ve önerilerde çıkmaz; geçmişin korunur.';
 
   @override
-  String get videoMarksHint =>
-      'Bir adımda duraklat ve bir dahaki sefere oraya atlamak için raptiyeye dokun.';
+  String get videoMarksHint => 'Bir adımda duraklat ve bir dahaki sefere oraya atlamak için raptiyeye dokun.';
 
   @override
   String get videoMarkHere => 'Bu adımı burada işaretle';
@@ -3167,8 +3049,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get multiPlanSetting => 'Günde birden fazla program';
 
   @override
-  String get multiPlanHint =>
-      'Bu günün her programına dokun. Eklediğin sırayla gelirler.';
+  String get multiPlanHint => 'Bu günün her programına dokun. Eklediğin sırayla gelirler.';
 
   @override
   String routineOfDay(int n, int total) {
@@ -3316,8 +3197,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fbPainLevel => 'Rahatsızlık düzeyi';
 
   @override
-  String get fbRehabHint =>
-      'Aynı bölgede rahatsızlık — rehabilitasyon dosyana not et';
+  String get fbRehabHint => 'Aynı bölgede rahatsızlık — rehabilitasyon dosyana not et';
 
   @override
   String get levelUpKicker => 'SONRAKİ ADIM';
@@ -3382,12 +3262,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String goalDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n gün kaldı',
-      one: '1 gün kaldı',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n gün kaldı', one: '1 gün kaldı');
     return '$_temp0';
   }
 
@@ -3456,8 +3331,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get swapKeepsDone =>
-      'Yaptığın setler kalır; yenisi kalanlarla devam eder.';
+  String get swapKeepsDone => 'Yaptığın setler kalır; yenisi kalanlarla devam eder.';
 
   @override
   String swapSameMuscle(String muscle) {
@@ -3468,12 +3342,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get swapDoneBefore => 'Daha önce yaptın';
 
   @override
-  String get multiPlanSettingHint =>
-      'Haftanın aynı gününde birden fazla program.';
+  String get multiPlanSettingHint => 'Haftanın aynı gününde birden fazla program.';
 
   @override
-  String get levelHintsHint =>
-      'Bir egzersiz kolaylaşınca daha zor versiyonunu önerir.';
+  String get levelHintsHint => 'Bir egzersiz kolaylaşınca daha zor versiyonunu önerir.';
 
   @override
   String get focusCardHint => 'Bugünün programı, Ana sayfanın en üstünde.';
@@ -3533,8 +3405,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get rpeExplain =>
-      'RPE 10 bir tekrar daha yapamamak; 8 iki tekrar kalmış demek.';
+  String get rpeExplain => 'RPE 10 bir tekrar daha yapamamak; 8 iki tekrar kalmış demek.';
 
   @override
   String get dotsBestLifts => 'En iyi kaldırışların';
@@ -3653,4 +3524,419 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get recommendedRowHint => 'Ana sayfada önerdiğimiz egzersizler.';
+
+  @override
+  String get rehabTitle => 'Rehab';
+
+  @override
+  String get rehabModuleSubtitle => 'Case files · safety gate · AI advice · offline';
+
+  @override
+  String get rehabArchiveTitle => 'Rehab case files';
+
+  @override
+  String get rehabArchiveBlurb => 'Intake · safety gate · AI advice';
+
+  @override
+  String get rehabBookTitle => 'Rehab handbook';
+
+  @override
+  String get rehabBookBlurb => '12-week low-back programme · offline reference';
+
+  @override
+  String get rehabBookBlurbShort => '12-week low-back programme · offline';
+
+  @override
+  String get rehabEnter => 'Open';
+
+  @override
+  String get rehabCardBlurb => 'Case files · safety gate · AI advice';
+
+  @override
+  String get rehabKeepLocal => 'Saved on device · never uploaded';
+
+  @override
+  String get rehabIntro =>
+      'One problem, one case file. Fill the intake once, clear the safety gate, then let a general AI assistant suggest a rehab plan (copy the prompt → paste it there → paste the answer back). Plans, cautions and notes all stay in this file.';
+
+  @override
+  String get rehabNew => 'New case file';
+
+  @override
+  String get rehabEmpty => 'No case files yet. A sore back or a painful shoulder is enough to start one.';
+
+  @override
+  String get rehabSafePass => 'Safety gate passed';
+
+  @override
+  String get rehabSeeDoctor => 'See a doctor first';
+
+  @override
+  String get rehabLabelArea => 'Where does it hurt?';
+
+  @override
+  String get rehabLabelDuration => 'How long?';
+
+  @override
+  String get rehabLabelRedFlags => 'Any of these? (tick to flag — this is screening, not diagnosis)';
+
+  @override
+  String get rehabLabelFactors => 'What makes it worse or better';
+
+  @override
+  String get rehabFactorsHint =>
+      'e.g. worse after sitting, better lying down; hurts when bending to pick something up';
+
+  @override
+  String get rehabLabelGoals => 'Rehab goals';
+
+  @override
+  String get rehabLabelGear => 'What kit do you have?';
+
+  @override
+  String get rehabSaveGate => 'Save and run the safety gate';
+
+  @override
+  String get rehabGateFailTitle => 'Safety gate not passed';
+
+  @override
+  String get rehabGateFailBody =>
+      'The items you ticked are best assessed in person by a doctor or physiotherapist.\n\nYour case file is saved — keep notes, store your doctor\'s advice — but the app will not offer training advice for it.';
+
+  @override
+  String get rehabOk => 'Got it';
+
+  @override
+  String get rehabDeleteFile => 'Delete this case file';
+
+  @override
+  String get rehabGatePassedNote =>
+      'Nothing in your intake suggests you need to see a doctor first. The advice below is for self-management only — stop any time symptoms get worse.';
+
+  @override
+  String get rehabGateFailedNote =>
+      'You ticked items that need an in-person assessment. This file keeps records only; the app will not offer training advice.';
+
+  @override
+  String get rehabFieldArea => 'Area';
+
+  @override
+  String get rehabFieldDuration => 'Duration';
+
+  @override
+  String get rehabFieldPain => 'Pain';
+
+  @override
+  String get rehabFieldFactors => 'Worse / better';
+
+  @override
+  String get rehabFieldGoals => 'Goals';
+
+  @override
+  String get rehabFieldGear => 'Kit';
+
+  @override
+  String get rehabFieldDays => 'Days a week';
+
+  @override
+  String get rehabGearBodyweight => 'Mostly bodyweight';
+
+  @override
+  String get rehabMySituation => 'My situation';
+
+  @override
+  String get rehabAiTitle => 'AI rehab advice (manual, local)';
+
+  @override
+  String get rehabAiBlurb =>
+      'The app never goes online and never uploads anything — everything is copy and paste by hand.';
+
+  @override
+  String get rehabCopyPrompt => 'Copy the prompt to an AI assistant';
+
+  @override
+  String get rehabExportPrompt => 'Export the prompt as a file';
+
+  @override
+  String get rehabPasteHint => 'Paste the assistant\'s whole answer here (plan data included)';
+
+  @override
+  String get rehabPaste => 'Paste';
+
+  @override
+  String get rehabSeeFormat => 'See the output format';
+
+  @override
+  String get rehabImportAdvice => 'Import the advice';
+
+  @override
+  String get rehabCautions => 'Cautions';
+
+  @override
+  String get rehabUnreadable =>
+      'Could not read that — make sure it is the assistant\'s answer (with plan data in it)';
+
+  @override
+  String get rehabNoPlan => 'No usable training plan found';
+
+  @override
+  String get rehabRehabPlans => 'Rehab plans';
+
+  @override
+  String get rehabNoAdviceYet =>
+      'Nothing imported yet. Run the assistant flow above and it will appear here.';
+
+  @override
+  String get rehabGateBlocksPlan => 'Safety gate not passed — no training advice for now.';
+
+  @override
+  String get rehabNotes => 'Notes / doctor\'s advice';
+
+  @override
+  String get rehabNotesHint => 'Jot things down: what the doctor said, which days hurt more, what helps…';
+
+  @override
+  String get rehabSaveNotes => 'Save notes';
+
+  @override
+  String get rehabNotesSaved => 'Notes saved';
+
+  @override
+  String get rehabPromptCopied => 'Prompt copied';
+
+  @override
+  String get rehabPromptCopiedHint => 'Paste it into any AI assistant, then paste the answer back';
+
+  @override
+  String get rehabDeleteTitle => 'Delete the case file?';
+
+  @override
+  String get rehabDeleteBody => 'Only the file goes — training plans it created are kept.';
+
+  @override
+  String get rehabDelete => 'Delete';
+
+  @override
+  String get rehabTabToday => 'Today';
+
+  @override
+  String get rehabTabPlan => 'Schedule';
+
+  @override
+  String get rehabTabLog => 'Log';
+
+  @override
+  String get rehabTabBook => 'Handbook';
+
+  @override
+  String get rehabHandTitle => 'Rehab handbook';
+
+  @override
+  String get rehabHandTarget => 'Who it is for';
+
+  @override
+  String get rehabHandGoal => 'Training goal';
+
+  @override
+  String get rehabHandPrinciple => 'Principles';
+
+  @override
+  String get rehabHandTimeline => 'Timeline';
+
+  @override
+  String get rehabHandTimelineSub => 'The full arc from injury to now';
+
+  @override
+  String get rehabHandSchedule => '12-week schedule';
+
+  @override
+  String get rehabHandScheduleSub => '4+1 phases · 28 sessions';
+
+  @override
+  String get rehabHandPhaseDetail => 'Phase detail';
+
+  @override
+  String get rehabHandExpand => 'Tap to expand';
+
+  @override
+  String get rehabHandTraffic => 'Traffic-light cheat sheet';
+
+  @override
+  String get rehabHandTrafficSub => 'One line after each session · stored locally';
+
+  @override
+  String get rehabHandMaintain => 'Maintenance';
+
+  @override
+  String get rehabHandFeel => 'Feel / pain score (optional)';
+
+  @override
+  String get rehabHandSaveLog => 'Save entry';
+
+  @override
+  String get rehabHandHistory => 'History';
+
+  @override
+  String get rehabHandNoLog => 'No entries yet';
+
+  @override
+  String get rehabHandTrafficGreen => 'Green';
+
+  @override
+  String get rehabHandTrafficYellow => 'Amber';
+
+  @override
+  String get rehabHandTrafficRed => 'Red';
+
+  @override
+  String get rehabHandFaq => 'FAQ';
+
+  @override
+  String get rehabHandDelete => 'Del';
+
+  @override
+  String get rehabAreaLowback => 'Lower back';
+
+  @override
+  String get rehabAreaNeck => 'Neck / upper back';
+
+  @override
+  String get rehabAreaShoulder => 'Shoulder';
+
+  @override
+  String get rehabAreaElbow => 'Elbow / wrist';
+
+  @override
+  String get rehabAreaHip => 'Hip';
+
+  @override
+  String get rehabAreaKnee => 'Knee';
+
+  @override
+  String get rehabAreaAnkle => 'Ankle / foot';
+
+  @override
+  String get rehabAreaOther => 'Other / not sure';
+
+  @override
+  String get rehabDurAcute => 'Under a week';
+
+  @override
+  String get rehabDurSub => '1–4 weeks';
+
+  @override
+  String get rehabDurChronic => '1–3 months';
+
+  @override
+  String get rehabDurLong => 'Over 3 months';
+
+  @override
+  String get rehabGoalPain => 'Ease the pain';
+
+  @override
+  String get rehabGoalMobility => 'Restore mobility';
+
+  @override
+  String get rehabGoalStrength => 'Build strength';
+
+  @override
+  String get rehabGoalReturn => 'Get back to training';
+
+  @override
+  String get rehabGoalDaily => 'Day-to-day function (sitting, bending, stairs)';
+
+  @override
+  String get rehabFlagBladder => 'Bladder or bowel changes, saddle numbness';
+
+  @override
+  String get rehabFlagWeakness => 'Progressive leg weakness, unsteady or dragging walk';
+
+  @override
+  String get rehabFlagTrauma => 'A recent fall or impact';
+
+  @override
+  String get rehabFlagFever => 'Fever, chills, or local heat and swelling';
+
+  @override
+  String get rehabFlagNight => 'Night pain at rest, unexplained weight loss';
+
+  @override
+  String get rehabFlagCancer => 'Cancer, TB or severe osteoporosis';
+
+  @override
+  String get rehabFlagPregnant => 'Pregnant or early post-partum';
+
+  @override
+  String get rehabFlagSurgery => 'Surgery in the last 3 months';
+
+  @override
+  String get rehabStopRules =>
+      'Stop and see a doctor if: pain keeps getting worse during training; new numbness, weakness or bladder/bowel changes; dizziness, chest tightness or palpitations; pain clearly worse the next day.';
+
+  @override
+  String rehabPlanCount(int n) {
+    return '$n programmes';
+  }
+
+  @override
+  String rehabPainNow(int pain) {
+    return 'Pain right now: $pain / 10';
+  }
+
+  @override
+  String rehabLabelDays(int days) {
+    return 'Days per week: $days';
+  }
+
+  @override
+  String rehabEpisodeMeta(String area, String duration, int pain, int plans) {
+    return '$area · $duration · pain $pain/10 · $plans programmes';
+  }
+
+  @override
+  String rehabAutoTitle(String area) {
+    return '$area rehab';
+  }
+
+  @override
+  String rehabRoutinesMade(int routines, int added, int adjusted) {
+    return 'Made $routines programmes · $added exercises · $adjusted adjusted';
+  }
+
+  @override
+  String rehabMissedActions(String list) {
+    return 'Not matched: $list';
+  }
+
+  @override
+  String rehabExerciseCount(int n) {
+    return '$n exercises';
+  }
+
+  @override
+  String rehabDaysCount(int n) {
+    return '$n days';
+  }
+
+  @override
+  String rehabLogStage(String n) {
+    return 'Phase $n';
+  }
+
+  @override
+  String rehabLogCount(int n) {
+    return '$n entries';
+  }
+
+  @override
+  String rehabPhaseN(String n) {
+    return 'Phase $n';
+  }
+
+  @override
+  String get rehabAiSteps =>
+      '1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.';
+
+  @override
+  String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
 }

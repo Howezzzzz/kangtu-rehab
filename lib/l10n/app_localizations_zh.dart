@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -93,12 +92,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String exerciseCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 项动作',
-      one: '$n 项动作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 项动作', one: '$n 项动作');
     return '$_temp0';
   }
 
@@ -166,12 +160,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String startCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 项动作',
-      one: '$n 项动作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 项动作', one: '$n 项动作');
     return '开始 · $_temp0';
   }
 
@@ -244,12 +233,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String finishBodyPr(int prs) {
-    String _temp0 = intl.Intl.pluralLogic(
-      prs,
-      locale: localeName,
-      other: '$prs 项动作',
-      one: '1 项动作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(prs, locale: localeName, other: '$prs 项动作', one: '1 项动作');
     return '你在 $_temp0 中突破了个人最佳纪录，已记入历史成绩。';
   }
 
@@ -272,12 +256,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String prCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 项新纪录',
-      one: '$n 项新纪录',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 项新纪录', one: '$n 项新纪录');
     return '$_temp0';
   }
 
@@ -353,12 +332,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String sessionsLogged(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已记录 $n 次训练',
-      one: '已记录 $n 次训练',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已记录 $n 次训练', one: '已记录 $n 次训练');
     return '$_temp0';
   }
 
@@ -452,12 +426,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String libraryCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '动作库共有 $n 项动作',
-      one: '动作库共有 $n 项动作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '动作库共有 $n 项动作', one: '动作库共有 $n 项动作');
     return '$_temp0';
   }
 
@@ -619,13 +588,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String noteCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 条备忘',
-      one: '1 条备忘',
-      zero: '暂无备忘',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 条备忘', one: '1 条备忘', zero: '暂无备忘');
     return '$_temp0';
   }
 
@@ -736,13 +699,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String measureCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 次记录',
-      one: '1 次记录',
-      zero: '暂无记录',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次记录', one: '1 次记录', zero: '暂无记录');
     return '$_temp0';
   }
 
@@ -793,13 +750,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String photoCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 张照片',
-      one: '1 张照片',
-      zero: '暂无照片',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 张照片', one: '1 张照片', zero: '暂无照片');
     return '$_temp0';
   }
 
@@ -831,12 +782,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String photoNextIn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 天后拍摄身材照',
-      one: '明天该拍照啦',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天后拍摄身材照', one: '明天该拍照啦');
     return '$_temp0';
   }
 
@@ -899,13 +845,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String sessionCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 次训练',
-      one: '1 次训练',
-      zero: '暂无训练',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次训练', one: '1 次训练', zero: '暂无训练');
     return '$_temp0';
   }
 
@@ -1005,12 +945,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String setCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 组',
-      one: '$n 组',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 组', one: '$n 组');
     return '$_temp0';
   }
 
@@ -1223,12 +1158,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String importWeights(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已导入 $n 条体重记录',
-      one: '已导入 $n 条体重记录',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已导入 $n 条体重记录', one: '已导入 $n 条体重记录');
     return '$_temp0';
   }
 
@@ -1246,12 +1176,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String importDone(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已导入 $n 次训练记录',
-      one: '已导入 $n 次训练记录',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已导入 $n 次训练记录', one: '已导入 $n 次训练记录');
     return '$_temp0';
   }
 
@@ -1603,8 +1528,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get calculatorsInside => '10 款实用计算器';
 
   @override
-  String get calculatorsInsideWhy =>
-      '涵盖 1RM、杠铃片、BMI、热量、体脂率、FFMI、热身、RPE 负重以及 DOTS 和 Wilks 力量评分。';
+  String get calculatorsInsideWhy => '涵盖 1RM、杠铃片、BMI、热量、体脂率、FFMI、热身、RPE 负重以及 DOTS 和 Wilks 力量评分。';
 
   @override
   String get mathInside => '真实可信的数据';
@@ -1617,12 +1541,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String daysUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '天',
-      one: '天',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '天', one: '天');
     return '$_temp0';
   }
 
@@ -1666,12 +1585,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String perWeek(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '每周 $n 次',
-      one: '每周 $n 次',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '每周 $n 次', one: '每周 $n 次');
     return '$_temp0';
   }
 
@@ -2102,8 +2016,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aiRoutine => '用 AI 生成计划';
 
   @override
-  String get aiIntro =>
-      '康途 不会和任何 AI 通信。你把动作清单导出，粘贴给你惯用的助手，再把它的回答导回来。手机不会自己往外发任何东西。';
+  String get aiIntro => '康途 不会和任何 AI 通信。你把动作清单导出，粘贴给你惯用的助手，再把它的回答导回来。手机不会自己往外发任何东西。';
 
   @override
   String aiMissing(int n) {
@@ -2372,12 +2285,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String badgeName(String id) {
-    String _temp0 = intl.Intl.selectLogic(id, {
-      'gold': '金色',
-      'blue': '蓝色',
-      'green': '绿色',
-      'other': '徽章',
-    });
+    String _temp0 = intl.Intl.selectLogic(id, {'gold': '金色', 'blue': '蓝色', 'green': '绿色', 'other': '徽章'});
     return '$_temp0';
   }
 
@@ -2860,8 +2768,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareIntroTitle => '分享这个计划';
 
   @override
-  String get shareIntroBody =>
-      '发给你的伴侣、朋友或家人。他们会收到一个小文件，用 康途 打开，一点就能加入，组数和重量都在。';
+  String get shareIntroBody => '发给你的伴侣、朋友或家人。他们会收到一个小文件，用 康途 打开，一点就能加入，组数和重量都在。';
 
   @override
   String get removedFromRoutine => '已从计划中移除';
@@ -2896,8 +2803,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get effortSetting => '记录每组强度';
 
   @override
-  String get effortHint =>
-      'RPE：10 表示一次都做不动了，8 表示还能再做两次。RIR 表示还剩几次。记录后，估算 1RM 会使用 RPE 表。';
+  String get effortHint => 'RPE：10 表示一次都做不动了，8 表示还能再做两次。RIR 表示还剩几次。记录后，估算 1RM 会使用 RPE 表。';
 
   @override
   String get rirHint => '0 表示一次都做不动了，2 表示还能再做两次。';
@@ -2910,12 +2816,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String repCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 次',
-      one: '$n 次',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次', one: '$n 次');
     return '$_temp0';
   }
 
@@ -3058,8 +2959,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get planBestLifts => '最近的最佳组';
 
   @override
-  String get planAskFirst =>
-      '如果你不知道我的目标（力量、增肌、减脂或一般体能）或每次能练多久，请先用一条简短消息问我。知道后只用 JSON 回答。';
+  String get planAskFirst => '如果你不知道我的目标（力量、增肌、减脂或一般体能）或每次能练多久，请先用一条简短消息问我。知道后只用 JSON 回答。';
 
   @override
   String get backToTop => '回到顶部';
@@ -3073,8 +2973,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get exportForStravaHint =>
-      '请在浏览器中打开 strava.com/upload/select 上传（Strava 应用无法导入文件），会显示为带组数的力量训练。';
+  String get exportForStravaHint => '请在浏览器中打开 strava.com/upload/select 上传（Strava 应用无法导入文件），会显示为带组数的力量训练。';
 
   @override
   String get manualStartTime => '开始时间';
@@ -3228,11 +3127,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String goalDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '还剩 $n 天',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '还剩 $n 天');
     return '$_temp0';
   }
 
@@ -3267,12 +3162,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String inRoutines(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已在 $n 个计划中',
-      zero: '还没加入任何计划',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已在 $n 个计划中', zero: '还没加入任何计划');
     return '$_temp0';
   }
 
@@ -3490,6 +3380,412 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get recommendedRowHint => '首页推荐的动作。';
+
+  @override
+  String get rehabTitle => '康复';
+
+  @override
+  String get rehabModuleSubtitle => '康复档案 · 安全门 · 智能建议 · 离线';
+
+  @override
+  String get rehabArchiveTitle => '康复档案';
+
+  @override
+  String get rehabArchiveBlurb => '问诊 · 安全门 · 智能建议';
+
+  @override
+  String get rehabBookTitle => '康复手册';
+
+  @override
+  String get rehabBookBlurb => '12 周腰痛康复 · 离线可看的参考内容';
+
+  @override
+  String get rehabBookBlurbShort => '12 周腰痛康复 · 离线可用';
+
+  @override
+  String get rehabEnter => '进入';
+
+  @override
+  String get rehabCardBlurb => '康复档案 · 安全门 · 智能建议';
+
+  @override
+  String get rehabKeepLocal => '本地保存 · 不上传';
+
+  @override
+  String get rehabIntro =>
+      '一个困扰 = 一个档案。填一次问诊信息，先过「安全门」筛查，再让通用智能助手给出康复建议（复制提示词 → 贴给它 → 粘回套用），计划、注意事项和备注都会留在这个档案里。';
+
+  @override
+  String get rehabNew => '新建康复档案';
+
+  @override
+  String get rehabEmpty => '还没有档案。比如「腰疼」「肩痛」都可以开一个。';
+
+  @override
+  String get rehabSafePass => '已通过安全门';
+
+  @override
+  String get rehabSeeDoctor => '建议先就医';
+
+  @override
+  String get rehabLabelArea => '哪里不舒服';
+
+  @override
+  String get rehabLabelDuration => '多久了';
+
+  @override
+  String get rehabLabelRedFlags => '有没有下列情况（有就勾上，我们只做筛查不做诊断）';
+
+  @override
+  String get rehabLabelFactors => '什么情况会加重 / 缓解';
+
+  @override
+  String get rehabFactorsHint => '例如：久坐后加重，躺下缓解；弯腰取物时疼';
+
+  @override
+  String get rehabLabelGoals => '康复目标';
+
+  @override
+  String get rehabLabelGear => '有什么器材';
+
+  @override
+  String get rehabSaveGate => '保存并检查安全门';
+
+  @override
+  String get rehabGateFailTitle => '安全门未通过';
+
+  @override
+  String get rehabGateFailBody => '勾选的这些情况建议先找医生或康复治疗师当面评估。\n\n档案已保存，可以做记录、存医生建议，但本 App 不再提供训练建议。';
+
+  @override
+  String get rehabOk => '知道了';
+
+  @override
+  String get rehabDeleteFile => '删除这个档案';
+
+  @override
+  String get rehabGatePassedNote => '问诊里没有发现需要先就医的信号。下面的建议仅供自我管理参考，症状加重随时停。';
+
+  @override
+  String get rehabGateFailedNote => '勾选了需要当面评估的情况，本档案只保留记录，不再提供训练建议。';
+
+  @override
+  String get rehabFieldArea => '部位';
+
+  @override
+  String get rehabFieldDuration => '病程';
+
+  @override
+  String get rehabFieldPain => '不适程度';
+
+  @override
+  String get rehabFieldFactors => '加重 / 缓解';
+
+  @override
+  String get rehabFieldGoals => '目标';
+
+  @override
+  String get rehabFieldGear => '器材';
+
+  @override
+  String get rehabFieldDays => '每周天数';
+
+  @override
+  String get rehabGearBodyweight => '徒手为主';
+
+  @override
+  String get rehabMySituation => '我的情况';
+
+  @override
+  String get rehabAiTitle => '智能康复建议（本地手动来回）';
+
+  @override
+  String get rehabAiBlurb => 'App 不联网、不上传任何信息，全部由手动复制完成。';
+
+  @override
+  String get rehabCopyPrompt => '复制提示词给智能助手';
+
+  @override
+  String get rehabExportPrompt => '导出提示词为文件';
+
+  @override
+  String get rehabPasteHint => '把智能助手的回复整段贴到这里（含计划数据）';
+
+  @override
+  String get rehabPaste => '粘贴';
+
+  @override
+  String get rehabSeeFormat => '看输出格式';
+
+  @override
+  String get rehabImportAdvice => '导入智能建议';
+
+  @override
+  String get rehabCautions => '注意事项';
+
+  @override
+  String get rehabUnreadable => '没读懂这段内容，确认贴的是智能助手的回复（要含计划数据）';
+
+  @override
+  String get rehabNoPlan => '没找到可用的训练计划';
+
+  @override
+  String get rehabRehabPlans => '康复计划';
+
+  @override
+  String get rehabNoAdviceYet => '还没导入建议。上面走一遍智能助手流程就有了。';
+
+  @override
+  String get rehabGateBlocksPlan => '未通过安全门，暂不生成训练建议。';
+
+  @override
+  String get rehabNotes => '备注 / 医生建议';
+
+  @override
+  String get rehabNotesHint => '记点东西：医生的说法、哪几天更疼、什么动作有效…';
+
+  @override
+  String get rehabSaveNotes => '保存备注';
+
+  @override
+  String get rehabNotesSaved => '备注已保存';
+
+  @override
+  String get rehabPromptCopied => '提示词已复制';
+
+  @override
+  String get rehabPromptCopiedHint => '贴给任意智能助手，再把回复贴回来';
+
+  @override
+  String get rehabDeleteTitle => '删除档案？';
+
+  @override
+  String get rehabDeleteBody => '只删档案本身，已经生成的训练计划会保留。';
+
+  @override
+  String get rehabDelete => '删除';
+
+  @override
+  String get rehabTabToday => '今天';
+
+  @override
+  String get rehabTabPlan => '课表';
+
+  @override
+  String get rehabTabLog => '日志';
+
+  @override
+  String get rehabTabBook => '手册';
+
+  @override
+  String get rehabHandTitle => '康复手册';
+
+  @override
+  String get rehabHandTarget => '训练对象';
+
+  @override
+  String get rehabHandGoal => '训练目标';
+
+  @override
+  String get rehabHandPrinciple => '总原则';
+
+  @override
+  String get rehabHandTimeline => '病程时间线';
+
+  @override
+  String get rehabHandTimelineSub => '从受伤到现在的完整脉络';
+
+  @override
+  String get rehabHandSchedule => '12 周训练课表';
+
+  @override
+  String get rehabHandScheduleSub => '4+1 阶段 · 28 次训练';
+
+  @override
+  String get rehabHandPhaseDetail => '每阶段课表明细';
+
+  @override
+  String get rehabHandExpand => '点开展开';
+
+  @override
+  String get rehabHandTraffic => '红绿灯速记';
+
+  @override
+  String get rehabHandTrafficSub => '练完记一行 · 存本地';
+
+  @override
+  String get rehabHandMaintain => '维持期';
+
+  @override
+  String get rehabHandFeel => '感受 / 疼痛分数（可空）';
+
+  @override
+  String get rehabHandSaveLog => '保存记录';
+
+  @override
+  String get rehabHandHistory => '历史记录';
+
+  @override
+  String get rehabHandNoLog => '还没有记录';
+
+  @override
+  String get rehabHandTrafficGreen => '绿灯';
+
+  @override
+  String get rehabHandTrafficYellow => '黄灯';
+
+  @override
+  String get rehabHandTrafficRed => '红灯';
+
+  @override
+  String get rehabHandFaq => 'FAQ · 常见疑问';
+
+  @override
+  String get rehabHandDelete => '删';
+
+  @override
+  String get rehabAreaLowback => '腰 / 下背';
+
+  @override
+  String get rehabAreaNeck => '颈 / 上背';
+
+  @override
+  String get rehabAreaShoulder => '肩';
+
+  @override
+  String get rehabAreaElbow => '肘 / 腕';
+
+  @override
+  String get rehabAreaHip => '髋';
+
+  @override
+  String get rehabAreaKnee => '膝';
+
+  @override
+  String get rehabAreaAnkle => '踝 / 足';
+
+  @override
+  String get rehabAreaOther => '其他 / 说不清';
+
+  @override
+  String get rehabDurAcute => '1 周以内';
+
+  @override
+  String get rehabDurSub => '1~4 周';
+
+  @override
+  String get rehabDurChronic => '1~3 个月';
+
+  @override
+  String get rehabDurLong => '3 个月以上';
+
+  @override
+  String get rehabGoalPain => '缓解疼痛';
+
+  @override
+  String get rehabGoalMobility => '恢复活动度';
+
+  @override
+  String get rehabGoalStrength => '增强力量';
+
+  @override
+  String get rehabGoalReturn => '回归运动 / 训练';
+
+  @override
+  String get rehabGoalDaily => '改善日常功能（久坐、弯腰、上下楼）';
+
+  @override
+  String get rehabFlagBladder => '大小便控制异常、会阴部（鞍区）麻木';
+
+  @override
+  String get rehabFlagWeakness => '下肢进行性无力、走路发飘或拖步';
+
+  @override
+  String get rehabFlagTrauma => '近期有摔倒、撞击等外伤';
+
+  @override
+  String get rehabFlagFever => '发热、寒战或局部红肿发热';
+
+  @override
+  String get rehabFlagNight => '夜间静息痛、不明原因消瘦';
+
+  @override
+  String get rehabFlagCancer => '肿瘤、结核或严重骨质疏松病史';
+
+  @override
+  String get rehabFlagPregnant => '已怀孕或产后早期';
+
+  @override
+  String get rehabFlagSurgery => '近 3 个月内做过手术';
+
+  @override
+  String get rehabStopRules => '出现以下情况立即停止并就医：疼痛在训练中持续加重；出现下肢麻木、无力或大小便异常；头晕、胸闷、心慌；疼痛第二天仍明显加重。';
+
+  @override
+  String rehabPlanCount(int n) {
+    return '计划 $n 个';
+  }
+
+  @override
+  String rehabPainNow(int pain) {
+    return '现在的不适程度：$pain / 10';
+  }
+
+  @override
+  String rehabLabelDays(int days) {
+    return '每周能练几天：$days';
+  }
+
+  @override
+  String rehabEpisodeMeta(String area, String duration, int pain, int plans) {
+    return '$area · $duration · 不适 $pain/10 · 计划 $plans 个';
+  }
+
+  @override
+  String rehabAutoTitle(String area) {
+    return '$area康复';
+  }
+
+  @override
+  String rehabRoutinesMade(int routines, int added, int adjusted) {
+    return '已生成 $routines 个计划 · 动作 $added 个 · 调整 $adjusted 处';
+  }
+
+  @override
+  String rehabMissedActions(String list) {
+    return '没匹配上的动作：$list';
+  }
+
+  @override
+  String rehabExerciseCount(int n) {
+    return '$n 个动作';
+  }
+
+  @override
+  String rehabDaysCount(int n) {
+    return '$n 天';
+  }
+
+  @override
+  String rehabLogStage(String n) {
+    return '阶段$n';
+  }
+
+  @override
+  String rehabLogCount(int n) {
+    return '共 $n 条';
+  }
+
+  @override
+  String rehabPhaseN(String n) {
+    return '阶段$n';
+  }
+
+  @override
+  String get rehabAiSteps => '1 复制提示词 → 2 贴给任意智能助手 → 3 把回复整段贴回来导入。';
+
+  @override
+  String get rehabGateFailedShort => '未通过安全门 · 建议先就医';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3580,12 +3876,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String exerciseCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 個動作',
-      one: '$n 個動作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個動作', one: '$n 個動作');
     return '$_temp0';
   }
 
@@ -3653,12 +3944,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String startCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 個動作',
-      one: '$n 個動作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個動作', one: '$n 個動作');
     return '開始 · $_temp0';
   }
 
@@ -3731,12 +4017,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String finishBodyPr(int prs) {
-    String _temp0 = intl.Intl.pluralLogic(
-      prs,
-      locale: localeName,
-      other: '$prs 個動作',
-      one: '1 個動作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(prs, locale: localeName, other: '$prs 個動作', one: '1 個動作');
     return '你在 $_temp0中舉出了新高。已記錄下來。';
   }
 
@@ -3759,12 +4040,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String prCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 個新紀錄',
-      one: '$n 個新紀錄',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個新紀錄', one: '$n 個新紀錄');
     return '$_temp0';
   }
 
@@ -3840,12 +4116,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String sessionsLogged(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已記錄 $n 次訓練',
-      one: '已記錄 $n 次訓練',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已記錄 $n 次訓練', one: '已記錄 $n 次訓練');
     return '$_temp0';
   }
 
@@ -3939,12 +4210,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String libraryCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '資料庫中有 $n 個動作',
-      one: '資料庫中有 $n 個動作',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '資料庫中有 $n 個動作', one: '資料庫中有 $n 個動作');
     return '$_temp0';
   }
 
@@ -4106,13 +4372,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String noteCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 則筆記',
-      one: '1 則筆記',
-      zero: '沒有筆記',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 則筆記', one: '1 則筆記', zero: '沒有筆記');
     return '$_temp0';
   }
 
@@ -4223,13 +4483,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String measureCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 筆測量',
-      one: '1 筆測量',
-      zero: '沒有測量',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 筆測量', one: '1 筆測量', zero: '沒有測量');
     return '$_temp0';
   }
 
@@ -4280,13 +4534,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String photoCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 張照片',
-      one: '1 張照片',
-      zero: '沒有照片',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 張照片', one: '1 張照片', zero: '沒有照片');
     return '$_temp0';
   }
 
@@ -4318,12 +4566,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String photoNextIn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '距下一張照片還有 $n 天',
-      one: '下一張照片是明天',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '距下一張照片還有 $n 天', one: '下一張照片是明天');
     return '$_temp0';
   }
 
@@ -4386,13 +4629,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String sessionCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 次訓練',
-      one: '1 次訓練',
-      zero: '沒有訓練',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次訓練', one: '1 次訓練', zero: '沒有訓練');
     return '$_temp0';
   }
 
@@ -4492,12 +4729,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String setCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 組',
-      one: '$n 組',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 組', one: '$n 組');
     return '$_temp0';
   }
 
@@ -4710,12 +4942,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String importWeights(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已匯入 $n 筆體重紀錄',
-      one: '已匯入 $n 筆體重紀錄',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已匯入 $n 筆體重紀錄', one: '已匯入 $n 筆體重紀錄');
     return '$_temp0';
   }
 
@@ -4733,12 +4960,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String importDone(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已匯入 $n 次訓練',
-      one: '已匯入 $n 次訓練',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已匯入 $n 次訓練', one: '已匯入 $n 次訓練');
     return '$_temp0';
   }
 
@@ -5090,8 +5312,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get calculatorsInside => '10 個計算器';
 
   @override
-  String get calculatorsInsideWhy =>
-      '1RM、槓片、BMI、卡路里、體脂、FFMI、暖身、RPE 重量與 DOTS、Wilks 力量評分 — 全都基於公開公式。';
+  String get calculatorsInsideWhy => '1RM、槓片、BMI、卡路里、體脂、FFMI、暖身、RPE 重量與 DOTS、Wilks 力量評分 — 全都基於公開公式。';
 
   @override
   String get mathInside => '透明計算';
@@ -5104,12 +5325,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String daysUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '天',
-      one: '天',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '天', one: '天');
     return '$_temp0';
   }
 
@@ -5153,12 +5369,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String perWeek(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '每週 $n 次訓練',
-      one: '每週 $n 次訓練',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '每週 $n 次訓練', one: '每週 $n 次訓練');
     return '$_temp0';
   }
 
@@ -5278,12 +5489,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String platesOwned(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 種尺寸',
-      one: '$n 種尺寸',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 種尺寸', one: '$n 種尺寸');
     return '$_temp0';
   }
 
@@ -5430,12 +5636,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String templateAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已新增 $n 個課表',
-      one: '已新增 $n 個課表',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已新增 $n 個課表', one: '已新增 $n 個課表');
     return '$_temp0';
   }
 
@@ -5459,12 +5660,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String dayCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 天',
-      one: '$n 天',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天', one: '$n 天');
     return '$_temp0';
   }
 
@@ -5607,8 +5803,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get aiRoutine => 'AI 課表';
 
   @override
-  String get aiIntro =>
-      '康途 絕不直接與 AI 通訊。你先匯出動作清單，貼到你已在使用的 AI 助手，再把回覆匯入。任何資料都不會自行離開手機。';
+  String get aiIntro => '康途 絕不直接與 AI 通訊。你先匯出動作清單，貼到你已在使用的 AI 助手，再把回覆匯入。任何資料都不會自行離開手機。';
 
   @override
   String aiMissing(int n) {
@@ -5883,12 +6078,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String badgeName(String id) {
-    String _temp0 = intl.Intl.selectLogic(id, {
-      'gold': '金色',
-      'blue': '藍色',
-      'green': '綠色',
-      'other': '徽章',
-    });
+    String _temp0 = intl.Intl.selectLogic(id, {'gold': '金色', 'blue': '藍色', 'green': '綠色', 'other': '徽章'});
     return '$_temp0';
   }
 
@@ -6220,11 +6410,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String routineCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 個課表',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 個課表');
     return '$_temp0';
   }
 
@@ -6239,11 +6425,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String routinesAdded(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已加入 $n 個課表',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已加入 $n 個課表');
     return '$_temp0';
   }
 
@@ -6387,8 +6569,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get shareIntroTitle => '分享這個課表';
 
   @override
-  String get shareIntroBody =>
-      '傳給你的伴侶、朋友或家人。他們會收到一個小檔案，用 康途 開啟，一點就能加入，組數和重量都在。';
+  String get shareIntroBody => '傳給你的伴侶、朋友或家人。他們會收到一個小檔案，用 康途 開啟，一點就能加入，組數和重量都在。';
 
   @override
   String get removedFromRoutine => '已從課表移除';
@@ -6423,8 +6604,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get effortSetting => '記錄每組強度';
 
   @override
-  String get effortHint =>
-      'RPE：10 表示一次都做不動了，8 表示還能再做兩次。RIR 表示還剩幾次。記錄後，估算 1RM 會使用 RPE 表。';
+  String get effortHint => 'RPE：10 表示一次都做不動了，8 表示還能再做兩次。RIR 表示還剩幾次。記錄後，估算 1RM 會使用 RPE 表。';
 
   @override
   String get rirHint => '0 表示一次都做不動了，2 表示還能再做兩次。';
@@ -6437,12 +6617,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String repCount(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 次',
-      one: '$n 次',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次', one: '$n 次');
     return '$_temp0';
   }
 
@@ -6585,8 +6760,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get planBestLifts => '最近的最佳組';
 
   @override
-  String get planAskFirst =>
-      '如果你不知道我的目標（力量、增肌、減脂或一般體能）或每次能練多久，請先用一則簡短訊息問我。知道後只用 JSON 回答。';
+  String get planAskFirst => '如果你不知道我的目標（力量、增肌、減脂或一般體能）或每次能練多久，請先用一則簡短訊息問我。知道後只用 JSON 回答。';
 
   @override
   String get backToTop => '回到頂端';
@@ -6600,8 +6774,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get exportForStravaHint =>
-      '請在瀏覽器中開啟 strava.com/upload/select 上傳（Strava App 無法匯入檔案），會顯示為含組數的重量訓練。';
+  String get exportForStravaHint => '請在瀏覽器中開啟 strava.com/upload/select 上傳（Strava App 無法匯入檔案），會顯示為含組數的重量訓練。';
 
   @override
   String get manualStartTime => '開始時間';
@@ -6755,11 +6928,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String goalDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '還剩 $n 天',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '還剩 $n 天');
     return '$_temp0';
   }
 
@@ -6794,12 +6963,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String inRoutines(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已在 $n 個課表中',
-      zero: '還沒加入任何課表',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已在 $n 個課表中', zero: '還沒加入任何課表');
     return '$_temp0';
   }
 
@@ -7017,4 +7181,410 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get recommendedRowHint => '首頁推薦的動作。';
+
+  @override
+  String get rehabTitle => '康复';
+
+  @override
+  String get rehabModuleSubtitle => '康复档案 · 安全门 · 智能建议 · 离线';
+
+  @override
+  String get rehabArchiveTitle => '康复档案';
+
+  @override
+  String get rehabArchiveBlurb => '问诊 · 安全门 · 智能建议';
+
+  @override
+  String get rehabBookTitle => '康复手册';
+
+  @override
+  String get rehabBookBlurb => '12 周腰痛康复 · 离线可看的参考内容';
+
+  @override
+  String get rehabBookBlurbShort => '12 周腰痛康复 · 离线可用';
+
+  @override
+  String get rehabEnter => '进入';
+
+  @override
+  String get rehabCardBlurb => '康复档案 · 安全门 · 智能建议';
+
+  @override
+  String get rehabKeepLocal => '本地保存 · 不上传';
+
+  @override
+  String get rehabIntro =>
+      '一个困扰 = 一个档案。填一次问诊信息，先过「安全门」筛查，再让通用智能助手给出康复建议（复制提示词 → 贴给它 → 粘回套用），计划、注意事项和备注都会留在这个档案里。';
+
+  @override
+  String get rehabNew => '新建康复档案';
+
+  @override
+  String get rehabEmpty => '还没有档案。比如「腰疼」「肩痛」都可以开一个。';
+
+  @override
+  String get rehabSafePass => '已通过安全门';
+
+  @override
+  String get rehabSeeDoctor => '建议先就医';
+
+  @override
+  String get rehabLabelArea => '哪里不舒服';
+
+  @override
+  String get rehabLabelDuration => '多久了';
+
+  @override
+  String get rehabLabelRedFlags => '有没有下列情况（有就勾上，我们只做筛查不做诊断）';
+
+  @override
+  String get rehabLabelFactors => '什么情况会加重 / 缓解';
+
+  @override
+  String get rehabFactorsHint => '例如：久坐后加重，躺下缓解；弯腰取物时疼';
+
+  @override
+  String get rehabLabelGoals => '康复目标';
+
+  @override
+  String get rehabLabelGear => '有什么器材';
+
+  @override
+  String get rehabSaveGate => '保存并检查安全门';
+
+  @override
+  String get rehabGateFailTitle => '安全门未通过';
+
+  @override
+  String get rehabGateFailBody => '勾选的这些情况建议先找医生或康复治疗师当面评估。\n\n档案已保存，可以做记录、存医生建议，但本 App 不再提供训练建议。';
+
+  @override
+  String get rehabOk => '知道了';
+
+  @override
+  String get rehabDeleteFile => '删除这个档案';
+
+  @override
+  String get rehabGatePassedNote => '问诊里没有发现需要先就医的信号。下面的建议仅供自我管理参考，症状加重随时停。';
+
+  @override
+  String get rehabGateFailedNote => '勾选了需要当面评估的情况，本档案只保留记录，不再提供训练建议。';
+
+  @override
+  String get rehabFieldArea => '部位';
+
+  @override
+  String get rehabFieldDuration => '病程';
+
+  @override
+  String get rehabFieldPain => '不适程度';
+
+  @override
+  String get rehabFieldFactors => '加重 / 缓解';
+
+  @override
+  String get rehabFieldGoals => '目标';
+
+  @override
+  String get rehabFieldGear => '器材';
+
+  @override
+  String get rehabFieldDays => '每周天数';
+
+  @override
+  String get rehabGearBodyweight => '徒手为主';
+
+  @override
+  String get rehabMySituation => '我的情况';
+
+  @override
+  String get rehabAiTitle => '智能康复建议（本地手动来回）';
+
+  @override
+  String get rehabAiBlurb => 'App 不联网、不上传任何信息，全部由手动复制完成。';
+
+  @override
+  String get rehabCopyPrompt => '复制提示词给智能助手';
+
+  @override
+  String get rehabExportPrompt => '导出提示词为文件';
+
+  @override
+  String get rehabPasteHint => '把智能助手的回复整段贴到这里（含计划数据）';
+
+  @override
+  String get rehabPaste => '粘贴';
+
+  @override
+  String get rehabSeeFormat => '看输出格式';
+
+  @override
+  String get rehabImportAdvice => '导入智能建议';
+
+  @override
+  String get rehabCautions => '注意事项';
+
+  @override
+  String get rehabUnreadable => '没读懂这段内容，确认贴的是智能助手的回复（要含计划数据）';
+
+  @override
+  String get rehabNoPlan => '没找到可用的训练计划';
+
+  @override
+  String get rehabRehabPlans => '康复计划';
+
+  @override
+  String get rehabNoAdviceYet => '还没导入建议。上面走一遍智能助手流程就有了。';
+
+  @override
+  String get rehabGateBlocksPlan => '未通过安全门，暂不生成训练建议。';
+
+  @override
+  String get rehabNotes => '备注 / 医生建议';
+
+  @override
+  String get rehabNotesHint => '记点东西：医生的说法、哪几天更疼、什么动作有效…';
+
+  @override
+  String get rehabSaveNotes => '保存备注';
+
+  @override
+  String get rehabNotesSaved => '备注已保存';
+
+  @override
+  String get rehabPromptCopied => '提示词已复制';
+
+  @override
+  String get rehabPromptCopiedHint => '贴给任意智能助手，再把回复贴回来';
+
+  @override
+  String get rehabDeleteTitle => '删除档案？';
+
+  @override
+  String get rehabDeleteBody => '只删档案本身，已经生成的训练计划会保留。';
+
+  @override
+  String get rehabDelete => '删除';
+
+  @override
+  String get rehabTabToday => '今天';
+
+  @override
+  String get rehabTabPlan => '课表';
+
+  @override
+  String get rehabTabLog => '日志';
+
+  @override
+  String get rehabTabBook => '手册';
+
+  @override
+  String get rehabHandTitle => '康复手册';
+
+  @override
+  String get rehabHandTarget => '训练对象';
+
+  @override
+  String get rehabHandGoal => '训练目标';
+
+  @override
+  String get rehabHandPrinciple => '总原则';
+
+  @override
+  String get rehabHandTimeline => '病程时间线';
+
+  @override
+  String get rehabHandTimelineSub => '从受伤到现在的完整脉络';
+
+  @override
+  String get rehabHandSchedule => '12 周训练课表';
+
+  @override
+  String get rehabHandScheduleSub => '4+1 阶段 · 28 次训练';
+
+  @override
+  String get rehabHandPhaseDetail => '每阶段课表明细';
+
+  @override
+  String get rehabHandExpand => '点开展开';
+
+  @override
+  String get rehabHandTraffic => '红绿灯速记';
+
+  @override
+  String get rehabHandTrafficSub => '练完记一行 · 存本地';
+
+  @override
+  String get rehabHandMaintain => '维持期';
+
+  @override
+  String get rehabHandFeel => '感受 / 疼痛分数（可空）';
+
+  @override
+  String get rehabHandSaveLog => '保存记录';
+
+  @override
+  String get rehabHandHistory => '历史记录';
+
+  @override
+  String get rehabHandNoLog => '还没有记录';
+
+  @override
+  String get rehabHandTrafficGreen => '绿灯';
+
+  @override
+  String get rehabHandTrafficYellow => '黄灯';
+
+  @override
+  String get rehabHandTrafficRed => '红灯';
+
+  @override
+  String get rehabHandFaq => 'FAQ · 常见疑问';
+
+  @override
+  String get rehabHandDelete => '删';
+
+  @override
+  String get rehabAreaLowback => '腰 / 下背';
+
+  @override
+  String get rehabAreaNeck => '颈 / 上背';
+
+  @override
+  String get rehabAreaShoulder => '肩';
+
+  @override
+  String get rehabAreaElbow => '肘 / 腕';
+
+  @override
+  String get rehabAreaHip => '髋';
+
+  @override
+  String get rehabAreaKnee => '膝';
+
+  @override
+  String get rehabAreaAnkle => '踝 / 足';
+
+  @override
+  String get rehabAreaOther => '其他 / 说不清';
+
+  @override
+  String get rehabDurAcute => '1 周以内';
+
+  @override
+  String get rehabDurSub => '1~4 周';
+
+  @override
+  String get rehabDurChronic => '1~3 个月';
+
+  @override
+  String get rehabDurLong => '3 个月以上';
+
+  @override
+  String get rehabGoalPain => '缓解疼痛';
+
+  @override
+  String get rehabGoalMobility => '恢复活动度';
+
+  @override
+  String get rehabGoalStrength => '增强力量';
+
+  @override
+  String get rehabGoalReturn => '回归运动 / 训练';
+
+  @override
+  String get rehabGoalDaily => '改善日常功能（久坐、弯腰、上下楼）';
+
+  @override
+  String get rehabFlagBladder => '大小便控制异常、会阴部（鞍区）麻木';
+
+  @override
+  String get rehabFlagWeakness => '下肢进行性无力、走路发飘或拖步';
+
+  @override
+  String get rehabFlagTrauma => '近期有摔倒、撞击等外伤';
+
+  @override
+  String get rehabFlagFever => '发热、寒战或局部红肿发热';
+
+  @override
+  String get rehabFlagNight => '夜间静息痛、不明原因消瘦';
+
+  @override
+  String get rehabFlagCancer => '肿瘤、结核或严重骨质疏松病史';
+
+  @override
+  String get rehabFlagPregnant => '已怀孕或产后早期';
+
+  @override
+  String get rehabFlagSurgery => '近 3 个月内做过手术';
+
+  @override
+  String get rehabStopRules => '出现以下情况立即停止并就医：疼痛在训练中持续加重；出现下肢麻木、无力或大小便异常；头晕、胸闷、心慌；疼痛第二天仍明显加重。';
+
+  @override
+  String rehabPlanCount(int n) {
+    return '计划 $n 个';
+  }
+
+  @override
+  String rehabPainNow(int pain) {
+    return '现在的不适程度：$pain / 10';
+  }
+
+  @override
+  String rehabLabelDays(int days) {
+    return '每周能练几天：$days';
+  }
+
+  @override
+  String rehabEpisodeMeta(String area, String duration, int pain, int plans) {
+    return '$area · $duration · 不适 $pain/10 · 计划 $plans 个';
+  }
+
+  @override
+  String rehabAutoTitle(String area) {
+    return '$area康复';
+  }
+
+  @override
+  String rehabRoutinesMade(int routines, int added, int adjusted) {
+    return '已生成 $routines 个计划 · 动作 $added 个 · 调整 $adjusted 处';
+  }
+
+  @override
+  String rehabMissedActions(String list) {
+    return '没匹配上的动作：$list';
+  }
+
+  @override
+  String rehabExerciseCount(int n) {
+    return '$n 个动作';
+  }
+
+  @override
+  String rehabDaysCount(int n) {
+    return '$n 天';
+  }
+
+  @override
+  String rehabLogStage(String n) {
+    return '阶段$n';
+  }
+
+  @override
+  String rehabLogCount(int n) {
+    return '共 $n 条';
+  }
+
+  @override
+  String rehabPhaseN(String n) {
+    return '阶段$n';
+  }
+
+  @override
+  String get rehabAiSteps => '1 复制提示词 → 2 贴给任意智能助手 → 3 把回复整段贴回来导入。';
+
+  @override
+  String get rehabGateFailedShort => '未通过安全门 · 建议先就医';
 }

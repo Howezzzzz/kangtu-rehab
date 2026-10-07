@@ -139,18 +139,18 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('康复', style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
+                  Text(t.rehabTitle, style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
                   const SizedBox(height: 2),
                   Text(
                     ep == null
-                        ? '康复档案 · 安全门 · 智能建议'
+                        ? t.rehabCardBlurb
                         : '${ep.title} · 计划 ${ep.routineIds.length} 个',
                     style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary),
                   ),
                 ],
               ),
             ),
-            Text('进入', style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
+            Text(t.rehabEnter, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
           ],
         ),
       ),

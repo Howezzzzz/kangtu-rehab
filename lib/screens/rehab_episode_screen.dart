@@ -18,6 +18,7 @@ import '../theme/app_theme.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/liquid_notch.dart';
 import '../widgets/ui_kit.dart';
+import '../l10n/l10n.dart';
 
 class RehabEpisodeScreen extends StatefulWidget {
   const RehabEpisodeScreen({super.key});
@@ -81,7 +82,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
             _notesCard(gc, ep),
             const SizedBox(height: 18),
             GhostButton(
-              label: '删除这个档案',
+              label: t.rehabDeleteFile,
               icon: PhosphorIconsRegular.trash,
               onTap: () => _delete(ep),
             ),
@@ -109,20 +110,20 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
             Icon(safe ? PhosphorIconsRegular.shieldCheck : PhosphorIconsRegular.warning,
                 size: 18, color: color),
             const SizedBox(width: 10),
-            Text(safe ? '已通过安全门' : '未通过安全门 · 建议先就医',
+            Text(safe ? t.rehabSafePass : t.rehabGateFailedShort,
                 style: AppTheme.f(14, weight: FontWeight.w800, color: color)),
           ]),
           const SizedBox(height: 8),
           Text(
             safe
-                ? '问诊里没有发现需要先就医的信号。下面的建议仅供自我管理参考，症状加重随时停。'
-                : '勾选了需要当面评估的情况，本档案只保留记录，不再提供训练建议。',
+                ? t.rehabGatePassedNote
+                : t.rehabGateFailedNote,
             style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.text, height: 1.45),
           ),
           if (!safe)
             for (final f in ep.redFlags) ...[
               const SizedBox(height: 6),
-              Text('· ${kRehabRedFlags[f] ?? f}',
+              Text('· ${t.rehabRedFlag(f)}',
                   style: AppTheme.f(12.5, weight: FontWeight.w600, color: gc.text)),
             ],
         ],
@@ -133,20 +134,20 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
   // ---- 问诊摘要 ----
   Widget _summary(GymColors gc, RehabEpisode ep) {
     final rows = <(String, String)>[
-      ('部位', rehabAreaLabel(ep.area)),
-      ('病程', rehabDurationLabel(ep.duration)),
-      ('不适程度', '${ep.pain}/10'),
-      if (ep.factors.trim().isNotEmpty) ('加重 / 缓解', ep.factors.trim()),
-      if (ep.goals.isNotEmpty) ('目标', ep.goals.map(rehabGoalLabel).join('、')),
-      ('器材', ep.equipment.isEmpty ? '徒手为主' : ep.equipment.join('、')),
-      ('每周天数', '${ep.daysPerWeek} 天'),
+      (t.rehabFieldArea, rehabAreaLabel(ep.area)),
+      (t.rehabFieldDuration, rehabDurationLabel(ep.duration)),
+      (t.rehabFieldPain, '${ep.pain}/10'),
+      if (ep.factors.trim().isNotEmpty) (t.rehabFieldFactors, ep.factors.trim()),
+      if (ep.goals.isNotEmpty) (t.rehabFieldGoals, ep.goals.map(rehabGoalLabel).join('、')),
+      (t.rehabFieldGear, ep.equipment.isEmpty ? t.rehabGearBodyweight : ep.equipment.join('、')),
+      (t.rehabFieldDays, t.rehabDaysCount(ep.daysPerWeek)),
     ];
     return SoftCard(
       radius: 18,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _title(gc, '我的情况'),
+          _title(gc, t.rehabMySituation),
           for (final r in rows) ...[
             const SizedBox(height: 6),
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -172,17 +173,17 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _title(gc, '智能康复建议（本地手动来回）'),
+          _title(gc, t.rehabAiTitle),
           Text(
-            '1 复制提示词 → 2 贴给任意智能助手 → 3 把回复整段贴回来导入。\n'
-            'App 不联网、不上传任何信息，全部由手动复制完成。',
+            '${t.rehabAiSteps}\n'
+            '${t.rehabAiBlurb}',
             style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.45),
           ),
           const SizedBox(height: 12),
-          PrimaryButton(label: '复制提示词给智能助手', onTap: () => _copy(ep)),
+          PrimaryButton(label: t.rehabCopyPrompt, onTap: () => _copy(ep)),
           const SizedBox(height: 8),
           GhostButton(
-              label: '导出提示词为文件',
+              label: t.rehabExportPrompt,
               icon: PhosphorIconsRegular.shareNetwork,
               onTap: () => _export(ep)),
           const SizedBox(height: 14),
@@ -195,7 +196,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
             style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.text, height: 1.35),
             cursorColor: gc.ember,
             decoration: InputDecoration(
-              hintText: '把智能助手的回复整段贴到这里（含计划数据）',
+              hintText: t.rehabPasteHint,
               hintStyle: AppTheme.f(13, weight: FontWeight.w500, color: gc.textTertiary),
               filled: true,
               fillColor: gc.bgRaised,
@@ -206,14 +207,14 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
           ),
           const SizedBox(height: 8),
           Row(children: [
-            _chip(gc, PhosphorIconsRegular.clipboardText, '粘贴', _paste),
+            _chip(gc, PhosphorIconsRegular.clipboardText, t.rehabPaste, _paste),
             const Spacer(),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => setState(() => _showFormat = !_showFormat),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                child: Text('看输出格式',
+                child: Text(t.rehabSeeFormat,
                     style: AppTheme.f(12.5, weight: FontWeight.w600, color: gc.ember)),
               ),
             ),
@@ -229,7 +230,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
           ],
           const SizedBox(height: 12),
           PrimaryButton(
-            label: '导入智能建议',
+            label: t.rehabImportAdvice,
             bg: _reply.text.trim().isEmpty ? gc.bgRaised2 : gc.ember,
             fg: _reply.text.trim().isEmpty ? gc.textTertiary : gc.onEmber,
             onTap: () => _import(ep),
@@ -240,7 +241,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
           ],
           if (ep.advice.trim().isNotEmpty) ...[
             const SizedBox(height: 14),
-            Text('注意事项',
+            Text(t.rehabCautions,
                 style: AppTheme.f(12.5, weight: FontWeight.w700, color: gc.text)),
             const SizedBox(height: 6),
             SelectableText(ep.advice,
@@ -267,15 +268,15 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
         children: [
           Text(
             _unreadable
-                ? '没读懂这段内容，确认贴的是智能助手的回复（要含计划数据）'
+                ? t.rehabUnreadable
                 : good
-                    ? '已生成 $_routines 个计划 · 动作 $_added 个 · 调整 $_adjusted 处'
-                    : '没找到可用的训练计划',
+                    ? t.rehabRoutinesMade(_routines, _added, _adjusted)
+                    : t.rehabNoPlan,
             style: AppTheme.f(13, weight: FontWeight.w600, color: good ? gc.sage : gc.text),
           ),
           if (_missed.isNotEmpty) ...[
             const SizedBox(height: 6),
-            Text('没匹配上的动作：${_missed.join(' · ')}',
+            Text(t.rehabMissedActions(_missed.join(' · ')),
                 style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textTertiary, height: 1.4)),
           ],
         ],
@@ -291,9 +292,9 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _title(gc, '康复计划'),
+          _title(gc, t.rehabRehabPlans),
           if (rs.isEmpty)
-            Text(ep.safe ? '还没导入建议。上面走一遍智能助手流程就有了。' : '未通过安全门，暂不生成训练建议。',
+            Text(ep.safe ? t.rehabNoAdviceYet : t.rehabGateBlocksPlan,
                 style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textSecondary))
           else
             for (final r in rs) ...[
@@ -308,7 +309,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
                     Expanded(
                       child: Text(r.name, style: AppTheme.f(13.5, weight: FontWeight.w600, color: gc.text)),
                     ),
-                    Text('${r.exerciseIds.length} 个动作',
+                    Text(t.rehabExerciseCount(r.exerciseIds.length),
                         style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textTertiary)),
                     const SizedBox(width: 6),
                     Icon(PhosphorIconsRegular.caretRight, size: 14, color: gc.textTertiary),
@@ -328,7 +329,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _title(gc, '备注 / 医生建议'),
+          _title(gc, t.rehabNotes),
           TextField(
             controller: _notes,
             minLines: 2,
@@ -336,7 +337,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
             style: AppTheme.f(13, weight: FontWeight.w500, color: gc.text),
             cursorColor: gc.ember,
             decoration: InputDecoration(
-              hintText: '记点东西：医生的说法、哪几天更疼、什么动作有效…',
+              hintText: t.rehabNotesHint,
               hintStyle: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textTertiary),
               filled: true,
               fillColor: gc.bgRaised,
@@ -346,12 +347,12 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
           ),
           const SizedBox(height: 10),
           GhostButton(
-            label: '保存备注',
+            label: t.rehabSaveNotes,
             icon: PhosphorIconsRegular.floppyDisk,
             onTap: () {
               ep.notes = _notes.text.trim();
               fit.updateEpisode(ep);
-              showNotchToast(context, '备注已保存', icon: PhosphorIconsFill.checkCircle, accent: gc.sage);
+              showNotchToast(context, t.rehabNotesSaved, icon: PhosphorIconsFill.checkCircle, accent: gc.sage);
             },
           ),
         ],
@@ -381,7 +382,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
   Future<void> _copy(RehabEpisode ep) async {
     await Clipboard.setData(ClipboardData(text: fit.rehabPromptText(ep)));
     if (!mounted) return;
-    showNotchToast(context, '提示词已复制', subtitle: '贴给任意智能助手，再把回复贴回来',
+    showNotchToast(context, t.rehabPromptCopied, subtitle: t.rehabPromptCopiedHint,
         icon: PhosphorIconsFill.copy, accent: context.gc.sage);
   }
 
@@ -419,9 +420,9 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
   Future<void> _delete(RehabEpisode ep) async {
     final ok = await askConfirm(
       context,
-      title: '删除档案？',
-      body: '只删档案本身，已经生成的训练计划会保留。',
-      confirmLabel: '删除',
+      title: t.rehabDeleteTitle,
+      body: t.rehabDeleteBody,
+      confirmLabel: t.rehabDelete,
       danger: true,
     );
     if (!ok || !mounted) return;

@@ -8,54 +8,42 @@
  */
 import 'dart:convert';
 
-/// 红旗征：命中任意一项 → 安全门不通过
-const Map<String, String> kRehabRedFlags = {
-  'bladder': '大小便控制异常、会阴部（鞍区）麻木',
-  'weakness': '下肢进行性无力、走路发飘或拖步',
-  'trauma': '近期有摔倒、撞击等外伤',
-  'fever': '发热、寒战或局部红肿发热',
-  'night': '夜间静息痛、不明原因消瘦',
-  'cancer': '肿瘤、结核或严重骨质疏松病史',
-  'pregnant': '已怀孕或产后早期',
-  'surgery': '近 3 个月内做过手术',
-};
+import '../l10n/l10n.dart';
 
-/// 不适部位
-const Map<String, String> kRehabAreas = {
-  'lowback': '腰 / 下背',
-  'neck': '颈 / 上背',
-  'shoulder': '肩',
-  'elbow': '肘 / 腕',
-  'hip': '髋',
-  'knee': '膝',
-  'ankle': '踝 / 足',
-  'other': '其他 / 说不清',
-};
+/// 红旗征 id（命中任意一项 → 安全门不通过）—— 文案见 l10n 的 rehabFlag*。
+const List<String> kRehabRedFlagIds = [
+  'bladder',
+  'weakness',
+  'trauma',
+  'fever',
+  'night',
+  'cancer',
+  'pregnant',
+  'surgery',
+];
 
-/// 病程
-const Map<String, String> kRehabDurations = {
-  'acute': '1 周以内',
-  'sub': '1~4 周',
-  'chronic': '1~3 个月',
-  'long': '3 个月以上',
-};
+/// 不适部位 id
+const List<String> kRehabAreaIds = [
+  'lowback',
+  'neck',
+  'shoulder',
+  'elbow',
+  'hip',
+  'knee',
+  'ankle',
+  'other',
+];
 
-/// 康复目标
-const Map<String, String> kRehabGoals = {
-  'pain': '缓解疼痛',
-  'mobility': '恢复活动度',
-  'strength': '增强力量',
-  'return': '回归运动 / 训练',
-  'daily': '改善日常功能（久坐、弯腰、上下楼）',
-};
+/// 病程 id
+const List<String> kRehabDurationIds = ['acute', 'sub', 'chronic', 'long'];
 
-/// 训练建议里必须包含的叫停规则（写进给 AI 的提示词，AI 需照抄并补充）
-const String kRehabStopRules = '出现以下情况立即停止并就医：疼痛在训练中持续加重；'
-    '出现下肢麻木、无力或大小便异常；头晕、胸闷、心慌；疼痛第二天仍明显加重。';
+/// 康复目标 id
+const List<String> kRehabGoalIds = ['pain', 'mobility', 'strength', 'return', 'daily'];
 
-String rehabAreaLabel(String key) => kRehabAreas[key] ?? key;
-String rehabDurationLabel(String key) => kRehabDurations[key] ?? key;
-String rehabGoalLabel(String key) => kRehabGoals[key] ?? key;
+String rehabAreaLabel(String key) => t.rehabArea(key);
+String rehabDurationLabel(String key) => t.rehabDuration(key);
+String rehabGoalLabel(String key) => t.rehabGoal(key);
+String rehabFlagLabel(String key) => t.rehabRedFlag(key);
 
 /// 从 AI 回复里抠出第一个 JSON 对象（与训练计划导入共用同一套动作 JSON 结构）
 Map<String, dynamic>? extractJsonObject(String raw) {

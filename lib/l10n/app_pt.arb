@@ -506,9 +506,7 @@
   "repsOnlyHint": "Registre este exercício sem peso.",
   "useDefaultArt": "Voltar à arte padrão",
   "daysShort": "{n}d",
-
   "focusCard": "O foco de hoje",
-
   "autoAdvance": "Avançar ao próximo sozinho",
   "keepScreenOn": "Manter a tela ligada durante o treino",
   "lockWorkout": "Bloquear a tela",
@@ -522,19 +520,34 @@
   "autoAdvanceHint": "Ao marcar a última série de um exercício, o treino passa para o próximo.",
   "autoProgress": "Subir o peso sozinho",
   "autoProgressHint": "Se completar todas as repetições, o próximo treino começa {w} a mais.",
-  "@autoProgressHint": { "placeholders": { "w": { "type": "String" } } },
-
+  "@autoProgressHint": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      }
+    }
+  },
   "placePlates": "Discos e barra",
   "platesAll": "Tudo disponível",
   "platesOwned": "{n, plural, =1{{n} medida} other{{n} medidas}}",
-  "@platesOwned": { "placeholders": { "n": { "type": "int" } } },
+  "@platesOwned": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "platePairs": "PARES",
   "plateAchievable": "O mais perto que consegue carregar: {w}",
-  "@plateAchievable": { "placeholders": { "w": { "type": "String" } } },
-
+  "@plateAchievable": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      }
+    }
+  },
   "autoWarmup": "Começar com aquecimento",
   "autoWarmupHint": "Adiciona as séries de aquecimento ao abrir o treino.",
-
   "trainReminder": "Aviso para treinar",
   "trainReminderHint": "Um aviso nesta hora, só nos dias com rotina planejada.",
   "reminderExactTime": "Hora exata",
@@ -544,24 +557,18 @@
   "notifTrainChannelWhy": "Um toque para treinar nos dias que planejou.",
   "notifTrainTitle": "Hora de treinar",
   "notifTrainBody": "A sua rotina está te esperando.",
-
   "planIntro": "Faça-me uma rotina de treino usando só os exercícios desta lista.",
   "planFormat": "Responda só em JSON, seguindo este formato:",
   "planNothing": "Nenhum exercício desse arquivo está na sua biblioteca",
   "planFailed": "Esse arquivo não é formatado em uma rotina aceita",
-
   "routineGroup": "Grupo",
   "newGroup": "Novo grupo",
   "noGroup": "Sem grupo",
   "groupNameHint": "Empurrar / Puxar / Pernas, 5×5…",
-
   "filters": "Filtros",
-
   "setsPlannedHint": "Escolha quantas séries quer de cada um. O treino abre com elas prontas.",
-
   "nextTime": "PRÓXIMO",
   "nextHold": "o mesmo peso até completar todas as repetições",
-
   "bgPhoto": "A sua foto",
   "bgPhotoPick": "Escolher uma foto",
   "bgPhotoChange": "Mudar a foto",
@@ -571,24 +578,39 @@
   "dimMedium": "Média",
   "dimStrong": "Forte",
   "bgPhotoHint": "Fica atrás de tudo, escurecida, para o app continuar legível.",
-
   "reminderSmart": "Inteligente",
   "reminderFixed": "Hora fixa",
   "reminderSmartHint": "Usa os dias e a hora em que você costuma treinar e não notifica se você já treinou nesse dia.",
   "reminderSmartEmpty": "Treine mais algumas vezes o app vai aprender a sua rotina.",
   "habitFocus": "o que costuma fazer às {day}",
-  "@habitFocus": { "placeholders": { "day": { "type": "String" } } },
-
+  "@habitFocus": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "duplicateRoutine": "Duplicar a rotina",
   "copySuffix": "{name} (cópiar)",
-  "@copySuffix": { "placeholders": { "name": { "type": "String" } } },
+  "@copySuffix": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "saveAsRoutine": "GUARDAR COMO ROTINA",
   "savedAsRoutine": "Guardada como rotina",
-
   "templates": "Planos prontos",
   "templatesHint": "Programas clássicos, montados com a sua biblioteca. Depois Poderá mudar tudo.",
   "templateAdded": "{n, plural, =1{{n} rotina adicionada} other{{n} rotinas adicionadas}}",
-  "@templateAdded": { "placeholders": { "n": { "type": "int" } } },
+  "@templateAdded": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "tplFullbody": "Três dias de corpo inteiro por semana. Por onde se começa.",
   "tplPpl": "Empurrar, puxar e pernas. Três ou seis dias por semana.",
   "tplUpperlower": "Superior e inferior, quatro dias por semana.",
@@ -596,19 +618,28 @@
   "tplStartingstrength": "Agachamento em todos, dois treinos que se alternam.",
   "tplHome": "Só uma barra para se pendurar e o chão.",
   "dayCount": "{n, plural, =1{{n} dia} other{{n} dias}}",
-  "@dayCount": { "placeholders": { "n": { "type": "int" } } },
-
+  "@dayCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "logRpe": "Registar o esforço (RPE)",
   "rpeHint": "10 é não conseguir fazer mais nenhuma repetição; 8, é que sobravam duas.",
-
   "superset": "Supersérie",
   "supersetLink": "Encadear com o próximo",
   "supersetHint": "Sem descanso entre exercícios encadeados: passa logo ao próximo.",
-
   "aiRoutine": "Rotina com IA",
   "aiIntro": "O Kangtu não fala com nenhuma IA. Você copia a sua lista de exercícios, cola no assistente que a usa e traz a resposta de volta. Do seu celular não sai nada sozinho.",
   "aiMissing": "{n, plural, =1{1 nome não estava na sua biblioteca} other{{n} nomes não estavam na sua biblioteca}}",
-  "@aiMissing": { "placeholders": { "n": { "type": "int" } } },
+  "@aiMissing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "importApps": "Quais apps lemos",
   "importOtherCsv": "Qualquer outro CSV com data, exercício, repetições e peso",
   "importAskApp": "Precisa de outro app? Peça-me",
@@ -710,7 +741,6 @@
   "momentsEmptyHint": "Fotografe a academia, o quadro, como montou a barra… o que quiser lembrar. Ficam no seu celular e só você vê.",
   "coverLabel": "CAPA",
   "removeCover": "Tirar capa",
-
   "startTitle": "Iniciar treino",
   "logTitle": "Registrar um treino",
   "logHint": "Sem cronômetro — só preencha o que você fez.",
@@ -720,9 +750,7 @@
   "plannedRoutine": "PLANEJADA",
   "logWorkoutAction": "REGISTRAR UM TREINO",
   "logging": "REGISTRANDO",
-
   "placesLabel": "Meus locais",
-
   "undo": "Desfazer",
   "deleteSet": "Excluir série",
   "setDeleted": "Série excluída",
@@ -753,7 +781,6 @@
   "moreOptions": "Mais opções",
   "suggestInWorkouts": "Sugerir em treinos rápidos",
   "suggestInWorkoutsHint": "Desligado, não aparece nas sugestões. Você ainda pode adicioná-los manualmente.",
-
   "onbPlaceTitle": "Onde você treina?",
   "onbPlaceWhy": "Marque todos os lugares onde você treina. Só vamos sugerir o que dá para fazer em cada um.",
   "onbPlaceGear": "O que você tem lá?",
@@ -776,7 +803,6 @@
   "saveChanges": "Salvar alterações",
   "noStepsYet": "Ainda não há passos. Escreva os seus para lembrar como você faz.",
   "addSteps": "Escrever os passos",
-
   "setTypeRestPause": "Rest-pause",
   "setTypeNormalInfo": "Uma série normal. Conta para o volume e para os recordes.",
   "setTypeWarmupInfo": "Séries leves para aquecer. Não contam para o volume nem para os recordes.",
@@ -810,7 +836,6 @@
   "importAction": "Importar",
   "showFormat": "Ver o formato",
   "shareAsFile": "Compartilhar como arquivo",
-
   "recoveryTab": "Recuperação",
   "recoveryOverall": "Corpo {pct}% recuperado",
   "recoveryAllFresh": "Tudo recuperado. Um bom dia para treinar o que quiser.",
@@ -820,23 +845,18 @@
   "recoveryHint": "Toque num músculo para ver quanto ele se recuperou. Séries recentes pesam mais, e as mais pesadas (pelo RPE) mais ainda.",
   "recoveryPct": "{pct}% recuperado",
   "readyInHours": "pronto em ~{h} h",
-
   "tplAbcd": "Quatro dias: peito e tríceps, costas e bíceps, pernas, ombros e abdômen.",
   "tplAbcde": "Cinco dias, um grupo em cada: peito, costas, pernas, ombros, braços.",
-
   "elapsedCaps": "DECORRIDO",
   "tapToSkip": "Toque para pular",
-
   "screenLocked": "Tela bloqueada",
   "lockedHint": "Mantenha pressionada a digital no topo para desbloquear",
-
   "liveDoneSet": "Série feita",
   "liveSkipRest": "Pular descanso",
   "livePause": "Pausar",
   "liveResume": "Retomar",
   "liveNext": "Próximo",
   "liveUpNext": "Depois: {name}",
-
   "stickerOpen": "Compartilhar numa foto",
   "stickerNoPhoto": "Sem foto",
   "stickerWorkout": "Treino",
@@ -845,32 +865,25 @@
   "stickerHint": "Arraste para mover e pinçe a tela para mudar o tamanho ou girar",
   "stickerSaved": "Salva na sua galeria",
   "stickerWeek": "Esta semana",
-
   "getReady": "Prepare-se",
-
   "stickerGallery": "Galeria",
   "stickerCamera": "Câmera",
   "shareIntroTitle": "Compartilhe esta rotina",
   "shareIntroBody": "Envie para seu parceiro, um amigo ou sua família. Eles recebem um pequeno arquivo que abre no Kangtu e adiciona a rotina com um toque, com séries e pesos.",
   "removedFromRoutine": "Removido da rotina",
-
   "radarTitle": "Últimos 30 dias",
   "radarHint": "Veja quais áreas precisam de mais trabalho",
   "radarEmpty": "Treine alguns dias para ver seu equilíbrio",
   "radarBalanced": "Bom equilíbrio até agora",
   "radarFocus": "Precisa de mais: {list}",
-
   "countdownReady": "Prepare-se",
   "countdownSkip": "Toque para começar já",
   "countdownSetting": "Contagem regressiva ao começar",
-
   "effortSetting": "Anotar o esforço",
   "effortHint": "RPE: 10 é não conseguir fazer mais nenhuma; 8, que sobravam duas. RIR conta as repetições que te sobravam. Se a série o tiver, o 1RM estimado usa a tabela de RPE.",
   "rirHint": "0 é não conseguir fazer mais nenhuma; 2, que sobravam duas.",
   "addWeekWidget": "Adicionar widget da semana",
-
   "gamificationSetting": "Medalhas e níveis",
-
   "repCount": "{n, plural, =1{{n} rep.} other{{n} reps.}}",
   "prBestSet": "Melhor série",
   "weekStartSetting": "A semana começa a",
@@ -1073,5 +1086,132 @@
   "trainReminderRowHint": "Um aviso nos dias de treino.",
   "alarmSoundRowHint": "O que toca ao fim do descanso.",
   "alarmStyleRowHint": "Se toca com o celular no silencioso.",
-  "recommendedRowHint": "Exercícios que sugerimos no Início."
+  "recommendedRowHint": "Exercícios que sugerimos no Início.",
+  "rehabTitle": "Rehab",
+  "rehabModuleSubtitle": "Case files · safety gate · AI advice · offline",
+  "rehabArchiveTitle": "Rehab case files",
+  "rehabArchiveBlurb": "Intake · safety gate · AI advice",
+  "rehabBookTitle": "Rehab handbook",
+  "rehabBookBlurb": "12-week low-back programme · offline reference",
+  "rehabBookBlurbShort": "12-week low-back programme · offline",
+  "rehabEnter": "Open",
+  "rehabCardBlurb": "Case files · safety gate · AI advice",
+  "rehabKeepLocal": "Saved on device · never uploaded",
+  "rehabIntro": "One problem, one case file. Fill the intake once, clear the safety gate, then let a general AI assistant suggest a rehab plan (copy the prompt → paste it there → paste the answer back). Plans, cautions and notes all stay in this file.",
+  "rehabNew": "New case file",
+  "rehabEmpty": "No case files yet. A sore back or a painful shoulder is enough to start one.",
+  "rehabSafePass": "Safety gate passed",
+  "rehabSeeDoctor": "See a doctor first",
+  "rehabLabelArea": "Where does it hurt?",
+  "rehabLabelDuration": "How long?",
+  "rehabLabelRedFlags": "Any of these? (tick to flag — this is screening, not diagnosis)",
+  "rehabLabelFactors": "What makes it worse or better",
+  "rehabFactorsHint": "e.g. worse after sitting, better lying down; hurts when bending to pick something up",
+  "rehabLabelGoals": "Rehab goals",
+  "rehabLabelGear": "What kit do you have?",
+  "rehabSaveGate": "Save and run the safety gate",
+  "rehabGateFailTitle": "Safety gate not passed",
+  "rehabGateFailBody": "The items you ticked are best assessed in person by a doctor or physiotherapist.\n\nYour case file is saved — keep notes, store your doctor's advice — but the app will not offer training advice for it.",
+  "rehabOk": "Got it",
+  "rehabDeleteFile": "Delete this case file",
+  "rehabGatePassedNote": "Nothing in your intake suggests you need to see a doctor first. The advice below is for self-management only — stop any time symptoms get worse.",
+  "rehabGateFailedNote": "You ticked items that need an in-person assessment. This file keeps records only; the app will not offer training advice.",
+  "rehabFieldArea": "Area",
+  "rehabFieldDuration": "Duration",
+  "rehabFieldPain": "Pain",
+  "rehabFieldFactors": "Worse / better",
+  "rehabFieldGoals": "Goals",
+  "rehabFieldGear": "Kit",
+  "rehabFieldDays": "Days a week",
+  "rehabGearBodyweight": "Mostly bodyweight",
+  "rehabMySituation": "My situation",
+  "rehabAiTitle": "AI rehab advice (manual, local)",
+  "rehabAiBlurb": "The app never goes online and never uploads anything — everything is copy and paste by hand.",
+  "rehabCopyPrompt": "Copy the prompt to an AI assistant",
+  "rehabExportPrompt": "Export the prompt as a file",
+  "rehabPasteHint": "Paste the assistant's whole answer here (plan data included)",
+  "rehabPaste": "Paste",
+  "rehabSeeFormat": "See the output format",
+  "rehabImportAdvice": "Import the advice",
+  "rehabCautions": "Cautions",
+  "rehabUnreadable": "Could not read that — make sure it is the assistant's answer (with plan data in it)",
+  "rehabNoPlan": "No usable training plan found",
+  "rehabRehabPlans": "Rehab plans",
+  "rehabNoAdviceYet": "Nothing imported yet. Run the assistant flow above and it will appear here.",
+  "rehabGateBlocksPlan": "Safety gate not passed — no training advice for now.",
+  "rehabNotes": "Notes / doctor's advice",
+  "rehabNotesHint": "Jot things down: what the doctor said, which days hurt more, what helps…",
+  "rehabSaveNotes": "Save notes",
+  "rehabNotesSaved": "Notes saved",
+  "rehabPromptCopied": "Prompt copied",
+  "rehabPromptCopiedHint": "Paste it into any AI assistant, then paste the answer back",
+  "rehabDeleteTitle": "Delete the case file?",
+  "rehabDeleteBody": "Only the file goes — training plans it created are kept.",
+  "rehabDelete": "Delete",
+  "rehabTabToday": "Today",
+  "rehabTabPlan": "Schedule",
+  "rehabTabLog": "Log",
+  "rehabTabBook": "Handbook",
+  "rehabHandTitle": "Rehab handbook",
+  "rehabHandTarget": "Who it is for",
+  "rehabHandGoal": "Training goal",
+  "rehabHandPrinciple": "Principles",
+  "rehabHandTimeline": "Timeline",
+  "rehabHandTimelineSub": "The full arc from injury to now",
+  "rehabHandSchedule": "12-week schedule",
+  "rehabHandScheduleSub": "4+1 phases · 28 sessions",
+  "rehabHandPhaseDetail": "Phase detail",
+  "rehabHandExpand": "Tap to expand",
+  "rehabHandTraffic": "Traffic-light cheat sheet",
+  "rehabHandTrafficSub": "One line after each session · stored locally",
+  "rehabHandMaintain": "Maintenance",
+  "rehabHandFeel": "Feel / pain score (optional)",
+  "rehabHandSaveLog": "Save entry",
+  "rehabHandHistory": "History",
+  "rehabHandNoLog": "No entries yet",
+  "rehabHandTrafficGreen": "Green",
+  "rehabHandTrafficYellow": "Amber",
+  "rehabHandTrafficRed": "Red",
+  "rehabHandFaq": "FAQ",
+  "rehabHandDelete": "Del",
+  "rehabAreaLowback": "Lower back",
+  "rehabAreaNeck": "Neck / upper back",
+  "rehabAreaShoulder": "Shoulder",
+  "rehabAreaElbow": "Elbow / wrist",
+  "rehabAreaHip": "Hip",
+  "rehabAreaKnee": "Knee",
+  "rehabAreaAnkle": "Ankle / foot",
+  "rehabAreaOther": "Other / not sure",
+  "rehabDurAcute": "Under a week",
+  "rehabDurSub": "1–4 weeks",
+  "rehabDurChronic": "1–3 months",
+  "rehabDurLong": "Over 3 months",
+  "rehabGoalPain": "Ease the pain",
+  "rehabGoalMobility": "Restore mobility",
+  "rehabGoalStrength": "Build strength",
+  "rehabGoalReturn": "Get back to training",
+  "rehabGoalDaily": "Day-to-day function (sitting, bending, stairs)",
+  "rehabFlagBladder": "Bladder or bowel changes, saddle numbness",
+  "rehabFlagWeakness": "Progressive leg weakness, unsteady or dragging walk",
+  "rehabFlagTrauma": "A recent fall or impact",
+  "rehabFlagFever": "Fever, chills, or local heat and swelling",
+  "rehabFlagNight": "Night pain at rest, unexplained weight loss",
+  "rehabFlagCancer": "Cancer, TB or severe osteoporosis",
+  "rehabFlagPregnant": "Pregnant or early post-partum",
+  "rehabFlagSurgery": "Surgery in the last 3 months",
+  "rehabStopRules": "Stop and see a doctor if: pain keeps getting worse during training; new numbness, weakness or bladder/bowel changes; dizziness, chest tightness or palpitations; pain clearly worse the next day.",
+  "rehabPlanCount": "{n} programmes",
+  "rehabPainNow": "Pain right now: {pain} / 10",
+  "rehabLabelDays": "Days per week: {days}",
+  "rehabEpisodeMeta": "{area} · {duration} · pain {pain}/10 · {plans} programmes",
+  "rehabAutoTitle": "{area} rehab",
+  "rehabRoutinesMade": "Made {routines} programmes · {added} exercises · {adjusted} adjusted",
+  "rehabMissedActions": "Not matched: {list}",
+  "rehabExerciseCount": "{n} exercises",
+  "rehabDaysCount": "{n} days",
+  "rehabLogStage": "Phase {n}",
+  "rehabLogCount": "{n} entries",
+  "rehabPhaseN": "Phase {n}",
+  "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
+  "rehabGateFailedShort": "Gate not passed · see a doctor first"
 }

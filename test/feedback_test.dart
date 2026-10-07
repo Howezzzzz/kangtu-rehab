@@ -119,7 +119,7 @@ void main() {
     });
 
     test('FB-03 部位映射覆盖全部康复部位(除“其他”)', () {
-      final missing = kRehabAreas.keys
+      final missing = kRehabAreaIds
           .where((k) => k != 'other' && !kRehabAreaMuscle.containsKey(k))
           .toList();
       expect(missing, isEmpty, reason: '康复部位新增后必须同步 kRehabAreaMuscle');
