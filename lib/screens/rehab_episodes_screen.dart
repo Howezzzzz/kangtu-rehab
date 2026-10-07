@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
+import '../l10n/l10n.dart';
 import '../models/rehab_episode.dart';
 import '../services/rehab_intake.dart';
 import '../state/fit_state.dart';
@@ -22,8 +23,6 @@ class RehabEpisodesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gc = context.gc;
-    final list = fit.rehabEpisodes;
     return SafeArea(
       bottom: false,
       child: SingleChildScrollView(
@@ -34,7 +33,26 @@ class RehabEpisodesScreen extends StatelessWidget {
           children: [
             ScreenHeader(title: '康复档案', onBack: fit.backFromRehabEpisodes, titleSize: 22),
             const SizedBox(height: 16),
-            SoftCard(
+            const RehabEpisodesBody(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// 康复档案主体（介绍 + 新建 + 列表）——「康复」模块首页与档案页共用。
+class RehabEpisodesBody extends StatelessWidget {
+  const RehabEpisodesBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final gc = context.gc;
+    final list = fit.rehabEpisodes;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SoftCard(
               radius: 20,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,9 +87,7 @@ class RehabEpisodesScreen extends StatelessWidget {
               _EpisodeCard(ep: ep),
               const SizedBox(height: 10),
             ],
-          ],
-        ),
-      ),
+      ],
     );
   }
 }
@@ -196,7 +212,7 @@ class _RehabNewEpisodeScreenState extends State<RehabNewEpisodeScreen> {
                 })),
             const SizedBox(height: 18),
             _label(gc, '有什么器材'),
-            _chips<String>(gc, {for (final g in _kWearableGear) g: g}, _gear, true, (k) => setState(() {
+            _chips<String>(gc, {for (final g in _kWearableGear) g: t.equipment(g)}, _gear, true, (k) => setState(() {
                   _gear.contains(k) ? _gear.remove(k) : _gear.add(k);
                 })),
             const SizedBox(height: 18),

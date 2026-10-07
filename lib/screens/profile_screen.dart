@@ -100,33 +100,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Rise(index: 0, child: _stats(gc)),
           ),
         ),
-        // 康复手册入口（离线模块）
+        // 康复（离线模块）：档案为主，手册为次
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
-            child: Pressable(
-              onTap: fit.goRehab,
-              child: SoftCard(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('康复手册',
-                              style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
-                          const SizedBox(height: 2),
-                          Text('12 周腰痛康复 · 离线可用',
-                              style: AppTheme.f(12,
-                                  weight: FontWeight.w500, color: gc.textSecondary)),
-                        ],
-                      ),
-                    ),
-                    Text('进入',
-                        style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
-                  ],
-                ),
-              ),
+            child: Column(
+              children: [
+                _rehabEntry(gc, '康复档案', '问诊 · 安全门 · 智能建议', fit.goRehab),
+                const SizedBox(height: 10),
+                _rehabEntry(gc, '康复手册', '12 周腰痛康复 · 离线可用', fit.goRehabBook),
+              ],
             ),
           ),
         ),
@@ -283,6 +266,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ],
     );
   }
+
+  Widget _rehabEntry(GymColors gc, String title, String detail, VoidCallback onTap) => Pressable(
+        onTap: onTap,
+        child: SoftCard(
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
+                    const SizedBox(height: 2),
+                    Text(detail,
+                        style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary)),
+                  ],
+                ),
+              ),
+              Text('进入', style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
+            ],
+          ),
+        ),
+      );
 
   Widget _heading(GymColors gc, String title, {String? count, VoidCallback? onMore, VoidCallback? onAdd}) {
     return GestureDetector(

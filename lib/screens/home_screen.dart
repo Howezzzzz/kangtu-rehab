@@ -109,9 +109,50 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 14),
+            _rehabCard(gc),
           ]),
         ),
       ),
+      ),
+    );
+  }
+
+  /// 康复入口（与训练计划/工具/日志并列）——康复档案为主，手册在模块内。
+  Widget _rehabCard(GymColors gc) {
+    final ep = fit.rehabEpisodes.isEmpty ? null : fit.rehabEpisodes.first;
+    return Pressable(
+      onTap: fit.goRehab,
+      child: SoftCard(
+        radius: 22,
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(color: gc.emberSoft, shape: BoxShape.circle),
+              child: Icon(PhosphorIconsRegular.heartbeat, size: 18, color: gc.ember),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('康复', style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
+                  const SizedBox(height: 2),
+                  Text(
+                    ep == null
+                        ? '康复档案 · 安全门 · 智能建议'
+                        : '${ep.title} · 计划 ${ep.routineIds.length} 个',
+                    style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary),
+                  ),
+                ],
+              ),
+            ),
+            Text('进入', style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
+          ],
+        ),
       ),
     );
   }

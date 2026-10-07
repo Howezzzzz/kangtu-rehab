@@ -1,4 +1,4 @@
-const String kDefaultName = 'InlitX';
+const String kDefaultName = '运动员';
 const String kDefaultHandle = 'inlitx';
 
 class Profile {

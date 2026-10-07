@@ -6,7 +6,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,15 +53,9 @@ class _RehabScreenState extends State<RehabScreen> {
           children: [
             ScreenHeader(
               title: '康复手册',
-              onBack: fit.backFromRehab,
+              onBack: fit.backFromRehabBook,
               titleSize: 22,
               subtitle: RehabData.meta()['subtitle']?.toString(),
-            ),
-            const SizedBox(height: 12),
-            GhostButton(
-              label: '我的康复档案（问诊 + 智能建议）',
-              icon: PhosphorIconsRegular.folderOpen,
-              onTap: fit.goRehabEpisodes,
             ),
             const SizedBox(height: 16),
             SegToggle([

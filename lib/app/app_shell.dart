@@ -21,6 +21,7 @@ import '../screens/plan_import_sheet.dart';
 import '../screens/progress_screen.dart';
 import '../screens/rehab_episode_screen.dart';
 import '../screens/rehab_episodes_screen.dart';
+import '../screens/rehab_home_screen.dart';
 import '../screens/rehab_screen.dart';
 import '../screens/routine_edit_screen.dart';
 import '../screens/routines_screen.dart';
@@ -369,9 +370,11 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
       case 'progress':
         return ProgressScreen();
       case 'rehab':
+        return const RehabHomeScreen();
+      case 'rehab-book':
         return const RehabScreen();
       case 'rehab-episodes':
-        return const RehabEpisodesScreen();
+        return const RehabHomeScreen();
       case 'rehab-episode-new':
         return const RehabNewEpisodeScreen();
       case 'rehab-episode':

@@ -29,7 +29,7 @@ Future<void> sharePlan(List<Routine> routines, {String? title}) async {
         .toLowerCase()
         .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
         .replaceAll(RegExp(r'^-+|-+$'), '');
-    final file = File('${dir.path}/gymmane-${slug.isEmpty ? 'plan' : slug}.json');
+    final file = File('${dir.path}/kangtu-${slug.isEmpty ? 'plan' : slug}.json');
     await file.writeAsString(fit.exportPlanJson(routines));
     await SharePlus.instance.share(ShareParams(
       files: [XFile(file.path, mimeType: 'application/json')],

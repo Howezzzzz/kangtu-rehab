@@ -36,10 +36,9 @@ import 'profile_screen.dart';
 import 'strava_sheet.dart';
 import '../widgets/ui_kit.dart';
 
-const _kRepoUrl = 'https://github.com/InlitX/GymMane';
+const _kRepoUrl = 'https://github.com/Howezzzzz/kangtu-rehab';
 const _kBugUrl = '$_kRepoUrl/issues/new?labels=bug';
 const _kFeatureUrl = '$_kRepoUrl/issues/new?labels=enhancement';
-const _kKofiUrl = 'https://ko-fi.com/inlitx';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -362,7 +361,6 @@ class SettingsScreen extends StatelessWidget {
               (PhosphorIconsRegular.bug, t.reportBug, () => _open(context, _kBugUrl)),
               (PhosphorIconsRegular.lightbulb, t.requestFeature, () => _open(context, _kFeatureUrl)),
               (PhosphorIconsRegular.githubLogo, t.starOnGithub, () => _open(context, _kRepoUrl)),
-              (PhosphorIconsRegular.coffee, t.buyCoffee, () => _open(context, _kKofiUrl)),
             ]),
             const SizedBox(height: 22),
             _linkGroup(gc, [
@@ -584,11 +582,11 @@ class SettingsScreen extends StatelessWidget {
     }
     final dir = await getTemporaryDirectory();
     final stamp = DateTime.now().toIso8601String().split('T').first;
-    final file = File('${dir.path}/gymmane-workouts-$stamp.csv');
+    final file = File('${dir.path}/kangtu-workouts-$stamp.csv');
     await file.writeAsString(fit.exportCsv());
     if (!context.mounted) return;
     await SharePlus.instance.share(
-      ShareParams(files: [XFile(file.path)], subject: 'GymMane workouts'),
+      ShareParams(files: [XFile(file.path)], subject: '康途 训练记录'),
     );
   }
 
@@ -607,11 +605,11 @@ class SettingsScreen extends StatelessWidget {
   Future<void> _exportBackup(BuildContext context) async {
     final dir = await getTemporaryDirectory();
     final stamp = DateTime.now().toIso8601String().split('T').first;
-    final file = File('${dir.path}/gymmane-backup-$stamp.zip');
+    final file = File('${dir.path}/kangtu-backup-$stamp.zip');
     await file.writeAsBytes(await buildBackupZip(), flush: true);
     if (!context.mounted) return;
     await SharePlus.instance.share(
-      ShareParams(files: [XFile(file.path)], subject: 'GymMane backup'),
+      ShareParams(files: [XFile(file.path)], subject: '康途 备份'),
     );
   }
 

@@ -130,8 +130,14 @@ abstract class FitCore extends ChangeNotifier {
 
   void goSettings() => _setRoute('settings', reset: true);
 
-  // 康复手册（离线模块）
+  // 康复模块（离线）：模块首页 = 康复档案，手册为次级入口
   void goRehab() => _setRoute('rehab', reset: true);
+
+  void backFromRehabHome() => _setRoute('settings', reset: true);
+
+  void goRehabBook() => pushRoute('rehab-book');
+
+  void backFromRehabBook() => popRoute(fallback: 'rehab');
 
   void backFromRehab() => _setRoute('settings', reset: true);
 

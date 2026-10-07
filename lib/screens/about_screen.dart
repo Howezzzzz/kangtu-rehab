@@ -11,11 +11,11 @@ import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
 
-const _kVersion = '1.4.0';
-const _kAuthor = 'InlitX';
-const _kAuthorUrl = 'https://github.com/InlitX';
-const _kRepoUrl = 'https://github.com/InlitX/GymMane';
-const _kKofiUrl = 'https://ko-fi.com/inlitx';
+const _kVersion = '1.11.0';
+const _kAuthor = '康途';
+const _kAuthorUrl = 'https://github.com/Howezzzzz';
+const _kRepoUrl = 'https://github.com/Howezzzzz/kangtu-rehab';
+const _kUpstreamUrl = 'https://github.com/InlitX/GymMane';
 const _kRepdbUrl = 'https://repdb.co';
 
 class AboutScreen extends StatelessWidget {
@@ -187,9 +187,9 @@ class AboutScreen extends StatelessWidget {
   Widget _credits(GymColors gc) {
     final rows = <(IconData, String, String, String, Color?)>[
       (PhosphorIconsFill.heart, t.madeWithLoveBy, _kAuthor, _kAuthorUrl, gc.accent),
-      (PhosphorIconsRegular.githubLogo, t.sourceCode, 'InlitX/GymMane', _kRepoUrl, null),
-      (PhosphorIconsRegular.coffee, t.buyCoffee, 'ko-fi.com/inlitx', _kKofiUrl, null),
+      (PhosphorIconsRegular.githubLogo, t.sourceCode, 'Howezzzzz/kangtu-rehab', _kRepoUrl, null),
       (PhosphorIconsRegular.database, 'REPDB', 'Exercise data by RepDB (repdb.co)', _kRepdbUrl, null),
+      (PhosphorIconsRegular.shieldCheck, '开源署名', 'Based on GymMane by InlitX', _kUpstreamUrl, null),
     ];
     return Container(
       clipBehavior: Clip.antiAlias,

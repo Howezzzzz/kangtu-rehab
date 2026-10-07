@@ -388,7 +388,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
   Future<void> _export(RehabEpisode ep) async {
     try {
       final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/gymmane-rehab-prompt.txt');
+      final file = File('${dir.path}/kangtu-rehab-prompt.txt');
       await file.writeAsString(fit.rehabPromptText(ep));
       await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], subject: ep.title));
     } catch (_) {}
