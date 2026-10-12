@@ -25,6 +25,10 @@ jobs:
       - name: Pub get
         run: flutter pub get
 
+      - name: Read version from pubspec
+        id: pkg
+        run: echo "version=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)" >> "$GITHUB_OUTPUT"
+
       - name: Build release APK
         run: flutter build apk --release
         env:
@@ -33,9 +37,15 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
 
+      - name: Rename APK to 康途-<版本号>.apk
+        run: |
+          mv build/app/outputs/flutter-apk/app-release.apk \
+             "build/app/outputs/flutter-apk/康途-${{ steps.pkg.outputs.version }}.apk"
+          ls -l build/app/outputs/flutter-apk/
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: kangtu-rehab-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: 康途-${{ steps.pkg.outputs.version }}
+          path: build/app/outputs/flutter-apk/康途-*.apk
           retention-days: 30
