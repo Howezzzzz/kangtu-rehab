@@ -188,8 +188,8 @@ class AboutScreen extends StatelessWidget {
     final rows = <(IconData, String, String, String, Color?)>[
       (PhosphorIconsFill.heart, t.madeWithLoveBy, _kAuthor, _kAuthorUrl, gc.accent),
       (PhosphorIconsRegular.githubLogo, t.sourceCode, 'Howezzzzz/kangtu-rehab', _kRepoUrl, null),
-      (PhosphorIconsRegular.database, 'REPDB', 'Exercise data by RepDB (repdb.co)', _kRepdbUrl, null),
-      (PhosphorIconsRegular.shieldCheck, '开源署名', 'Based on GymMane by InlitX', _kUpstreamUrl, null),
+      (PhosphorIconsRegular.database, 'REPDB', '动作数据来自 RepDB (repdb.co)', _kRepdbUrl, null),
+      (PhosphorIconsRegular.shieldCheck, '开源署名', '基于 InlitX 的 GymMane', _kUpstreamUrl, null),
     ];
     return Container(
       clipBehavior: Clip.antiAlias,

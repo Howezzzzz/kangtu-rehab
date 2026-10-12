@@ -1703,7 +1703,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String daysShort(int n) {
-    return '${n}d';
+    return '$n天';
   }
 
   @override
@@ -3461,7 +3461,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get suppVitaminD => '维生素 D';
 
   @override
-  String get suppOmega3 => 'Omega-3';
+  String get suppOmega3 => '欧米伽-3';
 
   @override
   String get suppMagnesium => '镁';
@@ -4108,97 +4108,92 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get readyDishes => 'Dishes';
+  String get readyDishes => '现成菜品';
 
   @override
   String weightLastLine(String weight) {
-    return 'Last weigh-in $weight';
+    return '上次称重 $weight';
   }
 
   @override
-  String get proteinAnimalShort => 'Animal';
+  String get proteinAnimalShort => '动物';
 
   @override
-  String get proteinPlantShort => 'Plant';
+  String get proteinPlantShort => '植物';
 
   @override
   String kcalFromMacros(String value) {
-    return 'These macros add up to about $value';
+    return '这些营养素约合 $value';
   }
 
   @override
-  String get useValue => 'Use';
+  String get useValue => '使用';
 
   @override
-  String get suppRowHint => 'Tap to mark · hold for details';
+  String get suppRowHint => '点按标记 · 长按详情';
 
   @override
-  String get suppPhoto => 'Photo';
+  String get suppPhoto => '照片';
 
   @override
-  String get suppDose => 'Dose';
+  String get suppDose => '剂量';
 
   @override
-  String get suppDoseHint => '5 g, 2 capsules…';
+  String get suppDoseHint => '5 克、2 粒…';
 
   @override
-  String get suppRemind => 'Remind me';
+  String get suppRemind => '提醒我';
 
   @override
   String mealPlanDefault(int n) {
-    return 'Plan $n';
+    return '计划 $n';
   }
 
   @override
-  String get mealPlansTitle => 'Meal plans';
+  String get mealPlansTitle => '备餐计划';
 
   @override
-  String get mealPlanNew => 'New plan';
+  String get mealPlanNew => '新建计划';
 
   @override
   String fromPlan(String name) {
-    return 'From $name';
+    return '来自 $name';
   }
 
   @override
-  String get logPlan => 'Log';
+  String get logPlan => '记录';
 
   @override
-  String get planFromDay => 'Copy this day';
+  String get planFromDay => '复制这一天';
 
   @override
-  String get planNewHint => 'Plan your days like your routines, then log a whole meal with one tap.';
+  String get planNewHint => '像安排训练一样排好每天，一整餐一键记录。';
 
   @override
-  String get planLogDay => 'Log the empty meals';
+  String get planLogDay => '记录空着的餐';
 
   @override
   String planLogged(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n foods logged',
-      one: '1 food logged',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已记录 $n 种食物', one: '已记录 1 种食物');
     return '$_temp0';
   }
 
   @override
-  String get planNoPlan => 'No plan';
+  String get planNoPlan => '暂无计划';
 
   @override
-  String get planWeekHint => 'Tap a day to give it a plan.';
+  String get planWeekHint => '点某天给它安排计划。';
 
   @override
-  String get planDuplicate => 'Duplicate';
+  String get planDuplicate => '复制';
 
   @override
   String planDeleteTitle(String name) {
-    return 'Delete $name?';
+    return '删除 $name？';
   }
 
   @override
-  String get planDeleteBody => 'Your logged days stay as they are.';
+  String get planDeleteBody => '已记录的日期保持不变。';
 
   @override
   String get sectionBeta => '测试版';
@@ -4249,289 +4244,282 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nutritionAboutOk => '知道了';
 
   @override
-  String get planShare => 'Share';
+  String get planShare => '分享';
 
   @override
-  String get planImport => 'Import a plan';
+  String get planImport => '导入计划';
 
   @override
   String planImported(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n plans imported',
-      one: '1 plan imported',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已导入 $n 个计划', one: '已导入 1 个计划');
     return '$_temp0';
   }
 
   @override
-  String get planImportNone => 'That file has no meal plans.';
+  String get planImportNone => '该文件里没有备餐计划。';
 
   @override
-  String get planMoveUp => 'Move up';
+  String get planMoveUp => '上移';
 
   @override
-  String get planMoveDown => 'Move down';
+  String get planMoveDown => '下移';
 
   @override
-  String get cutoutEdit => 'Touch up cutout';
+  String get cutoutEdit => '精修抠图';
 
   @override
-  String get cutoutEditHint =>
-      'Drag to erase or restore. Tap an area to remove or bring it back whole. Pinch to zoom.';
+  String get cutoutEditHint => '拖动擦除或恢复。点按某块可整体去除或复原。双指缩放。';
 
   @override
-  String get cutoutErase => 'Erase';
+  String get cutoutErase => '擦除';
 
   @override
-  String get cutoutRestore => 'Restore';
+  String get cutoutRestore => '恢复';
 
   @override
-  String get cutoutReset => 'Back to automatic';
+  String get cutoutReset => '恢复自动抠图';
 
   @override
-  String get cutoutByHand => 'Cut out by hand';
+  String get cutoutByHand => '手动抠图';
 
   @override
   String notifSuppTitleFor(String names) {
-    return 'Time to take: $names';
+    return '该服用了：$names';
   }
 
   @override
-  String get notifSuppTap => 'Tick it off in GymMane once you\'ve taken it.';
+  String get notifSuppTap => '服用后在康途里打个勾。';
 
   @override
-  String get suppNoneToday => 'Nothing to take today.';
+  String get suppNoneToday => '今天没有要服用的。';
 
   @override
-  String get suppOtherDays => 'Other days';
+  String get suppOtherDays => '其他日期';
 
   @override
   String suppEveryN(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'Every $n days', one: 'Every day');
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '每 $n 天', one: '每天');
     return '$_temp0';
   }
 
   @override
-  String get suppDaily => 'Every day';
+  String get suppDaily => '每天';
 
   @override
   String suppFromDate(String date) {
-    return 'from $date';
+    return '从 $date';
   }
 
   @override
   String suppUntilDate(String date) {
-    return 'until $date';
+    return '至 $date';
   }
 
   @override
-  String get suppSomeDays => 'Some days';
+  String get suppSomeDays => '部分日期';
 
   @override
-  String get suppEveryShort => 'Every X days';
+  String get suppEveryShort => '每 X 天';
 
   @override
-  String get suppWhen => 'When';
+  String get suppWhen => '时间';
 
   @override
-  String get suppEveryLead => 'Every';
+  String get suppEveryLead => '每';
 
   @override
   String suppEveryTail(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: 'days', one: 'day');
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '天', one: '天');
     return '$_temp0';
   }
 
   @override
-  String get suppStarts => 'Starts';
+  String get suppStarts => '开始';
 
   @override
-  String get suppEnds => 'Ends';
+  String get suppEnds => '结束';
 
   @override
-  String get suppTomorrow => 'Tomorrow';
+  String get suppTomorrow => '明天';
 
   @override
-  String get suppPickDate => 'Pick a date';
+  String get suppPickDate => '选择日期';
 
   @override
-  String get suppNever => 'Never';
+  String get suppNever => '从不';
 
   @override
-  String get suppOneWeek => 'In 1 week';
+  String get suppOneWeek => '1 周后';
 
   @override
-  String get suppOneMonth => 'In 1 month';
+  String get suppOneMonth => '1 个月后';
 
   @override
-  String get planPickHint => 'Pick the plan for this day, or make a new one.';
+  String get planPickHint => '为这天选一个计划，或新建一个。';
 
   @override
   String planSetForDay(String day) {
-    return 'Plan set for $day';
+    return '已为$day设置计划';
   }
 
   @override
-  String get planSaved => 'Plan saved';
+  String get planSaved => '计划已保存';
 
   @override
-  String get planDiscardTitle => 'Discard changes?';
+  String get planDiscardTitle => '放弃更改？';
 
   @override
-  String get planDiscardBody => 'What you changed won\'t be saved.';
+  String get planDiscardBody => '你的改动不会被保存。';
 
   @override
-  String get planDiscard => 'Discard';
+  String get planDiscard => '放弃';
 
   @override
-  String get planEdit => 'Edit plan';
+  String get planEdit => '编辑计划';
 
   @override
-  String get planNameHint => 'Plan name';
+  String get planNameHint => '计划名称';
 
   @override
-  String get planDaysQuestion => 'Which days?';
+  String get planDaysQuestion => '哪几天？';
 
   @override
-  String get planDaysHint => 'On those days it shows up in Nutrition so you can log it in one tap.';
+  String get planDaysHint => '这些天它会出现在营养模块里，方便一键记录。';
 
   @override
-  String get planDaysNone => 'Pick at least one day, or it won\'t show up anywhere.';
+  String get planDaysNone => '至少选一天，否则它不会出现在任何地方。';
 
   @override
-  String get planNothingToLog => 'Those meals are already logged';
+  String get planNothingToLog => '这些餐已经记录过了';
 
   @override
-  String get planSave => 'Save plan';
+  String get planSave => '保存计划';
 
   @override
-  String get planToday => 'Today\'s plan';
+  String get planToday => '今日计划';
 
   @override
-  String get planLogRest => 'Log the rest';
+  String get planLogRest => '记录其余';
 
   @override
-  String get dishNew => 'Create my dish';
+  String get dishNew => '创建我的菜品';
 
   @override
-  String get dishNewHint => 'Pick ingredients and amounts, save it and log it in one tap.';
+  String get dishNewHint => '选食材和用量，保存后可一键记录。';
 
   @override
-  String get dishEdit => 'Edit dish';
+  String get dishEdit => '编辑菜品';
 
   @override
-  String get dishNameHint => 'E.g. Mum\'s lentils';
+  String get dishNameHint => '例如：妈妈的扁豆';
 
   @override
-  String get dishIngredients => 'Ingredients';
+  String get dishIngredients => '食材';
 
   @override
-  String get dishEmptyHint => 'Add what goes in it with the amount you usually eat.';
+  String get dishEmptyHint => '把常吃的食材和用量加进来。';
 
   @override
-  String get dishSave => 'Save dish';
+  String get dishSave => '保存菜品';
 
   @override
-  String get dishNeedsName => 'Give it a name';
+  String get dishNeedsName => '给它起个名字';
 
   @override
-  String get dishNeedsItems => 'Add at least one ingredient';
+  String get dishNeedsItems => '至少加一种食材';
 
   @override
-  String get suppHistory => 'Last 14 days';
+  String get suppHistory => '最近 14 天';
 
   @override
   String suppTakenOf(int n, int total) {
-    return '$n of $total taken';
+    return '已服用 $n/$total';
   }
 
   @override
-  String get suppNoReminder => 'No reminder';
+  String get suppNoReminder => '不提醒';
 
   @override
-  String get suppMarkTaken => 'Mark as taken';
+  String get suppMarkTaken => '标记为已服用';
 
   @override
-  String get suppUnmark => 'Unmark';
+  String get suppUnmark => '取消标记';
 
   @override
-  String get suppEdit => 'Edit';
+  String get suppEdit => '编辑';
 
   @override
-  String get mealMoveTo => 'Move to';
+  String get mealMoveTo => '移到';
 
   @override
-  String get mealClear => 'Clear meal';
+  String get mealClear => '清空这一餐';
 
   @override
-  String get mealCleared => 'Meal cleared';
+  String get mealCleared => '已清空这一餐';
 
   @override
   String movedMealToast(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count foods moved',
-      one: '1 food moved',
+      other: '已移动 $count 种食物',
+      one: '已移动 1 种食物',
     );
     return '$_temp0';
   }
 
   @override
-  String get repeatWholeDay => 'Repeat the whole day';
+  String get repeatWholeDay => '重复整天';
 
   @override
   String createFoodNamed(String name) {
-    return 'Create “$name”';
+    return '创建“$name”';
   }
 
   @override
-  String get entryDay => 'Day';
+  String get entryDay => '日期';
 
   @override
-  String get movedToDay => 'Moved';
+  String get movedToDay => '已移到';
 
   @override
-  String get favFoodsHint => 'Tap ☆ on a food';
+  String get favFoodsHint => '点按食物上的 ☆';
 
   @override
-  String get favFoodsEmpty => 'Tap the star on any food to keep it here, one tap away.';
+  String get favFoodsEmpty => '点任意食物上的星标把它留在这里，一键可取。';
 
   @override
   String savedMealsCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count meals', one: '1 meal');
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count 餐', one: '1 餐');
     return '$_temp0';
   }
 
   @override
-  String get savedMealsEmpty => 'Save a meal from its ••• menu, or build your own dish.';
+  String get savedMealsEmpty => '从餐食的 ••• 菜单保存，或自建菜品。';
 
   @override
-  String get sugarLimitLabel => 'Sugar limit';
+  String get sugarLimitLabel => '糖上限';
 
   @override
-  String get sodiumLimitLabel => 'Sodium limit';
+  String get sodiumLimitLabel => '钠上限';
 
   @override
-  String get waterOptions => 'Water options';
+  String get waterOptions => '饮水设置';
 
   @override
-  String get waterNone => 'No water logged yet.';
+  String get waterNone => '还没有饮水记录。';
 
   @override
-  String get waterDailyGoal => 'Daily water';
+  String get waterDailyGoal => '每日饮水';
 
   @override
-  String get trackersScreen => 'Screen';
+  String get trackersScreen => '屏幕';
 
   @override
-  String get vesselMotion => 'Moving water and shake';
+  String get vesselMotion => '水面晃动与摇动';
 
   @override
-  String get vesselMotionHint =>
-      'Turn it off if the screen feels slow: the glasses still fill up, they just stop moving.';
+  String get vesselMotionHint => '界面卡顿就关掉：杯子照常装满，只是不再晃动。';
 
   @override
   String get tplNameFullbody => '全身训练';
