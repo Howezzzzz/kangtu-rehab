@@ -1,28 +1,8 @@
 {
   "@@locale": "fr",
   "languageName": "Français",
-  "@languageName": {
-    "description": "This language, written in itself. Shown in the language picker."
-  },
   "vsLastMonthLabel": "{pct}% vs le mois dernier",
-  "@vsLastMonthLabel": {
-    "placeholders": {
-      "pct": {
-        "type": "String"
-      }
-    }
-  },
   "levelStreakLabel": "Niveau {level} · {streak}",
-  "@levelStreakLabel": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      },
-      "streak": {
-        "type": "String"
-      }
-    }
-  },
   "save": "ENREGISTRER",
   "cancel": "Annuler",
   "cancelCaps": "ANNULER",
@@ -47,13 +27,6 @@
   "tools": "OUTILS",
   "firstSessionHint": "Choisis tes muscles et enregistre ta première séance",
   "exerciseCount": "{n, plural, =1{{n} exercice} other{{n} exercices}}",
-  "@exerciseCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "pushDay": "JOUR PUSH",
   "pullDay": "JOUR PULL",
   "legDay": "JAMBES",
@@ -70,25 +43,11 @@
   "nothingForFocus": "Aucun exercice pour cette cible",
   "goBackPick": "Reviens en arrière et choisis un muscle avec des exercices dans ta bibliothèque.",
   "pickedHint": "Nous avons préparé une séance — touche pour ajouter ou retirer l’un des {n} exercices.",
-  "@pickedHint": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "pickAnExercise": "CHOISIR UN EXERCICE",
   "searchAllExercises": "Rechercher un exercice…",
   "noExercisesMatch": "Aucun exercice correspondant",
   "createItInstead": "Créer ton propre exercice à la place",
   "startCount": "COMMENCER · {n, plural, =1{{n} EXERCICE} other{{n} EXERCICES}}",
-  "@startCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "inProgress": "EN COURS",
   "paused": "EN PAUSE",
   "last": "DERNIÈRE",
@@ -96,81 +55,33 @@
   "skip": "PASSER",
   "addSet": "+ AJOUTER UNE SÉRIE",
   "finishSession": "TERMINER LA SÉANCE",
+  "setDone": "SÉRIE TERMINÉE",
+  "nextExercise": "EXERCICE SUIVANT",
+  "dropExerciseAction": "Retirer l’exercice",
+  "restOff": "Désactivé",
   "setCol": "#",
   "repsCol": "RÉPÉTITIONS",
   "weightCol": "POIDS ({unit})",
-  "@weightCol": {
-    "placeholders": {
-      "unit": {
-        "type": "String"
-      }
-    }
-  },
   "repsTitle": "RÉPÉTITIONS",
   "weightTitle": "POIDS ({unit})",
-  "@weightTitle": {
-    "placeholders": {
-      "unit": {
-        "type": "String"
-      }
-    }
-  },
   "sessionComplete": "SÉANCE ENREGISTRÉE",
   "finishHeadlinePr": "Nouveau record personnel",
   "finishHeadlineGoal": "Objectif hebdomadaire atteint",
   "finishHeadlineStreak": "Série maintenue",
   "finishHeadlineDefault": "Une séance de plus",
   "finishBodyPr": "Tu as soulevé plus que jamais sur {prs, plural, =1{un exercice} other{{prs} exercices}}. C’est maintenant enregistré.",
-  "@finishBodyPr": {
-    "placeholders": {
-      "prs": {
-        "type": "int"
-      }
-    }
-  },
   "finishBodyGoal": "Tu as atteint le nombre de séances prévu cette semaine.",
   "finishBodyStreak": "{streak} jours d’affilée. Le plus dur, c’est de ne pas s’arrêter.",
-  "@finishBodyStreak": {
-    "placeholders": {
-      "streak": {
-        "type": "int"
-      }
-    }
-  },
   "finishBodyDefault": "Enregistré et comptabilisé. C’est la régularité qui fait progresser.",
   "vsLastTime": "VS LA DERNIÈRE FOIS",
   "firstTime": "Premier enregistrement",
   "prCount": "{n, plural, =1{{n} nouveau record} other{{n} nouveaux records}}",
-  "@prCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "duration": "DURÉE",
   "setsCaps": "SÉRIES",
   "exerciseXofY": "EXERCICE {i} SUR {n}",
-  "@exerciseXofY": {
-    "placeholders": {
-      "i": {
-        "type": "int"
-      },
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "decrease": "Diminuer",
   "increase": "Augmenter",
   "markSet": "Marquer la série {n} comme terminée",
-  "@markSet": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "pauseWorkout": "Mettre la séance en pause",
   "resumeWorkout": "Reprendre la séance",
   "discardTitle": "Abandonner la séance ?",
@@ -183,84 +94,44 @@
   "notifAlertChannelWhy": "Affiche une bannière dès que ton temps de repos est terminé",
   "restOverTitle": "Repos terminé",
   "restOverBody": "C’est reparti — la prochaine série t’attend.",
+  "allTimeSessions": "SÉANCES",
+  "allTimeTime": "TEMPS",
+  "allTimeSets": "SÉRIES",
   "consistency": "RÉGULARITÉ",
   "sessionsLogged": "{n, plural, =1{{n} séance enregistrée} other{{n} séances enregistrées}}",
-  "@sessionsLogged": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "streakDays": "Série de {n} jours",
-  "@streakDays": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "bodyweight": "POIDS CORPOREL",
   "logBodyweight": "ENREGISTRER LE POIDS",
   "trackWeight": "Suis l’évolution de ton poids",
   "muscleMap": "CARTE MUSCULAIRE",
   "days7": "7 J",
   "days30": "30 J",
+  "days90": "90 J",
+  "days365": "1 A",
+  "daysAll": "Tout",
+  "weeklyAvgTitle": "Moyenne par semaine",
+  "weekOfDate": "Semaine du {date}",
+  "weightChangeRange": "{change} sur la période",
   "heatLow": "Non travaillé",
   "heatHigh": "Volume maximal",
   "muscleMapEmpty": "Enregistre une séance et ton corps commencera à s’illuminer ici.",
   "muscleMapHint": "Touche un muscle pour voir ce qu’il a travaillé.",
   "muscleMapBehind": "En retard : {names}",
-  "@muscleMapBehind": {
-    "placeholders": {
-      "names": {
-        "type": "String"
-      }
-    }
-  },
   "ofTarget": "{pct}% de l’objectif",
-  "@ofTarget": {
-    "placeholders": {
-      "pct": {
-        "type": "int"
-      }
-    }
-  },
   "muscleSplit": "RÉPARTITION MUSCULAIRE",
   "personalRecords": "RECORDS PERSONNELS",
   "strength1rm": "FORCE · 1RM ESTIMÉ",
   "strengthEmpty": "Enregistre deux fois un exercice pour afficher ici sa courbe de force.",
   "oneRmEst": "1RM estimé : {w}",
-  "@oneRmEst": {
-    "placeholders": {
-      "w": {
-        "type": "String"
-      }
-    }
-  },
   "restDayShort": "Jour de repos",
   "restDay": "Jour de repos — rien d’enregistré.",
   "delete": "Supprimer",
   "deleteEntry": "Supprimer cette entrée ?",
   "deleteEntryBody": "« {name} » sera supprimé de cette journée, ainsi que de tes records et graphiques.",
-  "@deleteEntryBody": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "bodyweightHistory": "HISTORIQUE",
   "exercisesCaps": "EXERCICES",
   "timeCaps": "TEMPS",
   "libraryCount": "{n, plural, =1{{n} exercice dans ta bibliothèque} other{{n} exercices dans ta bibliothèque}}",
-  "@libraryCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "searchExercises": "Rechercher des exercices",
   "muscleFilter": "MUSCLE",
   "levelFilter": "NIVEAU",
@@ -290,336 +161,6 @@
   "noHistory": "Aucune séance enregistrée. Fais cet exercice pour créer un historique.",
   "notes": "NOTES",
   "notePlaceholder": "Conseils, placement, ressenti…",
-  "howTo": "COMMENT FAIRE",
-  "similar": "SIMILAIRES",
-  "primaryLabel": "PRINCIPAL",
-  "secondaryLabel": "SECONDAIRE",
-  "none": "Aucun",
-  "setCount": "{n, plural, =1{{n} série} other{{n} séries}}",
-  "@setCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "volumeSuffix": "volume {v}",
-  "@volumeSuffix": {
-    "placeholders": {
-      "v": {
-        "type": "String"
-      }
-    }
-  },
-  "weeklyPlan": "PROGRAMME HEBDOMADAIRE",
-  "yourRoutines": "TES PROGRAMMES",
-  "noRoutines": "Aucun programme. Crée-en un et ajoute tes exercices.",
-  "newRoutine": "NOUVEAU PROGRAMME",
-  "routineName": "Nom du programme",
-  "schedule": "PLANNING",
-  "addFromList": "Ajoute des exercices depuis la liste ci-dessous.",
-  "addExercises": "Ajouter des exercices",
-  "deleteRoutine": "Supprimer ce programme ?",
-  "exercisesWithCount": "EXERCICES · {n}",
-  "@exercisesWithCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "setDay": "DÉFINIR {day}",
-  "@setDay": {
-    "placeholders": {
-      "day": {
-        "type": "String"
-      }
-    }
-  },
-  "newRoutineName": "Nouveau programme",
-  "dragToReorder": "Fais glisser la poignée à points pour réordonner : c’est l’ordre de ta séance.",
-  "reorderHandle": "Réorganiser {name}",
-  "@reorderHandle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "removeFromRoutine": "Retirer du programme",
-  "dropExercise": "Retirer cet exercice ?",
-  "dropExerciseBody": "« {name} » sera retiré de cette séance. Rien de déjà enregistré ne sera perdu.",
-  "@dropExerciseBody": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "drop": "Retirer",
-  "resetData": "Supprimer toutes mes données",
-  "resetTitle": "Tout supprimer ?",
-  "resetBody": "Séances, records, programmes, notes et profil. Cette action est irréversible — exporte d’abord une sauvegarde si tu veux pouvoir les récupérer.",
-  "resetConfirm": "Tout supprimer",
-  "resetDone": "Toutes les données ont été supprimées",
-  "support": "ASSISTANCE",
-  "reportBug": "Signaler un bug",
-  "requestFeature": "Proposer une fonctionnalité",
-  "starOnGithub": "Mettre une étoile sur GitHub",
-  "buyCoffee": "M’offrir un café",
-  "cantOpenLink": "Impossible d’ouvrir le lien",
-  "theme": "Thème",
-  "darkTheme": "Sombre",
-  "lightTheme": "Clair",
-  "languageLabel": "Langue",
-  "unitsLabel": "Unités",
-  "restTimer": "Minuteur de repos",
-  "alarmBlockedTitle": "Les notifications sont désactivées",
-  "alarmBlockedBody": "L’alarme de repos ne sonnera pas lorsque l’écran est verrouillé",
-  "alarmBlockedAction": "ACTIVER",
-  "alarmSound": "Son de l’alarme",
-  "alarmDefaultName": "Par défaut",
-  "alarmSoundHint": "Utilise ton propre son — 15 secondes maximum",
-  "alarmChoose": "Choisir un son…",
-  "alarmPreview": "Écouter le son actuel",
-  "alarmReset": "Rétablir le son par défaut",
-  "alarmTooLong": "Ce son dure plus de 15 secondes",
-  "alarmInvalid": "Impossible de lire ce fichier audio",
-  "alarmChanged": "Son de l’alarme défini sur « {name} »",
-  "@alarmChanged": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "alarmChangedDefault": "Son par défaut rétabli",
-  "addActivityWidget": "Ajouter le widget d’activité",
-  "addStatsWidget": "Ajouter le widget de statistiques",
-  "pinUnsupported": "Ajoute-le depuis le menu des widgets de ton lanceur",
-  "background": "Arrière-plan",
-  "bgNone": "Aucun",
-  "bgDots": "Points",
-  "bgGrid": "Grille",
-  "exportCsv": "Exporter les séances (CSV)",
-  "exportBackup": "Exporter une sauvegarde (ZIP)",
-  "importBackup": "Importer une sauvegarde",
-  "importHint": "Choisis une sauvegarde .zip (ou un ancien .json) exportée depuis Kangtu. Cela remplace tes données actuelles, médias compris.",
-  "import": "Importer",
-  "chooseFile": "Choisir un fichier",
-  "importFromApp": "Importer depuis une autre application",
-  "importUnknownFormat": "Ce fichier doit contenir les colonnes date, exercice, répétitions et poids",
-  "importZipNoWeights": "Ce fichier zip ne contient aucun fichier de poids",
-  "importWeights": "{n, plural, =1{{n} mesure de poids importée} other{{n} mesures de poids importées}}",
-  "@importWeights": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "importReadFailed": "Impossible de lire ce fichier",
-  "importUnitTitle": "Quelle unité utilise ce fichier ?",
-  "importUnitBody": "Cet export n’indique pas l’unité utilisée pour les poids.",
-  "importNothing": "Rien de nouveau à importer",
-  "importDone": "{n, plural, =1{{n} séance importée} other{{n} séances importées}}",
-  "@importDone": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "aboutGymmane": "À propos de Kangtu",
-  "yourProfile": "TON PROFIL",
-  "autofills": "Remplit automatiquement les calculateurs",
-  "nameLabel": "NOM",
-  "sexLabel": "SEXE",
-  "male": "Homme",
-  "female": "Femme",
-  "ageLabel": "ÂGE",
-  "heightLabel": "TAILLE",
-  "weightLabel": "POIDS",
-  "weeklyGoal": "OBJECTIF HEBDOMADAIRE",
-  "activityLabel": "ACTIVITÉ",
-  "addPhoto": "Ajouter une photo",
-  "removePhoto": "Supprimer la photo",
-  "takePhoto": "Prendre une photo",
-  "chooseGallery": "Choisir dans la galerie",
-  "backupImported": "Sauvegarde importée",
-  "backupFailed": "Impossible de lire cette sauvegarde",
-  "nothingToExport": "Rien à exporter — enregistre d’abord une séance",
-  "calculatorsCount": "{n} calculateurs pour ton entraînement",
-  "@calculatorsCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "result": "RÉSULTAT",
-  "weightLifted": "POIDS SOULEVÉ",
-  "repsPerformed": "RÉPÉTITIONS EFFECTUÉES",
-  "neck": "COU",
-  "waist": "TOUR DE TAILLE",
-  "hip": "HANCHES (femmes)",
-  "targetWeight": "POIDS CIBLE",
-  "workingWeight": "CHARGE DE TRAVAIL",
-  "activityLevel": "NIVEAU D’ACTIVITÉ",
-  "barWeight": "POIDS DE LA BARRE",
-  "perSide": "PAR CÔTÉ",
-  "justTheBar": "Barre seule.",
-  "perSideCount": "× {n} par côté",
-  "@perSideCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "toolNameRm": "1RM",
-  "toolNameBmi": "IMC",
-  "toolNameCal": "Calories",
-  "toolNameBf": "Masse grasse",
-  "toolNamePlate": "Disques",
-  "toolNameWarmup": "Échauffement",
-  "toolTitleRm": "Calculateur de 1RM",
-  "toolTitleBmi": "Calculateur d’IMC",
-  "toolTitleCal": "Calories et macros",
-  "toolTitleBf": "% de masse grasse",
-  "toolTitlePlate": "Calculateur de disques",
-  "toolTitleWarmup": "Séries d’échauffement",
-  "toolHintRm": "Maximum estimé sur 1 répétition (formule d’Epley)",
-  "toolHintCal": "Estimation des besoins quotidiens de maintien",
-  "toolHintBf": "Estimation selon la méthode de l’US Navy",
-  "toolHintPlate": "Poids total de la barre",
-  "toolHintWarmup": "Charge de travail cible",
-  "toolDescRm": "Maximum estimé sur une répétition",
-  "toolDescBmi": "Indice de masse corporelle",
-  "toolDescCal": "Calories et macros",
-  "toolDescBf": "Pourcentage de masse grasse",
-  "toolDescPlate": "Calculateur de disques de musculation",
-  "toolDescWarmup": "Séries de montée en charge",
-  "bmiUnderweight": "Insuffisance pondérale",
-  "bmiNormal": "Corpulence normale",
-  "bmiOverweight": "Surpoids",
-  "bmiObese": "Obésité",
-  "actSedentary": "Sédentaire",
-  "actLight": "Faible",
-  "actActive": "Actif",
-  "actModerate": "Modéré",
-  "muscleChest": "Pectoraux",
-  "muscleBack": "Dos",
-  "muscleLowerBack": "Lombaires",
-  "muscleShoulders": "Épaules",
-  "muscleBiceps": "Biceps",
-  "muscleTriceps": "Triceps",
-  "muscleForearm": "Avant-bras",
-  "muscleTrapezius": "Trapèzes",
-  "muscleAbdomen": "Abdominaux",
-  "muscleObliques": "Obliques",
-  "muscleQuads": "Quadriceps",
-  "muscleHamstrings": "Ischio-jambiers",
-  "muscleGlutes": "Fessiers",
-  "muscleCalves": "Mollets",
-  "mgChest": "Pectoraux",
-  "mgBack": "Dos",
-  "mgLegs": "Jambes",
-  "mgShoulders": "Épaules",
-  "mgArms": "Bras",
-  "mgCore": "Ceinture abdominale",
-  "equipBarbell": "Barre",
-  "equipDumbbell": "Haltère",
-  "equipCable": "Poulie",
-  "equipMachine": "Machine",
-  "equipBodyweight": "Poids du corps",
-  "equipWeighted": "Lesté",
-  "equipBand": "Élastique",
-  "equipKettlebell": "Kettlebell",
-  "equipOther": "Autre",
-  "diffBeginner": "Débutant",
-  "diffAdvanced": "Avancé",
-  "diffIntermediate": "Intermédiaire",
-  "about": "À PROPOS",
-  "version": "Version {v}",
-  "@version": {
-    "placeholders": {
-      "v": {
-        "type": "String"
-      }
-    }
-  },
-  "aboutBlurb": "Créé par des pratiquants, pour des pratiquants.",
-  "freeForever": "Gratuit pour toujours",
-  "freeForeverWhy": "Pas d’abonnement, pas de pub, rien de bloqué derrière un paiement.",
-  "fullyOffline": "100 % hors ligne",
-  "fullyOfflineWhy": "Aucun compte, aucun serveur. Tes entraînements ne quittent jamais ce téléphone.",
-  "yoursToTake": "Tes données t’appartiennent",
-  "yoursToTakeWhy": "Exporte-les en CSV quand tu veux et supprime tout en un geste.",
-  "whatsInside": "CONTENU",
-  "exercisesInside": "{n} exercices",
-  "@exercisesInside": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "exercisesInsideWhy": "Chacun avec une animation et des instructions étape par étape.",
-  "calculatorsInside": "10 calculateurs",
-  "calculatorsInsideWhy": "1RM, disques, IMC, calories, masse grasse, FFMI, échauffement, charge selon le RPE et scores de force DOTS et Wilks — tous basés sur des formules publiées.",
-  "mathInside": "Des calculs transparents",
-  "mathInsideWhy": "Volume, records et séries sont calculés à partir de tes propres données. Rien n’est là pour faire joli.",
-  "streakCaps": "SÉRIE",
-  "daysUnit": "{n, plural, =1{jour} other{jours}}",
-  "@daysUnit": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "reset": "RÉINITIALISER",
-  "welcomeKicker": "BIENVENUE SUR",
-  "welcomeBlurb": "Tout reste sur ton téléphone. Aucun compte, pas d’Internet, rien à payer.",
-  "welcomeStart": "COMMENCER",
-  "onbStep": "ÉTAPE {i} SUR {n}",
-  "@onbStep": {
-    "placeholders": {
-      "i": {
-        "type": "int"
-      },
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "onbNameTitle": "Comment doit-on t’appeler ?",
-  "onbNameHint": "Ton prénom",
-  "onbNameWhy": "Utilisé uniquement pour t’accueillir. Il ne quitte jamais ton téléphone.",
-  "onbBodyTitle": "Quelques chiffres",
-  "onbBodyWhy": "Ils servent aux calculateurs. Tu peux les modifier à tout moment dans les Paramètres.",
-  "onbGoalTitle": "À quelle fréquence t’entraînes-tu ?",
-  "onbGoalWhy": "Définit ton objectif hebdomadaire. Sois réaliste, pas trop ambitieux.",
-  "perWeek": "{n, plural, =1{{n} séance par semaine} other{{n} séances par semaine}}",
-  "@perWeek": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "onbUnitsTitle": "Kilos ou livres ?",
-  "next": "SUIVANT",
-  "back": "RETOUR",
-  "skip2": "Passer",
-  "setDone": "SÉRIE TERMINÉE",
-  "nextExercise": "EXERCICE SUIVANT",
-  "dropExerciseAction": "Retirer l’exercice",
-  "restOff": "Désactivé",
-  "allTimeSessions": "SÉANCES",
-  "allTimeTime": "TEMPS",
-  "allTimeSets": "SÉRIES",
   "notHere": "Pas de {gear} à {place}",
   "notHereWhy": "Remplace-le par quelque chose que tu peux vraiment utiliser aujourd’hui.",
   "altHere": "CE QUE TU PEUX FAIRE ICI",
@@ -740,10 +281,229 @@
   "setTypeFailure": "À l’échec",
   "addWarmup": "ÉCHAUFFEMENT",
   "platesPerSide": "Par côté : {plates}",
+  "howTo": "COMMENT FAIRE",
+  "similar": "SIMILAIRES",
+  "primaryLabel": "PRINCIPAL",
+  "secondaryLabel": "SECONDAIRE",
+  "none": "Aucun",
+  "setCount": "{n, plural, =1{{n} série} other{{n} séries}}",
+  "volumeSuffix": "volume {v}",
+  "weeklyPlan": "PROGRAMME HEBDOMADAIRE",
+  "yourRoutines": "TES PROGRAMMES",
+  "noRoutines": "Aucun programme. Crée-en un et ajoute tes exercices.",
+  "newRoutine": "NOUVEAU PROGRAMME",
+  "routineName": "Nom du programme",
+  "schedule": "PLANNING",
+  "addFromList": "Ajoute des exercices depuis la liste ci-dessous.",
+  "addExercises": "Ajouter des exercices",
+  "deleteRoutine": "Supprimer ce programme ?",
+  "exercisesWithCount": "EXERCICES · {n}",
+  "setDay": "DÉFINIR {day}",
+  "newRoutineName": "Nouveau programme",
+  "dragToReorder": "Fais glisser la poignée à points pour réordonner : c’est l’ordre de ta séance.",
+  "reorderHandle": "Réorganiser {name}",
+  "removeFromRoutine": "Retirer du programme",
+  "dropExercise": "Retirer cet exercice ?",
+  "dropExerciseBody": "« {name} » sera retiré de cette séance. Rien de déjà enregistré ne sera perdu.",
+  "drop": "Retirer",
+  "resetData": "Supprimer toutes mes données",
+  "resetTitle": "Tout supprimer ?",
+  "resetBody": "Séances, records, programmes, notes et profil. Cette action est irréversible — exporte d’abord une sauvegarde si tu veux pouvoir les récupérer.",
+  "resetConfirm": "Tout supprimer",
+  "resetDone": "Toutes les données ont été supprimées",
+  "support": "ASSISTANCE",
+  "reportBug": "Signaler un bug",
+  "requestFeature": "Proposer une fonctionnalité",
+  "starOnGithub": "Mettre une étoile sur GitHub",
+  "buyCoffee": "M’offrir un café",
+  "cantOpenLink": "Impossible d’ouvrir le lien",
+  "theme": "Thème",
+  "darkTheme": "Sombre",
+  "lightTheme": "Clair",
+  "amoledTheme": "Noir AMOLED",
+  "editDuration": "Durée de la séance",
+  "sessionName": "Nom de la séance",
+  "nameWorkout": "Nommer",
+  "sessionNameHint": "ex. : Jambes, Push, Full body",
+  "secondaryPickHint": "Touche les autres muscles que travaille cet exercice.",
+  "languageLabel": "Langue",
+  "unitsLabel": "Unités",
+  "restTimer": "Minuteur de repos",
+  "alarmBlockedTitle": "Les notifications sont désactivées",
+  "alarmBlockedBody": "L’alarme de repos ne sonnera pas lorsque l’écran est verrouillé",
+  "alarmBlockedAction": "ACTIVER",
+  "alarmSound": "Son de l’alarme",
+  "alarmDefaultName": "Par défaut",
+  "alarmSoundHint": "Utilise ton propre son — 15 secondes maximum",
+  "alarmChoose": "Choisir un son…",
+  "alarmPreview": "Écouter le son actuel",
+  "alarmReset": "Rétablir le son par défaut",
+  "alarmTooLong": "Ce son dure plus de 15 secondes",
+  "alarmInvalid": "Impossible de lire ce fichier audio",
+  "alarmChanged": "Son de l’alarme défini sur « {name} »",
+  "alarmChangedDefault": "Son par défaut rétabli",
+  "addActivityWidget": "Ajouter le widget d’activité",
+  "addStatsWidget": "Ajouter le widget de statistiques",
+  "pinUnsupported": "Ajoute-le depuis le menu des widgets de ton lanceur",
+  "background": "Arrière-plan",
+  "bgNone": "Aucun",
+  "bgDots": "Points",
+  "bgGrid": "Grille",
+  "exportCsv": "Exporter les séances (CSV)",
+  "exportBackup": "Exporter une sauvegarde (ZIP)",
+  "importBackup": "Importer une sauvegarde",
+  "importHint": "Choisis une sauvegarde .zip (ou un ancien .json) exportée depuis Kangtu. Cela remplace tes données actuelles, médias compris.",
+  "import": "Importer",
+  "chooseFile": "Choisir un fichier",
+  "importFromApp": "Importer depuis une autre application",
+  "importUnknownFormat": "Ce fichier doit contenir les colonnes date, exercice, répétitions et poids",
+  "importZipNoWeights": "Ce fichier zip ne contient aucun fichier de poids",
+  "importWeights": "{n, plural, =1{{n} mesure de poids importée} other{{n} mesures de poids importées}}",
+  "importReadFailed": "Impossible de lire ce fichier",
+  "importUnitTitle": "Quelle unité utilise ce fichier ?",
+  "importUnitBody": "Cet export n’indique pas l’unité utilisée pour les poids.",
+  "importNothing": "Rien de nouveau à importer",
+  "importDone": "{n, plural, =1{{n} séance importée} other{{n} séances importées}}",
+  "aboutGymmane": "À propos de Kangtu",
+  "yourProfile": "TON PROFIL",
+  "autofills": "Remplit automatiquement les calculateurs",
+  "nameLabel": "NOM",
+  "sexLabel": "SEXE",
   "macroProtein": "PROTÉINES",
   "macroCarbs": "GLUCIDES",
   "macroFat": "LIPIDES",
+  "male": "Homme",
+  "female": "Femme",
+  "ageLabel": "ÂGE",
+  "heightLabel": "TAILLE",
+  "weightLabel": "POIDS",
+  "weeklyGoal": "OBJECTIF HEBDOMADAIRE",
+  "activityLabel": "ACTIVITÉ",
+  "addPhoto": "Ajouter une photo",
+  "removePhoto": "Supprimer la photo",
+  "takePhoto": "Prendre une photo",
+  "chooseGallery": "Choisir dans la galerie",
+  "backupImported": "Sauvegarde importée",
+  "backupFailed": "Impossible de lire cette sauvegarde",
+  "nothingToExport": "Rien à exporter — enregistre d’abord une séance",
+  "calculatorsCount": "{n} calculateurs pour ton entraînement",
+  "result": "RÉSULTAT",
+  "weightLifted": "POIDS SOULEVÉ",
+  "repsPerformed": "RÉPÉTITIONS EFFECTUÉES",
+  "neck": "COU",
+  "waist": "TOUR DE TAILLE",
+  "hip": "HANCHES (femmes)",
+  "targetWeight": "POIDS CIBLE",
+  "workingWeight": "CHARGE DE TRAVAIL",
+  "activityLevel": "NIVEAU D’ACTIVITÉ",
+  "barWeight": "POIDS DE LA BARRE",
+  "perSide": "PAR CÔTÉ",
+  "justTheBar": "Barre seule.",
+  "perSideCount": "× {n} par côté",
+  "toolNameRm": "1RM",
+  "toolNameBmi": "IMC",
+  "toolNameCal": "Calories",
+  "toolNameBf": "Masse grasse",
+  "toolNamePlate": "Disques",
+  "toolNameWarmup": "Échauffement",
+  "toolTitleRm": "Calculateur de 1RM",
+  "toolTitleBmi": "Calculateur d’IMC",
+  "toolTitleCal": "Calories et macros",
+  "toolTitleBf": "% de masse grasse",
+  "toolTitlePlate": "Calculateur de disques",
+  "toolTitleWarmup": "Séries d’échauffement",
+  "toolHintRm": "Maximum estimé sur 1 répétition (formule d’Epley)",
+  "toolHintCal": "Estimation des besoins quotidiens de maintien",
+  "toolHintBf": "Estimation selon la méthode de l’US Navy",
+  "toolHintPlate": "Poids total de la barre",
+  "toolHintWarmup": "Charge de travail cible",
+  "toolDescRm": "Maximum estimé sur une répétition",
+  "toolDescBmi": "Indice de masse corporelle",
+  "toolDescCal": "Calories et macros",
+  "toolDescBf": "Pourcentage de masse grasse",
+  "toolDescPlate": "Calculateur de disques de musculation",
+  "toolDescWarmup": "Séries de montée en charge",
+  "bmiUnderweight": "Insuffisance pondérale",
+  "bmiNormal": "Corpulence normale",
+  "bmiOverweight": "Surpoids",
+  "bmiObese": "Obésité",
+  "actSedentary": "Sédentaire",
+  "actLight": "Faible",
+  "actActive": "Actif",
+  "actModerate": "Modéré",
+  "muscleChest": "Pectoraux",
+  "muscleBack": "Dos",
+  "muscleLowerBack": "Lombaires",
+  "muscleShoulders": "Épaules",
+  "muscleBiceps": "Biceps",
+  "muscleTriceps": "Triceps",
+  "muscleForearm": "Avant-bras",
+  "muscleTrapezius": "Trapèzes",
+  "muscleAbdomen": "Abdominaux",
+  "muscleObliques": "Obliques",
+  "muscleQuads": "Quadriceps",
+  "muscleHamstrings": "Ischio-jambiers",
+  "muscleGlutes": "Fessiers",
+  "muscleCalves": "Mollets",
+  "mgChest": "Pectoraux",
+  "mgBack": "Dos",
+  "mgLegs": "Jambes",
+  "mgShoulders": "Épaules",
+  "mgArms": "Bras",
+  "mgCore": "Ceinture abdominale",
+  "equipBarbell": "Barre",
+  "equipDumbbell": "Haltère",
+  "equipCable": "Poulie",
+  "equipMachine": "Machine",
+  "equipBodyweight": "Poids du corps",
+  "equipWeighted": "Lesté",
+  "equipBand": "Élastique",
+  "equipKettlebell": "Kettlebell",
   "equipRings": "Anneaux",
+  "equipOther": "Autre",
+  "diffBeginner": "Débutant",
+  "diffAdvanced": "Avancé",
+  "diffIntermediate": "Intermédiaire",
+  "about": "À PROPOS",
+  "version": "Version {v}",
+  "aboutBlurb": "Créé par des pratiquants, pour des pratiquants.",
+  "freeForever": "Gratuit pour toujours",
+  "freeForeverWhy": "Pas d’abonnement, pas de pub, rien de bloqué derrière un paiement.",
+  "fullyOffline": "100 % hors ligne",
+  "fullyOfflineWhy": "Aucun compte, aucun serveur. Tes entraînements ne quittent jamais ce téléphone.",
+  "yoursToTake": "Tes données t’appartiennent",
+  "yoursToTakeWhy": "Exporte-les en CSV quand tu veux et supprime tout en un geste.",
+  "whatsInside": "CONTENU",
+  "exercisesInside": "{n} exercices",
+  "exercisesInsideWhy": "Chacun avec une animation et des instructions étape par étape.",
+  "calculatorsInside": "10 calculateurs",
+  "calculatorsInsideWhy": "1RM, disques, IMC, calories, masse grasse, FFMI, échauffement, charge selon le RPE et scores de force DOTS et Wilks — tous basés sur des formules publiées.",
+  "mathInside": "Des calculs transparents",
+  "mathInsideWhy": "Volume, records et séries sont calculés à partir de tes propres données. Rien n’est là pour faire joli.",
+  "streakCaps": "SÉRIE",
+  "daysUnit": "{n, plural, =1{jour} other{jours}}",
+  "reset": "RÉINITIALISER",
+  "welcomeKicker": "BIENVENUE SUR",
+  "welcomeBlurb": "Tout reste sur ton téléphone. Aucun compte, pas d’Internet, rien à payer.",
+  "welcomeStart": "COMMENCER",
+  "onbStep": "ÉTAPE {i} SUR {n}",
+  "onbNameTitle": "Comment doit-on t’appeler ?",
+  "onbNameHint": "Ton prénom",
+  "onbPhotoAdd": "Ajouter une photo",
+  "onbPhotoChange": "Changer la photo",
+  "onbPhotoTitle": "Mets un visage sur ton profil",
+  "onbPhotoWhy": "Facultatif. Elle reste sur ton téléphone et tu peux la changer quand tu veux depuis ton profil.",
+  "onbPhotoLater": "PLUS TARD",
+  "onbNameWhy": "Utilisé uniquement pour t’accueillir. Il ne quitte jamais ton téléphone.",
+  "onbBodyTitle": "Quelques chiffres",
+  "onbBodyWhy": "Ils servent aux calculateurs. Tu peux les modifier à tout moment dans les Paramètres.",
+  "onbGoalTitle": "À quelle fréquence t’entraînes-tu ?",
+  "onbGoalWhy": "Définit ton objectif hebdomadaire. Sois réaliste, pas trop ambitieux.",
+  "perWeek": "{n, plural, =1{{n} séance par semaine} other{{n} séances par semaine}}",
+  "onbUnitsTitle": "Kilos ou livres ?",
+  "next": "SUIVANT",
+  "back": "RETOUR",
+  "skip2": "Passer",
   "madeWithLoveBy": "FAIT AVEC AMOUR PAR",
   "sourceCode": "CODE SOURCE",
   "suggested": "SUGGÉRÉ",
@@ -762,6 +522,15 @@
   "daysShort": "{n} j",
   "focusCard": "Objectif du jour",
   "autoAdvance": "Passer automatiquement au suivant",
+  "keepScreenOn": "Garder l'écran allumé pendant l'entraînement",
+  "lockWorkout": "Verrouiller l'écran",
+  "unlockWorkout": "Déverrouiller",
+  "holdToUnlock": "Maintenir pour déverrouiller",
+  "liveChannel": "Séance en cours",
+  "liveChannelWhy": "Affiche l'exercice, la série et le repos en cours pendant l'entraînement",
+  "liveSet": "Série {n} sur {total}",
+  "liveResting": "Repos",
+  "liveAllDone": "Toutes les séries sont faites",
   "autoAdvanceHint": "Quand la dernière série d’un exercice est cochée, la séance passe automatiquement au suivant.",
   "autoProgress": "Ajouter du poids la prochaine fois",
   "autoProgressHint": "Réussis toutes les répétitions et la prochaine séance commencera avec {w} de plus.",
@@ -940,15 +709,6 @@
   "logWorkoutAction": "ENREGISTRER UNE SÉANCE",
   "logging": "ENREGISTREMENT",
   "placesLabel": "Mes lieux",
-  "keepScreenOn": "Garder l'écran allumé pendant l'entraînement",
-  "lockWorkout": "Verrouiller l'écran",
-  "unlockWorkout": "Déverrouiller",
-  "holdToUnlock": "Maintenir pour déverrouiller",
-  "liveChannel": "Séance en cours",
-  "liveChannelWhy": "Affiche l'exercice, la série et le repos en cours pendant l'entraînement",
-  "liveSet": "Série {n} sur {total}",
-  "liveResting": "Repos",
-  "liveAllDone": "Toutes les séries sont faites",
   "undo": "Annuler",
   "deleteSet": "Supprimer la série",
   "setDeleted": "Série supprimée",
@@ -1010,6 +770,11 @@
   "planFormatNotes": "Utilise les noms d'exercices exactement comme dans la liste. « sets », « reps », « weight » (dans l'unité indiquée), « rest » en secondes et « days » sont facultatifs. « superset »: true relie un exercice au suivant. Pour plusieurs semaines, regroupe les routines dans « weeks » comme dans le deuxième exemple.",
   "planSets": "Planifier les séries",
   "planSetsHint": "Choisis le type, les répétitions et le poids de chaque série. Laisse le poids sur Auto pour partir de ta dernière séance.",
+  "planHintReps": "Choisis le type et les répétitions de chaque série. Auto part de ta dernière séance.",
+  "planHintTime": "Choisis le type et la durée de chaque série. Auto part de ta dernière séance.",
+  "planHintTimeWeight": "Choisis le type, la durée et le poids de chaque série. Auto part de ta dernière séance.",
+  "planHintCardio": "Choisis la distance et la durée de chaque série. Auto part de ta dernière séance.",
+  "timeOnly": "Durée uniquement",
   "autoValue": "Auto",
   "clearPlan": "Effacer le plan",
   "shareRoutine": "Partager la routine",
@@ -1099,6 +864,25 @@
   "cardioFocus": "Cardio",
   "cardioFocusHint": "Course, vélo, rameur ou corde, en distance et en temps",
   "homeRecommended": "Recommandations sur l’accueil",
+  "homeRoutines": "Routines sur l’accueil",
+  "homeRoutinesHint": "Tes routines, la dernière faite en premier. Touche-en une pour la lancer.",
+  "homeWeekStats": "Cette semaine sur l’accueil",
+  "homeWeekStatsHint": "Volume, séries et records de la semaine.",
+  "stepsSetting": "Pas depuis Health Connect",
+  "stepsSettingHint": "Affiche les pas du jour sur l'Accueil. Rien ne quitte ton téléphone.",
+  "stepsToday": "Pas aujourd'hui",
+  "stepsOfGoal": "sur {goal}",
+  "stepsTodayCount": "{count} pas aujourd'hui",
+  "stepsGoal": "Objectif de pas quotidien",
+  "stepsNoAccess": "Pas d’accès à tes pas",
+  "stepsGrant": "Touche pour l’autoriser dans Health Connect",
+  "stepsInfoRead": "Lit seulement ton nombre de pas. Ne lit rien d’autre et n’écrit jamais dans Health Connect.",
+  "stepsInfoLocal": "Tes pas restent sur ton téléphone. GymMane ne se connecte jamais à internet.",
+  "stepsInfoOff": "Désactivable à tout moment dans les Réglages ou dans Health Connect.",
+  "stepsManage": "Gérer l’autorisation",
+  "routineDoneToday": "Fini pour aujourd’hui · bien joué",
+  "trainAgain": "S’entraîner encore",
+  "lastDoneAgo": "{n, plural, =0{Faite aujourd’hui} =1{Faite hier} other{Il y a {n} jours}}",
   "archivedFilter": "Archivés",
   "archiveExercise": "Archiver l’exercice",
   "restoreExercise": "Restaurer",
@@ -1147,49 +931,6 @@
   "groupDeleteTitle": "Supprimer « {name} » ?",
   "groupDeleteBody": "{count} seront supprimées. Ton historique d’entraînement est conservé.",
   "tplRr": "Le classique de r/bodyweightfitness : tout le corps trois jours par semaine. Passe à l’étape suivante quand ça devient facile.",
-  "fbTitle": "Bilan de séance",
-  "fbPrompt": "Comment ça s'est passé ?",
-  "fbFeelEasy": "Facile",
-  "fbFeelOk": "Comme il faut",
-  "fbFeelHard": "Dur",
-  "fbFeelMax": "À fond",
-  "fbPain": "Gêne",
-  "fbPainLevel": "Niveau de gêne",
-  "fbRehabHint": "Gêne au même endroit : notez-la dans votre épisode de rééducation",
-  "tplNameFullbody": "Corps complet",
-  "tplNamePpl": "Push Pull Legs",
-  "tplNameUpperlower": "Haut / Bas",
-  "tplNameAbcd": "Split ABCD",
-  "tplNameAbcde": "Split ABCDE",
-  "tplNameStronglifts": "StrongLifts 5×5",
-  "tplNameStartingstrength": "Starting Strength",
-  "tplNameGzclp": "GZCLP",
-  "tplNameBbb531": "5/3/1 Boring But Big",
-  "tplNamePpl6": "PPL 6 jours",
-  "tplNamePhul": "PHUL",
-  "tplNameRr": "Routine recommandée",
-  "tplNameHome": "Sans matériel",
-  "tplGzclp": "Palier lourd, palier volume, palier accessoire — la progression classique en trois paliers.",
-  "tplBbb531": "Vagues de quatre semaines en pourcentage de ton maximum d'entraînement, plus 5×10 de volume.",
-  "tplPpl6": "Six jours push/pull/legs : mouvements principaux linéaires, accessoires en double progression.",
-  "tplPhul": "Jours de force et jours d'hypertrophie en alternance, quatre jours par semaine.",
-  "progBadge": "Progression auto",
-  "progLinShort": "Objectif atteint → plus de poids ; échecs répétés → décharge",
-  "progDblShort": "Les répétitions montent dans la fourchette, puis la charge augmente",
-  "progRepsShort": "Au poids du corps : une répétition de plus par séance",
-  "progCycleShort": "Vagues hebdomadaires en % de ton maximum d'entraînement",
-  "progCycleWeeks": "Vagues de {n} semaines",
-  "tplStart": "Commencer ce programme",
-  "tmTitle": "Maximum d'entraînement (TM)",
-  "tmHint": "≈ 1RM × 0,9. Les charges hebdomadaires sont calculées en % du TM. Unité : {unit}.",
-  "progCardTitle": "Progression auto",
-  "progNext": "{ex} → prochain {label}",
-  "progDeloadFb": "{ex} : échecs répétés, décharge à {label}",
-  "progMiss": "{ex} : objectif manqué ({n}/{limit} avant la décharge)",
-  "progRepsNext": "{ex} → {r} répétitions la prochaine fois",
-  "progVarHint": "{ex} : {r} répétitions atteintes — essaie une variante plus dure ou ajoute de la charge",
-  "progWeekN": "Semaine {w} du cycle",
-  "progTmUp": "{ex} : maximum d'entraînement porté à {label}",
   "levelUpKicker": "ÉTAPE SUIVANTE",
   "levelUpBody": "3×{reps} sur {name} deux séances d’affilée. Prêt pour l’étape suivante ?",
   "levelUpSwap": "Le remplacer dans {routine}",
@@ -1285,6 +1026,281 @@
   "alarmSoundRowHint": "Ce qui sonne à la fin du repos.",
   "alarmStyleRowHint": "S’il sonne en mode silencieux.",
   "recommendedRowHint": "Exercices que l’on vous propose sur l’Accueil.",
+  "weightStepSetting": "Pas de poids",
+  "weightStepHint": "Ce qu’ajoutent les boutons − et +.",
+  "prBestWorkout": "Meilleure séance",
+  "mergeExercise": "Fusionner",
+  "mergeExerciseInto": "Fusionner {name} avec…",
+  "mergeExerciseTitle": "Fusionner les exercices ?",
+  "mergeExerciseBody": "Tout l’historique de « {from} » passe à « {to} ». « {from} » reste dans ta bibliothèque. C’est irréversible.",
+  "mergedToast": "Historique fusionné",
+  "nutrition": "Nutrition",
+  "nutritionHomeEmpty": "Eau, protéines et calories",
+  "nutritionHomeDetail": "{energy} · {protein} g de protéines",
+  "nutritionToday": "Aujourd’hui",
+  "nutritionYesterday": "Hier",
+  "nutritionGoals": "Objectifs du jour",
+  "kcalLabel": "CALORIES",
+  "kcalOver": "en trop",
+  "waterLabel": "EAU",
+  "waterDone": "Objectif atteint",
+  "waterCustom": "Autre quantité",
+  "glassSize": "Taille du verre",
+  "supplementsLabel": "COMPLÉMENTS",
+  "supplementsEmpty": "Touche-en un pour l’ajouter, ou + pour le tien.",
+  "addSupplement": "Nouveau complément",
+  "supplementNameHint": "Créatine, vitamine D…",
+  "removeSupplementTitle": "Retirer {name} ?",
+  "removeSupplementBody": "Les jours où tu l’as coché partent avec.",
+  "suppCreatine": "Créatine",
+  "suppVitaminD": "Vitamine D",
+  "suppOmega3": "Oméga-3",
+  "suppMagnesium": "Magnésium",
+  "suppMultivitamin": "Multivitamines",
+  "suppCaffeine": "Caféine",
+  "myFoods": "Mes aliments",
+  "newFood": "Nouvel aliment",
+  "editFood": "Modifier l’aliment",
+  "foodNameHint": "Whey, flocons d’avoine, pain…",
+  "servingLabel": "PORTION",
+  "servingHint": "1 dose · 30 g",
+  "perServing": "PAR PORTION",
+  "servingsLabel": "Portions",
+  "foodPhotoHint": "Sur un fond uni, il devient un sticker.",
+  "cutoutWorking": "Détourage…",
+  "cutoutTry": "Détourer",
+  "cutoutKeep": "Photo entière",
+  "deleteFoodTitle": "Supprimer {name} ?",
+  "deleteFoodBody": "Il quitte tes aliments. Ce que tu as déjà noté reste.",
+  "mealBreakfast": "Petit-déjeuner",
+  "mealLunch": "Déjeuner",
+  "mealDinner": "Dîner",
+  "mealSnacks": "En-cas",
+  "nothingLogged": "Rien de noté pour l’instant.",
+  "addToMeal": "Ajouter au {meal}",
+  "quickAdd": "Ajout rapide",
+  "quickAddHint": "Juste les chiffres, sans enregistrer d’aliment.",
+  "quickAddName": "C’était quoi ? (facultatif)",
+  "logFood": "Ajouter",
+  "loggedToast": "Ajouté au {meal}",
+  "entryRemoved": "Supprimé",
+  "goalsFromProfile": "Calculer depuis mon profil",
+  "goalsFromProfileHint": "Calories de ton profil, 1,8 g de protéines et 35 ml d’eau par kg de poids corporel.",
+  "kcalEaten": "Mangé",
+  "kcalRemaining": "Reste",
+  "waterTapHint": "Touche le verre : + {amount}",
+  "shakeEmpty": "Touche pour choisir ton shake",
+  "shakeTapHint": "Touche : + {name}",
+  "shakePick": "Ton shake",
+  "shakePickHint": "Touche le verre et il est noté d’un coup.",
+  "proteinLetter": "P",
+  "carbsLetter": "G",
+  "fatLetter": "L",
+  "addBurnedLabel": "Ajouter les calories brûlées",
+  "addBurnedHint": "Les calories brûlées sont estimées à partir de la durée de tes séances et de ton poids.",
+  "amountLabel": "Quantité",
+  "amountIn": "Quantité ({unit})",
+  "bodyweightLabel": "Poids",
+  "copiedMealToast": "{count, plural, =1{1 aliment copié} other{{count} aliments copiés}}",
+  "deleteSavedMealBody": "Ce que tu as déjà noté reste tel quel.",
+  "fiberLabel": "Fibres",
+  "sugarLabel": "Sucre",
+  "sodiumLabel": "Sodium",
+  "foodDatabase": "Base d’aliments",
+  "kcalBurned": "Brûlé",
+  "mealOptions": "Options du repas",
+  "moreNutrients": "Fibres, sucre et sodium",
+  "ofGoal": "sur {goal} {unit}",
+  "per100": "pour 100 {unit}",
+  "perServingShort": "par portion",
+  "portionUnit": "{count, plural, =1{1 pièce} other{{count} pièces}}",
+  "portionSlice": "{count, plural, =1{1 tranche} other{{count} tranches}}",
+  "portionScoop": "{count, plural, =1{1 dose} other{{count} doses}}",
+  "portionTbsp": "{count, plural, =1{1 c. à soupe} other{{count} c. à soupe}}",
+  "portionTsp": "{count, plural, =1{1 c. à café} other{{count} c. à café}}",
+  "portionCup": "{count, plural, =1{1 tasse} other{{count} tasses}}",
+  "portionGlass": "{count, plural, =1{1 verre} other{{count} verres}}",
+  "recentFoods": "Récents",
+  "recipeItems": "{count, plural, =1{1 aliment} other{{count} aliments}}",
+  "renameLabel": "Renommer",
+  "repeatFrom": "Reprendre de",
+  "repeatNone": "Rien de noté pour ce repas les autres jours.",
+  "restDayGoals": "Objectifs différents les jours de repos",
+  "trainingDays": "Jours d’entraînement",
+  "restDays": "Jours de repos",
+  "trainingDay": "Jour d’entraînement",
+  "saveAsMeal": "Enregistrer comme repas",
+  "savedMealNameHint": "ex. Petit-déj habituel",
+  "savedMealToast": "Repas enregistré",
+  "savedMeals": "Repas enregistrés",
+  "searchFoodsHint": "Chercher un aliment",
+  "searchFoodsEmpty": "Cherche parmi plus de 500 aliments en photo, ou crée les tiens.",
+  "searchFoodsNone": "Rien pour « {query} ». Crée-le comme aliment perso.",
+  "servingWeight": "GRAMMES",
+  "weekAverage": "Cette semaine",
+  "weekAvgEnergy": "Moyenne par jour",
+  "weekAvgProtein": "Protéines par jour",
+  "weekEnergyOnTarget": "Calories dans l’objectif",
+  "weekProteinOnTarget": "Protéines dans l’objectif",
+  "weekProteinAvg": "{grams} g de protéines par jour",
+  "weekDaysOnTarget": "{met} jours sur {days} dans l’objectif",
+  "weekLoggedDays": "{count, plural, =1{1 jour noté} other{{count} jours notés}}",
+  "weekNoData": "Rien de noté pour l’instant",
+  "weekOnTargetHint": "Dans l’objectif : calories à moins de 10 % de l’objectif et au moins 90 % des protéines.",
+  "weightGoalLabel": "Poids cible",
+  "weightGoalTitle": "Poids cible ({unit})",
+  "weightGoalLine": "Objectif {weight}",
+  "weightGoalNone": "Maintiens pour fixer un objectif",
+  "weightGoalReached": "Objectif atteint",
+  "weightToLose": "{weight} à perdre",
+  "weightToGain": "{weight} à prendre",
+  "aminoHis": "histidine",
+  "aminoIle": "isoleucine",
+  "aminoLeu": "leucine",
+  "aminoLys": "lysine",
+  "aminoSaa": "méthionine",
+  "aminoAaa": "phénylalanine",
+  "aminoThr": "thréonine",
+  "aminoTrp": "tryptophane",
+  "aminoVal": "valine",
+  "animalProtein": "Protéines animales",
+  "proteinQuality": "Qualité des protéines",
+  "qualityComplete": "Complète",
+  "qualityAlmost": "Presque complète",
+  "qualityIncomplete": "Incomplète",
+  "qualityNoData": "Pas encore de données",
+  "qualityNoDataHint": "Note des aliments de la base pour voir tes acides aminés.",
+  "qualityAllCovered": "Les neuf acides aminés essentiels sont couverts.",
+  "qualityLimiting": "Il te manque de la {amino}. Associe-le à des aliments qui en sont riches.",
+  "qualityCoverage": "Calculé sur {pct} % de tes protéines : tes aliments perso n’ont pas d’acides aminés.",
+  "fatTypes": "Types de graisses",
+  "fatSaturated": "Saturées",
+  "fatMono": "Mono",
+  "fatPoly": "Poly",
+  "satLimitLine": "Saturées {grams} g sur {limit} g max (10 % des calories)",
+  "sugarSodium": "Sucre et sodium",
+  "shakeCard": "Shake protéiné",
+  "mealOther": "Repas",
+  "mealAdd": "Ajouter un repas",
+  "mealAddHint": "ex. Pré-séance",
+  "mealsOfDay": "Repas de la journée",
+  "mealsHint": "Crée-en autant que tu veux. En supprimer un déplace son contenu dans celui du dessus.",
+  "trackersTitle": "Personnaliser",
+  "trackersHint": "Garde seulement ce que tu veux suivre.",
+  "trackersDaily": "Résumé du jour",
+  "trackersDetail": "En détail",
+  "trackersCards": "Cartes",
+  "prepTitle": "Meal prep",
+  "prepNewShort": "Nouvelle fournée",
+  "prepNew": "Nouvelle fournée",
+  "prepEdit": "Modifier la fournée",
+  "prepHint": "Note la marmite entière une fois, puis mange-la petit à petit.",
+  "prepEmpty": "Tu as cuisiné pour plusieurs jours ? Note-le une fois, puis dis juste combien du reste tu as mangé.",
+  "prepNameHint": "ex. Poulet riz",
+  "prepDefaultName": "Fournée",
+  "prepIngredients": "Ingrédients",
+  "prepAddIngredient": "Ajouter un ingrédient",
+  "prepCookedWeight": "POIDS CUIT",
+  "prepCookedHint": "Pèse la marmite une fois cuite pour des chiffres exacts. Vide = poids cru total ({grams} g).",
+  "prepNeedWeight": "Indique le poids cuit : certains ingrédients n’ont pas de grammes.",
+  "prepLeftOf": "Il reste {left} sur {total}",
+  "prepOfWhatsLeft": "% de ce qui reste",
+  "prepAll": "Tout",
+  "prepLogAmount": "Noter {grams}",
+  "prepWeighLeft": "Peser le reste",
+  "prepFinished": "Cette fournée est terminée.",
+  "approxValues": "Approximatif",
+  "editValues": "Modifier les valeurs",
+  "editValuesHint": "Ne change que cette entrée. Pour corriger l’aliment la prochaine fois, modifie-le dans Mes aliments.",
+  "editLibraryHint": "Enregistré comme aliment perso, avec la même photo",
+  "per100Line": "{energy} pour 100 {unit}",
+  "rawLabel": "Cru",
+  "cookedLabel": "Cuit",
+  "rawHint": "Poids avant cuisson",
+  "cookedHint": "Poids une fois cuit (×{factor} le poids cru)",
+  "servingsUnit": "portions",
+  "logAmount": "Noter · {energy}",
+  "catFruit": "Fruits",
+  "catVeg": "Légumes",
+  "catMeat": "Viande",
+  "catFish": "Poisson",
+  "catEgg": "Œufs",
+  "catDairy": "Laitages",
+  "catGrain": "Céréales",
+  "catBakery": "Pain",
+  "catLegume": "Légumineuses",
+  "catNut": "Fruits secs",
+  "catOil": "Huiles",
+  "catPantry": "Épicerie",
+  "catDrink": "Boissons",
+  "catSauce": "Sauces",
+  "catSpice": "Épices",
+  "searchFoodsPrompt": "Qu’as-tu mangé ?",
+  "shelfEmpty": "Cherche un aliment ou prends le tien en photo : ceux que tu notes le plus apparaîtront ici.",
+  "repeatEntry": "Refaire",
+  "notifSuppChannel": "Compléments",
+  "notifSuppChannelWhy": "Rappel quotidien pour prendre tes compléments",
+  "energySplit": "D’où viennent les calories",
+  "typicalServing": "Portion type",
+  "cookedYieldLine": "Pèse {factor}× son poids cru",
+  "sectionBeta": "Bêta",
+  "nutritionBeta": "Nutrition",
+  "nutritionBetaHint": "Repas, eau, protéines et compléments. Encore en construction : tes données restent même si tu la désactives.",
+  "nutritionAboutTitle": "À propos de la nutrition",
+  "nutritionAboutSub": "Ce que c’est, et ce que ce ne sera jamais.",
+  "nutritionAboutWhatTitle": "Une partie de ton entraînement",
+  "nutritionAboutWhat": "Une façon simple de noter tes repas, ton eau, tes protéines et tes compléments juste à côté de tes séances. GymMane est d’abord une app de musculation : la nutrition est là pour que tout soit au même endroit, pas pour remplacer une vraie app de régime.",
+  "nutritionAboutScanTitle": "Pas de scanner, jamais",
+  "nutritionAboutScan": "Scanner un code-barres et voir tout se remplir tout seul serait pratique. Mais cela demande Internet et une énorme base de données d’aliments en ligne, et ce que tu manges finit sur les serveurs de quelqu’un d’autre. Ces données montrent quand tu manges, ce que tu manges et comment tu prends soin de ton corps, et elles peuvent servir à la publicité ou finir entre les mains de grandes entreprises. C’est pour ça qu’il n’y a pas de scanner, et qu’il n’y en aura pas.",
+  "nutritionAboutLocalTitle": "Tout sur ton téléphone",
+  "nutritionAboutLocal": "Plus de 500 aliments avec photo sont inclus dans l’app. Tu peux ajouter les tiens, changer leurs photos et modifier leurs valeurs. Tout reste sur ton téléphone, comme le reste de GymMane.",
+  "nutritionAboutBetaTitle": "Encore en bêta",
+  "nutritionAboutBeta": "S’il te manque quelque chose, propose-le sur GitHub. Sauf un scanner ou une base d’aliments plus grande : en plus de ta vie privée, l’app deviendrait beaucoup plus lourde. Pas besoin de la nutrition ? Désactive-la dans les Paramètres, tes données restent.",
+  "nutritionAboutSuggest": "Proposer une idée",
+  "nutritionAboutOk": "Compris",
+  "tplNameFullbody": "Corps complet",
+  "tplNamePpl": "Push Pull Legs",
+  "tplNameUpperlower": "Haut / Bas",
+  "tplNameAbcd": "Split ABCD",
+  "tplNameAbcde": "Split ABCDE",
+  "tplNameStronglifts": "StrongLifts 5×5",
+  "tplNameStartingstrength": "Starting Strength",
+  "tplNameGzclp": "GZCLP",
+  "tplNameBbb531": "5/3/1 Boring But Big",
+  "tplNamePpl6": "PPL 6 jours",
+  "tplNamePhul": "PHUL",
+  "tplNameRr": "Routine recommandée",
+  "tplNameHome": "Sans matériel",
+  "tplGzclp": "Palier lourd, palier volume, palier accessoire — la progression classique en trois paliers.",
+  "tplBbb531": "Vagues de quatre semaines en pourcentage de ton maximum d'entraînement, plus 5×10 de volume.",
+  "tplPpl6": "Six jours push/pull/legs : mouvements principaux linéaires, accessoires en double progression.",
+  "tplPhul": "Jours de force et jours d'hypertrophie en alternance, quatre jours par semaine.",
+  "progBadge": "Progression auto",
+  "progLinShort": "Objectif atteint → plus de poids ; échecs répétés → décharge",
+  "progDblShort": "Les répétitions montent dans la fourchette, puis la charge augmente",
+  "progRepsShort": "Au poids du corps : une répétition de plus par séance",
+  "progCycleShort": "Vagues hebdomadaires en % de ton maximum d'entraînement",
+  "progCycleWeeks": "Vagues de {n} semaines",
+  "tplStart": "Commencer ce programme",
+  "tmTitle": "Maximum d'entraînement (TM)",
+  "tmHint": "≈ 1RM × 0,9. Les charges hebdomadaires sont calculées en % du TM. Unité : {unit}.",
+  "progCardTitle": "Progression auto",
+  "progNext": "{ex} → prochain {label}",
+  "progDeloadFb": "{ex} : échecs répétés, décharge à {label}",
+  "progMiss": "{ex} : objectif manqué ({n}/{limit} avant la décharge)",
+  "progRepsNext": "{ex} → {r} répétitions la prochaine fois",
+  "progVarHint": "{ex} : {r} répétitions atteintes — essaie une variante plus dure ou ajoute de la charge",
+  "progWeekN": "Semaine {w} du cycle",
+  "progTmUp": "{ex} : maximum d'entraînement porté à {label}",
+  "fbTitle": "Bilan de séance",
+  "fbPrompt": "Comment ça s'est passé ?",
+  "fbFeelEasy": "Facile",
+  "fbFeelOk": "Comme il faut",
+  "fbFeelHard": "Dur",
+  "fbFeelMax": "À fond",
+  "fbPain": "Gêne",
+  "fbPainLevel": "Niveau de gêne",
+  "fbRehabHint": "Gêne au même endroit : notez-la dans votre épisode de rééducation",
   "rehabTitle": "Rehab",
   "rehabModuleSubtitle": "Case files · safety gate · AI advice · offline",
   "rehabArchiveTitle": "Rehab case files",
@@ -1411,650 +1427,5 @@
   "rehabLogCount": "{n} entries",
   "rehabPhaseN": "Phase {n}",
   "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
-  "rehabGateFailedShort": "Gate not passed · see a doctor first",
-  "@notHere": {
-    "placeholders": {
-      "gear": {
-        "type": "String"
-      },
-      "place": {
-        "type": "String"
-      }
-    }
-  },
-  "@placeExercises": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@placeActive": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@noteCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@noteMonthCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@measureCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@photoCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@photoEveryDays": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@photoNextIn": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@posePhoto": {
-    "placeholders": {
-      "pose": {
-        "type": "String"
-      }
-    }
-  },
-  "@dayNumber": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@daysApart": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@sessionCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@timelineWindow": {
-    "placeholders": {
-      "from": {
-        "type": "String"
-      },
-      "to": {
-        "type": "String"
-      }
-    }
-  },
-  "@notifPhotoBody": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@platesPerSide": {
-    "placeholders": {
-      "plates": {
-        "type": "String"
-      }
-    }
-  },
-  "@daysShort": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@liveSet": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@autoProgressHint": {
-    "placeholders": {
-      "w": {
-        "type": "String"
-      }
-    }
-  },
-  "@platesOwned": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@plateAchievable": {
-    "placeholders": {
-      "w": {
-        "type": "String"
-      }
-    }
-  },
-  "@habitFocus": {
-    "placeholders": {
-      "day": {
-        "type": "String"
-      }
-    }
-  },
-  "@copySuffix": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@templateAdded": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@dayCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@progCycleWeeks": null,
-  "@tmHint": null,
-  "@progNext": null,
-  "@progDeloadFb": null,
-  "@progMiss": null,
-  "@progRepsNext": null,
-  "@progVarHint": null,
-  "@progWeekN": null,
-  "@progTmUp": null,
-  "@aiMissing": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@awardWonOn": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "@badgeName": {
-    "placeholders": {
-      "id": {
-        "type": "String"
-      }
-    }
-  },
-  "@memberSince": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "@levelToNext": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      },
-      "next": {
-        "type": "int"
-      }
-    }
-  },
-  "@levelShort": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@heightCm": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@heatToneName": {
-    "placeholders": {
-      "id": {
-        "type": "String"
-      }
-    }
-  },
-  "@setsThisWeek": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@weekOfGoal": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      },
-      "goal": {
-        "type": "int"
-      }
-    }
-  },
-  "@momentCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@photosSelected": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@deletePhotosTitle": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@setsDoneOf": {
-    "placeholders": {
-      "done": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@distanceCol": {
-    "placeholders": {
-      "unit": {
-        "type": "String"
-      }
-    }
-  },
-  "@distanceTitle": {
-    "placeholders": {
-      "unit": {
-        "type": "String"
-      }
-    }
-  },
-  "@startHold": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "@shareMessage": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@routineCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@routinesAdded": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@recoveryOverall": {
-    "placeholders": {
-      "pct": {
-        "type": "int"
-      }
-    }
-  },
-  "@recoveryStill": {
-    "placeholders": {
-      "muscles": {
-        "type": "String"
-      }
-    }
-  },
-  "@recoveryPct": {
-    "placeholders": {
-      "pct": {
-        "type": "int"
-      }
-    }
-  },
-  "@readyInHours": {
-    "placeholders": {
-      "h": {
-        "type": "int"
-      }
-    }
-  },
-  "@liveUpNext": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@radarFocus": {
-    "placeholders": {
-      "list": {
-        "type": "String"
-      }
-    }
-  },
-  "@repCount": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@saveChangesTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@createNamed": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@routineOfDay": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@planBody": {
-    "placeholders": {
-      "sex": {
-        "type": "String"
-      },
-      "age": {
-        "type": "int"
-      },
-      "height": {
-        "type": "String"
-      },
-      "weight": {
-        "type": "String"
-      }
-    }
-  },
-  "@planDays": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@planHistory": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@deleteExerciseBody": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@groupDeleteTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@groupDeleteBody": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "@levelUpBody": {
-    "placeholders": {
-      "reps": {
-        "type": "int"
-      },
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@levelUpSwap": {
-    "placeholders": {
-      "routine": {
-        "type": "String"
-      }
-    }
-  },
-  "@levelUpSwapped": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "routine": {
-        "type": "String"
-      }
-    }
-  },
-  "@rmAtPercent": {
-    "placeholders": {
-      "pct": {
-        "type": "String"
-      }
-    }
-  },
-  "@goalToGo": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
-  "@goalDaysLeft": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@alsoCalled": {
-    "placeholders": {
-      "names": {
-        "type": "String"
-      }
-    }
-  },
-  "@inRoutines": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@swapHint": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@swapSameMuscle": {
-    "placeholders": {
-      "muscle": {
-        "type": "String"
-      }
-    }
-  },
-  "@goalDaysShort": {
-    "placeholders": {
-      "done": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
-  "@rpeResultHint": {
-    "placeholders": {
-      "reps": {
-        "type": "int"
-      },
-      "rpe": {
-        "type": "String"
-      }
-    }
-  },
-  "@rpeOneRmLine": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
-  "@dotsTotalLine": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
-  "@ffmiLeanLine": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
-  "@rehabPlanCount": null,
-  "@rehabPainNow": null,
-  "@rehabLabelDays": null,
-  "@rehabEpisodeMeta": null,
-  "@rehabAutoTitle": null,
-  "@rehabRoutinesMade": null,
-  "@rehabMissedActions": null,
-  "@rehabExerciseCount": null,
-  "@rehabDaysCount": null,
-  "@rehabLogStage": null,
-  "@rehabLogCount": null,
-  "@rehabPhaseN": null,
-  "amoledTheme": "Noir AMOLED",
-  "editDuration": "Durée de la séance",
-  "sessionName": "Nom de la séance",
-  "nameWorkout": "Nommer",
-  "sessionNameHint": "ex. : Jambes, Push, Full body",
-  "secondaryPickHint": "Touche les autres muscles que travaille cet exercice.",
-  "planHintReps": "Choisis le type et les répétitions de chaque série. Auto part de ta dernière séance.",
-  "planHintTime": "Choisis le type et la durée de chaque série. Auto part de ta dernière séance.",
-  "planHintTimeWeight": "Choisis le type, la durée et le poids de chaque série. Auto part de ta dernière séance.",
-  "planHintCardio": "Choisis la distance et la durée de chaque série. Auto part de ta dernière séance.",
-  "timeOnly": "Durée uniquement",
-  "homeRoutines": "Routines sur l’accueil",
-  "homeRoutinesHint": "Tes routines, la dernière faite en premier. Touche-en une pour la lancer.",
-  "homeWeekStats": "Cette semaine sur l’accueil",
-  "homeWeekStatsHint": "Volume, séries et records de la semaine.",
-  "routineDoneToday": "Fini pour aujourd’hui · bien joué",
-  "trainAgain": "S’entraîner encore",
-  "lastDoneAgo": "{n, plural, =0{Faite aujourd’hui} =1{Faite hier} other{Il y a {n} jours}}",
-  "@lastDoneAgo": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "weightStepSetting": "Pas de poids",
-  "weightStepHint": "Ce qu’ajoutent les boutons − et +.",
-  "prBestWorkout": "Meilleure séance",
-  "mergeExercise": "Fusionner",
-  "mergeExerciseInto": "Fusionner {name} avec…",
-  "@mergeExerciseInto": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "mergeExerciseTitle": "Fusionner les exercices ?",
-  "mergeExerciseBody": "Tout l’historique de « {from} » passe à « {to} ». « {from} » reste dans ta bibliothèque. C’est irréversible.",
-  "@mergeExerciseBody": {
-    "placeholders": {
-      "from": {
-        "type": "String"
-      },
-      "to": {
-        "type": "String"
-      }
-    }
-  },
-  "mergedToast": "Historique fusionné"
+  "rehabGateFailedShort": "Gate not passed · see a doctor first"
 }

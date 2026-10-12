@@ -16,6 +16,7 @@ import '../models/exercise.dart';
 import '../models/live_session.dart';
 import '../models/measure.dart';
 import '../models/note.dart';
+import '../models/nutrition.dart';
 import '../models/place.dart';
 import '../models/profile.dart';
 import '../models/progression.dart';
@@ -25,6 +26,8 @@ import '../models/workout.dart';
 import '../services/alarm_store.dart';
 import '../services/beeper.dart';
 import '../services/exercise_match.dart';
+import '../services/food_library.dart';
+import '../services/health_steps.dart';
 import '../services/local_store.dart';
 import '../services/media_store.dart';
 import '../services/merged_ids.dart';
@@ -32,6 +35,7 @@ import '../services/progress_reminder.dart';
 import '../services/rehab_intake.dart';
 import '../services/plan_share.dart';
 import '../services/rest_alarm.dart';
+import '../services/supplement_reminder.dart';
 import '../services/train_reminder.dart';
 import '../services/workout_import.dart';
 
@@ -41,18 +45,20 @@ part 'library_state.dart';
 part 'measures_state.dart';
 part 'moments_state.dart';
 part 'notes_state.dart';
+part 'nutrition_state.dart';
 part 'places_state.dart';
 part 'progression_state.dart';
 part 'rehab_state.dart';
 part 'routines_state.dart';
 part 'settings_state.dart';
 part 'stats_state.dart';
+part 'steps_state.dart';
 part 'timeline_state.dart';
 part 'tools_state.dart';
 part 'workout_state.dart';
 
 class FitState extends FitCore
-    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, MeasuresState, MomentsState, TimelineState, StatsState, AwardsState, RoutinesState, WorkoutState, RehabState {
+    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, NutritionState, AwardsState, RoutinesState, WorkoutState, RehabState {
   void loadFromStore() {
     final data = withMergedExercises(Store.instance.load());
     _loading = true;
@@ -135,6 +141,8 @@ class FitState extends FitCore
             .map((e) => Moment.fromJson((e as Map).cast<String, dynamic>())));
       photoIntervalDays = (data['photoEvery'] as num?)?.toInt() ?? 30;
       bodyTimeline = data['bodyTl'] as bool? ?? false;
+      loadNutrition((data['nutrition'] as Map?)?.cast<String, dynamic>());
+      loadSteps((data['steps'] as Map?)?.cast<String, dynamic>());
       _restoreLiveSession(data);
     }
     _stampMemberSince();
@@ -459,6 +467,8 @@ class FitState extends FitCore
         'moments': moments.map((m) => m.toJson()).toList(),
         'photoEvery': photoIntervalDays,
         'bodyTl': bodyTimeline,
+        'nutrition': nutritionJson(),
+        'steps': stepsJson(),
         if (session != null && !session!.complete) ...{
           'live': session!.toJson(),
           'liveStart': _runningSince?.toIso8601String(),
@@ -485,6 +495,8 @@ class FitState extends FitCore
     compareToId = null;
     notes.clear();
     moments.clear();
+    loadNutrition(null);
+    loadSteps(null);
     awards.clear();
     awardsSeen.clear();
     pendingAwards.clear();
@@ -570,7 +582,8 @@ class FitState extends FitCore
       {Map<String, String>? restoredMedia,
       Map<String, String>? restoredNoteMedia,
       Map<String, String>? restoredShots,
-      Map<String, String>? restoredMoments}) {
+      Map<String, String>? restoredMoments,
+      Map<String, String>? restoredFoods}) {
     final map = withMergedExercises(backup);
     if (restoredMedia != null) restoredMedia = withMergedExercises(restoredMedia).cast<String, String>();
     _loading = true;
@@ -622,6 +635,8 @@ class FitState extends FitCore
     _loadMoments(map, restored: restoredMoments);
     photoIntervalDays = (map['photoEvery'] as num?)?.toInt() ?? photoIntervalDays;
     bodyTimeline = map['bodyTl'] as bool? ?? bodyTimeline;
+    loadNutrition((map['nutrition'] as Map?)?.cast<String, dynamic>(), restored: restoredFoods);
+    loadSteps((map['steps'] as Map?)?.cast<String, dynamic>());
     _seedCalculatorsFromProfile();
     _loading = false;
     _persist();
@@ -1339,6 +1354,8 @@ class FitState extends FitCore
         backFromCompare();
       case 'notes':
         backFromNotes();
+      case 'nutrition':
+        backFromNutrition();
       case 'note-edit':
         closeNoteEditor();
       case 'train':
