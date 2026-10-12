@@ -145,6 +145,8 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             _rehabCard(gc),
+            const SizedBox(height: 12),
+            _logCard(gc),
             if (fit.nutritionBeta) ...[
               const SizedBox(height: 12),
               HomeFolder(
@@ -191,6 +193,40 @@ class HomeScreen extends StatelessWidget {
                         : '${ep.title} · 计划 ${ep.routineIds.length} 个',
                     style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary),
                   ),
+                ],
+              ),
+            ),
+            Text(t.rehabEnter, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// 统一「日志」入口（训练 + 康复）。
+  Widget _logCard(GymColors gc) {
+    return Pressable(
+      onTap: fit.goLog,
+      child: SoftCard(
+        radius: 22,
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(color: gc.emberSoft, shape: BoxShape.circle),
+              child: Icon(PhosphorIconsRegular.bookOpenText, size: 18, color: gc.ember),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(t.rehabTabLog, style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
+                  const SizedBox(height: 2),
+                  Text(t.logSubtitle,
+                      style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary)),
                 ],
               ),
             ),

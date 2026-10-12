@@ -3,11 +3,7 @@
  * 设计沿用 GymMane 的组件与配色（AppTheme / GymColors / ui_kit）。
  * 合并进 GymMane（GPLv3），随本体一同以 GPLv3 分发。
  */
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/rehab_data.dart';
 import '../state/fit_state.dart';
@@ -16,7 +12,6 @@ import '../theme/app_theme.dart';
 import '../widgets/ui_kit.dart';
 import '../l10n/l10n.dart';
 
-const _kLogKey = 'rehab_log_v1';
 
 class RehabScreen extends StatefulWidget {
   const RehabScreen({super.key});
@@ -43,7 +38,7 @@ class _RehabScreenState extends State<RehabScreen> {
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
-    final labels = [t.rehabTabToday, t.rehabTabPlan, t.rehabTabLog, t.rehabTabBook];
+    final labels = [t.rehabTabToday, t.rehabTabPlan, t.rehabTabBook];
     return SafeArea(
       bottom: false,
       child: SingleChildScrollView(
@@ -67,7 +62,6 @@ class _RehabScreenState extends State<RehabScreen> {
             switch (_tab) {
               0 => const _TodaySection(),
               1 => const _PlanSection(),
-              2 => const _LogSection(),
               _ => const _BookSection(),
             },
             const SizedBox(height: 20),
@@ -418,173 +412,6 @@ class _PlanSection extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// 日志（本地存储）
-// ---------------------------------------------------------------------------
-
-class _LogSection extends StatefulWidget {
-  const _LogSection();
-
-  @override
-  State<_LogSection> createState() => _LogSectionState();
-}
-
-class _LogSectionState extends State<_LogSection> {
-  List<Map<String, dynamic>> _entries = [];
-  final _feel = TextEditingController();
-  String _light = 'g';
-  int _phase = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    _restore();
-  }
-
-  @override
-  void dispose() {
-    _feel.dispose();
-    super.dispose();
-  }
-
-  Future<void> _restore() async {
-    final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString(_kLogKey);
-    var list = <Map<String, dynamic>>[];
-    if (raw != null && raw.isNotEmpty) {
-      try {
-        final d = jsonDecode(raw);
-        if (d is List) {
-          list = d.whereType<Map>().map((e) => e.cast<String, dynamic>()).toList();
-        }
-      } catch (_) {}
-    }
-    if (mounted) setState(() => _entries = list);
-  }
-
-  Future<void> _save() async {
-    final e = <String, dynamic>{
-      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      'phase': _phase,
-      'light': _light,
-      'feel': _feel.text.trim(),
-    };
-    setState(() {
-      _entries.insert(0, e);
-      _feel.clear();
-    });
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_kLogKey, jsonEncode(_entries));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final gc = context.gc;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _SectionHead('08', t.rehabHandTraffic, sub: t.rehabHandTrafficSub),
-        SoftCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Wrap(spacing: 6, children: [
-                for (final ph in const [0, 1, 2, 3, 4])
-                  _Chip(ph == 4 ? t.rehabHandMaintain : t.rehabPhaseN('$ph'),
-                      color: _phase == ph ? gc.ember : gc.textTertiary),
-              ]),
-              const SizedBox(height: 4),
-              GestureDetector(
-                onTap: () {},
-                child: Row(children: [
-                  for (final l in const ['g', 'y', 'r'])
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => setState(() => _light = l),
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 6),
-                          padding: const EdgeInsets.symmetric(vertical: 9),
-                          decoration: BoxDecoration(
-                            color: _light == l ? gc.ember : gc.mutedFill,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Text(_lightLabel(l),
-                                style: AppTheme.f(12,
-                                    weight: FontWeight.w800,
-                                    color: _light == l ? gc.onEmber : gc.textSecondary)),
-                          ),
-                        ),
-                      ),
-                    ),
-                ]),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _feel,
-                maxLines: 2,
-                style: AppTheme.f(13, weight: FontWeight.w500, color: gc.text),
-                decoration: InputDecoration(
-                  hintText: t.rehabHandFeel,
-                  hintStyle: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textTertiary),
-                  filled: true,
-                  fillColor: gc.mutedFill,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: PrimaryButton(label: t.rehabHandSaveLog, onTap: _save),
-              ),
-            ],
-          ),
-        ),
-        _SectionHead('09', t.rehabHandHistory,
-            sub: _entries.isEmpty ? t.rehabHandNoLog : t.rehabLogCount(_entries.length)),
-        for (var i = 0; i < _entries.length; i++)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6),
-            child: SoftCard(
-              padding: const EdgeInsets.all(12),
-              child: Row(children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: BoxDecoration(color: _lightColor(_entries[i]['light']?.toString()), shape: BoxShape.circle),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    '${_entries[i]['date']} · ${t.rehabLogStage('${_entries[i]['phase']}')} · ${_lightLabel('${_entries[i]['light']}')}'
-                    '${'${_entries[i]['feel'] ?? ''}'.isEmpty ? '' : ' · ${_entries[i]['feel']}'}',
-                    style: AppTheme.f(12, weight: FontWeight.w600, color: gc.text),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    setState(() => _entries.removeAt(i));
-                    final prefs = await SharedPreferences.getInstance();
-                    await prefs.setString(_kLogKey, jsonEncode(_entries));
-                  },
-                  child: Text(t.rehabHandDelete, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.danger)),
-                ),
-              ]),
-            ),
-          ),
-      ],
-    );
-  }
-
-  String _lightLabel(String c) => c == 'g' ? t.rehabHandTrafficGreen : (c == 'y' ? t.rehabHandTrafficYellow : t.rehabHandTrafficRed);
-
-  Color _lightColor(String? c) {
-    final gc = context.gc;
-    return c == 'g' ? gc.sage : (c == 'y' ? gc.warn : gc.danger);
   }
 }
 

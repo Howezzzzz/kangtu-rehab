@@ -5151,4 +5151,25 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get logSubtitle => 'Training and rehab, logged in one place';
+
+  @override
+  String get logAddRehab => 'Log rehab';
+
+  @override
+  String get logTrends => 'Trends';
+
+  @override
+  String get logRehabTrend => 'Rehab trend';
+
+  @override
+  String get logTrainTrend => 'Training volume';
+
+  @override
+  String get logTagTrain => 'Training';
+
+  @override
+  String get logTagRehab => 'Rehab';
 }

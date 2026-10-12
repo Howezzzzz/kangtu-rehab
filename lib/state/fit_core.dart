@@ -141,6 +141,11 @@ abstract class FitCore extends ChangeNotifier {
 
   void goRehabBook() => pushRoute('rehab-book');
 
+  // 统一「日志」模块（训练 + 康复）
+  void goLog() => pushRoute('log');
+
+  void backFromLog() => popRoute(fallback: 'home');
+
   void backFromRehabBook() => popRoute(fallback: 'rehab');
 
   void backFromRehab() => _setRoute('settings', reset: true);

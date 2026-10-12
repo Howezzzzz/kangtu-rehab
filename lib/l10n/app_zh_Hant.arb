@@ -1427,5 +1427,12 @@
   "rehabLogCount": "共 {n} 条",
   "rehabPhaseN": "阶段{n}",
   "rehabAiSteps": "1 复制提示词 → 2 贴给任意智能助手 → 3 把回复整段贴回来导入。",
-  "rehabGateFailedShort": "未通过安全门 · 建议先就医"
+  "rehabGateFailedShort": "未通过安全门 · 建议先就医",
+  "logSubtitle": "Training and rehab, logged in one place",
+  "logAddRehab": "Log rehab",
+  "logTrends": "Trends",
+  "logRehabTrend": "Rehab trend",
+  "logTrainTrend": "Training volume",
+  "logTagTrain": "Training",
+  "logTagRehab": "Rehab"
 }

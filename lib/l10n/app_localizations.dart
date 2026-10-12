@@ -9333,6 +9333,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Gate not passed · see a doctor first'**
   String get rehabGateFailedShort;
+
+  /// No description provided for @logSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Training and rehab, logged in one place'**
+  String get logSubtitle;
+
+  /// No description provided for @logAddRehab.
+  ///
+  /// In en, this message translates to:
+  /// **'Log rehab'**
+  String get logAddRehab;
+
+  /// No description provided for @logTrends.
+  ///
+  /// In en, this message translates to:
+  /// **'Trends'**
+  String get logTrends;
+
+  /// No description provided for @logRehabTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Rehab trend'**
+  String get logRehabTrend;
+
+  /// No description provided for @logTrainTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Training volume'**
+  String get logTrainTrend;
+
+  /// No description provided for @logTagTrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get logTagTrain;
+
+  /// No description provided for @logTagRehab.
+  ///
+  /// In en, this message translates to:
+  /// **'Rehab'**
+  String get logTagRehab;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

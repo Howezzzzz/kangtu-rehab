@@ -181,7 +181,7 @@
   "placeFilterLabel": "场地筛选",
   "noGearOnly": "仅自重",
   "placeActive": "当前在 {name} 训练",
-  "journal": "备忘日志",
+  "journal": "备忘",
   "noteCount": "{n, plural, =0{暂无备忘} =1{1 条备忘} other{{n} 条备忘}}",
   "noteKindNote": "笔记",
   "noteKindPlan": "计划",
@@ -1534,5 +1534,12 @@
   "rehabLogCount": "共 {n} 条",
   "rehabPhaseN": "阶段{n}",
   "rehabAiSteps": "1 复制提示词 → 2 贴给任意智能助手 → 3 把回复整段贴回来导入。",
-  "rehabGateFailedShort": "未通过安全门 · 建议先就医"
+  "rehabGateFailedShort": "未通过安全门 · 建议先就医",
+  "logSubtitle": "训练与康复记录，都在这里",
+  "logAddRehab": "记录康复",
+  "logTrends": "趋势报表",
+  "logRehabTrend": "康复趋势",
+  "logTrainTrend": "训练量趋势",
+  "logTagTrain": "训练",
+  "logTagRehab": "康复"
 }

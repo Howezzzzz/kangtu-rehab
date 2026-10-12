@@ -6,6 +6,7 @@ import 'dart:ui' show PlatformDispatcher;
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../catalog/exercise_catalog.dart';
 import '../catalog/exercises_ext.dart';
@@ -14,6 +15,7 @@ import '../catalog/program_templates.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';
 import '../models/live_session.dart';
+import '../models/rehab_log.dart';
 import '../models/measure.dart';
 import '../models/note.dart';
 import '../models/nutrition.dart';
@@ -69,6 +71,14 @@ class FitState extends FitCore
             .whereType<Map>()
             .map((m) => RehabEpisode.fromJson(m.cast<String, dynamic>())));
     }
+    if (data['rehabLog'] is List) {
+      rehabLog
+        ..clear()
+        ..addAll((data['rehabLog'] as List)
+            .whereType<Map>()
+            .map((m) => RehabLogEntry.fromJson(m.cast<String, dynamic>())));
+    }
+    rehabLogMerged = data['rehabLogMerged'] == true;
     if (data['language'] == null) _adoptDeviceLanguage();
     if (data.isNotEmpty) {
       profile = Profile.fromJson((data['profile'] as Map?)?.cast<String, dynamic>() ?? {});
@@ -443,6 +453,8 @@ class FitState extends FitCore
         'favorites': favorites,
         'notes': notes.map((n) => n.toJson()).toList(),
         'rehabEp': rehabEpisodes.map((e) => e.toJson()).toList(),
+        'rehabLog': rehabLog.map((e) => e.toJson()).toList(),
+        'rehabLogMerged': rehabLogMerged,
         'places': places.map((p) => p.toJson()).toList(),
         'place': activePlaceId,
         'checkins': checkins.toList(),
@@ -507,6 +519,8 @@ class FitState extends FitCore
     weeklyPlan.clear();
     planExtras.clear();
     multiPlan = false;
+    rehabLog.clear();
+    rehabLogMerged = false;
     customExercises.clear();
     exerciseMedia.clear();
     repsOnly.clear();

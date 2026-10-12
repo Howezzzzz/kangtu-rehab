@@ -1427,5 +1427,12 @@
   "rehabLogCount": "{n} entries",
   "rehabPhaseN": "Phase {n}",
   "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
-  "rehabGateFailedShort": "Gate not passed · see a doctor first"
+  "rehabGateFailedShort": "Gate not passed · see a doctor first",
+  "logSubtitle": "Training and rehab, logged in one place",
+  "logAddRehab": "Log rehab",
+  "logTrends": "Trends",
+  "logRehabTrend": "Rehab trend",
+  "logTrainTrend": "Training volume",
+  "logTagTrain": "Training",
+  "logTagRehab": "Rehab"
 }

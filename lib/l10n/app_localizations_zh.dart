@@ -606,7 +606,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journal => '备忘日志';
+  String get journal => '备忘';
 
   @override
   String noteCount(int n) {
@@ -5073,6 +5073,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => '未通过安全门 · 建议先就医';
+
+  @override
+  String get logSubtitle => '训练与康复记录，都在这里';
+
+  @override
+  String get logAddRehab => '记录康复';
+
+  @override
+  String get logTrends => '趋势报表';
+
+  @override
+  String get logRehabTrend => '康复趋势';
+
+  @override
+  String get logTrainTrend => '训练量趋势';
+
+  @override
+  String get logTagTrain => '训练';
+
+  @override
+  String get logTagRehab => '康复';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -9795,4 +9816,25 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get rehabGateFailedShort => '未通过安全门 · 建议先就医';
+
+  @override
+  String get logSubtitle => 'Training and rehab, logged in one place';
+
+  @override
+  String get logAddRehab => 'Log rehab';
+
+  @override
+  String get logTrends => 'Trends';
+
+  @override
+  String get logRehabTrend => 'Rehab trend';
+
+  @override
+  String get logTrainTrend => 'Training volume';
+
+  @override
+  String get logTagTrain => 'Training';
+
+  @override
+  String get logTagRehab => 'Rehab';
 }

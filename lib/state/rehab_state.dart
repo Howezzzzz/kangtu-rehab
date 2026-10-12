@@ -7,6 +7,58 @@ part of 'fit_state.dart';
 mixin RehabState on FitCore {
   final List<RehabEpisode> rehabEpisodes = [];
 
+  /// 统一「日志」用的康复日志条目（原 prefs `rehab_log_v1` 一次性迁入）。
+  final List<RehabLogEntry> rehabLog = [];
+  bool rehabLogMerged = false;
+
+  void addRehabLog(RehabLogEntry e) {
+    rehabLog.insert(0, e);
+    persistNow();
+    notifyListeners();
+  }
+
+  void updateRehabLog(RehabLogEntry e) {
+    final i = rehabLog.indexWhere((x) => x.id == e.id);
+    if (i < 0) return;
+    rehabLog[i] = e;
+    persistNow();
+    notifyListeners();
+  }
+
+  void deleteRehabLog(String id) {
+    rehabLog.removeWhere((x) => x.id == id);
+    persistNow();
+    notifyListeners();
+  }
+
+  /// 一次性把旧康复手册日志（prefs `rehab_log_v1`）迁进统一日志。
+  Future<void> migrateRehabLog() async {
+    if (rehabLogMerged) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString('rehab_log_v1');
+      if (raw != null && raw.isNotEmpty) {
+        final d = jsonDecode(raw);
+        if (d is List) {
+          for (final e in d.whereType<Map>()) {
+            final m = e.cast<String, dynamic>();
+            final date = DateTime.tryParse('${m['date']}') ?? DateTime.now();
+            rehabLog.add(RehabLogEntry(
+              id: 'r${date.millisecondsSinceEpoch}_${rehabLog.length}',
+              date: date,
+              phase: (m['phase'] as num?)?.toInt() ?? 0,
+              light: '${m['light'] ?? 'g'}',
+              feel: '${m['feel'] ?? ''}',
+            ));
+          }
+          rehabLog.sort((a, b) => b.date.compareTo(a.date));
+        }
+      }
+    } catch (_) {}
+    rehabLogMerged = true;
+    persistNow();
+  }
+
   String? activeEpisodeId;
 
   RehabEpisode? get activeEpisode {
