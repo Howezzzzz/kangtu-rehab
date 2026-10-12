@@ -8,7 +8,48 @@ mixin LibraryState on FitCore {
   String? exKindFilter;
   String? activeExerciseId;
   int _customSeq = 0;
-  List<Exercise> get allExercises => [...kExercises, ...kExercisesExt, ...kExercisesRep, ...customExercises];
+  List<Exercise>? _builtInExercises;
+
+  List<Exercise> get allExercises => [
+        ...(_builtInExercises ??= [
+          for (final e in _builtInAll)
+            if (secondaryOverride[e.id] case final s?) e.copyWith(secondary: _cleanSecondary(e.primary, s)) else e,
+        ]),
+        ...customExercises,
+      ];
+
+  List<Exercise> get _builtInAll => [...kExercises, ...kExercisesExt, ...kExercisesRep];
+
+  bool hasSecondaryOverride(String id) => secondaryOverride.containsKey(id);
+
+  void setSecondary(String id, List<String> muscles) {
+    final ex = exerciseById(id);
+    if (ex == null) return;
+    final clean = _cleanSecondary(ex.primary, muscles);
+    final i = customExercises.indexWhere((e) => e.id == id);
+    if (i >= 0) {
+      customExercises[i] = customExercises[i].copyWith(secondary: clean);
+    } else {
+      final base = _builtInAll.where((e) => e.id == id).firstOrNull;
+      if (base != null && _sameMuscles(clean, _cleanSecondary(base.primary, base.secondary))) {
+        secondaryOverride.remove(id);
+      } else {
+        secondaryOverride[id] = clean;
+      }
+      _builtInExercises = null;
+    }
+    _persist();
+    notifyListeners();
+  }
+
+  void resetSecondary(String id) {
+    if (secondaryOverride.remove(id) == null) return;
+    _builtInExercises = null;
+    _persist();
+    notifyListeners();
+  }
+
+  static bool _sameMuscles(List<String> a, List<String> b) => a.length == b.length && a.toSet().containsAll(b);
 
   bool fitsHere(Exercise ex) => true;
 
@@ -238,6 +279,8 @@ mixin LibraryState on FitCore {
 
   bool isTimed(String id) => modeOf(id) == 'time';
 
+  bool runsClock(String id) => modeOf(id).isNotEmpty;
+
   void setExerciseMode(String id, String mode) {
     final base = customExercises.where((e) => e.id == id).map((e) => e.mode).firstOrNull ??
         kExerciseModes[id] ??
@@ -263,6 +306,31 @@ mixin LibraryState on FitCore {
     }
     favorites.remove(id);
     _persist();
+    notifyListeners();
+  }
+
+  List<Exercise> mergeTargets(String fromId) => [
+        for (final e in allExercises)
+          if (e.id != fromId && modeOf(e.id) == modeOf(fromId)) e,
+      ];
+
+  void mergeExerciseInto(String fromId, String toId) {
+    final to = exerciseById(toId);
+    if (to == null || fromId == toId || !isCustom(fromId) || modeOf(fromId) != modeOf(toId)) return;
+    for (final s in sessions) {
+      final i = s.exercises.indexWhere((e) => e.id == fromId);
+      if (i < 0) continue;
+      final from = s.exercises[i];
+      final j = s.exercises.indexWhere((e) => e.id == toId);
+      if (j < 0) {
+        s.exercises[i] = LoggedExercise(to.id, to.name, to.primary, from.sets);
+      } else {
+        s.exercises[j].sets.addAll(from.sets);
+        s.exercises.removeAt(i);
+      }
+    }
+    persistNow();
+    _refreshWidgets();
     notifyListeners();
   }
 
@@ -306,9 +374,13 @@ mixin LibraryState on FitCore {
   bool isRepsOnly(String id) {
     if (repsOnly.contains(id)) return true;
     if (repsOnlyOff.contains(id)) return false;
-    if (exerciseById(id)?.equipment != 'Bodyweight') return false;
+    final equipment = exerciseById(id)?.equipment;
+    final bare = modeOf(id) == 'time' ? !_loadedHolds.contains(equipment) : equipment == 'Bodyweight';
+    if (!bare) return false;
     return !_hasLoadedHistory(id);
   }
+
+  static const _loadedHolds = {'Dumbbell', 'Kettlebell', 'Cable', 'Machine', 'Weighted'};
 
   bool _hasLoadedHistory(String id) {
     for (final s in sessions) {

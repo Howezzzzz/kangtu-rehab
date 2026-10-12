@@ -106,11 +106,12 @@ class LoggedExercise {
 
 class LoggedSession {
   LoggedSession(this.date, this.durationSec, this.exercises,
-      {this.routineId, this.feel, this.painArea = '', this.painLevel = 0, this.note = ''});
+      {this.routineId, this.name, this.feel, this.painArea = '', this.painLevel = 0, this.note = ''});
   final DateTime date;
-  final int durationSec;
+  int durationSec;
   final List<LoggedExercise> exercises;
   final String? routineId;
+  String? name;
 
   /// 训练后主观反馈：整体感觉 0=很轻松 1=刚好 2=吃力 3=拼到底（null 未记录）
   int? feel;
@@ -134,6 +135,7 @@ class LoggedSession {
         'dur': durationSec,
         'ex': exercises.map((e) => e.toJson()).toList(),
         if (routineId != null) 'r': routineId,
+        if (name != null) 'n': name,
 
         if (feel != null) 'feel': feel,
         if (painArea.isNotEmpty) 'pa': painArea,
@@ -145,7 +147,7 @@ class LoggedSession {
         (j['dur'] as num?)?.toInt() ?? 0,
         (j['ex'] as List).map((e) => LoggedExercise.fromJson(e as Map<String, dynamic>)).toList(),
         routineId: j['r'] as String?,
-
+        name: j['n'] as String?,
         feel: (j['feel'] as num?)?.toInt(),
         painArea: (j['pa'] ?? '') as String,
         painLevel: ((j['pl'] ?? 0) as num).toInt(),

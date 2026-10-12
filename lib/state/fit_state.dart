@@ -157,10 +157,15 @@ class FitState extends FitCore
 
   static String _themeFrom(Map<String, dynamic> data, {required String fallback}) {
     final pref = data['theme'];
-    if (pref is String && const ['system', 'dark', 'light'].contains(pref)) return pref;
+    if (pref is String && const ['system', 'dark', 'amoled', 'light'].contains(pref)) return pref;
     final dark = data['dark'];
     if (dark is bool) return dark ? 'dark' : 'light';
     return fallback;
+  }
+
+  static double _stepFrom(Object? raw, List<double> allowed, double fallback) {
+    final v = (raw as num?)?.toDouble();
+    return v != null && allowed.contains(v) ? v : fallback;
   }
 
   void _loadToggles(Map<String, dynamic> data) {
@@ -207,9 +212,16 @@ class FitState extends FitCore
       ..clear()
       ..addAll(((data['exMode'] as Map?) ?? const {}).map((k, v) => MapEntry(k as String, v as String))
         ..removeWhere((_, v) => !const ['weight', 'cardio', 'time'].contains(v)));
+    secondaryOverride
+      ..clear()
+      ..addAll(((data['exSecondary'] as Map?) ?? const {})
+          .map((k, v) => MapEntry(k as String, (v as List).whereType<String>().toList())));
+    _builtInExercises = null;
     bgDim = (data['bgDim'] as num?)?.toDouble() ?? 0.55;
     showFocus = data['showFocus'] as bool? ?? true;
     showRecommended = data['showRecs'] as bool? ?? true;
+    showWeekStats = data['showWeek'] as bool? ?? true;
+    showRoutineRow = data['showRoutineRow'] as bool? ?? true;
     levelHints = data['levelHints'] as bool? ?? true;
     toastSound = data['toastSound'] as bool? ?? true;
     Beeper.instance.chimeOn = toastSound;
@@ -223,6 +235,8 @@ class FitState extends FitCore
     gamification = data['gamify'] as bool? ?? true;
     logRpe = data['rpe'] as bool? ?? false;
     effortScale = data['effort'] == 'rir' ? 'rir' : 'rpe';
+    stepKg = _stepFrom(data['stepKg'], SettingsState.kgSteps, 2.5);
+    stepLb = _stepFrom(data['stepLb'], SettingsState.lbSteps, 5);
     trainReminderMin = (data['trainAt'] as num?)?.toInt();
     smartReminder = data['trainSmart'] as bool? ?? false;
     progressStep
@@ -387,6 +401,8 @@ class FitState extends FitCore
         'bgDim': bgDim,
         'showFocus': showFocus,
         'showRecs': showRecommended,
+        'showWeek': showWeekStats,
+        'showRoutineRow': showRoutineRow,
         'levelHints': levelHints,
         'toastSound': toastSound,
         'heatLabels': heatmapLabels,
@@ -397,6 +413,8 @@ class FitState extends FitCore
         'gamify': gamification,
         'rpe': logRpe,
         'effort': effortScale,
+        'stepKg': stepKg,
+        'stepLb': stepLb,
         'demo': demoSize,
         'demoLoop': demoLoop,
         'alarmStyle': alarmStyle,
@@ -409,6 +427,7 @@ class FitState extends FitCore
         'barKg': exerciseBar,
         'marks': videoMarks.map((k, v) => MapEntry(k, v.map((i, ms) => MapEntry('$i', ms)))),
         'exMode': modeOverride,
+        'exSecondary': secondaryOverride,
         'trainAt': trainReminderMin,
         'trainSmart': smartReminder,
         'alarmAskedAt': alarmAskedAt,
@@ -494,6 +513,8 @@ class FitState extends FitCore
     videoMarks.clear();
     exerciseBar.clear();
     modeOverride.clear();
+    secondaryOverride.clear();
+    _builtInExercises = null;
     demoSize = 'large';
     demoLoop = 'always';
     MediaStore.clearAll();
@@ -503,6 +524,8 @@ class FitState extends FitCore
     profile = Profile();
     showFocus = true;
     showRecommended = true;
+    showWeekStats = true;
+    showRoutineRow = true;
     levelHints = true;
     toastSound = true;
     Beeper.instance.chimeOn = true;
@@ -513,6 +536,8 @@ class FitState extends FitCore
     gamification = true;
     logRpe = false;
     effortScale = 'rpe';
+    stepKg = 2.5;
+    stepLb = 5;
     trainReminderMin = null;
     smartReminder = false;
     TrainReminder.instance.cancel();

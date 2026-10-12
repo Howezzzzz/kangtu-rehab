@@ -7053,6 +7053,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Gate not passed · see a doctor first'**
   String get rehabGateFailedShort;
+
+  /// No description provided for @amoledTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'AMOLED black'**
+  String get amoledTheme;
+
+  /// No description provided for @editDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout length'**
+  String get editDuration;
+
+  /// No description provided for @sessionName.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout name'**
+  String get sessionName;
+
+  /// No description provided for @nameWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Name it'**
+  String get nameWorkout;
+
+  /// No description provided for @sessionNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Legs, Push, Full body'**
+  String get sessionNameHint;
+
+  /// No description provided for @secondaryPickHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the other muscles this exercise works.'**
+  String get secondaryPickHint;
+
+  /// No description provided for @planHintReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the type and reps of each set. Auto starts from your last session.'**
+  String get planHintReps;
+
+  /// No description provided for @planHintTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the type and time of each set. Auto starts from your last session.'**
+  String get planHintTime;
+
+  /// No description provided for @planHintTimeWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the type, time and weight of each set. Auto starts from your last session.'**
+  String get planHintTimeWeight;
+
+  /// No description provided for @planHintCardio.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the distance and time of each set. Auto starts from your last session.'**
+  String get planHintCardio;
+
+  /// No description provided for @timeOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Time only'**
+  String get timeOnly;
+
+  /// No description provided for @homeRoutines.
+  ///
+  /// In en, this message translates to:
+  /// **'Routines on home'**
+  String get homeRoutines;
+
+  /// No description provided for @homeRoutinesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your routines, last done first. Tap one to start it.'**
+  String get homeRoutinesHint;
+
+  /// No description provided for @homeWeekStats.
+  ///
+  /// In en, this message translates to:
+  /// **'This week on home'**
+  String get homeWeekStats;
+
+  /// No description provided for @homeWeekStatsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume, sets and PRs of the week.'**
+  String get homeWeekStatsHint;
+
+  /// No description provided for @routineDoneToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Done for today · nice work'**
+  String get routineDoneToday;
+
+  /// No description provided for @trainAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Train again'**
+  String get trainAgain;
+
+  /// No description provided for @lastDoneAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Done today} =1{Done yesterday} other{{n} days ago}}'**
+  String lastDoneAgo(int n);
+
+  /// No description provided for @weightStepSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight step'**
+  String get weightStepSetting;
+
+  /// No description provided for @weightStepHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What the − and + buttons add.'**
+  String get weightStepHint;
+
+  /// No description provided for @prBestWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Best workout'**
+  String get prBestWorkout;
+
+  /// No description provided for @mergeExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge'**
+  String get mergeExercise;
+
+  /// No description provided for @mergeExerciseInto.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge {name} into…'**
+  String mergeExerciseInto(String name);
+
+  /// No description provided for @mergeExerciseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge exercises?'**
+  String get mergeExerciseTitle;
+
+  /// No description provided for @mergeExerciseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'All the history of \"{from}\" moves to \"{to}\". \"{from}\" stays in your library. This can\'t be undone.'**
+  String mergeExerciseBody(String from, String to);
+
+  /// No description provided for @mergedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'History merged'**
+  String get mergedToast;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

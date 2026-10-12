@@ -7,7 +7,7 @@ mixin SettingsState on FitCore, ToolsState, LibraryState {
 
   bool get dark => themePref == 'system'
       ? PlatformDispatcher.instance.platformBrightness == Brightness.dark
-      : themePref == 'dark';
+      : themePref == 'dark' || themePref == 'amoled';
 
   set dark(bool on) => themePref = on ? 'dark' : 'light';
 
@@ -30,6 +30,8 @@ mixin SettingsState on FitCore, ToolsState, LibraryState {
   double bgDim = 0.55;
   bool showFocus = true;
   bool showRecommended = true;
+  bool showWeekStats = true;
+  bool showRoutineRow = true;
   bool levelHints = true;
   bool toastSound = true;
   bool heatmapLabels = true;
@@ -57,7 +59,7 @@ mixin SettingsState on FitCore, ToolsState, LibraryState {
   }
 
   void setThemePref(String pref) {
-    if (!const ['system', 'dark', 'light'].contains(pref)) return;
+    if (!const ['system', 'dark', 'amoled', 'light'].contains(pref)) return;
     themePref = pref;
     _persist();
     _refreshWidgets();
@@ -357,6 +359,18 @@ mixin SettingsState on FitCore, ToolsState, LibraryState {
     notifyListeners();
   }
 
+  void toggleWeekStats() {
+    showWeekStats = !showWeekStats;
+    _persist();
+    notifyListeners();
+  }
+
+  void toggleRoutineRow() {
+    showRoutineRow = !showRoutineRow;
+    _persist();
+    notifyListeners();
+  }
+
   void toggleHeatmapLabels() {
     heatmapLabels = !heatmapLabels;
     _persist();
@@ -377,6 +391,22 @@ mixin SettingsState on FitCore, ToolsState, LibraryState {
   }
 
   static const weekStarts = [DateTime.monday, DateTime.saturday, DateTime.sunday];
+
+  static const kgSteps = [0.5, 1.0, 1.25, 2.0, 2.5, 5.0];
+  static const lbSteps = [1.0, 2.5, 5.0, 10.0];
+
+  List<double> get weightSteps => isLb ? lbSteps : kgSteps;
+
+  void setWeightStep(double step) {
+    if (!weightSteps.contains(step)) return;
+    if (isLb) {
+      stepLb = step;
+    } else {
+      stepKg = step;
+    }
+    _persist();
+    notifyListeners();
+  }
 
   void setWeekStart(int weekday) {
     if (!weekStarts.contains(weekday)) return;

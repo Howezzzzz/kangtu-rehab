@@ -3918,4 +3918,96 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'مشکی AMOLED';
+
+  @override
+  String get editDuration => 'مدت تمرین';
+
+  @override
+  String get sessionName => 'نام تمرین';
+
+  @override
+  String get nameWorkout => 'نام بگذار';
+
+  @override
+  String get sessionNameHint => 'مثلاً: پا، پرس، کل بدن';
+
+  @override
+  String get secondaryPickHint => 'عضله‌های دیگری را که این حرکت درگیر می‌کند لمس کن.';
+
+  @override
+  String get planHintReps => 'نوع و تکرار هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.';
+
+  @override
+  String get planHintTime => 'نوع و زمان هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.';
+
+  @override
+  String get planHintTimeWeight =>
+      'نوع، زمان و وزن هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.';
+
+  @override
+  String get planHintCardio => 'مسافت و زمان هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.';
+
+  @override
+  String get timeOnly => 'فقط زمان';
+
+  @override
+  String get homeRoutines => 'روتین‌ها در خانه';
+
+  @override
+  String get homeRoutinesHint => 'روتین‌هایت، آخرین انجام‌شده اول. روی یکی بزن تا شروع شود.';
+
+  @override
+  String get homeWeekStats => 'این هفته در خانه';
+
+  @override
+  String get homeWeekStatsHint => 'حجم، ست‌ها و رکوردهای هفته.';
+
+  @override
+  String get routineDoneToday => 'برای امروز تمام شد · عالی بود';
+
+  @override
+  String get trainAgain => 'دوباره تمرین کن';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n روز پیش',
+      one: 'دیروز انجام شد',
+      zero: 'امروز انجام شد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'گام وزن';
+
+  @override
+  String get weightStepHint => 'مقداری که دکمه‌های − و + اضافه می‌کنند.';
+
+  @override
+  String get prBestWorkout => 'بهترین تمرین';
+
+  @override
+  String get mergeExercise => 'ادغام';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return 'ادغام $name با…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'حرکات ادغام شوند؟';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'تمام سابقهٔ «$from» به «$to» منتقل می‌شود. «$from» در کتابخانه‌ات می‌ماند. این کار برگشت‌پذیر نیست.';
+  }
+
+  @override
+  String get mergedToast => 'سابقه ادغام شد';
 }

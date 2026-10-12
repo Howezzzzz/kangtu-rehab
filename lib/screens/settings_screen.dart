@@ -68,6 +68,7 @@ class SettingsScreen extends StatelessWidget {
                 [
                   ('system', t.themeAuto, PhosphorIconsRegular.circleHalf),
                   ('dark', t.darkTheme, PhosphorIconsRegular.moon),
+                  ('amoled', t.amoledTheme, PhosphorIconsRegular.moonStars),
                   ('light', t.lightTheme, PhosphorIconsRegular.sun),
                 ],
                 () => fit.themePref,
@@ -169,6 +170,16 @@ class SettingsScreen extends StatelessWidget {
                 fit.setEffortMode,
                 hint: t.effortHint,
                 rowHint: t.effortRowHint,
+              ),
+              _choiceRow(
+                context,
+                gc,
+                PhosphorIconsRegular.barbell,
+                t.weightStepSetting,
+                [for (final s in fit.weightSteps) ('$s', '${fmt(s)} ${fit.units}', PhosphorIconsRegular.barbell)],
+                () => '${fit.weightStep}',
+                (v) => fit.setWeightStep(double.parse(v)),
+                rowHint: t.weightStepHint,
               ),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -323,6 +334,18 @@ class SettingsScreen extends StatelessWidget {
                 onTap: fit.toggleRecommended,
                 child: _prefRow(gc, PhosphorIconsRegular.sparkle, t.homeRecommended,
                     TinySwitch(on: fit.showRecommended), hint: t.recommendedRowHint),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: fit.toggleRoutineRow,
+                child: _prefRow(gc, PhosphorIconsRegular.folders, t.homeRoutines,
+                    TinySwitch(on: fit.showRoutineRow), hint: t.homeRoutinesHint),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: fit.toggleWeekStats,
+                child: _prefRow(gc, PhosphorIconsRegular.chartBar, t.homeWeekStats,
+                    TinySwitch(on: fit.showWeekStats), hint: t.homeWeekStatsHint),
               ),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,

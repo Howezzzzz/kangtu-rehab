@@ -3935,4 +3935,97 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'Negro AMOLED';
+
+  @override
+  String get editDuration => 'Duración del entreno';
+
+  @override
+  String get sessionName => 'Nombre del entreno';
+
+  @override
+  String get nameWorkout => 'Ponle nombre';
+
+  @override
+  String get sessionNameHint => 'Ej.: Pierna, Empuje, Cuerpo entero';
+
+  @override
+  String get secondaryPickHint => 'Toca los otros músculos que trabaja este ejercicio.';
+
+  @override
+  String get planHintReps => 'Elige el tipo y las repes de cada serie. Auto parte de tu última sesión.';
+
+  @override
+  String get planHintTime => 'Elige el tipo y el tiempo de cada serie. Auto parte de tu última sesión.';
+
+  @override
+  String get planHintTimeWeight =>
+      'Elige el tipo, el tiempo y el peso de cada serie. Auto parte de tu última sesión.';
+
+  @override
+  String get planHintCardio =>
+      'Elige la distancia y el tiempo de cada serie. Auto parte de tu última sesión.';
+
+  @override
+  String get timeOnly => 'Solo tiempo';
+
+  @override
+  String get homeRoutines => 'Rutinas en inicio';
+
+  @override
+  String get homeRoutinesHint => 'Tus rutinas, la última que hiciste primero. Toca una para empezarla.';
+
+  @override
+  String get homeWeekStats => 'Esta semana en inicio';
+
+  @override
+  String get homeWeekStatsHint => 'Volumen, series y récords de la semana.';
+
+  @override
+  String get routineDoneToday => 'Hecha por hoy · buen trabajo';
+
+  @override
+  String get trainAgain => 'Entrenar otra vez';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Hace $n días',
+      one: 'Hecha ayer',
+      zero: 'Hecha hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'Salto de peso';
+
+  @override
+  String get weightStepHint => 'Lo que suman los botones − y +.';
+
+  @override
+  String get prBestWorkout => 'Mejor entreno';
+
+  @override
+  String get mergeExercise => 'Fusionar';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return 'Fusionar $name con…';
+  }
+
+  @override
+  String get mergeExerciseTitle => '¿Fusionar ejercicios?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'Todo el historial de «$from» pasa a «$to». «$from» se queda en tu biblioteca. No se puede deshacer.';
+  }
+
+  @override
+  String get mergedToast => 'Historial fusionado';
 }

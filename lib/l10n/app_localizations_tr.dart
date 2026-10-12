@@ -3939,4 +3939,96 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'AMOLED siyah';
+
+  @override
+  String get editDuration => 'Antrenman süresi';
+
+  @override
+  String get sessionName => 'Antrenman adı';
+
+  @override
+  String get nameWorkout => 'Ad ver';
+
+  @override
+  String get sessionNameHint => 'örn. Bacak, İtiş, Tüm vücut';
+
+  @override
+  String get secondaryPickHint => 'Bu hareketin çalıştırdığı diğer kaslara dokun.';
+
+  @override
+  String get planHintReps => 'Her setin türünü ve tekrarını seç. Otomatik, son seansından başlar.';
+
+  @override
+  String get planHintTime => 'Her setin türünü ve süresini seç. Otomatik, son seansından başlar.';
+
+  @override
+  String get planHintTimeWeight =>
+      'Her setin türünü, süresini ve ağırlığını seç. Otomatik, son seansından başlar.';
+
+  @override
+  String get planHintCardio => 'Her setin mesafesini ve süresini seç. Otomatik, son seansından başlar.';
+
+  @override
+  String get timeOnly => 'Yalnızca süre';
+
+  @override
+  String get homeRoutines => 'Ana ekranda programlar';
+
+  @override
+  String get homeRoutinesHint => 'Programların, en son yaptığın önce. Başlatmak için birine dokun.';
+
+  @override
+  String get homeWeekStats => 'Ana ekranda bu hafta';
+
+  @override
+  String get homeWeekStatsHint => 'Haftanın hacmi, setleri ve rekorları.';
+
+  @override
+  String get routineDoneToday => 'Bugünlük bitti · harika iş';
+
+  @override
+  String get trainAgain => 'Tekrar antrenman yap';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gün önce',
+      one: 'Dün yapıldı',
+      zero: 'Bugün yapıldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'Ağırlık adımı';
+
+  @override
+  String get weightStepHint => '− ve + düğmelerinin eklediği miktar.';
+
+  @override
+  String get prBestWorkout => 'En iyi antrenman';
+
+  @override
+  String get mergeExercise => 'Birleştir';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return '$name şununla birleştir…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'Egzersizler birleştirilsin mi?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return '“$from” geçmişinin tamamı “$to” egzersizine taşınır. “$from” kitaplığında kalır. Bu geri alınamaz.';
+  }
+
+  @override
+  String get mergedToast => 'Geçmiş birleştirildi';
 }

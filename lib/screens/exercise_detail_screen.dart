@@ -7,6 +7,7 @@ import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';
 import '../models/workout.dart';
+import '../services/exercise_match.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
@@ -96,6 +97,14 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         ),
                       ),
                       const SizedBox(width: 10),
+                      if (history.isNotEmpty) ...[
+                        RoundAction(
+                          label: t.mergeExercise,
+                          onTap: () => _merge(context, ex),
+                          child: Icon(PhosphorIconsRegular.gitMerge, size: 16, color: gc.textSecondary),
+                        ),
+                        const SizedBox(width: 10),
+                      ],
                     ],
                     RoundAction(
                       label: archived ? t.restoreExercise : t.archiveExercise,
@@ -172,7 +181,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                     children: [
                       _meta(gc, t.primaryLabel, muscleLabel(ex.primary)),
                       const SizedBox(width: 20),
-                      _meta(gc, t.secondaryLabel, secondary),
+                      _meta(gc, t.secondaryLabel, secondary, onTap: () => _editSecondary(context, ex.id)),
                       const SizedBox(width: 20),
                       _meta(gc, t.equipmentLabel, t.equipment(ex.equipment)),
                     ],
@@ -210,6 +219,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                                       weight: FontWeight.w500, color: gc.textSecondary)),
                             ],
                           ),
+                          if (history.length > 1) _bests(gc, ex.id, pr.kind),
                           if (pr.kind == PrKind.weight && oneRm.length > 2) ...[
                             const SizedBox(height: 16),
                             TrendChart(values: [for (final v in oneRm) fit.toDisplayWeight(v)], height: 84, scale: fmt),
@@ -624,18 +634,93 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     );
   }
 
-  Widget _meta(GymColors gc, String label, String value) {
+  Widget _meta(GymColors gc, String label, String value, {VoidCallback? onTap}) {
+    final column = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          Flexible(child: _cardLabel(gc, label)),
+          if (onTap != null) ...[
+            const SizedBox(width: 4),
+            Icon(PhosphorIconsRegular.pencilSimple, size: 11, color: gc.textTertiary),
+          ],
+        ]),
+        const SizedBox(height: 5),
+        Text(value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTheme.f(14.5, weight: FontWeight.w600, color: gc.text)),
+      ],
+    );
     return Flexible(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _cardLabel(gc, label),
-          const SizedBox(height: 5),
-          Text(value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTheme.f(14.5, weight: FontWeight.w600, color: gc.text)),
-        ],
+      child: onTap == null
+          ? column
+          : Semantics(
+              button: true,
+              child: GestureDetector(behavior: HitTestBehavior.opaque, onTap: onTap, child: column),
+            ),
+    );
+  }
+
+  void _editSecondary(BuildContext context, String id) {
+    showAppSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (sheet) => AnimatedBuilder(
+        animation: fit,
+        builder: (sheet, _) {
+          final gc = sheet.gc;
+          final ex = fit.exerciseById(id);
+          if (ex == null) return const SizedBox.shrink();
+          return Container(
+            padding: sheetPad(sheet),
+            decoration: BoxDecoration(
+              color: gc.bgRaised,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SheetHandle(),
+                const SizedBox(height: 16),
+                SheetTitle(exerciseName(ex), subtitle: t.secondaryPickHint),
+                const SizedBox(height: 16),
+                Wrap(spacing: 8, runSpacing: 8, children: [
+                  for (final m in kMuscles)
+                    if (m.id != ex.primary)
+                      Pill(
+                        label: t.muscle(m.id),
+                        bg: ex.secondary.contains(m.id) ? gc.ember : gc.bgRaised2,
+                        fg: ex.secondary.contains(m.id) ? gc.onEmber : gc.textSecondary,
+                        vPad: 7,
+                        onTap: () => fit.setSecondary(
+                            id,
+                            ex.secondary.contains(m.id)
+                                ? [...ex.secondary.where((s) => s != m.id)]
+                                : [...ex.secondary, m.id]),
+                      ),
+                ]),
+                if (fit.hasSecondaryOverride(id))
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => fit.resetSecondary(id),
+                    child: Container(
+                      height: 44,
+                      margin: const EdgeInsets.only(top: 8),
+                      alignment: Alignment.center,
+                      child: Text(t.alarmReset,
+                          style: AppTheme.f(13, weight: FontWeight.w600, color: gc.accent)),
+                    ),
+                  )
+                else
+                  const SizedBox(height: 18),
+                PrimaryButton(label: t.done, onTap: () => Navigator.of(sheet).pop()),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -651,6 +736,33 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     if (!ok) return;
     fit.closeExerciseDetail();
     fit.deleteCustomExercise(ex.id);
+  }
+
+  Future<void> _merge(BuildContext context, Exercise ex) async {
+    final toId = await showAppSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _MergeTargetSheet(from: ex),
+    );
+    if (toId == null || !context.mounted) return;
+    final to = fit.exerciseById(toId);
+    if (to == null) return;
+    final ok = await askConfirm(
+      context,
+      title: t.mergeExerciseTitle,
+      body: t.mergeExerciseBody(exerciseName(ex), exerciseName(to)),
+      confirmLabel: t.mergeExercise,
+    );
+    if (!ok || !context.mounted) return;
+    fit.mergeExerciseInto(ex.id, to.id);
+    showNotchToast(
+      context,
+      t.mergedToast,
+      subtitle: exerciseName(to),
+      icon: PhosphorIconsRegular.gitMerge,
+      accent: context.gc.accent,
+    );
   }
 
   void _toggleArchived(BuildContext context, Exercise ex) {
@@ -689,6 +801,29 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
           ),
         ]),
       );
+
+  Widget _bests(GymColors gc, String id, PrKind kind) {
+    final set = kind == PrKind.weight ? fit.bestSet(id) : null;
+    final work = fit.bestWorkout(id, kind);
+    if (work == null) return const SizedBox.shrink();
+    Widget cell(String label, String value, DateTime date) => Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            _cardLabel(gc, label),
+            const SizedBox(height: 6),
+            FitText(value, style: AppTheme.f(17, weight: FontWeight.w700, color: gc.text, height: 1)),
+            const SizedBox(height: 4),
+            Text(_fmtDate(date), style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textTertiary)),
+          ]),
+        );
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(children: [
+        if (set != null) cell(t.prBestSet, '${fit.weightLabel(set.set.weight)} × ${set.set.reps}', set.date),
+        if (set != null) const SizedBox(width: 12),
+        cell(t.prBestWorkout, fit.bestWorkoutLabel(work.score, kind), work.date),
+      ]),
+    );
+  }
 
   Widget _cardLabel(GymColors gc, String label) => FitText(label.toUpperCase(),
       style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.3));
@@ -1204,7 +1339,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(t.repsOnly,
+                    Text(fit.isTimed(id) ? t.timeOnly : t.repsOnly,
                         style: AppTheme.f(14.5, weight: FontWeight.w500, color: gc.text)),
                     const SizedBox(height: 3),
                     Text(t.repsOnlyHint,
@@ -1316,6 +1451,73 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
             border: Border.all(color: gc.border),
           ),
           child: Icon(icon, size: 16, color: gc.text),
+        ),
+      ),
+    );
+  }
+}
+
+class _MergeTargetSheet extends StatefulWidget {
+  const _MergeTargetSheet({required this.from});
+
+  final Exercise from;
+
+  @override
+  State<_MergeTargetSheet> createState() => _MergeTargetSheetState();
+}
+
+class _MergeTargetSheetState extends State<_MergeTargetSheet> {
+  final TextEditingController _q = TextEditingController();
+
+  @override
+  void dispose() {
+    _q.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final gc = context.gc;
+    final all = fit.mergeTargets(widget.from.id);
+    final results = _q.text.trim().isEmpty ? all.take(40).toList() : all.where(exerciseSearch(_q.text)).take(60).toList();
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.72,
+        padding: sheetPad(context, bottom: 16),
+        decoration: BoxDecoration(
+          color: gc.bgRaised,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SheetHandle(),
+            const SizedBox(height: 16),
+            SheetTitle(t.mergeExerciseInto(exerciseName(widget.from))),
+            const SizedBox(height: 14),
+            SearchField(
+              controller: _q,
+              hint: t.searchAllExercises,
+              color: gc.bgRaised2,
+              onChanged: (_) => setState(() {}),
+            ),
+            const SizedBox(height: 12),
+            Flexible(
+              child: OptionGroup(
+                scroll: true,
+                [
+                  for (final ex in results)
+                    OptionItem(
+                      exerciseName(ex),
+                      detail: muscleLabel(ex.primary),
+                      onTap: () => Navigator.of(context).pop(ex.id),
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

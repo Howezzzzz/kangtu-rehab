@@ -3927,4 +3927,97 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'AMOLED black';
+
+  @override
+  String get editDuration => 'Workout length';
+
+  @override
+  String get sessionName => 'Workout name';
+
+  @override
+  String get nameWorkout => 'Name it';
+
+  @override
+  String get sessionNameHint => 'e.g. Legs, Push, Full body';
+
+  @override
+  String get secondaryPickHint => 'Tap the other muscles this exercise works.';
+
+  @override
+  String get planHintReps => 'Choose the type and reps of each set. Auto starts from your last session.';
+
+  @override
+  String get planHintTime => 'Choose the type and time of each set. Auto starts from your last session.';
+
+  @override
+  String get planHintTimeWeight =>
+      'Choose the type, time and weight of each set. Auto starts from your last session.';
+
+  @override
+  String get planHintCardio =>
+      'Choose the distance and time of each set. Auto starts from your last session.';
+
+  @override
+  String get timeOnly => 'Time only';
+
+  @override
+  String get homeRoutines => 'Routines on home';
+
+  @override
+  String get homeRoutinesHint => 'Your routines, last done first. Tap one to start it.';
+
+  @override
+  String get homeWeekStats => 'This week on home';
+
+  @override
+  String get homeWeekStatsHint => 'Volume, sets and PRs of the week.';
+
+  @override
+  String get routineDoneToday => 'Done for today · nice work';
+
+  @override
+  String get trainAgain => 'Train again';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days ago',
+      one: 'Done yesterday',
+      zero: 'Done today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'Weight step';
+
+  @override
+  String get weightStepHint => 'What the − and + buttons add.';
+
+  @override
+  String get prBestWorkout => 'Best workout';
+
+  @override
+  String get mergeExercise => 'Merge';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return 'Merge $name into…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'Merge exercises?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'All the history of \"$from\" moves to \"$to\". \"$from\" stays in your library. This can\'t be undone.';
+  }
+
+  @override
+  String get mergedToast => 'History merged';
 }

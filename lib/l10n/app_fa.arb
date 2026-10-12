@@ -1833,5 +1833,228 @@
   "rehabLogCount": "{n} entries",
   "rehabPhaseN": "Phase {n}",
   "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
-  "rehabGateFailedShort": "Gate not passed · see a doctor first"
+  "rehabGateFailedShort": "Gate not passed · see a doctor first",
+  "@progCycleWeeks": null,
+  "@tmHint": null,
+  "@progNext": null,
+  "@progDeloadFb": null,
+  "@progMiss": null,
+  "@progRepsNext": null,
+  "@progVarHint": null,
+  "@progWeekN": null,
+  "@progTmUp": null,
+  "@photosSelected": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@deletePhotosTitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@deleteExerciseBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@groupDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@groupDeleteBody": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "@levelUpBody": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@levelUpSwap": {
+    "placeholders": {
+      "routine": {
+        "type": "String"
+      }
+    }
+  },
+  "@levelUpSwapped": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "routine": {
+        "type": "String"
+      }
+    }
+  },
+  "@rmAtPercent": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalToGo": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalDaysLeft": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@alsoCalled": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "@inRoutines": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@swapHint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@swapSameMuscle": {
+    "placeholders": {
+      "muscle": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalDaysShort": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "@rpeResultHint": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "rpe": {
+        "type": "String"
+      }
+    }
+  },
+  "@rpeOneRmLine": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@dotsTotalLine": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@ffmiLeanLine": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@rehabPlanCount": null,
+  "@rehabPainNow": null,
+  "@rehabLabelDays": null,
+  "@rehabEpisodeMeta": null,
+  "@rehabAutoTitle": null,
+  "@rehabRoutinesMade": null,
+  "@rehabMissedActions": null,
+  "@rehabExerciseCount": null,
+  "@rehabDaysCount": null,
+  "@rehabLogStage": null,
+  "@rehabLogCount": null,
+  "@rehabPhaseN": null,
+  "amoledTheme": "مشکی AMOLED",
+  "editDuration": "مدت تمرین",
+  "sessionName": "نام تمرین",
+  "nameWorkout": "نام بگذار",
+  "sessionNameHint": "مثلاً: پا، پرس، کل بدن",
+  "secondaryPickHint": "عضله‌های دیگری را که این حرکت درگیر می‌کند لمس کن.",
+  "planHintReps": "نوع و تکرار هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.",
+  "planHintTime": "نوع و زمان هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.",
+  "planHintTimeWeight": "نوع، زمان و وزن هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.",
+  "planHintCardio": "مسافت و زمان هر ست را انتخاب کن. «خودکار» از آخرین جلسه‌ات شروع می‌کند.",
+  "timeOnly": "فقط زمان",
+  "homeRoutines": "روتین‌ها در خانه",
+  "homeRoutinesHint": "روتین‌هایت، آخرین انجام‌شده اول. روی یکی بزن تا شروع شود.",
+  "homeWeekStats": "این هفته در خانه",
+  "homeWeekStatsHint": "حجم، ست‌ها و رکوردهای هفته.",
+  "routineDoneToday": "برای امروز تمام شد · عالی بود",
+  "trainAgain": "دوباره تمرین کن",
+  "lastDoneAgo": "{n, plural, =0{امروز انجام شد} =1{دیروز انجام شد} other{{n} روز پیش}}",
+  "@lastDoneAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "weightStepSetting": "گام وزن",
+  "weightStepHint": "مقداری که دکمه‌های − و + اضافه می‌کنند.",
+  "prBestWorkout": "بهترین تمرین",
+  "mergeExercise": "ادغام",
+  "mergeExerciseInto": "ادغام {name} با…",
+  "@mergeExerciseInto": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mergeExerciseTitle": "حرکات ادغام شوند؟",
+  "mergeExerciseBody": "تمام سابقهٔ «{from}» به «{to}» منتقل می‌شود. «{from}» در کتابخانه‌ات می‌ماند. این کار برگشت‌پذیر نیست.",
+  "@mergeExerciseBody": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "mergedToast": "سابقه ادغام شد"
 }

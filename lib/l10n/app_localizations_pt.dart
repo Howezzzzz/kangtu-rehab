@@ -3934,4 +3934,96 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'Preto AMOLED';
+
+  @override
+  String get editDuration => 'Duração do treino';
+
+  @override
+  String get sessionName => 'Nome do treino';
+
+  @override
+  String get nameWorkout => 'Dar nome';
+
+  @override
+  String get sessionNameHint => 'ex.: Pernas, Empurrar, Corpo inteiro';
+
+  @override
+  String get secondaryPickHint => 'Toque nos outros músculos que este exercício trabalha.';
+
+  @override
+  String get planHintReps => 'Escolha o tipo e as repetições de cada série. Auto parte da última sessão.';
+
+  @override
+  String get planHintTime => 'Escolha o tipo e o tempo de cada série. Auto parte da última sessão.';
+
+  @override
+  String get planHintTimeWeight =>
+      'Escolha o tipo, o tempo e o peso de cada série. Auto parte da última sessão.';
+
+  @override
+  String get planHintCardio => 'Escolha a distância e o tempo de cada série. Auto parte da última sessão.';
+
+  @override
+  String get timeOnly => 'Somente tempo';
+
+  @override
+  String get homeRoutines => 'Rotinas no início';
+
+  @override
+  String get homeRoutinesHint => 'Suas rotinas, a última feita primeiro. Toque em uma para começar.';
+
+  @override
+  String get homeWeekStats => 'Esta semana no início';
+
+  @override
+  String get homeWeekStatsHint => 'Volume, séries e recordes da semana.';
+
+  @override
+  String get routineDoneToday => 'Feito por hoje · mandou bem';
+
+  @override
+  String get trainAgain => 'Treinar de novo';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Há $n dias',
+      one: 'Feita ontem',
+      zero: 'Feita hoje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'Incremento de peso';
+
+  @override
+  String get weightStepHint => 'O que os botões − e + somam.';
+
+  @override
+  String get prBestWorkout => 'Melhor treino';
+
+  @override
+  String get mergeExercise => 'Mesclar';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return 'Mesclar $name com…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'Mesclar exercícios?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'Todo o histórico de “$from” passa para “$to”. “$from” continua na sua biblioteca. Não dá para desfazer.';
+  }
+
+  @override
+  String get mergedToast => 'Histórico mesclado';
 }

@@ -207,6 +207,14 @@ mixin StatsState on FitCore, ToolsState, LibraryState, TimelineState {
     }
   }
 
+  String? sessionTitle(LoggedSession s) {
+    final name = s.name;
+    if (name != null) return name;
+    final r = routines.where((r) => r.id == s.routineId).firstOrNull;
+    if (r == null) return null;
+    return r.name.isEmpty ? t.newRoutineName : r.name;
+  }
+
   String workoutText(LoggedSession s) {
     String line(LoggedSet x) {
       if (x.km != null) return '${distanceLabel(x.km!)} · ${durationLabel(x.sec ?? 0)}';
@@ -214,7 +222,11 @@ mixin StatsState on FitCore, ToolsState, LibraryState, TimelineState {
       return x.weight > 0 ? '${weightLabel(x.weight)} × ${x.reps}' : t.repCount(x.reps);
     }
 
-    final out = [s.durationSec > 0 ? '${t.longDate(s.date)} · ${s.durationSec ~/ 60} min' : t.longDate(s.date)];
+    final title = sessionTitle(s);
+    final out = [
+      ?title,
+      s.durationSec > 0 ? '${t.longDate(s.date)} · ${s.durationSec ~/ 60} min' : t.longDate(s.date),
+    ];
     var reps = 0;
     for (final e in s.exercises) {
       out
@@ -236,6 +248,13 @@ mixin StatsState on FitCore, ToolsState, LibraryState, TimelineState {
     _releaseLevel(s, s.exercises.map((e) => e.id));
     persistNow();
     _refreshWidgets();
+    notifyListeners();
+  }
+
+  void setSessionDuration(LoggedSession s, int seconds) {
+    if (!sessions.contains(s) || seconds < 0 || seconds == s.durationSec) return;
+    s.durationSec = seconds;
+    persistNow();
     notifyListeners();
   }
 
@@ -403,6 +422,8 @@ mixin StatsState on FitCore, ToolsState, LibraryState, TimelineState {
 
   double get volumeThisWeekKg => _thisWeekSessions.fold(0.0, (a, s) => a + s.volume);
 
+  int get weekSetCount => _thisWeekSessions.fold(0, (a, s) => a + s.setCount);
+
   int get setsToday {
     final t = _dayKey(DateTime.now());
     return sessions.where((s) => _dayKey(s.date) == t).fold(0, (a, s) => a + s.setCount);
@@ -441,6 +462,35 @@ mixin StatsState on FitCore, ToolsState, LibraryState, TimelineState {
     final sets = [for (final h in exerciseHistory(id)) ...h.ex.workingSets];
     return sets.isEmpty ? null : _record(id, '', sets);
   }
+
+  ({LoggedSet set, DateTime date})? bestSet(String id) {
+    ({LoggedSet set, DateTime date})? best;
+    for (final h in exerciseHistory(id)) {
+      for (final st in h.ex.workingSets) {
+        if (st.weight <= 0 || st.reps <= 0) continue;
+        if (best == null || st.oneRm > best.set.oneRm) best = (set: st, date: h.date);
+      }
+    }
+    return best;
+  }
+
+  ({double score, DateTime date})? bestWorkout(String id, PrKind kind) {
+    double score(LoggedExercise e) => switch (kind) {
+          PrKind.weight => e.volume,
+          PrKind.reps => e.workingSets.fold(0.0, (n, st) => n + st.reps),
+          _ => 0,
+        };
+    ({double score, DateTime date})? best;
+    for (final h in exerciseHistory(id)) {
+      final v = score(h.ex);
+      if (v > 0 && (best == null || v > best.score)) best = (score: v, date: h.date);
+    }
+    return best;
+  }
+
+  String bestWorkoutLabel(double score, PrKind kind) => kind == PrKind.weight
+      ? '${fmt(toDisplayWeight(score).roundToDouble())} $units'
+      : t.repCount(score.round());
 
   String recordLabel(PersonalRecord r) => switch (r.kind) {
         PrKind.weight => weightLabel(r.best),

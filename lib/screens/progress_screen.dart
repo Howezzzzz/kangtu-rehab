@@ -1358,15 +1358,84 @@ class _DaySheet extends StatelessWidget {
   }
 
   Widget _sessionHeader(BuildContext context, GymColors gc, LoggedSession s) {
+    final title = fit.sessionTitle(s);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Semantics(
+          button: true,
+          label: t.sessionName,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => _renameSession(context, s),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(children: [
+                Flexible(
+                  child: Text(
+                    title ?? t.nameWorkout,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: title == null
+                        ? AppTheme.f(13, weight: FontWeight.w600, color: gc.textTertiary)
+                        : AppTheme.f(16, weight: FontWeight.w700, color: gc.text),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Icon(PhosphorIconsRegular.pencilSimple, size: 13, color: gc.textTertiary),
+              ]),
+            ),
+          ),
+        ),
+        _sessionMeta(context, gc, s),
+      ],
+    );
+  }
+
+  Future<void> _renameSession(BuildContext context, LoggedSession s) async {
+    final current = fit.sessionTitle(s) ?? '';
+    final name = await askText(context, title: t.sessionName, initial: current, hint: t.sessionNameHint);
+    if (name != null && name != current) fit.renameSession(s, name);
+  }
+
+  Widget _sessionMeta(BuildContext context, GymColors gc, LoggedSession s) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
           Expanded(
-            child: Text(
-              '${t.setCount(s.setCount)} · ${fit.volumeLabel(s.volume)}',
-              style: AppTheme.s(11, weight: FontWeight.w600, color: gc.textTertiary, letterSpacing: 1),
-            ),
+            child: Row(children: [
+              Flexible(
+                child: Text(
+                  '${t.setCount(s.setCount)} · ${fit.volumeLabel(s.volume)}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTheme.s(11, weight: FontWeight.w600, color: gc.textTertiary, letterSpacing: 1),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Semantics(
+                button: true,
+                label: t.editDuration,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => _editDuration(context, s),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: gc.bgRaised2,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Icon(PhosphorIconsRegular.timer, size: 12, color: gc.textSecondary),
+                      const SizedBox(width: 5),
+                      Text(s.durationSec > 0 ? '${(s.durationSec / 60).round()} min' : '– min',
+                          style: AppTheme.s(11, weight: FontWeight.w700, color: gc.textSecondary)),
+                    ]),
+                  ),
+                ),
+              ),
+            ]),
           ),
           Semantics(
             button: true,
@@ -1418,6 +1487,19 @@ class _DaySheet extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _editDuration(BuildContext context, LoggedSession s) async {
+    final v = await askRuler(
+      context,
+      title: t.editDuration,
+      value: s.durationSec > 0 ? (s.durationSec / 60).roundToDouble() : 60,
+      min: 1,
+      max: 300,
+      step: 1,
+      unit: 'min',
+    );
+    if (v != null) fit.setSessionDuration(s, v.round() * 60);
   }
 
   Future<void> _confirmDeleteWorkout(BuildContext context, LoggedSession s) async {

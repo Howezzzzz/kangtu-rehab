@@ -220,7 +220,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final working = planned.where((p) => p.kind != SetKind.warmup).length;
     final base = _workingOpeners(id, count: working == 0 ? 1 : working);
     final first = base.isEmpty ? SessionSet(10, 0, false) : base.first;
-    final warmWeight = fromDisplayWeight(_roundTo(toDisplayWeight(first.weight * 0.5), weightStep));
+    final warmWeight = fromDisplayWeight(_roundTo(toDisplayWeight(first.weight * 0.5), plateStep));
     final out = <SessionSet>[];
     var w = 0;
     for (final p in planned) {
@@ -812,7 +812,15 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     notifyListeners();
   }
 
-  void completeHold() => _finishHold();
+  void completeHold() {
+    final s = session;
+    if (s != null && holdEx >= 0 && holdEx < s.exercises.length && holdLead == 0) {
+      final ex = s.exercises[holdEx];
+      final ran = holdTotal - (holdRemaining ?? 0);
+      if (modeOf(ex.id) == 'cardio' && ran > 0 && holdSet < ex.sets.length) ex.sets[holdSet].sec = ran;
+    }
+    _finishHold();
+  }
 
   bool get holding => holdEndsAt != null;
 
@@ -837,7 +845,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     if (s == null || exIdx >= s.exercises.length) return;
     final sets = s.exercises[exIdx].sets;
     if (setIdx < 0 || setIdx >= sets.length) return;
-    final secs = (sets[setIdx].sec ?? 30).clamp(1, 3600);
+    final secs = (sets[setIdx].sec ?? 30).clamp(1, 18000);
     if (s.restRemaining != null) skipRest();
     holdEx = exIdx;
     holdSet = setIdx;
@@ -975,7 +983,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       for (final spec in _warmupSpec)
         SessionSet(
           spec.$2,
-          fromDisplayWeight(_roundTo(toDisplayWeight(target * spec.$1), weightStep)),
+          fromDisplayWeight(_roundTo(toDisplayWeight(target * spec.$1), plateStep)),
           false,
           kind: SetKind.warmup,
         ),
@@ -1069,8 +1077,11 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final s = session;
     final ex = exerciseById(id);
     if (s == null || ex == null || s.exercises.any((e) => e.id == id)) return;
-    s.exercises.add(SessionExercise(ex.id, ex.name, ex.primary, _openingSets(id)));
-    s.currentIndex = s.exercises.length - 1;
+    final chain = chainAt(s.currentIndex);
+    final at = chain.isEmpty ? s.exercises.length : chain.last + 1;
+    s.exercises.insert(at, SessionExercise(ex.id, ex.name, ex.primary, _openingSets(id)));
+    _advanceTimer?.cancel();
+    s.currentIndex = at;
     persistNow();
     notifyListeners();
   }
@@ -1148,7 +1159,14 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
 
   void nextExercise() {
     final s = session!;
-    s.currentIndex = math.min(s.currentIndex + 1, s.exercises.length - 1);
+    var next = s.currentIndex + 1;
+    final chain = chainAt(s.currentIndex);
+    if (chain.length > 1) {
+      final after = chain.where((i) => i > s.currentIndex && s.exercises[i].hasUndone);
+      next = after.isNotEmpty ? after.first : chain.last + 1;
+      if (next >= s.exercises.length) next = s.currentIndex + 1;
+    }
+    s.currentIndex = math.min(next, s.exercises.length - 1);
     _persist();
     notifyListeners();
   }
@@ -1192,7 +1210,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
           logged.add(LoggedExercise(e.id, e.name, e.primary, doneSets));
         }
       }
-      final entry = LoggedSession(s.loggedAt ?? DateTime.now(), s.summaryDuration ?? 0, logged, routineId: s.routineId);
+      final entry = LoggedSession(s.loggedAt ?? DateTime.now(), s.summaryDuration ?? 0, logged, routineId: s.routineId, name: s.name);
 
       final carried = _carriedFeedback;
       if (carried != null && !entry.hasFeedback) {
@@ -1471,6 +1489,15 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     notifyListeners();
   }
 
+  void renameSession(LoggedSession s, String name) {
+    final clean = name.trim().isEmpty ? null : name.trim();
+    if (!sessions.contains(s) || clean == s.name) return;
+    s.name = clean;
+    if (identical(s, _filed)) session?.name = clean;
+    persistNow();
+    notifyListeners();
+  }
+
   void continueSession() {
     final s = session;
     if (s == null || !s.complete) return;
@@ -1513,6 +1540,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       ..loggedAt = ls.date
       ..manual = _dayKey(ls.date) != _dayKey(DateTime.now())
       ..routineId = ls.routineId
+      ..name = ls.name
       ..exercises = ls.exercises
           .map((e) => SessionExercise(
               e.id,

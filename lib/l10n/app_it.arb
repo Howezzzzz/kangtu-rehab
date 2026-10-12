@@ -1668,5 +1668,393 @@
   "rehabLogCount": "{n} entries",
   "rehabPhaseN": "Phase {n}",
   "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
-  "rehabGateFailedShort": "Gate not passed · see a doctor first"
+  "rehabGateFailedShort": "Gate not passed · see a doctor first",
+  "@liveSet": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@progCycleWeeks": null,
+  "@tmHint": null,
+  "@progNext": null,
+  "@progDeloadFb": null,
+  "@progMiss": null,
+  "@progRepsNext": null,
+  "@progVarHint": null,
+  "@progWeekN": null,
+  "@progTmUp": null,
+  "@photosSelected": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@deletePhotosTitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@setsDoneOf": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@distanceCol": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "@distanceTitle": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "@startHold": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@shareMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@routineCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@routinesAdded": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@recoveryOverall": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "@recoveryStill": {
+    "placeholders": {
+      "muscles": {
+        "type": "String"
+      }
+    }
+  },
+  "@recoveryPct": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "@readyInHours": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      }
+    }
+  },
+  "@liveUpNext": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@radarFocus": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "@repCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@saveChangesTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@createNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@routineOfDay": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "@planBody": {
+    "placeholders": {
+      "sex": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      },
+      "height": {
+        "type": "String"
+      },
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "@planDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@planHistory": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@deleteExerciseBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@groupDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@groupDeleteBody": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "@levelUpBody": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@levelUpSwap": {
+    "placeholders": {
+      "routine": {
+        "type": "String"
+      }
+    }
+  },
+  "@levelUpSwapped": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "routine": {
+        "type": "String"
+      }
+    }
+  },
+  "@rmAtPercent": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalToGo": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalDaysLeft": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@alsoCalled": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "@inRoutines": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@swapHint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@swapSameMuscle": {
+    "placeholders": {
+      "muscle": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalDaysShort": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "@rpeResultHint": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "rpe": {
+        "type": "String"
+      }
+    }
+  },
+  "@rpeOneRmLine": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@dotsTotalLine": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@ffmiLeanLine": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@rehabPlanCount": null,
+  "@rehabPainNow": null,
+  "@rehabLabelDays": null,
+  "@rehabEpisodeMeta": null,
+  "@rehabAutoTitle": null,
+  "@rehabRoutinesMade": null,
+  "@rehabMissedActions": null,
+  "@rehabExerciseCount": null,
+  "@rehabDaysCount": null,
+  "@rehabLogStage": null,
+  "@rehabLogCount": null,
+  "@rehabPhaseN": null,
+  "amoledTheme": "Nero AMOLED",
+  "editDuration": "Durata dell’allenamento",
+  "sessionName": "Nome dell’allenamento",
+  "nameWorkout": "Dagli un nome",
+  "sessionNameHint": "es. Gambe, Spinta, Total body",
+  "secondaryPickHint": "Tocca gli altri muscoli che lavora questo esercizio.",
+  "planHintReps": "Scegli il tipo e le ripetizioni di ogni serie. Auto parte dalla tua ultima sessione.",
+  "planHintTime": "Scegli il tipo e il tempo di ogni serie. Auto parte dalla tua ultima sessione.",
+  "planHintTimeWeight": "Scegli il tipo, il tempo e il peso di ogni serie. Auto parte dalla tua ultima sessione.",
+  "planHintCardio": "Scegli la distanza e il tempo di ogni serie. Auto parte dalla tua ultima sessione.",
+  "timeOnly": "Solo tempo",
+  "homeRoutines": "Routine nella home",
+  "homeRoutinesHint": "Le tue routine, l’ultima fatta per prima. Toccane una per iniziarla.",
+  "homeWeekStats": "Questa settimana nella home",
+  "homeWeekStatsHint": "Volume, serie e record della settimana.",
+  "routineDoneToday": "Fatto per oggi · ottimo lavoro",
+  "trainAgain": "Allenati ancora",
+  "lastDoneAgo": "{n, plural, =0{Fatta oggi} =1{Fatta ieri} other{{n} giorni fa}}",
+  "@lastDoneAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "weightStepSetting": "Incremento del peso",
+  "weightStepHint": "Quanto aggiungono i pulsanti − e +.",
+  "prBestWorkout": "Miglior allenamento",
+  "mergeExercise": "Unisci",
+  "mergeExerciseInto": "Unisci {name} a…",
+  "@mergeExerciseInto": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mergeExerciseTitle": "Unire gli esercizi?",
+  "mergeExerciseBody": "Tutto lo storico di «{from}» passa a «{to}». «{from}» resta nella tua libreria. Non si può annullare.",
+  "@mergeExerciseBody": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "mergedToast": "Storico unito"
 }

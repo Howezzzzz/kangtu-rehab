@@ -3948,4 +3948,98 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'Czerń AMOLED';
+
+  @override
+  String get editDuration => 'Czas treningu';
+
+  @override
+  String get sessionName => 'Nazwa treningu';
+
+  @override
+  String get nameWorkout => 'Nazwij';
+
+  @override
+  String get sessionNameHint => 'np. Nogi, Push, Całe ciało';
+
+  @override
+  String get secondaryPickHint => 'Stuknij inne mięśnie, które pracują w tym ćwiczeniu.';
+
+  @override
+  String get planHintReps => 'Wybierz typ i powtórzenia każdej serii. Auto zaczyna od ostatniej sesji.';
+
+  @override
+  String get planHintTime => 'Wybierz typ i czas każdej serii. Auto zaczyna od ostatniej sesji.';
+
+  @override
+  String get planHintTimeWeight =>
+      'Wybierz typ, czas i ciężar każdej serii. Auto zaczyna od ostatniej sesji.';
+
+  @override
+  String get planHintCardio => 'Wybierz dystans i czas każdej serii. Auto zaczyna od ostatniej sesji.';
+
+  @override
+  String get timeOnly => 'Tylko czas';
+
+  @override
+  String get homeRoutines => 'Rutyny na ekranie głównym';
+
+  @override
+  String get homeRoutinesHint => 'Twoje rutyny, ostatnio wykonana na początku. Stuknij, aby zacząć.';
+
+  @override
+  String get homeWeekStats => 'Ten tydzień na ekranie głównym';
+
+  @override
+  String get homeWeekStatsHint => 'Objętość, serie i rekordy z tego tygodnia.';
+
+  @override
+  String get routineDoneToday => 'Na dziś gotowe · dobra robota';
+
+  @override
+  String get trainAgain => 'Trenuj jeszcze raz';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dni temu',
+      many: '$n dni temu',
+      few: '$n dni temu',
+      one: 'Zrobione wczoraj',
+      zero: 'Zrobione dziś',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'Krok ciężaru';
+
+  @override
+  String get weightStepHint => 'Ile dodają przyciski − i +.';
+
+  @override
+  String get prBestWorkout => 'Najlepszy trening';
+
+  @override
+  String get mergeExercise => 'Scal';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return 'Scal $name z…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'Scalić ćwiczenia?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'Cała historia „$from” przejdzie do „$to”. „$from” zostaje w twojej bibliotece. Tego nie można cofnąć.';
+  }
+
+  @override
+  String get mergedToast => 'Historia scalona';
 }

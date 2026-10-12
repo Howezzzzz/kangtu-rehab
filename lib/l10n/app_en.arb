@@ -2168,5 +2168,55 @@
     }
   },
   "rehabAiSteps": "1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.",
-  "rehabGateFailedShort": "Gate not passed · see a doctor first"
+  "rehabGateFailedShort": "Gate not passed · see a doctor first",
+  "amoledTheme": "AMOLED black",
+  "editDuration": "Workout length",
+  "sessionName": "Workout name",
+  "nameWorkout": "Name it",
+  "sessionNameHint": "e.g. Legs, Push, Full body",
+  "secondaryPickHint": "Tap the other muscles this exercise works.",
+  "planHintReps": "Choose the type and reps of each set. Auto starts from your last session.",
+  "planHintTime": "Choose the type and time of each set. Auto starts from your last session.",
+  "planHintTimeWeight": "Choose the type, time and weight of each set. Auto starts from your last session.",
+  "planHintCardio": "Choose the distance and time of each set. Auto starts from your last session.",
+  "timeOnly": "Time only",
+  "homeRoutines": "Routines on home",
+  "homeRoutinesHint": "Your routines, last done first. Tap one to start it.",
+  "homeWeekStats": "This week on home",
+  "homeWeekStatsHint": "Volume, sets and PRs of the week.",
+  "routineDoneToday": "Done for today · nice work",
+  "trainAgain": "Train again",
+  "lastDoneAgo": "{n, plural, =0{Done today} =1{Done yesterday} other{{n} days ago}}",
+  "@lastDoneAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "weightStepSetting": "Weight step",
+  "weightStepHint": "What the − and + buttons add.",
+  "prBestWorkout": "Best workout",
+  "mergeExercise": "Merge",
+  "mergeExerciseInto": "Merge {name} into…",
+  "@mergeExerciseInto": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mergeExerciseTitle": "Merge exercises?",
+  "mergeExerciseBody": "All the history of \"{from}\" moves to \"{to}\". \"{from}\" stays in your library. This can't be undone.",
+  "@mergeExerciseBody": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "mergedToast": "History merged"
 }

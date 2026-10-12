@@ -3941,4 +3941,97 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'AMOLED-zwart';
+
+  @override
+  String get editDuration => 'Duur van de training';
+
+  @override
+  String get sessionName => 'Naam van de training';
+
+  @override
+  String get nameWorkout => 'Geef een naam';
+
+  @override
+  String get sessionNameHint => 'bijv. Benen, Push, Full body';
+
+  @override
+  String get secondaryPickHint => 'Tik op de andere spieren die deze oefening traint.';
+
+  @override
+  String get planHintReps =>
+      'Kies het type en de herhalingen van elke set. Auto begint bij je laatste sessie.';
+
+  @override
+  String get planHintTime => 'Kies het type en de tijd van elke set. Auto begint bij je laatste sessie.';
+
+  @override
+  String get planHintTimeWeight =>
+      'Kies het type, de tijd en het gewicht van elke set. Auto begint bij je laatste sessie.';
+
+  @override
+  String get planHintCardio => 'Kies de afstand en de tijd van elke set. Auto begint bij je laatste sessie.';
+
+  @override
+  String get timeOnly => 'Alleen tijd';
+
+  @override
+  String get homeRoutines => 'Routines op het startscherm';
+
+  @override
+  String get homeRoutinesHint => 'Je routines, de laatst gedane eerst. Tik op een routine om te starten.';
+
+  @override
+  String get homeWeekStats => 'Deze week op het startscherm';
+
+  @override
+  String get homeWeekStatsHint => 'Volume, sets en PR’s van de week.';
+
+  @override
+  String get routineDoneToday => 'Klaar voor vandaag · goed gedaan';
+
+  @override
+  String get trainAgain => 'Nog een keer trainen';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dagen geleden',
+      one: 'Gisteren gedaan',
+      zero: 'Vandaag gedaan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'Gewichtsstap';
+
+  @override
+  String get weightStepHint => 'Wat de knoppen − en + toevoegen.';
+
+  @override
+  String get prBestWorkout => 'Beste training';
+
+  @override
+  String get mergeExercise => 'Samenvoegen';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return '$name samenvoegen met…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'Oefeningen samenvoegen?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'De hele geschiedenis van ‘$from’ gaat naar ‘$to’. ‘$from’ blijft in je bibliotheek. Dit kan niet ongedaan worden gemaakt.';
+  }
+
+  @override
+  String get mergedToast => 'Geschiedenis samengevoegd';
 }

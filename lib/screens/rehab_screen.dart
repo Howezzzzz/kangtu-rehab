@@ -124,10 +124,9 @@ class _SectionHead extends StatelessWidget {
 
 /// 渲染内容里带 <b> 的内联富文本（极简：粗体分段）。
 class _Rich extends StatelessWidget {
-  const _Rich(this.text, {this.size = 13, this.color});
+  const _Rich(this.text, {this.size = 13});
   final String text;
   final double size;
-  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -135,13 +134,13 @@ class _Rich extends StatelessWidget {
     final parts = text.split(RegExp(r'</?b>'));
     return RichText(
       text: TextSpan(
-        style: AppTheme.f(size, weight: FontWeight.w500, color: color ?? gc.textSecondary, height: 1.5),
+        style: AppTheme.f(size, weight: FontWeight.w500, color: gc.textSecondary, height: 1.5),
         children: [
           for (var i = 0; i < parts.length; i++)
             TextSpan(
               text: parts[i].replaceAll(RegExp(r'<[^>]+>'), ''),
               style: i.isOdd
-                  ? AppTheme.f(size, weight: FontWeight.w800, color: color ?? gc.text)
+                  ? AppTheme.f(size, weight: FontWeight.w800, color: gc.text)
                   : null,
             ),
         ],

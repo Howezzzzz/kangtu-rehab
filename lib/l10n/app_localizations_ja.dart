@@ -3840,4 +3840,89 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'AMOLEDブラック';
+
+  @override
+  String get editDuration => 'トレーニング時間';
+
+  @override
+  String get sessionName => 'トレーニング名';
+
+  @override
+  String get nameWorkout => '名前をつける';
+
+  @override
+  String get sessionNameHint => '例：脚、プッシュ、全身';
+
+  @override
+  String get secondaryPickHint => 'この種目で使うほかの筋肉をタップしてください。';
+
+  @override
+  String get planHintReps => '各セットの種類と回数を選びます。「自動」は前回のセッションから始まります。';
+
+  @override
+  String get planHintTime => '各セットの種類と時間を選びます。「自動」は前回のセッションから始まります。';
+
+  @override
+  String get planHintTimeWeight => '各セットの種類、時間、重量を選びます。「自動」は前回のセッションから始まります。';
+
+  @override
+  String get planHintCardio => '各セットの距離と時間を選びます。「自動」は前回のセッションから始まります。';
+
+  @override
+  String get timeOnly => '時間のみ';
+
+  @override
+  String get homeRoutines => 'ホームのルーティン';
+
+  @override
+  String get homeRoutinesHint => '最近やった順に表示。タップで開始します。';
+
+  @override
+  String get homeWeekStats => 'ホームの今週';
+
+  @override
+  String get homeWeekStatsHint => '今週のボリューム・セット・記録。';
+
+  @override
+  String get routineDoneToday => '今日は完了 · お疲れさま';
+
+  @override
+  String get trainAgain => 'もう一度トレーニング';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n日前', one: '昨日実施', zero: '今日実施');
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => '重量の刻み';
+
+  @override
+  String get weightStepHint => '− と + ボタンで増減する量。';
+
+  @override
+  String get prBestWorkout => 'ベストワークアウト';
+
+  @override
+  String get mergeExercise => '統合';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return '$name を統合…';
+  }
+
+  @override
+  String get mergeExerciseTitle => '種目を統合しますか？';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return '「$from」の履歴はすべて「$to」に移ります。「$from」はライブラリに残ります。元に戻せません。';
+  }
+
+  @override
+  String get mergedToast => '履歴を統合しました';
 }

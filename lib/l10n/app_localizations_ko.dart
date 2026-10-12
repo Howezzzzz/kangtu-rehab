@@ -3851,4 +3851,89 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'AMOLED 블랙';
+
+  @override
+  String get editDuration => '운동 시간';
+
+  @override
+  String get sessionName => '운동 이름';
+
+  @override
+  String get nameWorkout => '이름 붙이기';
+
+  @override
+  String get sessionNameHint => '예: 하체, 푸시, 전신';
+
+  @override
+  String get secondaryPickHint => '이 운동이 함께 쓰는 다른 근육을 탭하세요.';
+
+  @override
+  String get planHintReps => '세트마다 종류와 반복 수를 정하세요. 자동은 지난 세션에서 시작해요.';
+
+  @override
+  String get planHintTime => '세트마다 종류와 시간을 정하세요. 자동은 지난 세션에서 시작해요.';
+
+  @override
+  String get planHintTimeWeight => '세트마다 종류, 시간, 무게를 정하세요. 자동은 지난 세션에서 시작해요.';
+
+  @override
+  String get planHintCardio => '세트마다 거리와 시간을 정하세요. 자동은 지난 세션에서 시작해요.';
+
+  @override
+  String get timeOnly => '시간만';
+
+  @override
+  String get homeRoutines => '홈의 루틴';
+
+  @override
+  String get homeRoutinesHint => '최근에 한 루틴부터 보여줘요. 탭하면 시작해요.';
+
+  @override
+  String get homeWeekStats => '홈의 이번 주';
+
+  @override
+  String get homeWeekStatsHint => '이번 주 볼륨, 세트, 기록.';
+
+  @override
+  String get routineDoneToday => '오늘 완료 · 수고했어요';
+
+  @override
+  String get trainAgain => '다시 운동하기';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n일 전', one: '어제 완료', zero: '오늘 완료');
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => '무게 단위';
+
+  @override
+  String get weightStepHint => '− 및 + 버튼이 더하는 양.';
+
+  @override
+  String get prBestWorkout => '최고 운동';
+
+  @override
+  String get mergeExercise => '병합';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return '$name 병합 대상…';
+  }
+
+  @override
+  String get mergeExerciseTitle => '운동을 병합할까요?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return '「$from」의 모든 기록이 「$to」(으)로 옮겨집니다. 「$from」은(는) 라이브러리에 남습니다. 되돌릴 수 없습니다.';
+  }
+
+  @override
+  String get mergedToast => '기록을 병합했어요';
 }

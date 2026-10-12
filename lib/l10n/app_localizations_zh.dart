@@ -3786,6 +3786,91 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => '未通过安全门 · 建议先就医';
+
+  @override
+  String get amoledTheme => 'AMOLED 纯黑';
+
+  @override
+  String get editDuration => '训练时长';
+
+  @override
+  String get sessionName => '训练名称';
+
+  @override
+  String get nameWorkout => '起个名字';
+
+  @override
+  String get sessionNameHint => '例如：腿、推、全身';
+
+  @override
+  String get secondaryPickHint => '点选这个动作还会锻炼到的其他肌肉。';
+
+  @override
+  String get planHintReps => '选择每组的类型和次数。“自动”会从上次训练开始。';
+
+  @override
+  String get planHintTime => '选择每组的类型和时长。“自动”会从上次训练开始。';
+
+  @override
+  String get planHintTimeWeight => '选择每组的类型、时长和重量。“自动”会从上次训练开始。';
+
+  @override
+  String get planHintCardio => '选择每组的距离和时长。“自动”会从上次训练开始。';
+
+  @override
+  String get timeOnly => '仅计时';
+
+  @override
+  String get homeRoutines => '首页的计划';
+
+  @override
+  String get homeRoutinesHint => '你的训练计划，最近做过的排在前面。点一下即可开始。';
+
+  @override
+  String get homeWeekStats => '首页的本周';
+
+  @override
+  String get homeWeekStatsHint => '本周的训练量、组数和纪录。';
+
+  @override
+  String get routineDoneToday => '今天已完成 · 干得好';
+
+  @override
+  String get trainAgain => '再练一次';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天前', one: '昨天完成', zero: '今天完成');
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => '重量步长';
+
+  @override
+  String get weightStepHint => '− 和 + 按钮每次增减的量。';
+
+  @override
+  String get prBestWorkout => '最佳训练';
+
+  @override
+  String get mergeExercise => '合并';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return '将 $name 合并到…';
+  }
+
+  @override
+  String get mergeExerciseTitle => '合并动作？';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return '「$from」的全部记录将转到「$to」。「$from」仍保留在你的动作库中。此操作无法撤销。';
+  }
+
+  @override
+  String get mergedToast => '记录已合并';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -7587,4 +7672,89 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get rehabGateFailedShort => '未通过安全门 · 建议先就医';
+
+  @override
+  String get amoledTheme => 'AMOLED 純黑';
+
+  @override
+  String get editDuration => '訓練時長';
+
+  @override
+  String get sessionName => '訓練名稱';
+
+  @override
+  String get nameWorkout => '取個名字';
+
+  @override
+  String get sessionNameHint => '例如：腿、推、全身';
+
+  @override
+  String get secondaryPickHint => '點選這個動作還會鍛鍊到的其他肌肉。';
+
+  @override
+  String get planHintReps => '選擇每組的類型和次數。「自動」會從上次訓練開始。';
+
+  @override
+  String get planHintTime => '選擇每組的類型和時長。「自動」會從上次訓練開始。';
+
+  @override
+  String get planHintTimeWeight => '選擇每組的類型、時長和重量。「自動」會從上次訓練開始。';
+
+  @override
+  String get planHintCardio => '選擇每組的距離和時長。「自動」會從上次訓練開始。';
+
+  @override
+  String get timeOnly => '僅計時';
+
+  @override
+  String get homeRoutines => '首頁的課表';
+
+  @override
+  String get homeRoutinesHint => '你的課表，最近做過的排在前面。點一下即可開始。';
+
+  @override
+  String get homeWeekStats => '首頁的本週';
+
+  @override
+  String get homeWeekStatsHint => '本週的訓練量、組數和紀錄。';
+
+  @override
+  String get routineDoneToday => '今天完成了 · 做得好';
+
+  @override
+  String get trainAgain => '再練一次';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天前', one: '昨天完成', zero: '今天完成');
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => '重量步長';
+
+  @override
+  String get weightStepHint => '− 和 + 按鈕每次增減的量。';
+
+  @override
+  String get prBestWorkout => '最佳訓練';
+
+  @override
+  String get mergeExercise => '合併';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return '將 $name 合併到…';
+  }
+
+  @override
+  String get mergeExerciseTitle => '合併動作？';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return '「$from」的全部紀錄將轉到「$to」。「$from」仍保留在你的動作庫中。此操作無法復原。';
+  }
+
+  @override
+  String get mergedToast => '紀錄已合併';
 }

@@ -1140,7 +1140,11 @@ class SessionScreen extends StatelessWidget {
     final count = fit.sessionSetCount;
     final lead = fit.holdLead;
     return TimerPanel(
-      label: lead > 0 ? t.getReady : t.holdLabel,
+      label: lead > 0
+          ? t.getReady
+          : fit.modeOf(fit.session?.exercises[fit.holdEx].id ?? '') == 'cardio'
+              ? t.kindCardio
+              : t.holdLabel,
       remaining: lead > 0 ? lead : fit.holdRemaining ?? 0,
       total: lead > 0 ? WorkoutState.holdLeadIn : fit.holdTotal,
       elapsed: fit.elapsedLabel,
@@ -1174,7 +1178,7 @@ class SessionScreen extends StatelessWidget {
 
   Widget _mainAction(GymColors gc, SessionExercise? ex, int exIdx, int total, bool locked) {
     final pending = ex == null ? -1 : ex.sets.indexWhere((st) => !st.done);
-    if (pending >= 0 && ex != null && fit.isTimed(ex.id)) {
+    if (pending >= 0 && ex != null && fit.runsClock(ex.id) && (ex.sets[pending].sec ?? 30) > 0) {
       if (fit.holding && fit.holdEx == exIdx) {
         return _ticking(() => PrimaryButton(
               label: fit.holdPaused
@@ -1282,7 +1286,7 @@ class SessionScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Rise(index: 0, child: _finishHero(gc, prs: prs, streak: streak, goalHit: goalHit)),
+            Rise(index: 0, child: _finishHero(context, gc, prs: prs, streak: streak, goalHit: goalHit)),
             const SizedBox(height: 18),
             Rise(
               index: 1,
@@ -1428,7 +1432,7 @@ class SessionScreen extends StatelessWidget {
       showNotchToast(context, t.routineUpdated, icon: PhosphorIconsFill.listChecks, accent: accent);
       return;
     }
-    final name = await askText(context, title: t.routineName, initial: t.newRoutineName);
+    final name = await askText(context, title: t.routineName, initial: fit.filedSession?.name ?? t.newRoutineName);
     if (name == null || !context.mounted || fit.saveSessionAsRoutine(name).isEmpty) return;
     showNotchToast(context, t.savedAsRoutine, icon: PhosphorIconsFill.listChecks, accent: accent);
   }
@@ -1493,7 +1497,9 @@ class SessionScreen extends StatelessWidget {
         builder: (context, v, _) => builder(v),
       );
 
-  Widget _finishHero(GymColors gc, {required int prs, required int streak, required bool goalHit}) {
+  Widget _finishHero(BuildContext context, GymColors gc,
+      {required int prs, required int streak, required bool goalHit}) {
+    final filed = fit.sessionRoutine == null ? fit.filedSession : null;
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
       child: Container(
@@ -1553,10 +1559,49 @@ class SessionScreen extends StatelessWidget {
                     child: Text(t.finishBody(prs: prs, streak: streak, goalHit: goalHit),
                         style: AppTheme.f(13, weight: FontWeight.w500, color: gc.textSecondary, height: 1.35)),
                   ),
+                  if (filed != null) ...[
+                    const SizedBox(height: 14),
+                    _namePill(context, gc, filed),
+                  ],
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _namePill(BuildContext context, GymColors gc, LoggedSession filed) {
+    final name = filed.name;
+    return Semantics(
+      button: true,
+      label: t.sessionName,
+      child: GestureDetector(
+        onTap: () async {
+          final v = await askText(context, title: t.sessionName, initial: name ?? '', hint: t.sessionNameHint);
+          if (v != null) fit.renameSession(filed, v);
+        },
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 230),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+            decoration: BoxDecoration(
+              color: name == null ? gc.bgRaised2 : gc.accentSoft,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(PhosphorIconsRegular.pencilSimple, size: 13, color: name == null ? gc.textSecondary : gc.accent),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(name ?? t.nameWorkout,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTheme.f(12.5,
+                        weight: FontWeight.w700, color: name == null ? gc.textSecondary : gc.accent)),
+              ),
+            ]),
+          ),
         ),
       ),
     );

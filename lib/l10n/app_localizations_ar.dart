@@ -3930,4 +3930,95 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'أسود AMOLED';
+
+  @override
+  String get editDuration => 'مدة التمرين';
+
+  @override
+  String get sessionName => 'اسم التمرين';
+
+  @override
+  String get nameWorkout => 'سمِّه';
+
+  @override
+  String get sessionNameHint => 'مثلًا: أرجل، دفع، الجسم كامل';
+
+  @override
+  String get secondaryPickHint => 'اضغط على العضلات الأخرى التي يعمل عليها هذا التمرين.';
+
+  @override
+  String get planHintReps => 'اختر نوع كل مجموعة وعدد تكراراتها. «تلقائي» يبدأ من جلستك الأخيرة.';
+
+  @override
+  String get planHintTime => 'اختر نوع كل مجموعة ومدتها. «تلقائي» يبدأ من جلستك الأخيرة.';
+
+  @override
+  String get planHintTimeWeight => 'اختر نوع كل مجموعة ومدتها ووزنها. «تلقائي» يبدأ من جلستك الأخيرة.';
+
+  @override
+  String get planHintCardio => 'اختر مسافة كل مجموعة ومدتها. «تلقائي» يبدأ من جلستك الأخيرة.';
+
+  @override
+  String get timeOnly => 'الوقت فقط';
+
+  @override
+  String get homeRoutines => 'الروتينات في الرئيسية';
+
+  @override
+  String get homeRoutinesHint => 'روتيناتك، آخر ما أنجزته أولًا. اضغط على أحدها لتبدأه.';
+
+  @override
+  String get homeWeekStats => 'هذا الأسبوع في الرئيسية';
+
+  @override
+  String get homeWeekStatsHint => 'الحجم والمجموعات والأرقام القياسية لهذا الأسبوع.';
+
+  @override
+  String get routineDoneToday => 'انتهيت لليوم · عمل رائع';
+
+  @override
+  String get trainAgain => 'تمرّن مرة أخرى';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'قبل $n يوم',
+      one: 'أُنجز أمس',
+      zero: 'أُنجز اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'خطوة الوزن';
+
+  @override
+  String get weightStepHint => 'ما تضيفه زرّا − و+.';
+
+  @override
+  String get prBestWorkout => 'أفضل تمرين';
+
+  @override
+  String get mergeExercise => 'دمج';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return 'دمج $name في…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'دمج التمارين؟';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'ينتقل كل سجل «$from» إلى «$to». يبقى «$from» في مكتبتك. لا يمكن التراجع عن ذلك.';
+  }
+
+  @override
+  String get mergedToast => 'تم دمج السجل';
 }

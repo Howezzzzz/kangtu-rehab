@@ -3951,4 +3951,99 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
+
+  @override
+  String get amoledTheme => 'Чорна AMOLED';
+
+  @override
+  String get editDuration => 'Тривалість тренування';
+
+  @override
+  String get sessionName => 'Назва тренування';
+
+  @override
+  String get nameWorkout => 'Назвати';
+
+  @override
+  String get sessionNameHint => 'напр. Ноги, Жими, Усе тіло';
+
+  @override
+  String get secondaryPickHint => 'Познач інші мʼязи, які працюють у цій вправі.';
+
+  @override
+  String get planHintReps =>
+      'Обери тип і кількість повторень кожного підходу. «Авто» бере дані минулого тренування.';
+
+  @override
+  String get planHintTime => 'Обери тип і час кожного підходу. «Авто» бере дані минулого тренування.';
+
+  @override
+  String get planHintTimeWeight =>
+      'Обери тип, час і вагу кожного підходу. «Авто» бере дані минулого тренування.';
+
+  @override
+  String get planHintCardio => 'Обери дистанцію і час кожного підходу. «Авто» бере дані минулого тренування.';
+
+  @override
+  String get timeOnly => 'Лише час';
+
+  @override
+  String get homeRoutines => 'Програми на головній';
+
+  @override
+  String get homeRoutinesHint => 'Твої програми, остання виконана першою. Натисни, щоб почати.';
+
+  @override
+  String get homeWeekStats => 'Цей тиждень на головній';
+
+  @override
+  String get homeWeekStatsHint => 'Обʼєм, підходи й рекорди за тиждень.';
+
+  @override
+  String get routineDoneToday => 'На сьогодні все · чудова робота';
+
+  @override
+  String get trainAgain => 'Тренуватися ще';
+
+  @override
+  String lastDoneAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня тому',
+      many: '$n днів тому',
+      few: '$n дні тому',
+      one: '$n день тому',
+      zero: 'Зроблено сьогодні',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weightStepSetting => 'Крок ваги';
+
+  @override
+  String get weightStepHint => 'Скільки додають кнопки − і +.';
+
+  @override
+  String get prBestWorkout => 'Найкраще тренування';
+
+  @override
+  String get mergeExercise => 'Об’єднати';
+
+  @override
+  String mergeExerciseInto(String name) {
+    return 'Об’єднати $name з…';
+  }
+
+  @override
+  String get mergeExerciseTitle => 'Об’єднати вправи?';
+
+  @override
+  String mergeExerciseBody(String from, String to) {
+    return 'Уся історія «$from» перейде до «$to». «$from» залишиться в бібліотеці. Цю дію не можна скасувати.';
+  }
+
+  @override
+  String get mergedToast => 'Історію об’єднано';
 }
