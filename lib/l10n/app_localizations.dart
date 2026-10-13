@@ -9375,6 +9375,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rehab'**
   String get logTagRehab;
+
+  /// No description provided for @baselineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Baseline test'**
+  String get baselineTitle;
+
+  /// No description provided for @baselineSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Measure your baseline, then set your starting level'**
+  String get baselineSubtitle;
+
+  /// No description provided for @baselineGateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you start'**
+  String get baselineGateTitle;
+
+  /// No description provided for @baselineGateQ1.
+  ///
+  /// In en, this message translates to:
+  /// **'Has a doctor said you should only do medically approved exercise?'**
+  String get baselineGateQ1;
+
+  /// No description provided for @baselineGateQ2.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you get chest pain or tightness when exercising?'**
+  String get baselineGateQ2;
+
+  /// No description provided for @baselineGateQ3.
+  ///
+  /// In en, this message translates to:
+  /// **'Have you had chest pain at rest in the last month?'**
+  String get baselineGateQ3;
+
+  /// No description provided for @baselineGateQ4.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you get dizziness, or a joint problem that worsens with exercise?'**
+  String get baselineGateQ4;
+
+  /// No description provided for @baselineGateFail.
+  ///
+  /// In en, this message translates to:
+  /// **'You ticked one: please consult a doctor first and skip the test for now.'**
+  String get baselineGateFail;
+
+  /// No description provided for @baselineSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save baseline'**
+  String get baselineSave;
+
+  /// No description provided for @baselineSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Baseline saved'**
+  String get baselineSaved;
+
+  /// No description provided for @baselineDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'For reference only, not a medical diagnosis.'**
+  String get baselineDisclaimer;
+
+  /// No description provided for @baselineResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Baseline result'**
+  String get baselineResultTitle;
+
+  /// No description provided for @baselineLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last'**
+  String get baselineLast;
+
+  /// No description provided for @baselineInputHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a value'**
+  String get baselineInputHint;
+
+  /// No description provided for @baselineNmRestingHr.
+  ///
+  /// In en, this message translates to:
+  /// **'Resting heart rate'**
+  String get baselineNmRestingHr;
+
+  /// No description provided for @baselineHowRestingHr.
+  ///
+  /// In en, this message translates to:
+  /// **'Sit quietly 5 min, count your pulse for 1 min'**
+  String get baselineHowRestingHr;
+
+  /// No description provided for @baselineNmStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2-minute step'**
+  String get baselineNmStep2;
+
+  /// No description provided for @baselineHowStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'March in place, count knee raises in 2 min'**
+  String get baselineHowStep2;
+
+  /// No description provided for @baselineNmChairStand.
+  ///
+  /// In en, this message translates to:
+  /// **'30s chair stand'**
+  String get baselineNmChairStand;
+
+  /// No description provided for @baselineHowChairStand.
+  ///
+  /// In en, this message translates to:
+  /// **'Stand-ups in 30s from a chair, arms crossed'**
+  String get baselineHowChairStand;
+
+  /// No description provided for @baselineNmSingleLeg.
+  ///
+  /// In en, this message translates to:
+  /// **'Single-leg stand'**
+  String get baselineNmSingleLeg;
+
+  /// No description provided for @baselineHowSingleLeg.
+  ///
+  /// In en, this message translates to:
+  /// **'Time standing on one leg, up to 60s'**
+  String get baselineHowSingleLeg;
+
+  /// No description provided for @baselineNmSitReach.
+  ///
+  /// In en, this message translates to:
+  /// **'Sit-and-reach'**
+  String get baselineNmSitReach;
+
+  /// No description provided for @baselineHowSitReach.
+  ///
+  /// In en, this message translates to:
+  /// **'Seated straight-leg reach, cm past your toes'**
+  String get baselineHowSitReach;
+
+  /// No description provided for @baselineNmWaist.
+  ///
+  /// In en, this message translates to:
+  /// **'Waist'**
+  String get baselineNmWaist;
+
+  /// No description provided for @baselineHowWaist.
+  ///
+  /// In en, this message translates to:
+  /// **'Measure around the waist, navel level'**
+  String get baselineHowWaist;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

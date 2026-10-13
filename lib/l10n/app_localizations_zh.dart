@@ -5094,6 +5094,84 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get logTagRehab => '康复';
+
+  @override
+  String get baselineTitle => '自测基线';
+
+  @override
+  String get baselineSubtitle => '先测基础值，再定训练起始强度';
+
+  @override
+  String get baselineGateTitle => '运动前安全自查';
+
+  @override
+  String get baselineGateQ1 => '医生是否说过你只能做被许可的运动？';
+
+  @override
+  String get baselineGateQ2 => '运动时是否出现胸痛或胸闷？';
+
+  @override
+  String get baselineGateQ3 => '近一个月不运动时是否胸痛？';
+
+  @override
+  String get baselineGateQ4 => '运动时是否头晕，或骨关节问题加重？';
+
+  @override
+  String get baselineGateFail => '有一项打勾：请先咨询医生，暂不进行自测。';
+
+  @override
+  String get baselineSave => '保存基线';
+
+  @override
+  String get baselineSaved => '基线已保存';
+
+  @override
+  String get baselineDisclaimer => '自测结果仅供参考，非医疗诊断。';
+
+  @override
+  String get baselineResultTitle => '基线结果';
+
+  @override
+  String get baselineLast => '上次';
+
+  @override
+  String get baselineInputHint => '填入数值';
+
+  @override
+  String get baselineNmRestingHr => '静息心率';
+
+  @override
+  String get baselineHowRestingHr => '安静坐 5 分钟后，测 1 分钟脉搏';
+
+  @override
+  String get baselineNmStep2 => '2 分钟原地踏步';
+
+  @override
+  String get baselineHowStep2 => '2 分钟内尽量抬高膝盖原地踏步，记抬膝次数';
+
+  @override
+  String get baselineNmChairStand => '30 秒坐站';
+
+  @override
+  String get baselineHowChairStand => '无扶手椅上，双手抱胸，30 秒内起坐次数';
+
+  @override
+  String get baselineNmSingleLeg => '单脚站立（睁眼）';
+
+  @override
+  String get baselineHowSingleLeg => '单脚站立计时，最多 60 秒';
+
+  @override
+  String get baselineNmSitReach => '坐位体前屈';
+
+  @override
+  String get baselineHowSitReach => '坐姿直腿前伸，记录指尖超过脚尖（cm）';
+
+  @override
+  String get baselineNmWaist => '腰围';
+
+  @override
+  String get baselineHowWaist => '绕脐水平或肋骨下缘至髂嵴中点一圈';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -9837,4 +9915,82 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get logTagRehab => 'Rehab';
+
+  @override
+  String get baselineTitle => 'Baseline test';
+
+  @override
+  String get baselineSubtitle => 'Measure your baseline, then set your starting level';
+
+  @override
+  String get baselineGateTitle => 'Before you start';
+
+  @override
+  String get baselineGateQ1 => 'Has a doctor said you should only do medically approved exercise?';
+
+  @override
+  String get baselineGateQ2 => 'Do you get chest pain or tightness when exercising?';
+
+  @override
+  String get baselineGateQ3 => 'Have you had chest pain at rest in the last month?';
+
+  @override
+  String get baselineGateQ4 => 'Do you get dizziness, or a joint problem that worsens with exercise?';
+
+  @override
+  String get baselineGateFail => 'You ticked one: please consult a doctor first and skip the test for now.';
+
+  @override
+  String get baselineSave => 'Save baseline';
+
+  @override
+  String get baselineSaved => 'Baseline saved';
+
+  @override
+  String get baselineDisclaimer => 'For reference only, not a medical diagnosis.';
+
+  @override
+  String get baselineResultTitle => 'Baseline result';
+
+  @override
+  String get baselineLast => 'Last';
+
+  @override
+  String get baselineInputHint => 'Enter a value';
+
+  @override
+  String get baselineNmRestingHr => 'Resting heart rate';
+
+  @override
+  String get baselineHowRestingHr => 'Sit quietly 5 min, count your pulse for 1 min';
+
+  @override
+  String get baselineNmStep2 => '2-minute step';
+
+  @override
+  String get baselineHowStep2 => 'March in place, count knee raises in 2 min';
+
+  @override
+  String get baselineNmChairStand => '30s chair stand';
+
+  @override
+  String get baselineHowChairStand => 'Stand-ups in 30s from a chair, arms crossed';
+
+  @override
+  String get baselineNmSingleLeg => 'Single-leg stand';
+
+  @override
+  String get baselineHowSingleLeg => 'Time standing on one leg, up to 60s';
+
+  @override
+  String get baselineNmSitReach => 'Sit-and-reach';
+
+  @override
+  String get baselineHowSitReach => 'Seated straight-leg reach, cm past your toes';
+
+  @override
+  String get baselineNmWaist => 'Waist';
+
+  @override
+  String get baselineHowWaist => 'Measure around the waist, navel level';
 }

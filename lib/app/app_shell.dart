@@ -8,6 +8,7 @@ import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import '../l10n/l10n.dart';
 import '../screens/about_screen.dart';
 import '../screens/ai_plan_screen.dart';
+import '../screens/baseline_screen.dart';
 import '../screens/compare_screen.dart';
 import '../screens/exercise_detail_screen.dart';
 import '../screens/exercises_screen.dart';
@@ -442,6 +443,8 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
         return const RehabEpisodeScreen();
       case 'log':
         return const LogScreen();
+      case 'baseline':
+        return const BaselineScreen();
       case 'train':
         return TrainScreen();
       case 'session':

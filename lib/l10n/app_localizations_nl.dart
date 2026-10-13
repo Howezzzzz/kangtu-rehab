@@ -5310,4 +5310,82 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get logTagRehab => 'Rehab';
+
+  @override
+  String get baselineTitle => 'Baseline test';
+
+  @override
+  String get baselineSubtitle => 'Measure your baseline, then set your starting level';
+
+  @override
+  String get baselineGateTitle => 'Before you start';
+
+  @override
+  String get baselineGateQ1 => 'Has a doctor said you should only do medically approved exercise?';
+
+  @override
+  String get baselineGateQ2 => 'Do you get chest pain or tightness when exercising?';
+
+  @override
+  String get baselineGateQ3 => 'Have you had chest pain at rest in the last month?';
+
+  @override
+  String get baselineGateQ4 => 'Do you get dizziness, or a joint problem that worsens with exercise?';
+
+  @override
+  String get baselineGateFail => 'You ticked one: please consult a doctor first and skip the test for now.';
+
+  @override
+  String get baselineSave => 'Save baseline';
+
+  @override
+  String get baselineSaved => 'Baseline saved';
+
+  @override
+  String get baselineDisclaimer => 'For reference only, not a medical diagnosis.';
+
+  @override
+  String get baselineResultTitle => 'Baseline result';
+
+  @override
+  String get baselineLast => 'Last';
+
+  @override
+  String get baselineInputHint => 'Enter a value';
+
+  @override
+  String get baselineNmRestingHr => 'Resting heart rate';
+
+  @override
+  String get baselineHowRestingHr => 'Sit quietly 5 min, count your pulse for 1 min';
+
+  @override
+  String get baselineNmStep2 => '2-minute step';
+
+  @override
+  String get baselineHowStep2 => 'March in place, count knee raises in 2 min';
+
+  @override
+  String get baselineNmChairStand => '30s chair stand';
+
+  @override
+  String get baselineHowChairStand => 'Stand-ups in 30s from a chair, arms crossed';
+
+  @override
+  String get baselineNmSingleLeg => 'Single-leg stand';
+
+  @override
+  String get baselineHowSingleLeg => 'Time standing on one leg, up to 60s';
+
+  @override
+  String get baselineNmSitReach => 'Sit-and-reach';
+
+  @override
+  String get baselineHowSitReach => 'Seated straight-leg reach, cm past your toes';
+
+  @override
+  String get baselineNmWaist => 'Waist';
+
+  @override
+  String get baselineHowWaist => 'Measure around the waist, navel level';
 }

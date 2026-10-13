@@ -14,6 +14,7 @@ import '../catalog/exercises_rep.dart';
 import '../catalog/program_templates.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';
+import '../models/baseline.dart';
 import '../models/live_session.dart';
 import '../models/rehab_log.dart';
 import '../models/measure.dart';
@@ -42,6 +43,7 @@ import '../services/train_reminder.dart';
 import '../services/workout_import.dart';
 
 part 'awards_state.dart';
+part 'baseline_state.dart';
 part 'fit_core.dart';
 part 'library_state.dart';
 part 'measures_state.dart';
@@ -60,7 +62,7 @@ part 'tools_state.dart';
 part 'workout_state.dart';
 
 class FitState extends FitCore
-    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, NutritionState, AwardsState, RoutinesState, WorkoutState, RehabState {
+    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, NutritionState, AwardsState, RoutinesState, WorkoutState, RehabState, BaselineState {
   void loadFromStore() {
     final data = withMergedExercises(Store.instance.load());
     _loading = true;
@@ -79,6 +81,13 @@ class FitState extends FitCore
             .map((m) => RehabLogEntry.fromJson(m.cast<String, dynamic>())));
     }
     rehabLogMerged = data['rehabLogMerged'] == true;
+    if (data['baselines'] is List) {
+      baselines
+        ..clear()
+        ..addAll((data['baselines'] as List)
+            .whereType<Map>()
+            .map((m) => BaselineSession.fromJson(m.cast<String, dynamic>())));
+    }
     if (data['language'] == null) _adoptDeviceLanguage();
     if (data.isNotEmpty) {
       profile = Profile.fromJson((data['profile'] as Map?)?.cast<String, dynamic>() ?? {});
@@ -455,6 +464,7 @@ class FitState extends FitCore
         'rehabEp': rehabEpisodes.map((e) => e.toJson()).toList(),
         'rehabLog': rehabLog.map((e) => e.toJson()).toList(),
         'rehabLogMerged': rehabLogMerged,
+        'baselines': baselines.map((b) => b.toJson()).toList(),
         'places': places.map((p) => p.toJson()).toList(),
         'place': activePlaceId,
         'checkins': checkins.toList(),
@@ -521,6 +531,7 @@ class FitState extends FitCore
     multiPlan = false;
     rehabLog.clear();
     rehabLogMerged = false;
+    baselines.clear();
     customExercises.clear();
     exerciseMedia.clear();
     repsOnly.clear();
