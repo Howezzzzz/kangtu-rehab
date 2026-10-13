@@ -46,7 +46,7 @@
   "routines": "ROUTINES",
   "tools": "TOOLS",
   "firstSessionHint": "Pick your muscles and log your first session",
-  "exerciseCount": "{n, plural, =1{{n} exercise} other{{n} exercises}}",
+  "exerciseCount": "{n, plural, one{{n} exercise} other{{n} exercises}}",
   "@exerciseCount": {
     "placeholders": {
       "n": {
@@ -81,7 +81,7 @@
   "searchAllExercises": "Search any exercise…",
   "noExercisesMatch": "No exercises match",
   "createItInstead": "Create it as your own instead",
-  "startCount": "START · {n, plural, =1{{n} EXERCISE} other{{n} EXERCISES}}",
+  "startCount": "START · {n, plural, one{{n} EXERCISE} other{{n} EXERCISES}}",
   "@startCount": {
     "placeholders": {
       "n": {
@@ -124,7 +124,7 @@
   "finishHeadlineGoal": "Weekly goal reached",
   "finishHeadlineStreak": "Streak alive",
   "finishHeadlineDefault": "Another one in the bank",
-  "finishBodyPr": "You lifted more than ever on {prs, plural, =1{an exercise} other{{prs} exercises}}. It is in your records now.",
+  "finishBodyPr": "You lifted more than ever on {prs, plural, one{an exercise} other{{prs} exercises}}. It is in your records now.",
   "@finishBodyPr": {
     "placeholders": {
       "prs": {
@@ -144,7 +144,7 @@
   "finishBodyDefault": "Logged and counted. Consistency is what moves the numbers.",
   "vsLastTime": "VS LAST TIME",
   "firstTime": "First time logged",
-  "prCount": "{n, plural, =1{{n} new record} other{{n} new records}}",
+  "prCount": "{n, plural, one{{n} new record} other{{n} new records}}",
   "@prCount": {
     "placeholders": {
       "n": {
@@ -191,7 +191,7 @@
   "allTimeTime": "TIME",
   "allTimeSets": "SETS",
   "consistency": "CONSISTENCY",
-  "sessionsLogged": "{n, plural, =1{{n} session logged} other{{n} sessions logged}}",
+  "sessionsLogged": "{n, plural, one{{n} session logged} other{{n} sessions logged}}",
   "@sessionsLogged": {
     "placeholders": {
       "n": {
@@ -280,7 +280,7 @@
   "bodyweightHistory": "HISTORY",
   "exercisesCaps": "EXERCISES",
   "timeCaps": "TIME",
-  "libraryCount": "{n, plural, =1{{n} exercise in your library} other{{n} exercises in your library}}",
+  "libraryCount": "{n, plural, one{{n} exercise in your library} other{{n} exercises in your library}}",
   "@libraryCount": {
     "placeholders": {
       "n": {
@@ -362,7 +362,7 @@
     }
   },
   "journal": "JOURNAL",
-  "noteCount": "{n, plural, =0{No notes} =1{1 note} other{{n} notes}}",
+  "noteCount": "{n, plural, =0{No notes} one{1 note} other{{n} notes}}",
   "@noteCount": {
     "placeholders": {
       "n": {
@@ -399,7 +399,7 @@
   "noteAddOnDay": "Note on this day",
   "notePrevMonth": "Previous month",
   "noteNextMonth": "Next month",
-  "noteMonthCount": "{n, plural, =0{No notes this month} =1{1 note this month} other{{n} notes this month}}",
+  "noteMonthCount": "{n, plural, =0{No notes this month} one{1 note this month} other{{n} notes this month}}",
   "@noteMonthCount": {
     "placeholders": {
       "n": {
@@ -409,7 +409,7 @@
   },
   "measures": "MEASUREMENTS",
   "measuresHint": "Neck to calf — watch your body change, not just the bar.",
-  "measureCount": "{n, plural, =0{Nothing logged} =1{1 reading} other{{n} readings}}",
+  "measureCount": "{n, plural, =0{Nothing logged} one{1 reading} other{{n} readings}}",
   "@measureCount": {
     "placeholders": {
       "n": {
@@ -432,7 +432,7 @@
   "timeline": "TIMELINE",
   "timelineHint": "Same pose, same spot, same light. In a year you will not believe it.",
   "timelineEmptyTitle": "Your first photo starts the clock",
-  "photoCount": "{n, plural, =0{No photos} =1{1 photo} other{{n} photos}}",
+  "photoCount": "{n, plural, =0{No photos} one{1 photo} other{{n} photos}}",
   "@photoCount": {
     "placeholders": {
       "n": {
@@ -455,7 +455,7 @@
   "photoEveryOff": "Never",
   "timelineEvery": "GROUP EVERY",
   "custom": "Custom",
-  "photoNextIn": "{n, plural, =1{Next photo tomorrow} other{Next photo in {n} days}}",
+  "photoNextIn": "{n, plural, one{Next photo tomorrow} other{Next photo in {n} days}}",
   "@photoNextIn": {
     "placeholders": {
       "n": {
@@ -483,7 +483,7 @@
       }
     }
   },
-  "daysApart": "{n, plural, =0{Same day} =1{1 day apart} other{{n} days apart}}",
+  "daysApart": "{n, plural, =0{Same day} one{1 day apart} other{{n} days apart}}",
   "@daysApart": {
     "placeholders": {
       "n": {
@@ -498,7 +498,7 @@
   "timelineBodyEmpty": "Log a session and your muscle map starts filling in here, no photos needed.",
   "timelineBodyHint": "Built from your own sets — nothing to upload.",
   "timelineWindow": "{from} – {to}",
-  "sessionCount": "{n, plural, =0{No sessions} =1{1 session} other{{n} sessions}}",
+  "sessionCount": "{n, plural, =0{No sessions} one{1 session} other{{n} sessions}}",
   "@sessionCount": {
     "placeholders": {
       "n": {
@@ -560,7 +560,7 @@
   "primaryLabel": "PRIMARY",
   "secondaryLabel": "SECONDARY",
   "none": "None",
-  "setCount": "{n, plural, =1{{n} set} other{{n} sets}}",
+  "setCount": "{n, plural, one{{n} set} other{{n} sets}}",
   "@setCount": {
     "placeholders": {
       "n": {
@@ -681,7 +681,7 @@
   "importFromApp": "Import from another app",
   "importUnknownFormat": "That file needs date, exercise, reps and weight columns",
   "importZipNoWeights": "That zip has no weight file in it",
-  "importWeights": "{n, plural, =1{Imported {n} weigh-in} other{Imported {n} weigh-ins}}",
+  "importWeights": "{n, plural, one{Imported {n} weigh-in} other{Imported {n} weigh-ins}}",
   "@importWeights": {
     "placeholders": {
       "n": {
@@ -693,7 +693,7 @@
   "importUnitTitle": "Which unit is that file in?",
   "importUnitBody": "This export doesn't say which unit the weights are in.",
   "importNothing": "Nothing new to import",
-  "importDone": "{n, plural, =1{Imported {n} session} other{Imported {n} sessions}}",
+  "importDone": "{n, plural, one{Imported {n} session} other{Imported {n} sessions}}",
   "@importDone": {
     "placeholders": {
       "n": {
@@ -846,7 +846,7 @@
   "mathInside": "Honest maths",
   "mathInsideWhy": "Volume, records and streaks come from your own sets. Nothing here is decoration.",
   "streakCaps": "STREAK",
-  "daysUnit": "{n, plural, =1{day} other{days}}",
+  "daysUnit": "{n, plural, one{day} other{days}}",
   "@daysUnit": {
     "placeholders": {
       "n": {
@@ -881,7 +881,7 @@
   "onbBodyWhy": "They feed the calculators. You can change them any time in Settings.",
   "onbGoalTitle": "How often do you train?",
   "onbGoalWhy": "Sets your weekly goal ring. Be honest, not ambitious.",
-  "perWeek": "{n, plural, =1{{n} session a week} other{{n} sessions a week}}",
+  "perWeek": "{n, plural, one{{n} session a week} other{{n} sessions a week}}",
   "@perWeek": {
     "placeholders": {
       "n": {
@@ -949,7 +949,7 @@
   },
   "placePlates": "Plates and bar",
   "platesAll": "Everything available",
-  "platesOwned": "{n, plural, =1{{n} size} other{{n} sizes}}",
+  "platesOwned": "{n, plural, one{{n} size} other{{n} sizes}}",
   "@platesOwned": {
     "placeholders": {
       "n": {
@@ -1023,7 +1023,7 @@
   "savedAsRoutine": "Saved as a routine",
   "templates": "Ready-made plans",
   "templatesHint": "Classic programmes, built from your own library. You can change anything afterwards.",
-  "templateAdded": "{n, plural, =1{{n} routine added} other{{n} routines added}}",
+  "templateAdded": "{n, plural, one{{n} routine added} other{{n} routines added}}",
   "@templateAdded": {
     "placeholders": {
       "n": {
@@ -1037,7 +1037,7 @@
   "tplStronglifts": "Two workouts, five sets of five, alternating.",
   "tplStartingstrength": "Squat every session, two alternating workouts.",
   "tplHome": "Nothing but a bar to hang from and the floor.",
-  "dayCount": "{n, plural, =1{{n} day} other{{n} days}}",
+  "dayCount": "{n, plural, one{{n} day} other{{n} days}}",
   "@dayCount": {
     "placeholders": {
       "n": {
@@ -1052,7 +1052,7 @@
   "supersetHint": "No rest between chained exercises — you go straight to the next one.",
   "aiRoutine": "Routine with AI",
   "aiIntro": "Kangtu never talks to an AI. You take your exercise list out, you paste it into whatever assistant you already use, and you bring its answer back in. Nothing leaves the phone on its own.",
-  "aiMissing": "{n, plural, =1{1 name was not in your library} other{{n} names were not in your library}}",
+  "aiMissing": "{n, plural, one{1 name was not in your library} other{{n} names were not in your library}}",
   "@aiMissing": {
     "placeholders": {
       "n": {
@@ -1170,7 +1170,7 @@
     }
   },
   "levelShort": "Level {n}",
-  "levelToNext": "{n, plural, =1{1 workout to level {next}} other{{n} workouts to level {next}}}",
+  "levelToNext": "{n, plural, one{1 workout to level {next}} other{{n} workouts to level {next}}}",
   "@levelToNext": {
     "placeholders": {
       "n": {
@@ -1374,7 +1374,7 @@
   "importRoutines": "Import routines",
   "importPasteHint": "Paste a routine here: one shared from Kangtu, an AI answer, JSON or CSV.",
   "pasteAction": "Paste",
-  "routineCount": "{n, plural, =1{1 routine} other{{n} routines}}",
+  "routineCount": "{n, plural, one{1 routine} other{{n} routines}}",
   "@routineCount": {
     "placeholders": {
       "n": {
@@ -1385,7 +1385,7 @@
   "useTheirSchedule": "Also use its weekly schedule",
   "useTheirScheduleHint": "The days it brings replace what you have planned on them.",
   "addToMyRoutines": "Add to my routines",
-  "routinesAdded": "{n, plural, =1{1 routine added} other{{n} routines added}}",
+  "routinesAdded": "{n, plural, one{1 routine added} other{{n} routines added}}",
   "@routinesAdded": {
     "placeholders": {
       "n": {
@@ -1493,7 +1493,7 @@
   "rirHint": "0 is nothing left in the tank, 2 is two reps to spare.",
   "addWeekWidget": "Add week widget",
   "gamificationSetting": "Medals and levels",
-  "repCount": "{n, plural, =1{{n} rep} other{{n} reps}}",
+  "repCount": "{n, plural, one{{n} rep} other{{n} reps}}",
   "@repCount": {
     "placeholders": {
       "n": {
@@ -1563,7 +1563,7 @@
   "stepsManage": "Manage permission",
   "routineDoneToday": "Done for today · nice work",
   "trainAgain": "Train again",
-  "lastDoneAgo": "{n, plural, =0{Done today} =1{Done yesterday} other{{n} days ago}}",
+  "lastDoneAgo": "{n, plural, =0{Done today} one{Done yesterday} other{{n} days ago}}",
   "@lastDoneAgo": {
     "placeholders": {
       "n": {
@@ -1603,7 +1603,7 @@
   "planBody": "{sex}, {age} years old, {height} tall, {weight}.",
   "planDays": "I want to train {n} days a week.",
   "planNoHistory": "No workouts logged yet: treat me as a beginner and keep volume and weights conservative.",
-  "planHistory": "{n, plural, =1{1 workout logged in the last 30 days.} other{{n} workouts logged in the last 30 days.}}",
+  "planHistory": "{n, plural, one{1 workout logged in the last 30 days.} other{{n} workouts logged in the last 30 days.}}",
   "planBestLifts": "Best recent sets",
   "planAskFirst": "If you don’t know my goal (strength, muscle, fat loss or general fitness) or how long each session can last, ask me first in one short message. Once you have it, answer with JSON only.",
   "@planBody": {
@@ -1738,7 +1738,7 @@
     }
   },
   "goalReached": "Goal reached",
-  "goalDaysLeft": "{n, plural, =1{1 day left} other{{n} days left}}",
+  "goalDaysLeft": "{n, plural, one{1 day left} other{{n} days left}}",
   "@goalDaysLeft": {
     "placeholders": {
       "n": {
@@ -1762,7 +1762,7 @@
     }
   },
   "addToRoutine": "Add to routine",
-  "inRoutines": "{n, plural, =0{Not in any routine yet} =1{In 1 routine} other{In {n} routines}}",
+  "inRoutines": "{n, plural, =0{Not in any routine yet} one{In 1 routine} other{In {n} routines}}",
   "@inRoutines": {
     "placeholders": {
       "n": {
@@ -2043,7 +2043,7 @@
     }
   },
   "bodyweightLabel": "Bodyweight",
-  "copiedMealToast": "{count, plural, =1{1 food copied} other{{count} foods copied}}",
+  "copiedMealToast": "{count, plural, one{1 food copied} other{{count} foods copied}}",
   "@copiedMealToast": {
     "placeholders": {
       "count": {
@@ -2079,7 +2079,7 @@
     }
   },
   "perServingShort": "per serving",
-  "portionUnit": "{count, plural, =1{1 piece} other{{count} pieces}}",
+  "portionUnit": "{count, plural, one{1 piece} other{{count} pieces}}",
   "@portionUnit": {
     "placeholders": {
       "count": {
@@ -2087,7 +2087,7 @@
       }
     }
   },
-  "portionSlice": "{count, plural, =1{1 slice} other{{count} slices}}",
+  "portionSlice": "{count, plural, one{1 slice} other{{count} slices}}",
   "@portionSlice": {
     "placeholders": {
       "count": {
@@ -2095,7 +2095,7 @@
       }
     }
   },
-  "portionScoop": "{count, plural, =1{1 scoop} other{{count} scoops}}",
+  "portionScoop": "{count, plural, one{1 scoop} other{{count} scoops}}",
   "@portionScoop": {
     "placeholders": {
       "count": {
@@ -2103,7 +2103,7 @@
       }
     }
   },
-  "portionTbsp": "{count, plural, =1{1 tbsp} other{{count} tbsp}}",
+  "portionTbsp": "{count, plural, one{1 tbsp} other{{count} tbsp}}",
   "@portionTbsp": {
     "placeholders": {
       "count": {
@@ -2111,7 +2111,7 @@
       }
     }
   },
-  "portionTsp": "{count, plural, =1{1 tsp} other{{count} tsp}}",
+  "portionTsp": "{count, plural, one{1 tsp} other{{count} tsp}}",
   "@portionTsp": {
     "placeholders": {
       "count": {
@@ -2119,7 +2119,7 @@
       }
     }
   },
-  "portionCup": "{count, plural, =1{1 cup} other{{count} cups}}",
+  "portionCup": "{count, plural, one{1 cup} other{{count} cups}}",
   "@portionCup": {
     "placeholders": {
       "count": {
@@ -2127,7 +2127,7 @@
       }
     }
   },
-  "portionGlass": "{count, plural, =1{1 glass} other{{count} glasses}}",
+  "portionGlass": "{count, plural, one{1 glass} other{{count} glasses}}",
   "@portionGlass": {
     "placeholders": {
       "count": {
@@ -2136,7 +2136,7 @@
     }
   },
   "recentFoods": "Recent",
-  "recipeItems": "{count, plural, =1{1 food} other{{count} foods}}",
+  "recipeItems": "{count, plural, one{1 food} other{{count} foods}}",
   "@recipeItems": {
     "placeholders": {
       "count": {
@@ -2190,7 +2190,7 @@
       }
     }
   },
-  "weekLoggedDays": "{count, plural, =1{1 day logged} other{{count} days logged}}",
+  "weekLoggedDays": "{count, plural, one{1 day logged} other{{count} days logged}}",
   "@weekLoggedDays": {
     "placeholders": {
       "count": {
@@ -2450,7 +2450,7 @@
   "planFromDay": "Copy this day",
   "planNewHint": "Plan your days like your routines, then log a whole meal with one tap.",
   "planLogDay": "Log the empty meals",
-  "planLogged": "{n, plural, =1{1 food logged} other{{n} foods logged}}",
+  "planLogged": "{n, plural, one{1 food logged} other{{n} foods logged}}",
   "@planLogged": {
     "placeholders": {
       "n": {
@@ -2487,7 +2487,7 @@
   "nutritionAboutOk": "Got it",
   "planShare": "Share",
   "planImport": "Import a plan",
-  "planImported": "{n, plural, =1{1 plan imported} other{{n} plans imported}}",
+  "planImported": "{n, plural, one{1 plan imported} other{{n} plans imported}}",
   "@planImported": {
     "placeholders": {
       "n": {
@@ -2515,7 +2515,7 @@
   "notifSuppTap": "Tick it off in GymMane once you've taken it.",
   "suppNoneToday": "Nothing to take today.",
   "suppOtherDays": "Other days",
-  "suppEveryN": "{n, plural, =1{Every day} other{Every {n} days}}",
+  "suppEveryN": "{n, plural, one{Every day} other{Every {n} days}}",
   "@suppEveryN": {
     "placeholders": {
       "n": {
@@ -2544,7 +2544,7 @@
   "suppEveryShort": "Every X days",
   "suppWhen": "When",
   "suppEveryLead": "Every",
-  "suppEveryTail": "{n, plural, =1{day} other{days}}",
+  "suppEveryTail": "{n, plural, one{day} other{days}}",
   "@suppEveryTail": {
     "placeholders": {
       "n": {
@@ -2609,7 +2609,7 @@
   "mealMoveTo": "Move to",
   "mealClear": "Clear meal",
   "mealCleared": "Meal cleared",
-  "movedMealToast": "{count, plural, =1{1 food moved} other{{count} foods moved}}",
+  "movedMealToast": "{count, plural, one{1 food moved} other{{count} foods moved}}",
   "@movedMealToast": {
     "placeholders": {
       "count": {
@@ -2630,7 +2630,7 @@
   "movedToDay": "Moved",
   "favFoodsHint": "Tap ☆ on a food",
   "favFoodsEmpty": "Tap the star on any food to keep it here, one tap away.",
-  "savedMealsCount": "{count, plural, =1{1 meal} other{{count} meals}}",
+  "savedMealsCount": "{count, plural, one{1 meal} other{{count} meals}}",
   "@savedMealsCount": {
     "placeholders": {
       "count": {
