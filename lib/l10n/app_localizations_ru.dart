@@ -5495,4 +5495,32 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get baselineHowWaist => 'Measure around the waist, navel level';
+
+  @override
+  String get fbRehabSection => 'Rehab log';
+
+  @override
+  String get rehabStPhaseDesc1 =>
+      'Activation: dead bug, glute bridge, bird dog + brisk walks (2 wks, 8 sessions)';
+
+  @override
+  String get rehabStPhaseDesc2 => 'Progression: add plank, side plank, single-leg bridge (2 wks, 8 sessions)';
+
+  @override
+  String get rehabStPhaseDesc3 =>
+      'Consolidation: advanced mix + knee push-ups / wall sit (4 wks, 12 sessions)';
+
+  @override
+  String get rehabStPhaseDescMaintain =>
+      'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold volume';
+
+  @override
+  String get rehabStLightDescGreen => 'All three questions improved → progress the plan';
+
+  @override
+  String get rehabStLightDescAmber => 'Plateau (no change in a week) → repeat the phase, don\'t add load';
+
+  @override
+  String get rehabStLightDescRed =>
+      'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor';
 }

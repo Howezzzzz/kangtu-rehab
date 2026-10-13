@@ -1,5 +1,6 @@
 // 「日志」合并回归测试（ISS-028）：康复日志并入统一日志后的模型/CRUD/迁移。
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gymmane/models/rehab_episode.dart';
 import 'package:gymmane/models/rehab_log.dart';
 import 'package:gymmane/services/local_store.dart';
 import 'package:gymmane/state/fit_state.dart';
@@ -69,5 +70,25 @@ void main() {
     expect(map['rehabLog'], isA<List>());
     expect((map['rehabLog'] as List).length, 1);
     expect(map['rehabLogMerged'], isTrue);
+  });
+
+  test('upsertRehabLogForDay：同一天只更新不新增', () {
+    fit.upsertRehabLogForDay(DateTime(2026, 5, 1, 9), 1, 'g', '还好');
+    fit.upsertRehabLogForDay(DateTime(2026, 5, 1, 20), 2, 'y', '有点紧');
+    expect(fit.rehabLog.length, 1);
+    expect(fit.rehabLog.single.phase, 2);
+    expect(fit.rehabLog.single.light, 'y');
+    expect(fit.rehabLog.single.feel, '有点紧');
+
+    fit.upsertRehabLogForDay(DateTime(2026, 5, 2, 9), 3, 'r', '退步');
+    expect(fit.rehabLog.length, 2);
+    expect(fit.rehabLog.first.date.day, 2);
+  });
+
+  test('hasActiveRehab 判定（训练反馈据此显示康复记录）', () {
+    expect(fit.hasActiveRehab, isFalse);
+    fit.createEpisode(RehabEpisode(
+        id: 'ep1', title: '腰部康复', createdAt: DateTime.now(), area: 'lowback', status: 'active'));
+    expect(fit.hasActiveRehab, isTrue);
   });
 }

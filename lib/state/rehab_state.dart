@@ -31,6 +31,27 @@ mixin RehabState on FitCore {
     notifyListeners();
   }
 
+  /// 是否有进行中的康复档案（决定训练反馈里是否出现康复记录）。
+  bool get hasActiveRehab => rehabEpisodes.any((e) => e.status == 'active');
+
+  /// 按「日」写入/更新一条康复日志（训练反馈用：同一天重复保存只更新不新增）。
+  void upsertRehabLogForDay(DateTime day, int phase, String light, String feel) {
+    final key = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
+    String dayKey(DateTime d) =>
+        '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+    final i = rehabLog.indexWhere((x) => dayKey(x.date) == key);
+    if (i >= 0) {
+      rehabLog[i] = RehabLogEntry(
+          id: rehabLog[i].id, date: rehabLog[i].date, phase: phase, light: light, feel: feel);
+    } else {
+      rehabLog.insert(0,
+          RehabLogEntry(id: 'r${day.millisecondsSinceEpoch}', date: day, phase: phase, light: light, feel: feel));
+      rehabLog.sort((a, b) => b.date.compareTo(a.date));
+    }
+    persistNow();
+    notifyListeners();
+  }
+
   /// 一次性把旧康复手册日志（prefs `rehab_log_v1`）迁进统一日志。
   Future<void> migrateRehabLog() async {
     if (rehabLogMerged) return;

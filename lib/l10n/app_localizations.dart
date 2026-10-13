@@ -9531,6 +9531,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Measure around the waist, navel level'**
   String get baselineHowWaist;
+
+  /// No description provided for @fbRehabSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Rehab log'**
+  String get fbRehabSection;
+
+  /// No description provided for @rehabStPhaseDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Activation: dead bug, glute bridge, bird dog + brisk walks (2 wks, 8 sessions)'**
+  String get rehabStPhaseDesc1;
+
+  /// No description provided for @rehabStPhaseDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Progression: add plank, side plank, single-leg bridge (2 wks, 8 sessions)'**
+  String get rehabStPhaseDesc2;
+
+  /// No description provided for @rehabStPhaseDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Consolidation: advanced mix + knee push-ups / wall sit (4 wks, 12 sessions)'**
+  String get rehabStPhaseDesc3;
+
+  /// No description provided for @rehabStPhaseDescMaintain.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold volume'**
+  String get rehabStPhaseDescMaintain;
+
+  /// No description provided for @rehabStLightDescGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'All three questions improved → progress the plan'**
+  String get rehabStLightDescGreen;
+
+  /// No description provided for @rehabStLightDescAmber.
+  ///
+  /// In en, this message translates to:
+  /// **'Plateau (no change in a week) → repeat the phase, don\'t add load'**
+  String get rehabStLightDescAmber;
+
+  /// No description provided for @rehabStLightDescRed.
+  ///
+  /// In en, this message translates to:
+  /// **'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor'**
+  String get rehabStLightDescRed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

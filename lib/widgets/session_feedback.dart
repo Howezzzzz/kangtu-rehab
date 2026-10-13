@@ -14,6 +14,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import 'glass.dart';
 import 'liquid_notch.dart';
+import 'rehab_pick.dart';
 import 'ui_kit.dart';
 
 /// 0 很轻松 / 1 刚好 / 2 吃力 / 3 拼到底
@@ -66,6 +67,9 @@ bool rehabFeedbackHint(String painArea, int painLevel) =>
 
 bool _rehabWorthMentioning(LoggedSession s) => rehabFeedbackHint(s.painArea, s.painLevel);
 
+bool _sameDay(DateTime a, DateTime b) =>
+    a.year == b.year && a.month == b.month && a.day == b.day;
+
 Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) async {
   final gc = context.gc;
   await showAppSheet<void>(
@@ -77,6 +81,10 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
       var painArea = s.painArea;
       var pain = s.painLevel;
       final note = TextEditingController(text: s.note);
+      final existingLog =
+          fit.rehabLog.where((x) => _sameDay(x.date, s.date)).firstOrNull;
+      var rPhase = existingLog?.phase ?? 1;
+      var rLight = existingLog?.light ?? 'g';
       return StatefulBuilder(
         builder: (sheetCtx, setSheet) {
           return Container(
@@ -163,6 +171,18 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
                             borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
                       ),
                     ),
+                    if (fit.hasActiveRehab) ...[
+                      const SizedBox(height: 20),
+                      Text(t.fbRehabSection,
+                          style: AppTheme.d(14, weight: FontWeight.w700, color: gc.text)),
+                      const SizedBox(height: 10),
+                      RehabPick(
+                        phase: rPhase,
+                        light: rLight,
+                        onPhase: (p) => setSheet(() => rPhase = p),
+                        onLight: (l) => setSheet(() => rLight = l),
+                      ),
+                    ],
                     if (rehabFeedbackHint(painArea, pain)) ...[
                       const SizedBox(height: 12),
                       Row(children: [
@@ -184,6 +204,9 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
                             painArea: painArea,
                             painLevel: pain,
                             note: note.text.trim());
+                        if (fit.hasActiveRehab) {
+                          fit.upsertRehabLogForDay(s.date, rPhase, rLight, note.text.trim());
+                        }
                         Navigator.of(sheetCtx).pop();
                         showNotchToast(context, t.fbTitle,
                             icon: PhosphorIconsFill.checkCircle, accent: context.gc.sage);

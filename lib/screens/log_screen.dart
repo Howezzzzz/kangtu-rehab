@@ -14,6 +14,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import '../widgets/charts.dart';
 import '../widgets/glass.dart';
+import '../widgets/rehab_pick.dart';
 import '../widgets/ui_kit.dart';
 import 'progress_screen.dart' show showDaySheet;
 import 'start_sheet.dart' show showStartSheet;
@@ -276,51 +277,11 @@ class _RehabLogSheetState extends State<RehabLogSheet> {
           Text(widget.existing == null ? t.logAddRehab : t.rehabHandHistory,
               style: AppTheme.f(19, weight: FontWeight.w800, color: gc.text)),
           const SizedBox(height: 14),
-          Wrap(
-            spacing: 6,
-            children: [
-              for (final ph in const [0, 1, 2, 3, 4])
-                GestureDetector(
-                  onTap: () => setState(() => _phase = ph),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                    decoration: BoxDecoration(
-                      color: _phase == ph ? gc.ember : gc.mutedFill,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Text(ph == 4 ? t.rehabHandMaintain : t.rehabLogStage('$ph'),
-                        style: AppTheme.f(12,
-                            weight: FontWeight.w700, color: _phase == ph ? gc.onEmber : gc.textSecondary)),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              for (final l in const ['g', 'y', 'r'])
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => _light = l),
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 6),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: _light == l ? gc.ember : gc.mutedFill,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Text(
-                            l == 'g'
-                                ? t.rehabHandTrafficGreen
-                                : (l == 'y' ? t.rehabHandTrafficYellow : t.rehabHandTrafficRed),
-                            style: AppTheme.f(12,
-                                weight: FontWeight.w800, color: _light == l ? gc.onEmber : gc.textSecondary)),
-                      ),
-                    ),
-                  ),
-                ),
-            ],
+          RehabPick(
+            phase: _phase,
+            light: _light,
+            onPhase: (p) => setState(() => _phase = p),
+            onLight: (l) => setState(() => _light = l),
           ),
           const SizedBox(height: 12),
           TextField(

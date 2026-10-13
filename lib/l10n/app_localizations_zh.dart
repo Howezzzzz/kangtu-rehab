@@ -5172,6 +5172,30 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get baselineHowWaist => '绕脐水平或肋骨下缘至髂嵴中点一圈';
+
+  @override
+  String get fbRehabSection => '康复记录';
+
+  @override
+  String get rehabStPhaseDesc1 => '基础激活：死虫式＋臀桥＋鸟狗式＋快走有氧（2 周·8 次·15~18 分钟）';
+
+  @override
+  String get rehabStPhaseDesc2 => '稳定进阶：加入平板＋侧平板＋单腿臀桥（2 周·8 次·20~25 分钟）';
+
+  @override
+  String get rehabStPhaseDesc3 => '巩固强化：全套进阶＋跪姿俯卧撑／靠墙静蹲（4 周·12 次·约 30 分钟）';
+
+  @override
+  String get rehabStPhaseDescMaintain => '目标从「变强」转为「不退步」；每周 2~3 次，量维持';
+
+  @override
+  String get rehabStLightDescGreen => '三问都好转 → 按课表升级';
+
+  @override
+  String get rehabStLightDescAmber => '平台期（一周无变化）→ 当前阶段再练一周，别加量';
+
+  @override
+  String get rehabStLightDescRed => '任何一项倒退 → 退回上一阶段；连续倒退或红线症状 → 停练＋复诊';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -9993,4 +10017,32 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get baselineHowWaist => 'Measure around the waist, navel level';
+
+  @override
+  String get fbRehabSection => 'Rehab log';
+
+  @override
+  String get rehabStPhaseDesc1 =>
+      'Activation: dead bug, glute bridge, bird dog + brisk walks (2 wks, 8 sessions)';
+
+  @override
+  String get rehabStPhaseDesc2 => 'Progression: add plank, side plank, single-leg bridge (2 wks, 8 sessions)';
+
+  @override
+  String get rehabStPhaseDesc3 =>
+      'Consolidation: advanced mix + knee push-ups / wall sit (4 wks, 12 sessions)';
+
+  @override
+  String get rehabStPhaseDescMaintain =>
+      'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold volume';
+
+  @override
+  String get rehabStLightDescGreen => 'All three questions improved → progress the plan';
+
+  @override
+  String get rehabStLightDescAmber => 'Plateau (no change in a week) → repeat the phase, don\'t add load';
+
+  @override
+  String get rehabStLightDescRed =>
+      'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor';
 }
