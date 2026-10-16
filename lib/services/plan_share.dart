@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../models/plan_cycle.dart';
+
 class PlanSet {
   const PlanSet({this.reps, this.weightKg, this.kind = 0, this.sec, this.km});
   final int? reps;
@@ -73,6 +75,41 @@ const _weekdayNames = {
   6: ['saturday', 'sat', 'sabado', 'sab', 'sabato', 'samstag', 'sa'],
   7: ['sunday', 'sun', 'domingo', 'dom', 'domenica', 'sonntag', 'so'],
 };
+
+/// 从 AI 返回的 JSON 顶层解析「训练时间周期」字段（可选）。
+/// 兼容两种写法：
+/// - `"cycle": {"start": "2026-10-19", "weeks": 12, "perWeek": 3}`（全局周期）
+/// - 顶层直接给 `"start"` / `"weeks"` / `"perWeek"`（展开式）
+/// 返回 null 表示没给周期（调用方保持旧行为，零影响）。
+PlanCycle? parseCycle(String raw) {
+  final data = _decode(raw);
+  if (data is! Map<Object?, Object?>) return null;
+  final c = _value(data, ['cycle', 'period', 'ciclo']);
+  Map<Object?, Object?>? src;
+  if (c is Map<Object?, Object?>) {
+    src = c;
+  } else {
+    final start = _value(data, ['start', 'startdate', 'fecha']);
+    final weeks = _value(data, ['weeks', 'totalweeks', 'durationweeks']);
+    final perWeek = _value(data, ['perweek', 'frequency', 'daysperweek']);
+    if (start == null && weeks == null && perWeek == null) return null;
+    src = data;
+  }
+  final start = _value(src, ['start', 'startdate', 'fecha']);
+  final weeks = _value(src, ['weeks', 'totalweeks', 'durationweeks']);
+  final perWeek = _value(src, ['perweek', 'frequency', 'daysperweek']);
+  if (weeks == null && perWeek == null && start == null) return null;
+  final pinned = _value(src, ['days', 'pinned', 'pinneddays', 'weekdays', 'on']);
+  final startDate = start is String ? DateTime.tryParse(start) : null;
+  if (startDate == null && start is! String) return null;
+  final days = _days(pinned);
+  return PlanCycle(
+    start: PlanCycle.dayOnly(startDate ?? DateTime.now()),
+    weeks: (_int(weeks) ?? 8).clamp(1, 104),
+    perWeek: days.isNotEmpty ? days.length : (_int(perWeek) ?? 3).clamp(1, 7),
+    pinnedDays: days,
+  );
+}
 
 List<PlanRoutine> parsePlan(String raw) {
   final data = _decode(raw);

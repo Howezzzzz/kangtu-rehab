@@ -43,7 +43,7 @@ class _BaselineScreenState extends State<BaselineScreen> {
     final out = <BaselineItem>[];
     for (final d in kBaselineFitness) {
       final v = double.tryParse(_c[d.code]!.text.trim());
-      if (v != null && v > 0) out.add(BaselineItem(d.code, v));
+      if (v != null && v.isFinite && v >= d.min && v <= d.max) out.add(BaselineItem(d.code, v));
     }
     return out;
   }
@@ -254,5 +254,7 @@ class _BaselineScreenState extends State<BaselineScreen> {
         _ => t.baselineHowWaist,
       };
 
-  String _fmt(double v) => v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1);
+  String _fmt(double v) => !v.isFinite
+      ? '—'
+      : (v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1));
 }

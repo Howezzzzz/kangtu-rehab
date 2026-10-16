@@ -16,6 +16,7 @@ import '../l10n/l10n.dart';
 import '../models/exercise.dart';
 import '../models/baseline.dart';
 import '../models/live_session.dart';
+import '../models/plan_cycle.dart';
 import '../models/rehab_log.dart';
 import '../models/measure.dart';
 import '../models/note.dart';
@@ -87,6 +88,12 @@ class FitState extends FitCore
         ..addAll((data['baselines'] as List)
             .whereType<Map>()
             .map((m) => BaselineSession.fromJson(m.cast<String, dynamic>())));
+    }
+    if (data['planCycles'] is Map) {
+      planCycles
+        ..clear()
+        ..addAll((data['planCycles'] as Map).map((k, v) =>
+            MapEntry(k as String, PlanCycle.fromJson((v as Map).cast<String, dynamic>()))));
     }
     if (data['language'] == null) _adoptDeviceLanguage();
     if (data.isNotEmpty) {
@@ -465,6 +472,7 @@ class FitState extends FitCore
         'rehabLog': rehabLog.map((e) => e.toJson()).toList(),
         'rehabLogMerged': rehabLogMerged,
         'baselines': baselines.map((b) => b.toJson()).toList(),
+        'planCycles': planCycles.map((k, v) => MapEntry(k, v.toJson())),
         'places': places.map((p) => p.toJson()).toList(),
         'place': activePlaceId,
         'checkins': checkins.toList(),
@@ -530,8 +538,9 @@ class FitState extends FitCore
     planExtras.clear();
     multiPlan = false;
     rehabLog.clear();
-    rehabLogMerged = false;
+    rehabLogMerged = true;
     baselines.clear();
+    planCycles.clear();
     customExercises.clear();
     exerciseMedia.clear();
     repsOnly.clear();
@@ -662,6 +671,34 @@ class FitState extends FitCore
     bodyTimeline = map['bodyTl'] as bool? ?? bodyTimeline;
     loadNutrition((map['nutrition'] as Map?)?.cast<String, dynamic>(), restored: restoredFoods);
     loadSteps((map['steps'] as Map?)?.cast<String, dynamic>());
+    if (map['rehabEp'] is List) {
+      rehabEpisodes
+        ..clear()
+        ..addAll((map['rehabEp'] as List)
+            .whereType<Map>()
+            .map((m) => RehabEpisode.fromJson(m.cast<String, dynamic>())));
+    }
+    if (map['rehabLog'] is List) {
+      rehabLog
+        ..clear()
+        ..addAll((map['rehabLog'] as List)
+            .whereType<Map>()
+            .map((m) => RehabLogEntry.fromJson(m.cast<String, dynamic>())));
+    }
+    rehabLogMerged = map['rehabLogMerged'] == true;
+    if (map['baselines'] is List) {
+      baselines
+        ..clear()
+        ..addAll((map['baselines'] as List)
+            .whereType<Map>()
+            .map((m) => BaselineSession.fromJson(m.cast<String, dynamic>())));
+    }
+    if (map['planCycles'] is Map) {
+      planCycles
+        ..clear()
+        ..addAll((map['planCycles'] as Map).map((k, v) =>
+            MapEntry(k as String, PlanCycle.fromJson((v as Map).cast<String, dynamic>()))));
+    }
     _seedCalculatorsFromProfile();
     _loading = false;
     _persist();
@@ -809,6 +846,25 @@ class FitState extends FitCore
       '  {"name": "Week 2", "routines": [{"name": "Day A", "exercises": [{"name": "Barbell Full Squat", "sets": 4, "reps": 8}]}]}\n'
       ']}';
 
+  /// 带「训练时间周期」的完整导出模板（教 AI 输出周期：起始日+总周数+每周次数）。
+  static const planCycleTemplate = '{\n'
+      '  "program": "Upper Lower",\n'
+      '  "unit": "kg",\n'
+      '  "cycle": {"start": "2026-10-19", "weeks": 12, "perWeek": 3},\n'
+      '  "routines": [\n'
+      '    {\n'
+      '      "name": "Upper A",\n'
+      '      "days": ["Monday", "Thursday"],\n'
+      '      "exercises": [\n'
+      '        {"name": "Barbell Bench Press", "sets": 4, "reps": 8, "weight": 60, "rest": 120,\n'
+      '         "plan": [{"type": "warmup", "reps": 10, "weight": 30}]},\n'
+      '        {"name": "Barbell Bent Over Row", "sets": 4, "reps": 8, "superset": true},\n'
+      '        {"name": "Dumbbell Biceps Curl", "sets": 3, "reps": 12}\n'
+      '      ]\n'
+      '    }\n'
+      '  ]\n'
+      '}';
+
   String planRequestText() {
     final here = allExercises.where((e) => fitsHere(e) && !isArchived(e.id)).toList();
     final month = DateTime.now().subtract(const Duration(days: 30));
@@ -825,7 +881,8 @@ class FitState extends FitCore
       '',
       t.planIntro,
       t.planFormat,
-      planTemplate,
+      t.planCycleAsk,
+      FitState.planCycleTemplate,
       t.planFormatNotes,
       planWeeksTemplate,
       '',
@@ -842,7 +899,7 @@ class FitState extends FitCore
   ({int added, List<String> missed, bool readable}) importPlan(String raw, {bool schedule = false}) {
     final plans = parsePlan(raw);
     if (plans.isEmpty) return (added: 0, missed: const [], readable: false);
-    final result = applyPlan(plans, schedule: schedule);
+    final result = applyPlan(plans, schedule: schedule, cycle: parseCycle(raw));
     return (added: result.added, missed: result.missed, readable: true);
   }
 
@@ -891,7 +948,7 @@ class FitState extends FitCore
       [for (var i = 0; i < ids.length; i++) r.exerciseIds[i] == ids[i]].every((x) => x);
 
   ({int routines, int added, List<String> missed}) applyPlan(List<PlanRoutine> plans,
-      {bool schedule = false}) {
+      {bool schedule = false, PlanCycle? cycle}) {
     var made = 0, added = 0;
     final missed = <String>[];
     for (final plan in plans) {
@@ -931,6 +988,17 @@ class FitState extends FitCore
         for (final d in plan.days) {
           weeklyPlan[d] = id;
         }
+      }
+      if (cycle != null) {
+        final c = plan.days.isNotEmpty && cycle.pinnedDays.isEmpty
+            ? PlanCycle(
+                start: cycle.start,
+                weeks: cycle.weeks,
+                perWeek: plan.days.length,
+                pinnedDays: plan.days,
+                round: cycle.round)
+            : cycle;
+        setCycle(id, c);
       }
     }
     if (added > 0 || schedule) {

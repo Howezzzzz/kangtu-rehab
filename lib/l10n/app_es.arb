@@ -1575,5 +1575,20 @@
   "rehabStPhaseDescMaintain": "Goal shifts from \"get stronger\" to \"don't regress\"; 2–3×/week, hold volume",
   "rehabStLightDescGreen": "All three questions improved → progress the plan",
   "rehabStLightDescAmber": "Plateau (no change in a week) → repeat the phase, don't add load",
-  "rehabStLightDescRed": "Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor"
+  "rehabStLightDescRed": "Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor",
+  "cycleTitle": "Cycle",
+  "cycleEnable": "Use a cycle",
+  "cycleHint": "Set a full cycle; training days are spaced automatically (no fixed weekdays)",
+  "cycleStart": "Start",
+  "cycleWeeks": "Weeks",
+  "cyclePerWeek": "Per week",
+  "cyclePinHint": "Pin weekdays (optional)",
+  "cycleWeekXY": "Week {x} of {y}",
+  "cycleDone": "{d} of {e} done",
+  "cycleComplete": "Cycle complete",
+  "cycleRenew": "Next round",
+  "cycleOff": "End cycle",
+  "cycleRound": "Round {n}",
+  "planCycleAsk": "Plan the training period too: add a top-level \"cycle\" object with \"start\" (e.g. \"2026-10-19\"), \"weeks\" (total weeks) and \"perWeek\" (sessions per week). You may also set \"days\": [1..7] to pin exact weekdays. Follow this shape:",
+  "planCycleApplied": "Training cycle applied ({weeks} weeks, {n}×/week)"
 }

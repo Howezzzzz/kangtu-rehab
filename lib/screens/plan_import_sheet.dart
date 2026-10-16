@@ -111,12 +111,17 @@ class _PlanImportSheetState extends State<_PlanImportSheet> {
   }
 
   void _apply() {
-    final result = fit.applyPlan(_plans, schedule: _schedule);
+    final cycle = _text.text.trim().isEmpty ? null : parseCycle(_text.text);
+    final result = fit.applyPlan(_plans, schedule: _schedule, cycle: cycle);
     final gc = context.gc;
     showNotchToast(
       context,
       result.routines > 0 ? t.routinesAdded(result.routines) : t.nothingToImport,
-      subtitle: result.routines > 0 ? t.exerciseCount(result.added) : null,
+      subtitle: result.routines > 0
+          ? cycle == null
+              ? t.exerciseCount(result.added)
+              : t.planCycleApplied(cycle.weeks, cycle.perWeek)
+          : null,
       icon: result.routines > 0 ? PhosphorIconsFill.checkCircle : PhosphorIconsFill.warningCircle,
       accent: result.routines > 0 ? gc.sage : gc.warn,
     );

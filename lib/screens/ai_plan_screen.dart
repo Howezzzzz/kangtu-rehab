@@ -29,6 +29,7 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
   int _routines = 0;
   bool _unreadable = false;
   bool _format = false;
+  String? _cycleNote;
 
   @override
   void dispose() {
@@ -203,6 +204,11 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
           ],
           if (good) ...[
             const SizedBox(height: 10),
+            if (_cycleNote != null) ...[
+              Text(_cycleNote!,
+                  style: AppTheme.f(12, weight: FontWeight.w600, color: gc.accent)),
+              const SizedBox(height: 6),
+            ],
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: fit.backFromAiPlan,
@@ -260,12 +266,16 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
       });
       return;
     }
-    final outcome = fit.applyPlan(plans, schedule: fit.weeklyPlan.isEmpty);
+    final outcome = fit.applyPlan(plans, schedule: fit.weeklyPlan.isEmpty, cycle: parseCycle(raw));
+    final cycle = parseCycle(raw);
     setState(() {
       _unreadable = false;
       _added = outcome.added;
       _routines = outcome.routines;
       _missed = outcome.missed;
+      _cycleNote = cycle == null
+          ? null
+          : t.planCycleApplied(cycle.weeks, cycle.perWeek);
     });
   }
 }

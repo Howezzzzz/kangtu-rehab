@@ -5,6 +5,7 @@ import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import '../catalog/exercise_catalog.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';
+import '../models/plan_cycle.dart';
 import '../models/workout.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
@@ -234,8 +235,29 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
         const SizedBox(height: 18),
         _colors(gc, routine),
         const SizedBox(height: 22),
-        Text(t.schedule, style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
+        Row(
+          children: [
+            Expanded(
+              child: Text(t.schedule,
+                  style: AppTheme.f(12,
+                      weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
+            ),
+            GestureDetector(
+              onTap: () => _toggleCycle(routine),
+              child: Row(children: [
+                Text(t.cycleEnable,
+                    style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary)),
+                const SizedBox(width: 8),
+                TinySwitch(on: fit.cycleOf(routine.id) != null),
+              ]),
+            ),
+          ],
+        ),
         const SizedBox(height: 10),
+        if (fit.cycleOf(routine.id) != null) _cycleCard(gc, routine),
+        Text(fit.cycleOf(routine.id) != null ? t.cyclePinHint : t.schedule,
+            style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textTertiary)),
+        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [for (int i = 0; i < 7; i++) _dayToggle(gc, i)],
@@ -371,9 +393,27 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
 
   Widget _dayToggle(GymColors gc, int i) {
     final weekday = fit.weekdayAt(i);
-    final on = fit.plannedOn(weekday, _id);
+    final c = fit.cycleOf(_id);
+    final on = c != null ? c.pinnedDays.contains(weekday) : fit.plannedOn(weekday, _id);
     return GestureDetector(
-      onTap: () => fit.togglePlanDay(weekday, _id),
+      onTap: () {
+        if (c == null) {
+          fit.togglePlanDay(weekday, _id);
+        } else {
+          final days = [...c.pinnedDays];
+          days.contains(weekday) ? days.remove(weekday) : days.add(weekday);
+          days.sort();
+          fit.setCycle(
+              _id,
+              PlanCycle(
+                  start: c.start,
+                  weeks: c.weeks,
+                  perWeek: c.perWeek,
+                  pinnedDays: days,
+                  round: c.round));
+        }
+        setState(() {});
+      },
       child: Container(
         width: 38,
         height: 38,
@@ -387,6 +427,151 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       ),
     );
   }
+
+  // ---- 排期周期 ----
+  void _toggleCycle(Routine routine) {
+    final c = fit.cycleOf(routine.id);
+    if (c != null) {
+      fit.clearCycle(routine.id);
+    } else {
+      // 用当前旧的周几作为默认「钉日」，平滑过渡
+      final pinned = <int>[
+        for (int i = 0; i < 7; i++)
+          if (fit.plannedOn(fit.weekdayAt(i), routine.id)) fit.weekdayAt(i),
+      ];
+      fit.setCycle(
+          routine.id,
+          PlanCycle(
+              start: PlanCycle.dayOnly(DateTime.now()),
+              weeks: 8,
+              perWeek: pinned.isNotEmpty ? pinned.length : 3,
+              pinnedDays: pinned));
+    }
+    setState(() {});
+  }
+
+  Widget _cycleCard(GymColors gc, Routine routine) {
+    final c = fit.cycleOf(routine.id)!;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: SoftCard(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _cycleRow(gc, t.cycleStart, _shortDate(c.start), () async {
+              final d = await showDatePicker(
+                context: context,
+                initialDate: c.start,
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2100),
+              );
+              if (d == null) return;
+              fit.setCycle(
+                  routine.id,
+                  PlanCycle(
+                      start: PlanCycle.dayOnly(d),
+                      weeks: c.weeks,
+                      perWeek: c.perWeek,
+                      pinnedDays: c.pinnedDays,
+                      round: c.round));
+              setState(() {});
+            }),
+            _cycleStep(gc, t.cycleWeeks, '${c.weeks}', routine, c, weeks: true),
+            _cycleStep(gc, t.cyclePerWeek, '${c.perWeek}', routine, c, weeks: false),
+            const SizedBox(height: 6),
+            Text(t.cycleHint,
+                style: AppTheme.f(11, weight: FontWeight.w500, color: gc.textTertiary)),
+            if (c.expired) ...[
+              const SizedBox(height: 12),
+              Text('${t.cycleComplete} · ${t.cycleRound(c.round)}',
+                  style: AppTheme.f(13, weight: FontWeight.w700, color: gc.sage)),
+              const SizedBox(height: 8),
+              Row(children: [
+                Expanded(
+                  child: PrimaryButton(
+                      label: t.cycleRenew,
+                      height: 42,
+                      onTap: () {
+                        fit.advanceCycle(routine.id);
+                        setState(() {});
+                      }),
+                ),
+                const SizedBox(width: 10),
+                GhostButton(
+                    label: t.cycleOff,
+                    icon: PhosphorIconsRegular.checkCircle,
+                    onTap: () {
+                      fit.clearCycle(routine.id);
+                      setState(() {});
+                    }),
+              ]),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _cycleRow(GymColors gc, String label, String value, VoidCallback onTap) =>
+      GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 7),
+          child: Row(children: [
+            Expanded(
+                child: Text(label,
+                    style: AppTheme.f(13, weight: FontWeight.w600, color: gc.text))),
+            Text(value, style: AppTheme.f(13.5, weight: FontWeight.w800, color: gc.ember)),
+            const SizedBox(width: 6),
+            Icon(PhosphorIconsRegular.caretRight, size: 14, color: gc.textTertiary),
+          ]),
+        ),
+      );
+
+  Widget _cycleStep(GymColors gc, String label, String value, Routine routine, PlanCycle c,
+      {required bool weeks}) {
+    void set(int v) {
+      fit.setCycle(
+          routine.id,
+          PlanCycle(
+              start: c.start,
+              weeks: weeks ? v.clamp(1, 104) : c.weeks,
+              perWeek: weeks ? c.perWeek : v.clamp(1, 7),
+              pinnedDays: c.pinnedDays,
+              round: c.round));
+      setState(() {});
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(children: [
+        Expanded(
+            child: Text(label, style: AppTheme.f(13, weight: FontWeight.w600, color: gc.text))),
+        _stepBtn(gc, '-', () => set((weeks ? c.weeks : c.perWeek) - 1)),
+        Container(
+          width: 42,
+          alignment: Alignment.center,
+          child: Text(value, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
+        ),
+        _stepBtn(gc, '+', () => set((weeks ? c.weeks : c.perWeek) + 1)),
+      ]),
+    );
+  }
+
+  Widget _stepBtn(GymColors gc, String s, VoidCallback onTap) => GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: 30,
+          height: 30,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(color: gc.bgRaised2, borderRadius: BorderRadius.circular(9)),
+          child: Text(s, style: AppTheme.f(16, weight: FontWeight.w800, color: gc.ember)),
+        ),
+      );
+
+  String _shortDate(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   Widget _rail(GymColors gc, {required bool top, required bool bottom}) => Center(
         child: Container(

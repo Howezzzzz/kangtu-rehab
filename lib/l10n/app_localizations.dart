@@ -9579,6 +9579,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor'**
   String get rehabStLightDescRed;
+
+  /// No description provided for @cycleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle'**
+  String get cycleTitle;
+
+  /// No description provided for @cycleEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a cycle'**
+  String get cycleEnable;
+
+  /// No description provided for @cycleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a full cycle; training days are spaced automatically (no fixed weekdays)'**
+  String get cycleHint;
+
+  /// No description provided for @cycleStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get cycleStart;
+
+  /// No description provided for @cycleWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'Weeks'**
+  String get cycleWeeks;
+
+  /// No description provided for @cyclePerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Per week'**
+  String get cyclePerWeek;
+
+  /// No description provided for @cyclePinHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin weekdays (optional)'**
+  String get cyclePinHint;
+
+  /// No description provided for @cycleWeekXY.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {x} of {y}'**
+  String cycleWeekXY(Object x, Object y);
+
+  /// No description provided for @cycleDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{d} of {e} done'**
+  String cycleDone(Object d, Object e);
+
+  /// No description provided for @cycleComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle complete'**
+  String get cycleComplete;
+
+  /// No description provided for @cycleRenew.
+  ///
+  /// In en, this message translates to:
+  /// **'Next round'**
+  String get cycleRenew;
+
+  /// No description provided for @cycleOff.
+  ///
+  /// In en, this message translates to:
+  /// **'End cycle'**
+  String get cycleOff;
+
+  /// No description provided for @cycleRound.
+  ///
+  /// In en, this message translates to:
+  /// **'Round {n}'**
+  String cycleRound(Object n);
+
+  /// AI plan: ask for a training cycle (start+weeks+perWeek)
+  ///
+  /// In en, this message translates to:
+  /// **'Plan the training period too: add a top-level \"cycle\" object with \"start\" (e.g. \"2026-10-19\"), \"weeks\" (total weeks) and \"perWeek\" (sessions per week). You may also set \"days\": [1..7] to pin exact weekdays. Follow this shape:'**
+  String get planCycleAsk;
+
+  /// Toast: cycle applied on import
+  ///
+  /// In en, this message translates to:
+  /// **'Training cycle applied ({weeks} weeks, {n}×/week)'**
+  String planCycleApplied(Object n, Object weeks);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

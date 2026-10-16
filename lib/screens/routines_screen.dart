@@ -66,6 +66,14 @@ class RoutinesScreen extends StatelessWidget {
               child: Column(children: [for (int i = 0; i < 7; i++) _dayRow(context, gc, i)]),
             ),
             const SizedBox(height: 26),
+            if (fit.planCycles.isNotEmpty) ...[
+              Text(t.cycleTitle,
+                  style: AppTheme.f(12,
+                      weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
+              const SizedBox(height: 10),
+              for (final e in fit.planCycles.entries) _cycleStatus(context, gc, e.key),
+              const SizedBox(height: 26),
+            ],
             Text(t.yourRoutines, style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
             const SizedBox(height: 10),
             if (fit.routines.isEmpty)
@@ -545,6 +553,46 @@ class RoutinesScreen extends StatelessWidget {
         c.dispose();
       }
     });
+  }
+
+  Widget _cycleStatus(BuildContext context, GymColors gc, String routineId) {
+    final c = fit.cycleOf(routineId);
+    final r = fit.routines.where((x) => x.id == routineId).firstOrNull;
+    if (c == null || r == null) return const SizedBox.shrink();
+    final wk = c.weekIndex(DateTime.now());
+    final done = fit.cycleDoneSessions(routineId);
+    final whole = c.weeks * c.perWeek;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: SoftCard(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(r.name, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
+                  const SizedBox(height: 2),
+                  Text(
+                    '${wk == null ? t.cycleComplete : t.cycleWeekXY('$wk', '${c.weeks}')}'
+                    ' · ${t.cycleDone('$done', '$whole')}'
+                    '${c.round > 1 ? ' · ${t.cycleRound(c.round)}' : ''}',
+                    style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textSecondary),
+                  ),
+                ],
+              ),
+            ),
+            if (c.expired)
+              TextButton(
+                onPressed: () => fit.advanceCycle(routineId),
+                child: Text(t.cycleRenew,
+                    style: AppTheme.f(12.5, weight: FontWeight.w700, color: gc.ember)),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _dayRow(BuildContext context, GymColors gc, int i) {

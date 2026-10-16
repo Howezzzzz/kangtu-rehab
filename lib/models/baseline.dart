@@ -1,21 +1,24 @@
 /// 自测基线（Baseline Self-Test）—— 先测身体基础值，再据此给训练计划定起始强度。
 /// v1 只做「普通档（fitness）」6 项、零器械；分龄参考值表与康复档（ODI/RMDQ/NPRS）留 v2。
 class BaselineDef {
-  const BaselineDef(this.code, this.unit, {this.higherIsBetter = true, this.safeForBack = true});
+  const BaselineDef(this.code, this.unit,
+      {this.higherIsBetter = true, this.safeForBack = true, this.min = 0, this.max = 100000});
   final String code;
   final String unit;
   final bool higherIsBetter; // 越大越好？（静息心率、腰围为 false）
   final bool safeForBack; // 腰痛者是否可做（跑跳类禁用）
+  final double min; // 合法下限（含）
+  final double max; // 合法上限（含）
 }
 
 /// v1 普通档 6 项（覆盖 ACSM 四要素：心肺/力量/柔韧/平衡/体成分）。
 const List<BaselineDef> kBaselineFitness = [
-  BaselineDef('resting_hr', 'bpm', higherIsBetter: false), // 心肺
-  BaselineDef('step_2min', '次'), // 心肺（Rikli & Jones 2 分钟原地踏步）
-  BaselineDef('chair_stand_30', '次'), // 下肢力量（30 秒坐站）
-  BaselineDef('single_leg_stand', '秒'), // 平衡（单脚站立·睁眼）
-  BaselineDef('sit_reach', 'cm'), // 柔韧（坐位体前屈）
-  BaselineDef('waist', 'cm', higherIsBetter: false), // 体成分
+  BaselineDef('resting_hr', 'bpm', higherIsBetter: false, min: 25, max: 250), // 心肺
+  BaselineDef('step_2min', '次', min: 1, max: 400), // 心肺（Rikli & Jones 2 分钟原地踏步）
+  BaselineDef('chair_stand_30', '次', min: 1, max: 120), // 下肢力量（30 秒坐站）
+  BaselineDef('single_leg_stand', '秒', min: 1, max: 600), // 平衡（单脚站立·睁眼）
+  BaselineDef('sit_reach', 'cm', min: -60, max: 60), // 柔韧（坐位体前屈，未触脚尖为负）
+  BaselineDef('waist', 'cm', higherIsBetter: false, min: 30, max: 300), // 体成分
 ];
 
 BaselineDef? baselineDef(String code) {

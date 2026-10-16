@@ -1,5 +1,6 @@
 // 「日志」合并回归测试（ISS-028）：康复日志并入统一日志后的模型/CRUD/迁移。
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gymmane/models/baseline.dart';
 import 'package:gymmane/models/rehab_episode.dart';
 import 'package:gymmane/models/rehab_log.dart';
 import 'package:gymmane/services/local_store.dart';
@@ -50,6 +51,7 @@ void main() {
     });
     await Store.instance.init();
     fit.resetAllData();
+    fit.rehabLogMerged = false; // 模拟全新安装
     expect(fit.rehabLogMerged, isFalse);
 
     await fit.migrateRehabLog();
@@ -57,10 +59,63 @@ void main() {
     expect(fit.rehabLogMerged, isTrue);
     expect(fit.rehabLog.first.date.day, 5); // 旧→新，最新在前
     expect(fit.rehabLog.first.feel, 'hi');
+    expect(fit.rehabLog.last.phase, 1, reason: 'phase 0 归一为 1');
 
     // 幂等：再跑不重复
     await fit.migrateRehabLog();
     expect(fit.rehabLog.length, 2);
+  });
+
+  test('迁移失败保留 merged=false（不静默丢失）', () async {
+    SharedPreferences.setMockInitialValues({'rehab_log_v1': '{bad json'});
+    await Store.instance.init();
+    fit.resetAllData();
+    fit.rehabLogMerged = false;
+
+    await fit.migrateRehabLog();
+    expect(fit.rehabLogMerged, isFalse, reason: '失败不置 flag，留给下次重试');
+    expect(fit.rehabLog, isEmpty);
+  });
+
+  test('resetAllData 后不复迁旧日志（merged=true，防清空后复活）', () {
+    fit.resetAllData();
+    expect(fit.rehabLogMerged, isTrue);
+  });
+
+  test('addRehabLog 保持按时间降序', () {
+    fit.addRehabLog(RehabLogEntry(id: 'a', date: DateTime(2026, 3, 5), phase: 1, light: 'g'));
+    fit.addRehabLog(RehabLogEntry(id: 'b', date: DateTime(2026, 3, 9), phase: 1, light: 'g'));
+    fit.addRehabLog(RehabLogEntry(id: 'c', date: DateTime(2026, 3, 7), phase: 1, light: 'g'));
+    expect(fit.rehabLog.map((e) => e.id).toList(), ['b', 'c', 'a']);
+  });
+
+  test('upsert 空 feel 不覆盖当天已有康复感受', () {
+    fit.upsertRehabLogForDay(DateTime(2026, 6, 1, 9), 2, 'y', '手写的感受');
+    // 训练反馈只填了训练备注（此处为空）→ 不应清掉康复感受
+    fit.upsertRehabLogForDay(DateTime(2026, 6, 1, 20), 2, 'y', '');
+    expect(fit.rehabLog.single.feel, '手写的感受');
+    // 非空则覆盖
+    fit.upsertRehabLogForDay(DateTime(2026, 6, 1, 21), 3, 'r', '新的');
+    expect(fit.rehabLog.single.feel, '新的');
+    expect(fit.rehabLog.single.phase, 3);
+  });
+
+  test('备份恢复（applyBackup）带回 rehabLog / baselines', () {
+    fit.saveBaseline(BaselineSession(
+        id: 'b1', date: DateTime(2026, 7, 1), items: [BaselineItem('waist', 80)]));
+    fit.addRehabLog(RehabLogEntry(id: 'r1', date: DateTime(2026, 7, 2), phase: 2, light: 'g', feel: 'ok'));
+    fit.rehabLogMerged = true;
+    final backup = fit.toJson();
+
+    fit.resetAllData();
+    expect(fit.baselines, isEmpty);
+    expect(fit.rehabLog, isEmpty);
+
+    fit.applyBackup(backup);
+    expect(fit.baselines.length, 1);
+    expect(fit.baselines.single.value('waist'), 80);
+    expect(fit.rehabLog.length, 1);
+    expect(fit.rehabLog.single.feel, 'ok');
   });
 
   test('toJson 带上 rehabLog 与 merged 标记', () {

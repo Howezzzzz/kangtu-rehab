@@ -33,6 +33,34 @@ void main() {
     });
   });
 
+  group('parseCycle (周期)', () {
+    test('顶层 cycle 对象 → 解析成 PlanCycle', () {
+      final c = parseCycle('{"program":"X","cycle":{"start":"2026-10-19","weeks":12,"perWeek":3}}');
+      expect(c, isNotNull);
+      expect(c!.weeks, 12);
+      expect(c.perWeek, 3);
+      expect(c.start, DateTime(2026, 10, 19));
+      expect(c.pinnedDays, isEmpty);
+    });
+
+    test('cycle 带 days → 钉死周几', () {
+      final c = parseCycle('{"cycle":{"start":"2026-10-19","weeks":8,"perWeek":3,"days":[1,3,5]}}');
+      expect(c!.pinnedDays, [1, 3, 5]);
+      expect(c.perWeek, 3);
+    });
+
+    test('展开式 start/weeks/perWeek 也能认', () {
+      final c = parseCycle('{"start":"2026-10-19","weeks":6,"perWeek":2}');
+      expect(c!.weeks, 6);
+      expect(c.perWeek, 2);
+    });
+
+    test('没给周期 → null（零影响）', () {
+      expect(parseCycle('{"name":"Push","exercises":["Squat"]}'), isNull);
+      expect(parseCycle('no json'), isNull);
+    });
+  });
+
   group('importar en el estado', () {
     setUp(() => fit.resetAllData());
 
@@ -59,6 +87,24 @@ void main() {
 
     test('un archivo ilegible se distingue de uno sin coincidencias', () {
       expect(fit.importPlan('no soy json').readable, isFalse);
+    });
+
+    test('带 cycle 的 AI 计划 → 自动套用训练周期', () {
+      final result = fit.importPlan(
+          '{"name":"Empuje","cycle":{"start":"2026-10-19","weeks":12,"perWeek":3},'
+          '"exercises":["Barbell Bench Press"]}');
+      expect(result.added, 1);
+      final routine = fit.routines.single;
+      final c = fit.cycleOf(routine.id);
+      expect(c, isNotNull);
+      expect(c!.weeks, 12);
+      expect(c.perWeek, 3);
+      expect(c.start, DateTime(2026, 10, 19));
+    });
+
+    test('不带 cycle → 不生成周期（旧行为不变）', () {
+      fit.importPlan('{"name":"Empuje","exercises":["Barbell Bench Press"]}');
+      expect(fit.cycleOf(fit.routines.single.id), isNull);
     });
   });
 

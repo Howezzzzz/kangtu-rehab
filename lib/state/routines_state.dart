@@ -58,7 +58,51 @@ mixin RoutinesState on FitCore, LibraryState {
         if (multiPlan) ...?planExtras[weekday],
       ];
 
-  List<Routine> routinesOn(DateTime day) => [for (final id in planIdsOn(day.weekday)) ?_routine(id)];
+  List<Routine> routinesOn(DateTime day) {
+    final ids = [...planIdsOn(day.weekday)];
+    for (final e in planCycles.entries) {
+      if (e.value.isTrainingDay(day) && !ids.contains(e.key)) ids.add(e.key);
+    }
+    return [for (final id in ids) ?_routine(id)];
+  }
+
+  // ---- 排期周期（Plan Cycle）----
+  PlanCycle? cycleOf(String routineId) => planCycles[routineId];
+
+  void setCycle(String routineId, PlanCycle c) {
+    planCycles[routineId] = c;
+    persistNow();
+    notifyListeners();
+  }
+
+  void clearCycle(String routineId) {
+    if (planCycles.remove(routineId) == null) return;
+    persistNow();
+    notifyListeners();
+  }
+
+  /// 续一轮：新周期从上一轮到期日接续，轮次 +1。
+  void advanceCycle(String routineId) {
+    final c = planCycles[routineId];
+    if (c == null) return;
+    planCycles[routineId] = c.nextRound();
+    persistNow();
+    notifyListeners();
+  }
+
+  /// 本轮已完成次数（自本轮起始日以来的该计划训练记录）。
+  int cycleDoneSessions(String routineId) {
+    final c = planCycles[routineId];
+    if (c == null) return 0;
+    return sessions
+        .where((s) => s.routineId == routineId && !PlanCycle.dayOnly(s.date).isBefore(c.start))
+        .length;
+  }
+
+  int cycleExpected(String routineId) {
+    final c = planCycles[routineId];
+    return c == null ? 0 : c.weeks * c.perWeek;
+  }
 
   bool plannedOn(int weekday, String routineId) => planIdsOn(weekday).contains(routineId);
 

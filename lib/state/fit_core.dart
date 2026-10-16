@@ -48,6 +48,7 @@ abstract class FitCore extends ChangeNotifier {
   final Map<int, String> weeklyPlan = {};
   final Map<int, List<String>> planExtras = {};
   bool multiPlan = false;
+  final Map<String, PlanCycle> planCycles = {};
   final List<Exercise> customExercises = [];
   final List<GymPlace> places = [];
 

@@ -5407,4 +5407,58 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get rehabStLightDescRed =>
       'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor';
+
+  @override
+  String get cycleTitle => 'Cycle';
+
+  @override
+  String get cycleEnable => 'Use a cycle';
+
+  @override
+  String get cycleHint => 'Set a full cycle; training days are spaced automatically (no fixed weekdays)';
+
+  @override
+  String get cycleStart => 'Start';
+
+  @override
+  String get cycleWeeks => 'Weeks';
+
+  @override
+  String get cyclePerWeek => 'Per week';
+
+  @override
+  String get cyclePinHint => 'Pin weekdays (optional)';
+
+  @override
+  String cycleWeekXY(Object x, Object y) {
+    return 'Week $x of $y';
+  }
+
+  @override
+  String cycleDone(Object d, Object e) {
+    return '$d of $e done';
+  }
+
+  @override
+  String get cycleComplete => 'Cycle complete';
+
+  @override
+  String get cycleRenew => 'Next round';
+
+  @override
+  String get cycleOff => 'End cycle';
+
+  @override
+  String cycleRound(Object n) {
+    return 'Round $n';
+  }
+
+  @override
+  String get planCycleAsk =>
+      'Plan the training period too: add a top-level \"cycle\" object with \"start\" (e.g. \"2026-10-19\"), \"weeks\" (total weeks) and \"perWeek\" (sessions per week). You may also set \"days\": [1..7] to pin exact weekdays. Follow this shape:';
+
+  @override
+  String planCycleApplied(Object n, Object weeks) {
+    return 'Training cycle applied ($weeks weeks, $n×/week)';
+  }
 }

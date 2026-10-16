@@ -13,6 +13,7 @@ mixin RehabState on FitCore {
 
   void addRehabLog(RehabLogEntry e) {
     rehabLog.insert(0, e);
+    rehabLog.sort((a, b) => b.date.compareTo(a.date));
     persistNow();
     notifyListeners();
   }
@@ -40,12 +41,15 @@ mixin RehabState on FitCore {
     String dayKey(DateTime d) =>
         '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
     final i = rehabLog.indexWhere((x) => dayKey(x.date) == key);
+    // 空 feel（如仅填了训练备注）不覆盖当天已有的康复感受
+    final keepFeel = feel.trim().isEmpty && i >= 0 && rehabLog[i].feel.isNotEmpty;
+    final useFeel = keepFeel ? rehabLog[i].feel : feel;
     if (i >= 0) {
       rehabLog[i] = RehabLogEntry(
-          id: rehabLog[i].id, date: rehabLog[i].date, phase: phase, light: light, feel: feel);
+          id: rehabLog[i].id, date: rehabLog[i].date, phase: phase, light: light, feel: useFeel);
     } else {
-      rehabLog.insert(0,
-          RehabLogEntry(id: 'r${day.millisecondsSinceEpoch}', date: day, phase: phase, light: light, feel: feel));
+      rehabLog
+          .insert(0, RehabLogEntry(id: 'r${day.millisecondsSinceEpoch}', date: day, phase: phase, light: light, feel: useFeel));
       rehabLog.sort((a, b) => b.date.compareTo(a.date));
     }
     persistNow();
@@ -53,31 +57,41 @@ mixin RehabState on FitCore {
   }
 
   /// 一次性把旧康复手册日志（prefs `rehab_log_v1`）迁进统一日志。
+  /// 仅在成功后置 `rehabLogMerged`；失败保留 false 待下次重试（不静默丢失）。
   Future<void> migrateRehabLog() async {
     if (rehabLogMerged) return;
+    var ok = false;
     try {
       final prefs = await SharedPreferences.getInstance();
       final raw = prefs.getString('rehab_log_v1');
-      if (raw != null && raw.isNotEmpty) {
+      if (raw == null || raw.isEmpty) {
+        ok = true; // 无旧数据：视为已完成，不再重复检查
+      } else {
         final d = jsonDecode(raw);
         if (d is List) {
           for (final e in d.whereType<Map>()) {
             final m = e.cast<String, dynamic>();
             final date = DateTime.tryParse('${m['date']}') ?? DateTime.now();
+            final ph = (m['phase'] as num?)?.toInt() ?? 1;
             rehabLog.add(RehabLogEntry(
               id: 'r${date.millisecondsSinceEpoch}_${rehabLog.length}',
               date: date,
-              phase: (m['phase'] as num?)?.toInt() ?? 0,
+              phase: ph <= 0 ? 1 : (ph > 4 ? 4 : ph),
               light: '${m['light'] ?? 'g'}',
               feel: '${m['feel'] ?? ''}',
             ));
           }
           rehabLog.sort((a, b) => b.date.compareTo(a.date));
         }
+        ok = true;
       }
-    } catch (_) {}
-    rehabLogMerged = true;
-    persistNow();
+    } catch (err) {
+      debugPrint('migrateRehabLog failed: $err');
+    }
+    if (ok) {
+      rehabLogMerged = true;
+      persistNow();
+    }
   }
 
   String? activeEpisodeId;

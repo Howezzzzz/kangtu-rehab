@@ -1575,5 +1575,20 @@
   "rehabStPhaseDescMaintain": "目标从「变强」转为「不退步」；每周 2~3 次，量维持",
   "rehabStLightDescGreen": "三问都好转 → 按课表升级",
   "rehabStLightDescAmber": "平台期（一周无变化）→ 当前阶段再练一周，别加量",
-  "rehabStLightDescRed": "任何一项倒退 → 退回上一阶段；连续倒退或红线症状 → 停练＋复诊"
+  "rehabStLightDescRed": "任何一项倒退 → 退回上一阶段；连续倒退或红线症状 → 停练＋复诊",
+  "cycleTitle": "排期周期",
+  "cycleEnable": "启用周期",
+  "cycleHint": "设一段完整周期，训练日自动均摊（不再固定周几）",
+  "cycleStart": "起始日",
+  "cycleWeeks": "周期（周）",
+  "cyclePerWeek": "每周次数",
+  "cyclePinHint": "钉死某几天（可选）",
+  "cycleWeekXY": "第 {x}/{y} 周",
+  "cycleDone": "已完成 {d}/{e}",
+  "cycleComplete": "周期已完成",
+  "cycleRenew": "续一轮",
+  "cycleOff": "结束周期",
+  "cycleRound": "第 {n} 轮",
+  "planCycleAsk": "请同时规划训练时间周期：在顶层加一个 \"cycle\" 对象，包含 \"start\"（如 \"2026-10-19\"）、\"weeks\"（总周数）和 \"perWeek\"（每周次数）。也可以加 \"days\": [1..7] 钉死具体星期几。格式如下：",
+  "planCycleApplied": "训练周期已套用（{weeks} 周，每周 {n} 次）"
 }

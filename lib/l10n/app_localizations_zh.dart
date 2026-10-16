@@ -5196,6 +5196,60 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get rehabStLightDescRed => '任何一项倒退 → 退回上一阶段；连续倒退或红线症状 → 停练＋复诊';
+
+  @override
+  String get cycleTitle => '排期周期';
+
+  @override
+  String get cycleEnable => '启用周期';
+
+  @override
+  String get cycleHint => '设一段完整周期，训练日自动均摊（不再固定周几）';
+
+  @override
+  String get cycleStart => '起始日';
+
+  @override
+  String get cycleWeeks => '周期（周）';
+
+  @override
+  String get cyclePerWeek => '每周次数';
+
+  @override
+  String get cyclePinHint => '钉死某几天（可选）';
+
+  @override
+  String cycleWeekXY(Object x, Object y) {
+    return '第 $x/$y 周';
+  }
+
+  @override
+  String cycleDone(Object d, Object e) {
+    return '已完成 $d/$e';
+  }
+
+  @override
+  String get cycleComplete => '周期已完成';
+
+  @override
+  String get cycleRenew => '续一轮';
+
+  @override
+  String get cycleOff => '结束周期';
+
+  @override
+  String cycleRound(Object n) {
+    return '第 $n 轮';
+  }
+
+  @override
+  String get planCycleAsk =>
+      '请同时规划训练时间周期：在顶层加一个 \"cycle\" 对象，包含 \"start\"（如 \"2026-10-19\"）、\"weeks\"（总周数）和 \"perWeek\"（每周次数）。也可以加 \"days\": [1..7] 钉死具体星期几。格式如下：';
+
+  @override
+  String planCycleApplied(Object n, Object weeks) {
+    return '训练周期已套用（$weeks 周，每周 $n 次）';
+  }
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -10045,4 +10099,58 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   @override
   String get rehabStLightDescRed =>
       'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor';
+
+  @override
+  String get cycleTitle => 'Cycle';
+
+  @override
+  String get cycleEnable => 'Use a cycle';
+
+  @override
+  String get cycleHint => 'Set a full cycle; training days are spaced automatically (no fixed weekdays)';
+
+  @override
+  String get cycleStart => 'Start';
+
+  @override
+  String get cycleWeeks => 'Weeks';
+
+  @override
+  String get cyclePerWeek => 'Per week';
+
+  @override
+  String get cyclePinHint => 'Pin weekdays (optional)';
+
+  @override
+  String cycleWeekXY(Object x, Object y) {
+    return 'Week $x of $y';
+  }
+
+  @override
+  String cycleDone(Object d, Object e) {
+    return '$d of $e done';
+  }
+
+  @override
+  String get cycleComplete => 'Cycle complete';
+
+  @override
+  String get cycleRenew => 'Next round';
+
+  @override
+  String get cycleOff => 'End cycle';
+
+  @override
+  String cycleRound(Object n) {
+    return 'Round $n';
+  }
+
+  @override
+  String get planCycleAsk =>
+      '請同時規劃訓練時間週期：在頂層加一個 \"cycle\" 物件，包含 \"start\"（如 \"2026-10-19\"）、\"weeks\"（總週數）和 \"perWeek\"（每週次數）。也可以加 \"days\": [1..7] 釘死具體星期幾。格式如下：';
+
+  @override
+  String planCycleApplied(Object n, Object weeks) {
+    return '訓練週期已套用（$weeks 週，每週 $n 次）';
+  }
 }
