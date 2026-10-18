@@ -58,14 +58,6 @@ mixin RoutinesState on FitCore, LibraryState {
         if (multiPlan) ...?planExtras[weekday],
       ];
 
-  List<Routine> routinesOn(DateTime day) {
-    final ids = [...planIdsOn(day.weekday)];
-    for (final e in planCycles.entries) {
-      if (e.value.isTrainingDay(day) && !ids.contains(e.key)) ids.add(e.key);
-    }
-    return [for (final id in ids) ?_routine(id)];
-  }
-
   // ---- 排期周期（Plan Cycle）----
   PlanCycle? cycleOf(String routineId) => planCycles[routineId];
 
@@ -95,7 +87,7 @@ mixin RoutinesState on FitCore, LibraryState {
     final c = planCycles[routineId];
     if (c == null) return 0;
     return sessions
-        .where((s) => s.routineId == routineId && !PlanCycle.dayOnly(s.date).isBefore(c.start))
+        .where((s) => s.routineId == routineId && !PlanCycle.dayOnly(s.day).isBefore(c.start))
         .length;
   }
 
@@ -104,13 +96,167 @@ mixin RoutinesState on FitCore, LibraryState {
     return c == null ? 0 : c.weeks * c.perWeek;
   }
 
+  static String _moveKey(DateTime d) =>
+      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  List<String> planIdsFor(DateTime day) => planMoves[_moveKey(day)] ?? planIdsOn(day.weekday);
+
+  bool movedOn(DateTime day) => planMoves.containsKey(_moveKey(day));
+
+  bool get rotating => rotation && rotationRoutines.isNotEmpty;
+
+  List<Routine> get rotationRoutines => [for (final id in rotationIds) ?_routine(id)];
+
+  Routine? get rotationNext {
+    final list = rotationRoutines;
+    if (list.isEmpty) return null;
+    return _routine(rotationNextId) ?? list.first;
+  }
+
+  int get rotationStep {
+    final next = rotationNext;
+    return next == null ? 0 : rotationRoutines.indexOf(next);
+  }
+
+  List<Routine> _rotationOn(DateTime day) {
+    final key = _dayKey(day);
+    final today = _dayKey(DateTime.now());
+    final done = [
+      for (final s in sessions)
+        if (_dayKey(s.day) == key && s.routineId != null && rotationIds.contains(s.routineId)) ?_routine(s.routineId!),
+    ];
+    if (key.isBefore(today) || done.isNotEmpty) return done;
+    return [?rotationNext];
+  }
+
+  @override
+  bool hasPlanOn(DateTime day) => routinesOn(day).isNotEmpty;
+
+  /// 当日计划：轮转开启时按轮转返回；否则用（含改期覆盖的）周日计划 + 周期（Plan Cycle）补入。
+  List<Routine> routinesOn(DateTime day) {
+    if (rotating) return _rotationOn(day);
+    final ids = [...planIdsFor(day)];
+    for (final e in planCycles.entries) {
+      if (e.value.isTrainingDay(day) && !ids.contains(e.key)) ids.add(e.key);
+    }
+    return [for (final id in ids) ?_routine(id)];
+  }
+  void setRotation(bool on) {
+    if (rotation == on) return;
+    rotation = on;
+    if (on && rotationIds.isEmpty) {
+      for (var d = 1; d <= 7; d++) {
+        for (final id in planIdsOn(d)) {
+          if (!rotationIds.contains(id) && _routine(id) != null) rotationIds.add(id);
+        }
+      }
+      rotationNextId = rotationIds.isEmpty ? '' : rotationIds.first;
+    }
+    _planChanged();
+  }
+
+  void toggleRotationRoutine(String id) {
+    if (_routine(id) == null) return;
+    if (rotationIds.remove(id)) {
+      if (rotationNextId == id) rotationNextId = '';
+    } else {
+      rotationIds.add(id);
+    }
+    _fixRotationNext();
+    _planChanged();
+  }
+
+  void reorderRotation(int from, int to) {
+    if (from < 0 || from >= rotationIds.length) return;
+    if (to > from) to -= 1;
+    rotationIds.insert(to.clamp(0, rotationIds.length), rotationIds.removeAt(from));
+    _planChanged();
+  }
+
+  void setRotationNext(String id) {
+    if (!rotationIds.contains(id)) return;
+    rotationNextId = id;
+    _planChanged();
+  }
+
+  void skipRotation() {
+    final list = rotationRoutines;
+    final next = rotationNext;
+    if (next == null) return;
+    rotationNextId = list[(list.indexOf(next) + 1) % list.length].id;
+    _planChanged();
+  }
+
+  void restartRotation() {
+    final list = rotationRoutines;
+    if (list.isEmpty) return;
+    rotationNextId = list.first.id;
+    _planChanged();
+  }
+
+  void _advanceRotation(String? routineId) {
+    if (!rotation || routineId == null) return;
+    final list = rotationRoutines;
+    final i = list.indexWhere((r) => r.id == routineId);
+    if (i < 0) return;
+    rotationNextId = list[(i + 1) % list.length].id;
+  }
+
+  void _fixRotationNext() {
+    rotationIds.removeWhere((id) => _routine(id) == null);
+    if (!rotationIds.contains(rotationNextId)) rotationNextId = rotationIds.isEmpty ? '' : rotationIds.first;
+  }
+
+  VoidCallback? moveRoutineDay(String routineId, DateTime from, DateTime to) {
+    final source = _dayKey(from), target = _dayKey(to);
+    if (source == target) return null;
+    final left = [...planIdsFor(source)];
+    if (!left.remove(routineId)) return null;
+    final arrive = [...planIdsFor(target)];
+    if (!arrive.contains(routineId)) arrive.add(routineId);
+    final a = _moveKey(source), b = _moveKey(target);
+    final before = {a: planMoves[a], b: planMoves[b]};
+    planMoves[a] = left;
+    planMoves[b] = arrive;
+    _pruneMoves();
+    _planChanged();
+    return () {
+      for (final e in before.entries) {
+        final was = e.value;
+        if (was == null) {
+          planMoves.remove(e.key);
+        } else {
+          planMoves[e.key] = was;
+        }
+      }
+      _planChanged();
+    };
+  }
+
+  void undoMoves(DateTime day) {
+    if (planMoves.remove(_moveKey(day)) == null) return;
+    _planChanged();
+  }
+
+  void _pruneMoves() {
+    final cutoff = _moveKey(_dayKey(DateTime.now()).subtract(const Duration(days: 14)));
+    planMoves.removeWhere((k, _) => k.compareTo(cutoff) < 0);
+  }
+
+  void _planChanged() {
+    _persist();
+    _refreshWidgets();
+    syncTrainReminder();
+    notifyListeners();
+  }
+
   bool plannedOn(int weekday, String routineId) => planIdsOn(weekday).contains(routineId);
 
   List<Routine> pendingRoutinesOn(DateTime day) {
     final left = routinesOn(day);
     final key = _dayKey(day);
     var free = 0;
-    for (final s in sessions.where((s) => _dayKey(s.date) == key)) {
+    for (final s in sessions.where((s) => _dayKey(s.day) == key)) {
       final id = s.routineId;
       if (id == null) {
         free++;
@@ -246,15 +392,24 @@ mixin RoutinesState on FitCore, LibraryState {
 
   void _dropRoutine(String id) {
     final doomedInst = _routine(id)?.progInst;
+    final i = rotationIds.indexOf(id);
+    if (i >= 0) {
+      if (rotationNextId == id) rotationNextId = rotationIds[(i + 1) % rotationIds.length];
+      rotationIds.removeAt(i);
+    }
     routines.removeWhere((r) => r.id == id);
     if (doomedInst != null && !routines.any((r) => r.progInst == doomedInst)) {
       programStates.remove(doomedInst);
     }
+    _fixRotationNext();
     weeklyPlan.removeWhere((_, v) => v == id);
     for (final extras in planExtras.values) {
       extras.remove(id);
     }
     planExtras.removeWhere((_, v) => v.isEmpty);
+    for (final ids in planMoves.values) {
+      ids.remove(id);
+    }
     for (final day in [...planExtras.keys]) {
       if (weeklyPlan[day] != null) continue;
       final extras = planExtras[day]!;

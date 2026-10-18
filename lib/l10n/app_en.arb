@@ -3061,5 +3061,93 @@
   "planCycleApplied": "Training cycle applied ({weeks} weeks, {n}×/week)",
   "@planCycleApplied": {
     "description": "Toast: cycle applied on import"
-  }
+  },
+  "hidePhotos": "Hide photos",
+  "showPhotos": "Show photos",
+  "eachSide": "Each side",
+  "eachSideHint": "The timer runs once per side and the rest starts after both.",
+  "timePerSideCol": "TIME / SIDE",
+  "tapToChange": "Tap to change",
+  "swipeToSkipHint": "Swipe the timer sideways to skip the rest.",
+  "sideOfTwo": "Side {n} of 2",
+  "@sideOfTwo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "switchSides": "Switch sides",
+  "planFixedWeek": "Fixed week",
+  "planRotation": "Rotation",
+  "rotationTitle": "ROTATION",
+  "rotationHint": "Next up is whatever follows your last workout, whatever the day.",
+  "rotationEmpty": "Add your routines in the order you’ll do them: A, B, C…",
+  "rotationProgress": "{done} of {total} done this round",
+  "@rotationProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "rotationNext": "Next",
+  "rotationAdd": "Add routines",
+  "rotationPickHint": "They go in the order you tap them.",
+  "rotationSkip": "Skip to the next one",
+  "rotationRestart": "Start a new round",
+  "rotationMakeNext": "Make it the next one",
+  "rotationRemove": "Remove from rotation",
+  "rotationPlace": "{n} of {total} in the rotation",
+  "@rotationPlace": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "moveToDay": "Move to another day",
+  "moveToDayHint": "Just this once; your weekly plan stays the same.",
+  "movedToast": "Workout moved",
+  "backToPlan": "Back to the weekly plan",
+  "tomorrow": "Tomorrow",
+  "untrainedTab": "Untrained",
+  "untrainedRecent": "Recent",
+  "untrainedLong": "Long ago",
+  "untrainedWaiting": "Waiting the longest: {list}",
+  "@untrainedWaiting": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "untrainedAllRecent": "Every muscle got work this week. Nice.",
+  "trainedAgo": "{n, plural, =0{Trained today} =1{Trained yesterday} other{{n} days ago}}",
+  "@trainedAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "neverTrained": "Not trained yet",
+  "layoutSetting": "Workout layout",
+  "layoutCards": "Cards",
+  "layoutList": "List",
+  "layoutHint": "Cards show one exercise at a time. List shows the whole workout on one screen, set by set.",
+  "layoutRowHint": "One exercise at a time, or the whole workout as a list",
+  "previousCol": "PREVIOUS",
+  "usePrevious": "Use last time’s numbers",
+  "skipShort": "Skip",
+  "moveUp": "Move up",
+  "moveDown": "Move down",
+  "widgetNutritionOff": "Turn on Nutrition in Settings › Beta to use this widget.",
+  "widgetPickShake": "Pick your shake"
 }

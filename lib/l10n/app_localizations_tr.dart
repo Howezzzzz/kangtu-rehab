@@ -5463,4 +5463,163 @@ class AppLocalizationsTr extends AppLocalizations {
   String planCycleApplied(Object n, Object weeks) {
     return 'Training cycle applied ($weeks weeks, $n×/week)';
   }
+
+  @override
+  String get hidePhotos => 'Fotoğrafları gizle';
+
+  @override
+  String get showPhotos => 'Fotoğrafları göster';
+
+  @override
+  String get eachSide => 'Her taraf';
+
+  @override
+  String get eachSideHint => 'Süre her taraf için bir kez işler, dinlenme ikisinden sonra başlar.';
+
+  @override
+  String get timePerSideCol => 'SÜRE / TARAF';
+
+  @override
+  String get tapToChange => 'Değiştirmek için dokun';
+
+  @override
+  String get swipeToSkipHint => 'Dinlenmeyi geçmek için zamanlayıcıyı yana kaydır.';
+
+  @override
+  String sideOfTwo(String n) {
+    return 'Taraf $n/2';
+  }
+
+  @override
+  String get switchSides => 'Taraf değiştir';
+
+  @override
+  String get planFixedWeek => 'Sabit hafta';
+
+  @override
+  String get planRotation => 'Rotasyon';
+
+  @override
+  String get rotationTitle => 'ROTASYON';
+
+  @override
+  String get rotationHint => 'Sıradaki, gün fark etmeksizin son antrenmanından sonra gelendir.';
+
+  @override
+  String get rotationEmpty => 'Rutinlerini yapacağın sırayla ekle: A, B, C…';
+
+  @override
+  String rotationProgress(int done, int total) {
+    return 'Bu turda $total içinden $done tamam';
+  }
+
+  @override
+  String get rotationNext => 'Sıradaki';
+
+  @override
+  String get rotationAdd => 'Rutin ekle';
+
+  @override
+  String get rotationPickHint => 'Dokunduğun sırayla eklenir.';
+
+  @override
+  String get rotationSkip => 'Sıradakine geç';
+
+  @override
+  String get rotationRestart => 'Yeni tura başla';
+
+  @override
+  String get rotationMakeNext => 'Sıradaki yap';
+
+  @override
+  String get rotationRemove => 'Rotasyondan çıkar';
+
+  @override
+  String rotationPlace(int n, int total) {
+    return 'Rotasyonda $total içinden $n';
+  }
+
+  @override
+  String get moveToDay => 'Başka bir güne taşı';
+
+  @override
+  String get moveToDayHint => 'Sadece bu sefer; haftalık planın aynı kalır.';
+
+  @override
+  String get movedToast => 'Antrenman taşındı';
+
+  @override
+  String get backToPlan => 'Haftalık plana dön';
+
+  @override
+  String get tomorrow => 'Yarın';
+
+  @override
+  String get untrainedTab => 'Çalışılmayan';
+
+  @override
+  String get untrainedRecent => 'Yakın';
+
+  @override
+  String get untrainedLong => 'Uzun süre önce';
+
+  @override
+  String untrainedWaiting(String list) {
+    return 'En uzun süredir bekleyen: $list';
+  }
+
+  @override
+  String get untrainedAllRecent => 'Bu hafta her kas çalıştı. Güzel.';
+
+  @override
+  String trainedAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gün önce',
+      one: 'Dün çalışıldı',
+      zero: 'Bugün çalışıldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get neverTrained => 'Henüz çalışılmadı';
+
+  @override
+  String get layoutSetting => 'Antrenman görünümü';
+
+  @override
+  String get layoutCards => 'Kartlar';
+
+  @override
+  String get layoutList => 'Liste';
+
+  @override
+  String get layoutHint =>
+      'Kartlar her seferinde bir egzersiz gösterir. Liste tüm antrenmanı tek ekranda, set set gösterir.';
+
+  @override
+  String get layoutRowHint => 'Tek tek egzersiz ya da hepsi liste halinde';
+
+  @override
+  String get previousCol => 'ÖNCEKİ';
+
+  @override
+  String get usePrevious => 'Geçen seferki değerleri kullan';
+
+  @override
+  String get skipShort => 'Geç';
+
+  @override
+  String get moveUp => 'Yukarı taşı';
+
+  @override
+  String get moveDown => 'Aşağı taşı';
+
+  @override
+  String get widgetNutritionOff => 'Turn on Nutrition in Settings › Beta to use this widget.';
+
+  @override
+  String get widgetPickShake => 'Pick your shake';
 }

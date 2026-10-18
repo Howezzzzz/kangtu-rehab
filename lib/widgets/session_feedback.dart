@@ -82,7 +82,7 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
       var pain = s.painLevel;
       final note = TextEditingController(text: s.note);
       final existingLog =
-          fit.rehabLog.where((x) => _sameDay(x.date, s.date)).firstOrNull;
+          fit.rehabLog.where((x) => _sameDay(x.date, s.day)).firstOrNull;
       var rPhase = existingLog?.phase ?? 1;
       var rLight = existingLog?.light ?? 'g';
       return StatefulBuilder(
@@ -205,7 +205,7 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
                             painLevel: pain,
                             note: note.text.trim());
                         if (fit.hasActiveRehab) {
-                          fit.upsertRehabLogForDay(s.date, rPhase, rLight, note.text.trim());
+                          fit.upsertRehabLogForDay(s.day, rPhase, rLight, note.text.trim());
                         }
                         Navigator.of(sheetCtx).pop();
                         showNotchToast(context, t.fbTitle,

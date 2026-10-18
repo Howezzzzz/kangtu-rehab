@@ -85,7 +85,7 @@ class LogScreen extends StatelessWidget {
   }
 
   List<({DateTime date, Object entry})> _feed() => <({DateTime date, Object entry})>[
-        for (final s in fit.sessions) (date: s.date, entry: s),
+        for (final s in fit.sessions) (date: s.day, entry: s),
         for (final r in fit.rehabLog) (date: r.date, entry: r),
       ]..sort((a, b) => b.date.compareTo(a.date));
 
@@ -180,7 +180,7 @@ class _LogRow extends StatelessWidget {
     return SoftCard(
       padding: const EdgeInsets.all(12),
       child: Pressable(
-        onTap: () => showDaySheet(context, s.date),
+        onTap: () => showDaySheet(context, s.day),
         child: Row(
           children: [
             _tag(gc, t.logTagTrain, gc.ember),

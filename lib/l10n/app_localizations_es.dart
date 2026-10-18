@@ -5476,4 +5476,163 @@ class AppLocalizationsEs extends AppLocalizations {
   String planCycleApplied(Object n, Object weeks) {
     return 'Training cycle applied ($weeks weeks, $n×/week)';
   }
+
+  @override
+  String get hidePhotos => 'Ocultar fotos';
+
+  @override
+  String get showPhotos => 'Mostrar fotos';
+
+  @override
+  String get eachSide => 'Cada lado';
+
+  @override
+  String get eachSideHint => 'El tiempo corre una vez por lado y el descanso empieza tras los dos.';
+
+  @override
+  String get timePerSideCol => 'TIEMPO / LADO';
+
+  @override
+  String get tapToChange => 'Toca para cambiar';
+
+  @override
+  String get swipeToSkipHint => 'Desliza el reloj a un lado para saltar el descanso.';
+
+  @override
+  String sideOfTwo(String n) {
+    return 'Lado $n de 2';
+  }
+
+  @override
+  String get switchSides => 'Cambia de lado';
+
+  @override
+  String get planFixedWeek => 'Semana fija';
+
+  @override
+  String get planRotation => 'Rotación';
+
+  @override
+  String get rotationTitle => 'ROTACIÓN';
+
+  @override
+  String get rotationHint => 'Te toca la siguiente de la lista, sea el día que sea.';
+
+  @override
+  String get rotationEmpty => 'Añade tus rutinas en el orden en que las harás: A, B, C…';
+
+  @override
+  String rotationProgress(int done, int total) {
+    return '$done de $total hechas en esta vuelta';
+  }
+
+  @override
+  String get rotationNext => 'Siguiente';
+
+  @override
+  String get rotationAdd => 'Añadir rutinas';
+
+  @override
+  String get rotationPickHint => 'Se añaden en el orden en que las tocas.';
+
+  @override
+  String get rotationSkip => 'Saltar a la siguiente';
+
+  @override
+  String get rotationRestart => 'Empezar vuelta nueva';
+
+  @override
+  String get rotationMakeNext => 'Que sea la siguiente';
+
+  @override
+  String get rotationRemove => 'Quitar de la rotación';
+
+  @override
+  String rotationPlace(int n, int total) {
+    return '$n de $total de la rotación';
+  }
+
+  @override
+  String get moveToDay => 'Mover a otro día';
+
+  @override
+  String get moveToDayHint => 'Solo esta vez; tu plan semanal no cambia.';
+
+  @override
+  String get movedToast => 'Entreno movido';
+
+  @override
+  String get backToPlan => 'Volver al plan semanal';
+
+  @override
+  String get tomorrow => 'Mañana';
+
+  @override
+  String get untrainedTab => 'Sin entrenar';
+
+  @override
+  String get untrainedRecent => 'Reciente';
+
+  @override
+  String get untrainedLong => 'Hace mucho';
+
+  @override
+  String untrainedWaiting(String list) {
+    return 'Llevan más tiempo esperando: $list';
+  }
+
+  @override
+  String get untrainedAllRecent => 'Todos los músculos han trabajado esta semana. Bien.';
+
+  @override
+  String trainedAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Hace $n días',
+      one: 'Entrenado ayer',
+      zero: 'Entrenado hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get neverTrained => 'Aún sin entrenar';
+
+  @override
+  String get layoutSetting => 'Vista del entreno';
+
+  @override
+  String get layoutCards => 'Tarjetas';
+
+  @override
+  String get layoutList => 'Lista';
+
+  @override
+  String get layoutHint =>
+      'Tarjetas enseña un ejercicio cada vez. Lista enseña todo el entreno en una pantalla, serie a serie.';
+
+  @override
+  String get layoutRowHint => 'Un ejercicio cada vez o todo el entreno en lista';
+
+  @override
+  String get previousCol => 'ANTERIOR';
+
+  @override
+  String get usePrevious => 'Usar lo de la última vez';
+
+  @override
+  String get skipShort => 'Saltar';
+
+  @override
+  String get moveUp => 'Subir';
+
+  @override
+  String get moveDown => 'Bajar';
+
+  @override
+  String get widgetNutritionOff => 'Activa Nutrición en Ajustes › Beta para usar este widget.';
+
+  @override
+  String get widgetPickShake => 'Elige tu batido';
 }

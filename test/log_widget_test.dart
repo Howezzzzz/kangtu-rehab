@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/app/gymmane_app.dart';
 import 'package:gymmane/l10n/l10n.dart';
 import 'package:gymmane/models/rehab_episode.dart';
+import 'package:gymmane/models/workout.dart';
 import 'package:gymmane/services/local_store.dart';
 import 'package:gymmane/state/fit_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,5 +60,24 @@ void main() {
     expect(fit.rehabLog.length, 1);
     expect(fit.rehabLog.single.phase, 2);
     expect(fit.rehabLog.single.light, 'r');
+  });
+
+  // 回归（上游「按开始日计训练」语义合并，ISS-14x）：跨午夜训练在日志里必须按「开始日」打开日详情，
+  // 否则点进去会落到结束日 → 显示「休息日」而看不到这次训练。
+  testWidgets('跨午夜训练在日志中按「开始日」打开日详情', (tester) async {
+    final start = DateTime(2026, 10, 12, 23, 30);
+    fit.sessions.add(LoggedSession(start.add(const Duration(hours: 1)), 3600, [
+      LoggedExercise('plank', 'Plank', 'abdomen', [LoggedSet(0, 0, sec: 60)]),
+    ]));
+    fit.route = 'log';
+    await tester.pumpWidget(const GymManeApp());
+    await tester.pumpAndSettle();
+
+    final rowText = find.textContaining(t.longDate(start));
+    expect(rowText, findsWidgets);
+    await tester.tap(rowText.first);
+    await tester.pumpAndSettle();
+
+    expect(find.text(t.restDay), findsNothing);
   });
 }

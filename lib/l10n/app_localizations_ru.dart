@@ -5577,4 +5577,165 @@ class AppLocalizationsRu extends AppLocalizations {
   String planCycleApplied(Object n, Object weeks) {
     return 'Training cycle applied ($weeks weeks, $n×/week)';
   }
+
+  @override
+  String get hidePhotos => 'Скрыть фото';
+
+  @override
+  String get showPhotos => 'Показать фото';
+
+  @override
+  String get eachSide => 'Каждая сторона';
+
+  @override
+  String get eachSideHint => 'Таймер идёт на каждую сторону, отдых начинается после обеих.';
+
+  @override
+  String get timePerSideCol => 'ВРЕМЯ / СТОРОНА';
+
+  @override
+  String get tapToChange => 'Нажми, чтобы изменить';
+
+  @override
+  String get swipeToSkipHint => 'Смахни таймер в сторону, чтобы пропустить отдых.';
+
+  @override
+  String sideOfTwo(String n) {
+    return 'Сторона $n из 2';
+  }
+
+  @override
+  String get switchSides => 'Смени сторону';
+
+  @override
+  String get planFixedWeek => 'Фикс. неделя';
+
+  @override
+  String get planRotation => 'Ротация';
+
+  @override
+  String get rotationTitle => 'РОТАЦИЯ';
+
+  @override
+  String get rotationHint => 'Следующая — та, что идёт после последней тренировки, в любой день.';
+
+  @override
+  String get rotationEmpty => 'Добавь программы в том порядке, в каком будешь их делать: A, B, C…';
+
+  @override
+  String rotationProgress(int done, int total) {
+    return '$done из $total сделано в этом круге';
+  }
+
+  @override
+  String get rotationNext => 'Следующая';
+
+  @override
+  String get rotationAdd => 'Добавить программы';
+
+  @override
+  String get rotationPickHint => 'Добавляются в том порядке, в каком нажимаешь.';
+
+  @override
+  String get rotationSkip => 'Перейти к следующей';
+
+  @override
+  String get rotationRestart => 'Начать новый круг';
+
+  @override
+  String get rotationMakeNext => 'Сделать следующей';
+
+  @override
+  String get rotationRemove => 'Убрать из ротации';
+
+  @override
+  String rotationPlace(int n, int total) {
+    return '$n из $total в ротации';
+  }
+
+  @override
+  String get moveToDay => 'Перенести на другой день';
+
+  @override
+  String get moveToDayHint => 'Только в этот раз; план на неделю не меняется.';
+
+  @override
+  String get movedToast => 'Тренировка перенесена';
+
+  @override
+  String get backToPlan => 'Вернуть недельный план';
+
+  @override
+  String get tomorrow => 'Завтра';
+
+  @override
+  String get untrainedTab => 'Без нагрузки';
+
+  @override
+  String get untrainedRecent => 'Недавно';
+
+  @override
+  String get untrainedLong => 'Давно';
+
+  @override
+  String untrainedWaiting(String list) {
+    return 'Дольше всех ждут: $list';
+  }
+
+  @override
+  String get untrainedAllRecent => 'Все мышцы поработали на этой неделе. Отлично.';
+
+  @override
+  String trainedAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня назад',
+      many: '$n дней назад',
+      few: '$n дня назад',
+      one: '$n день назад',
+      zero: 'Сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get neverTrained => 'Ещё не тренировалась';
+
+  @override
+  String get layoutSetting => 'Вид тренировки';
+
+  @override
+  String get layoutCards => 'Карточки';
+
+  @override
+  String get layoutList => 'Список';
+
+  @override
+  String get layoutHint =>
+      'Карточки показывают по одному упражнению. Список — всю тренировку на одном экране, подход за подходом.';
+
+  @override
+  String get layoutRowHint => 'По одному упражнению или всё списком';
+
+  @override
+  String get previousCol => 'ПРОШЛЫЙ';
+
+  @override
+  String get usePrevious => 'Взять прошлые значения';
+
+  @override
+  String get skipShort => 'Пропустить';
+
+  @override
+  String get moveUp => 'Выше';
+
+  @override
+  String get moveDown => 'Ниже';
+
+  @override
+  String get widgetNutritionOff => 'Turn on Nutrition in Settings › Beta to use this widget.';
+
+  @override
+  String get widgetPickShake => 'Pick your shake';
 }

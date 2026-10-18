@@ -5321,4 +5321,162 @@ class AppLocalizationsJa extends AppLocalizations {
   String planCycleApplied(Object n, Object weeks) {
     return 'Training cycle applied ($weeks weeks, $n×/week)';
   }
+
+  @override
+  String get hidePhotos => '写真を隠す';
+
+  @override
+  String get showPhotos => '写真を表示';
+
+  @override
+  String get eachSide => '左右それぞれ';
+
+  @override
+  String get eachSideHint => 'タイマーは片側ずつ動き、両側が終わってから休憩が始まります。';
+
+  @override
+  String get timePerSideCol => '時間/片側';
+
+  @override
+  String get tapToChange => 'タップで変更';
+
+  @override
+  String get swipeToSkipHint => 'タイマーを横にスワイプすると休憩をスキップできます。';
+
+  @override
+  String sideOfTwo(String n) {
+    return '片側 $n/2';
+  }
+
+  @override
+  String get switchSides => '反対側へ';
+
+  @override
+  String get planFixedWeek => '固定の週';
+
+  @override
+  String get planRotation => 'ローテーション';
+
+  @override
+  String get rotationTitle => 'ローテーション';
+
+  @override
+  String get rotationHint => '曜日に関係なく、前回の次のルーティンが「次」になります。';
+
+  @override
+  String get rotationEmpty => 'やる順番にルーティンを追加しよう: A、B、C…';
+
+  @override
+  String rotationProgress(int done, int total) {
+    return '今回のサイクルで $total 中 $done 完了';
+  }
+
+  @override
+  String get rotationNext => '次';
+
+  @override
+  String get rotationAdd => 'ルーティンを追加';
+
+  @override
+  String get rotationPickHint => 'タップした順に並びます。';
+
+  @override
+  String get rotationSkip => '次へスキップ';
+
+  @override
+  String get rotationRestart => '新しいサイクル';
+
+  @override
+  String get rotationMakeNext => '次にする';
+
+  @override
+  String get rotationRemove => 'ローテーションから外す';
+
+  @override
+  String rotationPlace(int n, int total) {
+    return 'ローテーション $n/$total';
+  }
+
+  @override
+  String get moveToDay => '別の日に移動';
+
+  @override
+  String get moveToDayHint => '今回だけ。週間プランはそのままです。';
+
+  @override
+  String get movedToast => 'トレーニングを移動しました';
+
+  @override
+  String get backToPlan => '週間プランに戻す';
+
+  @override
+  String get tomorrow => '明日';
+
+  @override
+  String get untrainedTab => '未トレーニング';
+
+  @override
+  String get untrainedRecent => '最近';
+
+  @override
+  String get untrainedLong => 'だいぶ前';
+
+  @override
+  String untrainedWaiting(String list) {
+    return 'いちばん間が空いている: $list';
+  }
+
+  @override
+  String get untrainedAllRecent => '今週はすべての筋肉を鍛えました。いいね。';
+
+  @override
+  String trainedAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日前',
+      one: '昨日トレーニング',
+      zero: '今日トレーニング',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get neverTrained => 'まだ未トレーニング';
+
+  @override
+  String get layoutSetting => 'ワークアウトの表示';
+
+  @override
+  String get layoutCards => 'カード';
+
+  @override
+  String get layoutList => 'リスト';
+
+  @override
+  String get layoutHint => 'カードは種目を1つずつ表示。リストはワークアウト全体を1画面にセットごとに表示します。';
+
+  @override
+  String get layoutRowHint => '1種目ずつ、または全体をリストで';
+
+  @override
+  String get previousCol => '前回';
+
+  @override
+  String get usePrevious => '前回の値を使う';
+
+  @override
+  String get skipShort => 'スキップ';
+
+  @override
+  String get moveUp => '上へ移動';
+
+  @override
+  String get moveDown => '下へ移動';
+
+  @override
+  String get widgetNutritionOff => 'Turn on Nutrition in Settings › Beta to use this widget.';
+
+  @override
+  String get widgetPickShake => 'Pick your shake';
 }

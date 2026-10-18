@@ -441,7 +441,8 @@ void main() {
     test('un día sin rutina no rompe la racha', () {
       final today = DateTime.now();
       final yesterday = DateTime(today.year, today.month, today.day - 1);
-      final before = DateTime(today.year, today.month, today.day - 2);
+      // 新语义：day = date - durationSec。取当天正午，保证开始日落在目标日（对齐上游改动）。
+      final before = DateTime(today.year, today.month, today.day - 2, 12);
       fit.sessions.add(logged(today, [LoggedSet(5, 60)]));
       fit.sessions.add(logged(before, [LoggedSet(5, 60)]));
       expect(fit.currentStreak, 1);

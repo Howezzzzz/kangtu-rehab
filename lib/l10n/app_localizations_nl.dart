@@ -5470,4 +5470,163 @@ class AppLocalizationsNl extends AppLocalizations {
   String planCycleApplied(Object n, Object weeks) {
     return 'Training cycle applied ($weeks weeks, $n×/week)';
   }
+
+  @override
+  String get hidePhotos => 'Foto\'s verbergen';
+
+  @override
+  String get showPhotos => 'Foto\'s tonen';
+
+  @override
+  String get eachSide => 'Elke kant';
+
+  @override
+  String get eachSideHint => 'De timer loopt één keer per kant en de rust begint na beide.';
+
+  @override
+  String get timePerSideCol => 'TIJD / KANT';
+
+  @override
+  String get tapToChange => 'Tik om te wijzigen';
+
+  @override
+  String get swipeToSkipHint => 'Veeg de timer opzij om de rust over te slaan.';
+
+  @override
+  String sideOfTwo(String n) {
+    return 'Kant $n van 2';
+  }
+
+  @override
+  String get switchSides => 'Wissel van kant';
+
+  @override
+  String get planFixedWeek => 'Vaste week';
+
+  @override
+  String get planRotation => 'Rotatie';
+
+  @override
+  String get rotationTitle => 'ROTATIE';
+
+  @override
+  String get rotationHint => 'Je volgende is wat na je laatste training komt, welke dag het ook is.';
+
+  @override
+  String get rotationEmpty => 'Voeg je routines toe in de volgorde waarin je ze doet: A, B, C…';
+
+  @override
+  String rotationProgress(int done, int total) {
+    return '$done van $total gedaan deze ronde';
+  }
+
+  @override
+  String get rotationNext => 'Volgende';
+
+  @override
+  String get rotationAdd => 'Routines toevoegen';
+
+  @override
+  String get rotationPickHint => 'Ze komen in de volgorde waarin je ze aantikt.';
+
+  @override
+  String get rotationSkip => 'Naar de volgende';
+
+  @override
+  String get rotationRestart => 'Nieuwe ronde';
+
+  @override
+  String get rotationMakeNext => 'Maak dit de volgende';
+
+  @override
+  String get rotationRemove => 'Uit de rotatie halen';
+
+  @override
+  String rotationPlace(int n, int total) {
+    return '$n van $total in de rotatie';
+  }
+
+  @override
+  String get moveToDay => 'Naar een andere dag';
+
+  @override
+  String get moveToDayHint => 'Alleen deze keer; je weekplan blijft hetzelfde.';
+
+  @override
+  String get movedToast => 'Training verplaatst';
+
+  @override
+  String get backToPlan => 'Terug naar het weekplan';
+
+  @override
+  String get tomorrow => 'Morgen';
+
+  @override
+  String get untrainedTab => 'Ongetraind';
+
+  @override
+  String get untrainedRecent => 'Recent';
+
+  @override
+  String get untrainedLong => 'Lang geleden';
+
+  @override
+  String untrainedWaiting(String list) {
+    return 'Het langst niet getraind: $list';
+  }
+
+  @override
+  String get untrainedAllRecent => 'Elke spier heeft deze week gewerkt. Mooi.';
+
+  @override
+  String trainedAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dagen geleden',
+      one: 'Gisteren getraind',
+      zero: 'Vandaag getraind',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get neverTrained => 'Nog niet getraind';
+
+  @override
+  String get layoutSetting => 'Trainingsweergave';
+
+  @override
+  String get layoutCards => 'Kaarten';
+
+  @override
+  String get layoutList => 'Lijst';
+
+  @override
+  String get layoutHint =>
+      'Kaarten tonen één oefening tegelijk. De lijst toont de hele training op één scherm, set na set.';
+
+  @override
+  String get layoutRowHint => 'Eén oefening tegelijk of alles als lijst';
+
+  @override
+  String get previousCol => 'VORIGE';
+
+  @override
+  String get usePrevious => 'Waarden van vorige keer gebruiken';
+
+  @override
+  String get skipShort => 'Overslaan';
+
+  @override
+  String get moveUp => 'Omhoog';
+
+  @override
+  String get moveDown => 'Omlaag';
+
+  @override
+  String get widgetNutritionOff => 'Turn on Nutrition in Settings › Beta to use this widget.';
+
+  @override
+  String get widgetPickShake => 'Pick your shake';
 }

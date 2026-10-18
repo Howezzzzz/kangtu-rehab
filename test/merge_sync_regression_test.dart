@@ -10,6 +10,7 @@ import 'package:gymmane/catalog/exercise_catalog.dart';
 import 'package:gymmane/catalog/exercises_ext.dart';
 import 'package:gymmane/catalog/exercises_rep.dart';
 import 'package:gymmane/models/exercise.dart';
+import 'package:gymmane/models/plan_cycle.dart';
 import 'package:gymmane/models/workout.dart';
 import 'package:gymmane/services/local_store.dart';
 import 'package:gymmane/state/fit_state.dart';
@@ -115,6 +116,31 @@ void main() {
       expect(fit.hasSecondaryOverride(base.id), isFalse);
       expect(fit.allExercises.firstWhere((e) => e.id == base.id).secondary,
           base.secondary);
+    });
+  });
+
+  // ISS-126 回归：上游本批把「训练日期」语义改为「按开始日计」
+  //   （LoggedSession.day = date - durationSec，date 为结束时刻）。
+  //   跨午夜训练必须归到「开始日」，且定制模块（日志/日详情/Plan Cycle 计数）与新语义一致。
+  group('ISS-126 上游 date→day 语义迁移（按开始日计训练）', () {
+    test('day = date - durationSec（跨午夜落到开始日）', () {
+      final end = DateTime(2026, 10, 13, 0, 30); // 10/12 23:30 开始
+      final s = LoggedSession(end, 3600, const []);
+      expect(s.day, DateTime(2026, 10, 12, 23, 30));
+    });
+
+    test('日详情按开始日归组（跨午夜训练算在开始日）', () {
+      fit.sessions.add(LoggedSession(DateTime(2026, 10, 13, 0, 30), 3600, const []));
+      expect(fit.daySummary(DateTime(2026, 10, 12)), isNotNull); // 开始日有训练
+      expect(fit.daySummary(DateTime(2026, 10, 13)), isNull); // 结束日为空
+    });
+
+    test('周期已完成计数按开始日（cycleDoneSessions）', () {
+      final id = fit.createRoutine('回归-周期');
+      fit.setCycle(id, PlanCycle(start: DateTime(2026, 10, 1), weeks: 4, perWeek: 3));
+      fit.sessions.add(
+          LoggedSession(DateTime(2026, 10, 13, 0, 30), 3600, const [], routineId: id));
+      expect(fit.cycleDoneSessions(id), 1);
     });
   });
 }
