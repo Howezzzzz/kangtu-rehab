@@ -48,7 +48,7 @@ void main() {
 
     await tester.tap(find.text('阶段2'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('稳定进阶'), findsOneWidget);
+    expect(find.textContaining('控制稳了再进阶'), findsOneWidget);
 
     await tester.tap(find.text('红灯'));
     await tester.pumpAndSettle();

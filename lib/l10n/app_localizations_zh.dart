@@ -5177,25 +5177,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fbRehabSection => '康复记录';
 
   @override
-  String get rehabStPhaseDesc1 => '基础激活：死虫式＋臀桥＋鸟狗式＋快走有氧（2 周·8 次·15~18 分钟）';
+  String get rehabStPhaseDesc1 => '核心唤醒起步，强度最轻，先把动作质量做对';
 
   @override
-  String get rehabStPhaseDesc2 => '稳定进阶：加入平板＋侧平板＋单腿臀桥（2 周·8 次·20~25 分钟）';
+  String get rehabStPhaseDesc2 => '控制稳了再进阶，难度和训练时长逐步加';
 
   @override
-  String get rehabStPhaseDesc3 => '巩固强化：全套进阶＋跪姿俯卧撑／靠墙静蹲（4 周·12 次·约 30 分钟）';
+  String get rehabStPhaseDesc3 => '把稳定性练成习惯，力量与耐力同步提升';
 
   @override
-  String get rehabStPhaseDescMaintain => '目标从「变强」转为「不退步」；每周 2~3 次，量维持';
+  String get rehabStPhaseDescMaintain => '目标从「变强」转为「不退步」，每周 2~3 次、量维持';
 
   @override
-  String get rehabStLightDescGreen => '三问都好转 → 按课表升级';
+  String get rehabStLightDescGreen => '本周三问都好转（腰痛更轻、腿麻更少、久坐起身不僵）→ 按课表正常推进';
 
   @override
-  String get rehabStLightDescAmber => '平台期（一周无变化）→ 当前阶段再练一周，别加量';
+  String get rehabStLightDescAmber => '本周状态没进展（平台期），或训练中只有 ≤3 分轻微不适、停下即缓解 → 当前阶段再练一周，别加量';
 
   @override
-  String get rehabStLightDescRed => '任何一项倒退 → 退回上一阶段；连续倒退或红线症状 → 停练＋复诊';
+  String get rehabStLightDescRed => '本周状态比上周更差，或疼痛 >3 分／腿麻加重／放射痛／无力 → 立即停练、退回上一阶段；2~3 天不缓解就复诊';
 
   @override
   String get cycleTitle => '排期周期';
@@ -10229,28 +10229,30 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get rehabStPhaseDesc1 =>
-      'Activation: dead bug, glute bridge, bird dog + brisk walks (2 wks, 8 sessions)';
+      'Activation start: the gentlest load; focus on doing each move correctly first';
 
   @override
-  String get rehabStPhaseDesc2 => 'Progression: add plank, side plank, single-leg bridge (2 wks, 8 sessions)';
+  String get rehabStPhaseDesc2 =>
+      'Once control is steady, progress: difficulty and session length rise gradually';
 
   @override
-  String get rehabStPhaseDesc3 =>
-      'Consolidation: advanced mix + knee push-ups / wall sit (4 wks, 12 sessions)';
+  String get rehabStPhaseDesc3 => 'Turn stability into a habit; strength and endurance improve together';
 
   @override
   String get rehabStPhaseDescMaintain =>
-      'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold volume';
+      'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold the volume';
 
   @override
-  String get rehabStLightDescGreen => 'All three questions improved → progress the plan';
+  String get rehabStLightDescGreen =>
+      'All three weekly checks improved (less back pain, less leg numbness, less stiffness after sitting) → keep progressing per the plan';
 
   @override
-  String get rehabStLightDescAmber => 'Plateau (no change in a week) → repeat the phase, don\'t add load';
+  String get rehabStLightDescAmber =>
+      'No progress this week (plateau), or only mild soreness ≤3/10 during training that eases when you stop → repeat the current phase, don\'t add load';
 
   @override
   String get rehabStLightDescRed =>
-      'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor';
+      'Worse than last week, or pain >3/10, worse leg numbness, radiating pain or weakness → stop at once and step back a phase; if it doesn\'t ease in 2–3 days, see a doctor';
 
   @override
   String get cycleTitle => 'Cycle';

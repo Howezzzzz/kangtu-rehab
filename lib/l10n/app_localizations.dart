@@ -9541,43 +9541,43 @@ abstract class AppLocalizations {
   /// No description provided for @rehabStPhaseDesc1.
   ///
   /// In en, this message translates to:
-  /// **'Activation: dead bug, glute bridge, bird dog + brisk walks (2 wks, 8 sessions)'**
+  /// **'Activation start: the gentlest load; focus on doing each move correctly first'**
   String get rehabStPhaseDesc1;
 
   /// No description provided for @rehabStPhaseDesc2.
   ///
   /// In en, this message translates to:
-  /// **'Progression: add plank, side plank, single-leg bridge (2 wks, 8 sessions)'**
+  /// **'Once control is steady, progress: difficulty and session length rise gradually'**
   String get rehabStPhaseDesc2;
 
   /// No description provided for @rehabStPhaseDesc3.
   ///
   /// In en, this message translates to:
-  /// **'Consolidation: advanced mix + knee push-ups / wall sit (4 wks, 12 sessions)'**
+  /// **'Turn stability into a habit; strength and endurance improve together'**
   String get rehabStPhaseDesc3;
 
   /// No description provided for @rehabStPhaseDescMaintain.
   ///
   /// In en, this message translates to:
-  /// **'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold volume'**
+  /// **'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold the volume'**
   String get rehabStPhaseDescMaintain;
 
   /// No description provided for @rehabStLightDescGreen.
   ///
   /// In en, this message translates to:
-  /// **'All three questions improved → progress the plan'**
+  /// **'All three weekly checks improved (less back pain, less leg numbness, less stiffness after sitting) → keep progressing per the plan'**
   String get rehabStLightDescGreen;
 
   /// No description provided for @rehabStLightDescAmber.
   ///
   /// In en, this message translates to:
-  /// **'Plateau (no change in a week) → repeat the phase, don\'t add load'**
+  /// **'No progress this week (plateau), or only mild soreness ≤3/10 during training that eases when you stop → repeat the current phase, don\'t add load'**
   String get rehabStLightDescAmber;
 
   /// No description provided for @rehabStLightDescRed.
   ///
   /// In en, this message translates to:
-  /// **'Any item regressed → step back a phase; repeated/warning signs → stop + see a doctor'**
+  /// **'Worse than last week, or pain >3/10, worse leg numbness, radiating pain or weakness → stop at once and step back a phase; if it doesn\'t ease in 2–3 days, see a doctor'**
   String get rehabStLightDescRed;
 
   /// No description provided for @cycleTitle.
