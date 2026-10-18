@@ -30,6 +30,17 @@ class RehabEpisodeScreen extends StatefulWidget {
 class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
   final TextEditingController _reply = TextEditingController();
   final TextEditingController _notes = TextEditingController();
+  // ---- 就医与医嘱 ----
+  final TextEditingController _dx = TextEditingController();
+  final TextEditingController _icd = TextEditingController();
+  final TextEditingController _ord = TextEditingController();
+  final TextEditingController _care = TextEditingController();
+  final TextEditingController _restr = TextEditingController();
+  final TextEditingController _img = TextEditingController();
+  final TextEditingController _hosp = TextEditingController();
+  final TextEditingController _med = TextEditingController();
+  DateTime? _visitDate;
+  DateTime? _followUpAt;
   String? _epId;
   int _added = 0;
   int _routines = 0;
@@ -39,8 +50,9 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
 
   @override
   void dispose() {
-    _reply.dispose();
-    _notes.dispose();
+    for (final c in [_reply, _notes, _dx, _icd, _ord, _care, _restr, _img, _hosp, _med]) {
+      c.dispose();
+    }
     super.dispose();
   }
 
@@ -58,6 +70,16 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
     if (_epId != ep.id) {
       _epId = ep.id;
       _notes.text = ep.notes;
+      _dx.text = ep.doctorDx;
+      _icd.text = ep.icdCode;
+      _ord.text = ep.ordersText;
+      _care.text = ep.advisedCare;
+      _restr.text = ep.restrictions;
+      _img.text = ep.imaging;
+      _hosp.text = ep.facility;
+      _med.text = ep.medNote;
+      _visitDate = ep.visitDate;
+      _followUpAt = ep.followUpAt;
     }
     return SafeArea(
       bottom: false,
@@ -73,7 +95,13 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
             const SizedBox(height: 14),
             _summary(gc, ep),
             const SizedBox(height: 14),
-            if (ep.safe) ...[
+            if (!ep.safe && !ep.hasDoctorOrders) ...[
+              _doctorGuide(gc),
+              const SizedBox(height: 14),
+            ],
+            _doctorCard(gc, ep),
+            const SizedBox(height: 14),
+            if (ep.safe || ep.hasDoctorOrders) ...[
               _aiCard(gc, ep),
               const SizedBox(height: 14),
             ],
@@ -166,6 +194,144 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
     );
   }
 
+  // ---- 就医与医嘱 ----
+
+  /// 安全门未过且尚未记录医嘱时的引导条。
+  Widget _doctorGuide(GymColors gc) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: gc.bgRaised,
+        border: Border.all(color: gc.ember),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Icon(PhosphorIconsRegular.stethoscope, size: 18, color: gc.ember),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(t.rehabDoctorGuide,
+              style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.45)),
+        ),
+      ]),
+    );
+  }
+
+  /// 记录医生诊断与医嘱 —— 记完后（即使安全门未过）即可生成训练计划。
+  Widget _doctorCard(GymColors gc, RehabEpisode ep) {
+    return SoftCard(
+      radius: 18,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _title(gc, t.rehabDoctorTitle),
+          Text(t.rehabDoctorDisclaimer,
+              style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textTertiary, height: 1.4)),
+          const SizedBox(height: 12),
+          _field(_dx, t.rehabDoctorDx),
+          const SizedBox(height: 8),
+          _field(_icd, t.rehabDoctorIcd),
+          const SizedBox(height: 10),
+          _dateRow(gc, t.rehabDoctorVisit, _visitDate, () => _pickDate(true)),
+          const SizedBox(height: 8),
+          _dateRow(gc, t.rehabDoctorFollowUp, _followUpAt, () => _pickDate(false)),
+          const SizedBox(height: 10),
+          _field(_ord, t.rehabDoctorOrders, minLines: 4),
+          const SizedBox(height: 8),
+          _field(_care, t.rehabDoctorAdvice),
+          const SizedBox(height: 8),
+          _field(_restr, t.rehabDoctorRestrictions),
+          const SizedBox(height: 8),
+          _field(_img, t.rehabDoctorImaging),
+          const SizedBox(height: 8),
+          _field(_hosp, t.rehabDoctorFacility),
+          const SizedBox(height: 8),
+          _field(_med, t.rehabDoctorMeds),
+          const SizedBox(height: 12),
+          PrimaryButton(label: t.rehabDoctorSave, onTap: () => _saveDoctor(ep)),
+        ],
+      ),
+    );
+  }
+
+  Widget _field(TextEditingController c, String hint, {int minLines = 1}) {
+    final gc = context.gc;
+    return TextField(
+      controller: c,
+      minLines: minLines,
+      maxLines: minLines == 1 ? 1 : 8,
+      keyboardType: minLines == 1 ? TextInputType.text : TextInputType.multiline,
+      style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.text, height: 1.35),
+      cursorColor: gc.ember,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: AppTheme.f(13, weight: FontWeight.w500, color: gc.textTertiary),
+        filled: true,
+        fillColor: gc.bgRaised,
+        contentPadding: const EdgeInsets.all(14),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+      ),
+    );
+  }
+
+  Widget _dateRow(GymColors gc, String label, DateTime? date, VoidCallback onTap) {
+    final fmt = date == null
+        ? ''
+        : '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(color: gc.bgRaised, borderRadius: BorderRadius.circular(16)),
+        child: Row(children: [
+          Icon(PhosphorIconsRegular.calendarBlank, size: 16, color: gc.textTertiary),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(fmt.isEmpty ? label : '$label：$fmt',
+                style: AppTheme.f(12.5,
+                    weight: FontWeight.w500, color: fmt.isEmpty ? gc.textTertiary : gc.text)),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Future<void> _pickDate(bool visit) async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: (visit ? _visitDate : _followUpAt) ?? now,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(now.year + 5),
+    );
+    if (picked == null) return;
+    setState(() {
+      if (visit) {
+        _visitDate = picked;
+      } else {
+        _followUpAt = picked;
+      }
+    });
+  }
+
+  void _saveDoctor(RehabEpisode ep) {
+    FocusScope.of(context).unfocus();
+    ep.doctorDx = _dx.text.trim();
+    ep.icdCode = _icd.text.trim();
+    ep.visitDate = _visitDate;
+    ep.ordersText = _ord.text.trim();
+    ep.advisedCare = _care.text.trim();
+    ep.restrictions = _restr.text.trim();
+    ep.followUpAt = _followUpAt;
+    ep.imaging = _img.text.trim();
+    ep.facility = _hosp.text.trim();
+    ep.medNote = _med.text.trim();
+    fit.updateEpisode(ep);
+    setState(() => _epId = null); // 重读档案 + 刷新安全门/引导
+    showNotchToast(context, t.rehabDoctorSaved,
+        icon: PhosphorIconsFill.checkCircle, accent: context.gc.sage);
+  }
+
   // ---- AI 建议闭环 ----
   Widget _aiCard(GymColors gc, RehabEpisode ep) {
     return SoftCard(
@@ -188,6 +354,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
               onTap: () => _export(ep)),
           const SizedBox(height: 14),
           TextField(
+            key: const Key('rehabAiReply'),
             controller: _reply,
             minLines: 5,
             maxLines: 12,
@@ -294,7 +461,7 @@ class _RehabEpisodeScreenState extends State<RehabEpisodeScreen> {
         children: [
           _title(gc, t.rehabRehabPlans),
           if (rs.isEmpty)
-            Text(ep.safe ? t.rehabNoAdviceYet : t.rehabGateBlocksPlan,
+            Text((ep.safe || ep.hasDoctorOrders) ? t.rehabNoAdviceYet : t.rehabGateBlocksPlan,
                 style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textSecondary))
           else
             for (final r in rs) ...[

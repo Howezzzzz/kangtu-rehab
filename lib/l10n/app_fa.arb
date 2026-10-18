@@ -1528,5 +1528,20 @@
   "usePrevious": "استفاده از اعداد دفعه قبل",
   "skipShort": "رد کن",
   "moveUp": "بالا ببر",
-  "moveDown": "پایین ببر"
+  "moveDown": "پایین ببر",
+  "rehabDoctorTitle": "Diagnosis & Doctor's Orders",
+  "rehabDoctorDisclaimer": "The app only records — it does not interpret your doctor's orders. Always follow your doctor.",
+  "rehabDoctorGuide": "Seen a doctor? Record the diagnosis and orders → you can generate a plan even if the safety gate failed",
+  "rehabDoctorDx": "Diagnosis / findings (e.g. L5-S1 disc herniation)",
+  "rehabDoctorIcd": "ICD code (optional)",
+  "rehabDoctorVisit": "Visit date",
+  "rehabDoctorFollowUp": "Follow-up / reassessment",
+  "rehabDoctorOrders": "Doctor's orders (copy or paste your doctor's words)",
+  "rehabDoctorAdvice": "Treatment / activities your doctor advised",
+  "rehabDoctorRestrictions": "Restrictions & contraindications (e.g. no bending or lifting for now)",
+  "rehabDoctorImaging": "Imaging / test findings (optional)",
+  "rehabDoctorFacility": "Hospital / department / doctor (optional, not sent to the AI)",
+  "rehabDoctorMeds": "Medications / other notes (optional, not sent to the AI)",
+  "rehabDoctorSave": "Save diagnosis & orders",
+  "rehabDoctorSaved": "Saved — you can generate a plan now"
 }

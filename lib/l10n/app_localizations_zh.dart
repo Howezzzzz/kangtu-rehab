@@ -5402,6 +5402,51 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get widgetPickShake => 'Pick your shake';
+
+  @override
+  String get rehabDoctorTitle => '诊断与医嘱';
+
+  @override
+  String get rehabDoctorDisclaimer => 'App 只做记录、不解释医嘱；一切以医生为准';
+
+  @override
+  String get rehabDoctorGuide => '已就医？把医生的诊断和医嘱记下来 → 就算安全门没过，也能生成训练计划';
+
+  @override
+  String get rehabDoctorDx => '诊断 / 结论（如 L5-S1 椎间盘突出）';
+
+  @override
+  String get rehabDoctorIcd => 'ICD 码（选填）';
+
+  @override
+  String get rehabDoctorVisit => '就诊日期';
+
+  @override
+  String get rehabDoctorFollowUp => '复诊 / 再评估时间';
+
+  @override
+  String get rehabDoctorOrders => '医嘱原文（照抄或粘贴医生的话）';
+
+  @override
+  String get rehabDoctorAdvice => '医生建议的治疗 / 可做动作';
+
+  @override
+  String get rehabDoctorRestrictions => '限制与禁忌（禁做 / 慎做，如暂不弯腰搬重物）';
+
+  @override
+  String get rehabDoctorImaging => '影像 / 检查结论（选填）';
+
+  @override
+  String get rehabDoctorFacility => '医院 / 科室 / 医生（选填，不会发给 AI）';
+
+  @override
+  String get rehabDoctorMeds => '用药 / 其他备注（选填，不会发给 AI）';
+
+  @override
+  String get rehabDoctorSave => '保存诊断与医嘱';
+
+  @override
+  String get rehabDoctorSaved => '已保存，可以生成计划了';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -10453,4 +10498,52 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get moveDown => '下移';
+
+  @override
+  String get rehabDoctorTitle => 'Diagnosis & Doctor\'s Orders';
+
+  @override
+  String get rehabDoctorDisclaimer =>
+      'The app only records — it does not interpret your doctor\'s orders. Always follow your doctor.';
+
+  @override
+  String get rehabDoctorGuide =>
+      'Seen a doctor? Record the diagnosis and orders → you can generate a plan even if the safety gate failed';
+
+  @override
+  String get rehabDoctorDx => 'Diagnosis / findings (e.g. L5-S1 disc herniation)';
+
+  @override
+  String get rehabDoctorIcd => 'ICD code (optional)';
+
+  @override
+  String get rehabDoctorVisit => 'Visit date';
+
+  @override
+  String get rehabDoctorFollowUp => 'Follow-up / reassessment';
+
+  @override
+  String get rehabDoctorOrders => 'Doctor\'s orders (copy or paste your doctor\'s words)';
+
+  @override
+  String get rehabDoctorAdvice => 'Treatment / activities your doctor advised';
+
+  @override
+  String get rehabDoctorRestrictions =>
+      'Restrictions & contraindications (e.g. no bending or lifting for now)';
+
+  @override
+  String get rehabDoctorImaging => 'Imaging / test findings (optional)';
+
+  @override
+  String get rehabDoctorFacility => 'Hospital / department / doctor (optional, not sent to the AI)';
+
+  @override
+  String get rehabDoctorMeds => 'Medications / other notes (optional, not sent to the AI)';
+
+  @override
+  String get rehabDoctorSave => 'Save diagnosis & orders';
+
+  @override
+  String get rehabDoctorSaved => 'Saved — you can generate a plan now';
 }

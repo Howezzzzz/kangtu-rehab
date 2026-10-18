@@ -9951,6 +9951,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick your shake'**
   String get widgetPickShake;
+
+  /// No description provided for @rehabDoctorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnosis & Doctor\'s Orders'**
+  String get rehabDoctorTitle;
+
+  /// No description provided for @rehabDoctorDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'The app only records — it does not interpret your doctor\'s orders. Always follow your doctor.'**
+  String get rehabDoctorDisclaimer;
+
+  /// No description provided for @rehabDoctorGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen a doctor? Record the diagnosis and orders → you can generate a plan even if the safety gate failed'**
+  String get rehabDoctorGuide;
+
+  /// No description provided for @rehabDoctorDx.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnosis / findings (e.g. L5-S1 disc herniation)'**
+  String get rehabDoctorDx;
+
+  /// No description provided for @rehabDoctorIcd.
+  ///
+  /// In en, this message translates to:
+  /// **'ICD code (optional)'**
+  String get rehabDoctorIcd;
+
+  /// No description provided for @rehabDoctorVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit date'**
+  String get rehabDoctorVisit;
+
+  /// No description provided for @rehabDoctorFollowUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow-up / reassessment'**
+  String get rehabDoctorFollowUp;
+
+  /// No description provided for @rehabDoctorOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor\'s orders (copy or paste your doctor\'s words)'**
+  String get rehabDoctorOrders;
+
+  /// No description provided for @rehabDoctorAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment / activities your doctor advised'**
+  String get rehabDoctorAdvice;
+
+  /// No description provided for @rehabDoctorRestrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'Restrictions & contraindications (e.g. no bending or lifting for now)'**
+  String get rehabDoctorRestrictions;
+
+  /// No description provided for @rehabDoctorImaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Imaging / test findings (optional)'**
+  String get rehabDoctorImaging;
+
+  /// No description provided for @rehabDoctorFacility.
+  ///
+  /// In en, this message translates to:
+  /// **'Hospital / department / doctor (optional, not sent to the AI)'**
+  String get rehabDoctorFacility;
+
+  /// No description provided for @rehabDoctorMeds.
+  ///
+  /// In en, this message translates to:
+  /// **'Medications / other notes (optional, not sent to the AI)'**
+  String get rehabDoctorMeds;
+
+  /// No description provided for @rehabDoctorSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save diagnosis & orders'**
+  String get rehabDoctorSave;
+
+  /// No description provided for @rehabDoctorSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved — you can generate a plan now'**
+  String get rehabDoctorSaved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

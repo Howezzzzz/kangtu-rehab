@@ -5609,4 +5609,52 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get widgetPickShake => 'Pick your shake';
+
+  @override
+  String get rehabDoctorTitle => 'Diagnosis & Doctor\'s Orders';
+
+  @override
+  String get rehabDoctorDisclaimer =>
+      'The app only records — it does not interpret your doctor\'s orders. Always follow your doctor.';
+
+  @override
+  String get rehabDoctorGuide =>
+      'Seen a doctor? Record the diagnosis and orders → you can generate a plan even if the safety gate failed';
+
+  @override
+  String get rehabDoctorDx => 'Diagnosis / findings (e.g. L5-S1 disc herniation)';
+
+  @override
+  String get rehabDoctorIcd => 'ICD code (optional)';
+
+  @override
+  String get rehabDoctorVisit => 'Visit date';
+
+  @override
+  String get rehabDoctorFollowUp => 'Follow-up / reassessment';
+
+  @override
+  String get rehabDoctorOrders => 'Doctor\'s orders (copy or paste your doctor\'s words)';
+
+  @override
+  String get rehabDoctorAdvice => 'Treatment / activities your doctor advised';
+
+  @override
+  String get rehabDoctorRestrictions =>
+      'Restrictions & contraindications (e.g. no bending or lifting for now)';
+
+  @override
+  String get rehabDoctorImaging => 'Imaging / test findings (optional)';
+
+  @override
+  String get rehabDoctorFacility => 'Hospital / department / doctor (optional, not sent to the AI)';
+
+  @override
+  String get rehabDoctorMeds => 'Medications / other notes (optional, not sent to the AI)';
+
+  @override
+  String get rehabDoctorSave => 'Save diagnosis & orders';
+
+  @override
+  String get rehabDoctorSaved => 'Saved — you can generate a plan now';
 }

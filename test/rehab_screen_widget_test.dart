@@ -40,7 +40,7 @@ void main() {
 
     // 回复框是页面里第一个 TextField（AI 建议卡在备注卡之前）
     await tester.enterText(
-      find.byType(TextField).first,
+      find.byKey(const Key('rehabAiReply')),
       '{"advice":"疼就停", "routines":[{"name":"康复 A","exercises":['
       '{"name":"Barbell Bench Press","sets":3,"reps":10}]}]}',
     );
@@ -74,7 +74,7 @@ void main() {
     await tester.pumpWidget(const GymManeApp());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).first, '多喝热水，注意休息。');
+    await tester.enterText(find.byKey(const Key('rehabAiReply')), '多喝热水，注意休息。');
     await tester.pump();
     await tester.ensureVisible(find.text('导入智能建议'));
     await tester.pumpAndSettle();

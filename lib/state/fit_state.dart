@@ -564,6 +564,7 @@ class FitState extends FitCore
     multiPlan = false;
     rehabLog.clear();
     rehabLogMerged = true;
+    rehabEpisodes.clear();
     baselines.clear();
     planCycles.clear();
     rotation = false;
@@ -1069,6 +1070,18 @@ class FitState extends FitCore
       '- 当前不适程度：${ep.pain}/10',
       if (ep.factors.trim().isNotEmpty) '- 加重 / 缓解因素：${ep.factors.trim()}',
       if (flags.isEmpty) '- 安全筛查：未发现红旗征' else '- 安全筛查命中：$flags',
+      if (ep.hasDoctorOrders) ...[
+        '',
+        '【医生诊断与医嘱】',
+        if (ep.doctorDx.trim().isNotEmpty)
+          '- 诊断：${ep.doctorDx.trim()}${ep.icdCode.trim().isEmpty ? '' : '（ICD: ${ep.icdCode.trim()}）'}',
+        if (ep.visitDate != null) '- 就诊日期：${ep.visitDate!.toIso8601String().split('T').first}',
+        if (ep.ordersText.trim().isNotEmpty) '- 医嘱原文：${ep.ordersText.trim()}',
+        if (ep.advisedCare.trim().isNotEmpty) '- 医生建议的治疗/可做动作：${ep.advisedCare.trim()}',
+        if (ep.restrictions.trim().isNotEmpty) '- 限制与禁忌（必须遵守）：${ep.restrictions.trim()}',
+        if (ep.imaging.trim().isNotEmpty) '- 影像/检查结论：${ep.imaging.trim()}',
+        if (ep.followUpAt != null) '- 复诊时间：${ep.followUpAt!.toIso8601String().split('T').first}',
+      ],
       '',
       '【当前计划】',
       if (linked.isEmpty) '暂无计划（请按输出要求用 routines 字段新建）' else exportPlanJson(linked, withSchedule: false),
@@ -1096,7 +1109,9 @@ class FitState extends FitCore
       '5. 动作名尽量取自【动作库清单】里的英文名，这样能自动匹配到 App 的动作库。',
       '6. 强度保守：以不加重症状为前提，训练中疼痛不超过 3/10；先活动度、再稳定性、最后力量。',
       '7. advice 里必须包含：${t.rehabStopRules}',
-      '8. 未通过安全门时，只给 advice，routines 与 adjust 都不要输出。',
+      ep.hasDoctorOrders
+          ? '8. 【医生诊断与医嘱】存在时，即使安全门未通过也应给出计划：可输出 routines/adjust，但必须严格遵守【限制与禁忌】，不得安排被禁的动作；与医嘱冲突时以医嘱为准。'
+          : '8. 未通过安全门时，只给 advice，routines 与 adjust 都不要输出。',
       '',
       '【动作库清单】英文名 (中文名) | 肌群 | 器材 | 难度 | 模式',
     ];
@@ -1145,12 +1160,15 @@ class FitState extends FitCore
       };
 
   /// 把 AI 回复里的 adjust 指令套到档案关联的计划上。
-  /// 安全门未通过 / 无关联计划时不动。返回实际应用的条数 + 未处理项说明。
+  /// 安全门未通过且未记录医嘱 / 无关联计划时不动。返回实际应用的条数 + 未处理项说明。
   ({int adjusted, List<String> missed}) applyRehabAdjust(
       String episodeId, List<RehabAdjust> adjusts) {
     final ep = episodeById(episodeId);
     if (ep == null || adjusts.isEmpty) return (adjusted: 0, missed: const <String>[]);
-    if (!ep.safe) return (adjusted: 0, missed: const ['未通过安全门，已忽略全部计划调整']);
+    // 安全门未过但已记录医嘱（医生已看过）→ 放行，与提示词规则 8 一致
+    if (!ep.safe && !ep.hasDoctorOrders) {
+      return (adjusted: 0, missed: const ['未通过安全门，已忽略全部计划调整']);
+    }
     final rs = routines.where((r) => ep.routineIds.contains(r.id)).toList();
     if (rs.isEmpty) return (adjusted: 0, missed: const ['档案没有关联计划，无法套用调整']);
     var n = 0;
@@ -1276,8 +1294,9 @@ class FitState extends FitCore
       String episodeId, String raw) {
     final ep = episodeById(episodeId);
     if (ep == null) return (routines: 0, added: 0, adjusted: 0, missed: const <String>[]);
-    if (!ep.safe) {
-      // 安全门未通过：只保留 advice，不建计划、不套调整（与提示词规则 8 一致）
+    // 安全门未通过且未记录医嘱：只保留 advice，不建计划、不套调整（与提示词规则 8 一致）；
+    // 已记录医嘱（医生已看过）→ 放行，允许建计划/套调整。
+    if (!ep.safe && !ep.hasDoctorOrders) {
       final advice = extractRehabAdvice(raw);
       if (advice.isNotEmpty) ep.advice = advice;
       updateEpisode(ep);

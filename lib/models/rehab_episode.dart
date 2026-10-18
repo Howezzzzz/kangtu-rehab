@@ -22,6 +22,17 @@ class RehabEpisode {
     this.advice = '',
     this.notes = '',
     this.status = 'active',
+    // ---- 就医与医嘱（诊断 + 医嘱，2026-10-18 新增；全部加性，可空）----
+    this.doctorDx = '',
+    this.icdCode = '',
+    this.visitDate,
+    this.ordersText = '',
+    this.advisedCare = '',
+    this.restrictions = '',
+    this.followUpAt,
+    this.imaging = '',
+    this.facility = '',
+    this.medNote = '',
   });
 
   final String id;
@@ -67,6 +78,45 @@ class RehabEpisode {
   /// active | done
   String status;
 
+  // ---- 就医与医嘱（2026-10-18 新增；全部加性、向后兼容）----
+
+  /// 诊断 / 结论（医生给的）
+  String doctorDx;
+
+  /// ICD 码（选填）
+  String icdCode;
+
+  /// 就诊日期（选填）
+  DateTime? visitDate;
+
+  /// 医嘱原文（鼓励照抄 / 粘贴）
+  String ordersText;
+
+  /// 医生建议的治疗 / 可做动作
+  String advisedCare;
+
+  /// 限制与禁忌（禁做 / 慎做、负重或活动度限制）——进食提示词的关键项
+  String restrictions;
+
+  /// 复诊 / 再评估时间（选填）
+  DateTime? followUpAt;
+
+  /// 影像 / 检查结论（选填）
+  String imaging;
+
+  /// 医院 / 科室 / 医生（选填；**不进提示词**，仅本地回溯）
+  String facility;
+
+  /// 用药 / 其他备注（**不进提示词**）
+  String medNote;
+
+  /// 是否已记录医生诊断或医嘱。
+  /// 命中红旗征（safe == false）时，只要已就医并记录医嘱，就放行生成训练计划。
+  bool get hasDoctorOrders =>
+      doctorDx.trim().isNotEmpty ||
+      ordersText.trim().isNotEmpty ||
+      restrictions.trim().isNotEmpty;
+
   /// 安全门：没有红旗征才放行训练建议
   bool get safe => redFlags.isEmpty;
 
@@ -86,6 +136,16 @@ class RehabEpisode {
         'adv': advice,
         'note': notes,
         'st': status,
+        'dx': doctorDx,
+        'icd': icdCode,
+        if (visitDate != null) 'vd': visitDate!.toIso8601String(),
+        'ord': ordersText,
+        'care': advisedCare,
+        'restr': restrictions,
+        if (followUpAt != null) 'fua': followUpAt!.toIso8601String(),
+        'img': imaging,
+        'hosp': facility,
+        'med': medNote,
       };
 
   factory RehabEpisode.fromJson(Map<String, dynamic> j) => RehabEpisode(
@@ -104,5 +164,15 @@ class RehabEpisode {
         advice: (j['adv'] ?? '') as String,
         notes: (j['note'] ?? '') as String,
         status: (j['st'] ?? 'active') as String,
+        doctorDx: (j['dx'] ?? '') as String,
+        icdCode: (j['icd'] ?? '') as String,
+        visitDate: DateTime.tryParse((j['vd'] ?? '') as String),
+        ordersText: (j['ord'] ?? '') as String,
+        advisedCare: (j['care'] ?? '') as String,
+        restrictions: (j['restr'] ?? '') as String,
+        followUpAt: DateTime.tryParse((j['fua'] ?? '') as String),
+        imaging: (j['img'] ?? '') as String,
+        facility: (j['hosp'] ?? '') as String,
+        medNote: (j['med'] ?? '') as String,
       );
 }
