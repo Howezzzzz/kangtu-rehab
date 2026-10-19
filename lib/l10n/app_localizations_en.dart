@@ -1607,10 +1607,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get freeForeverWhy => 'No subscription, no ads, nothing locked behind a paywall.';
 
   @override
-  String get fullyOffline => 'Fully offline';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => 'No account, no servers. Your training never leaves this phone.';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => 'Your data is yours';
@@ -1659,7 +1660,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeKicker => 'WELCOME TO';
 
   @override
-  String get welcomeBlurb => 'Everything stays on your phone. No account, no internet, nothing to pay.';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => 'GET STARTED';
@@ -2989,7 +2991,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'It only reads your step count. It never reads anything else or writes to Health Connect.';
 
   @override
-  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu never connects to the internet.';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => 'Turn it off anytime in Settings or in Health Connect.';
@@ -5780,4 +5782,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String historyMore(int n) {
     return '+$n more';
   }
+
+  @override
+  String get updateTitle => 'Check for updates';
+
+  @override
+  String get updateChecking => 'Checking for updates…';
+
+  @override
+  String updateLatest(String v) {
+    return 'You\'re on the latest version ($v)';
+  }
+
+  @override
+  String updateAvailable(String v) {
+    return 'Version $v is available';
+  }
+
+  @override
+  String get updateNow => 'Download & install';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateFailed => 'Update check failed. Please try again later.';
+
+  @override
+  String get updateOpenPage => 'Open releases page';
+
+  @override
+  String get updateDownloading => 'Downloading update…';
+
+  @override
+  String get updateDownloadFailed => 'Download failed. Please try again later.';
+
+  @override
+  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
+
+  @override
+  String get updateNetNote =>
+      'Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.';
 }

@@ -827,8 +827,8 @@
   "aboutBlurb": "Built by lifters, for lifters.",
   "freeForever": "Free forever",
   "freeForeverWhy": "No subscription, no ads, nothing locked behind a paywall.",
-  "fullyOffline": "Fully offline",
-  "fullyOfflineWhy": "No account, no servers. Your training never leaves this phone.",
+  "fullyOffline": "Offline first",
+  "fullyOfflineWhy": "No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.",
   "yoursToTake": "Your data is yours",
   "yoursToTakeWhy": "Export it to CSV whenever you like, and delete it all in one tap.",
   "whatsInside": "WHAT'S INSIDE",
@@ -856,7 +856,7 @@
   },
   "reset": "RESET",
   "welcomeKicker": "WELCOME TO",
-  "welcomeBlurb": "Everything stays on your phone. No account, no internet, nothing to pay.",
+  "welcomeBlurb": "Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.",
   "welcomeStart": "GET STARTED",
   "onbStep": "STEP {i} OF {n}",
   "@onbStep": {
@@ -1558,7 +1558,7 @@
   "stepsNoAccess": "No access to your steps",
   "stepsGrant": "Tap to allow it in Health Connect",
   "stepsInfoRead": "It only reads your step count. It never reads anything else or writes to Health Connect.",
-  "stepsInfoLocal": "Your steps stay on your phone. Kangtu never connects to the internet.",
+  "stepsInfoLocal": "Your steps stay on your phone. Kangtu only goes online to check for updates.",
   "stepsInfoOff": "Turn it off anytime in Settings or in Health Connect.",
   "stepsManage": "Manage permission",
   "routineDoneToday": "Done for today · nice work",
@@ -3244,6 +3244,32 @@
     "placeholders": {
       "n": {
         "type": "int"
+      }
+    }
+  },
+  "updateTitle": "Check for updates",
+  "updateChecking": "Checking for updates…",
+  "updateLatest": "You're on the latest version ({v})",
+  "updateAvailable": "Version {v} is available",
+  "updateNow": "Download & install",
+  "updateLater": "Later",
+  "updateFailed": "Update check failed. Please try again later.",
+  "updateOpenPage": "Open releases page",
+  "updateDownloading": "Downloading update…",
+  "updateDownloadFailed": "Download failed. Please try again later.",
+  "updateInstallHint": "Downloaded. If prompted, allow \"install unknown apps\" to finish.",
+  "updateNetNote": "Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.",
+  "@updateLatest": {
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "@updateAvailable": {
+    "placeholders": {
+      "v": {
+        "type": "String"
       }
     }
   }

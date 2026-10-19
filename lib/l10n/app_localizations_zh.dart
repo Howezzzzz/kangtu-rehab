@@ -1542,10 +1542,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get freeForeverWhy => '无订阅、无广告、无付费功能。';
 
   @override
-  String get fullyOffline => '完全离线';
+  String get fullyOffline => '离线优先';
 
   @override
-  String get fullyOfflineWhy => '无账号、无服务器。';
+  String get fullyOfflineWhy => '无账号、无服务器。唯一联网的是「检查更新」，只读版本信息、不发送你的任何数据。';
 
   @override
   String get yoursToTake => '数据归你所有';
@@ -1592,7 +1592,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get welcomeKicker => '欢迎使用';
 
   @override
-  String get welcomeBlurb => '所有数据均保存在你的手机上。无账号、无网络连接要求、无任何费用。';
+  String get welcomeBlurb => '所有数据均保存在你的手机上。无账号、无任何费用；只有「检查更新」会用到网络。';
 
   @override
   String get welcomeStart => '立即开始';
@@ -2866,7 +2866,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stepsInfoRead => '只读取步数。不读取其他任何内容，也不会写入 Health Connect。';
 
   @override
-  String get stepsInfoLocal => '步数只保存在手机上。康途 从不联网。';
+  String get stepsInfoLocal => '步数只保存在手机上。康途仅在检查更新时联网。';
 
   @override
   String get stepsInfoOff => '可随时在设置或 Health Connect 中关闭。';
@@ -4787,7 +4787,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get rehabAiTitle => '智能康复建议（本地手动来回）';
 
   @override
-  String get rehabAiBlurb => 'App 不联网、不上传任何信息，全部由手动复制完成。';
+  String get rehabAiBlurb => 'App 不上传任何信息，全部由手动复制完成。';
 
   @override
   String get rehabCopyPrompt => '复制提示词给智能助手';
@@ -5580,6 +5580,46 @@ class AppLocalizationsZh extends AppLocalizations {
   String historyMore(int n) {
     return '另外 $n 个';
   }
+
+  @override
+  String get updateTitle => '检查更新';
+
+  @override
+  String get updateChecking => '正在检查更新…';
+
+  @override
+  String updateLatest(String v) {
+    return '已是最新版本（当前 $v）';
+  }
+
+  @override
+  String updateAvailable(String v) {
+    return '发现新版本 $v';
+  }
+
+  @override
+  String get updateNow => '下载并安装';
+
+  @override
+  String get updateLater => '稍后';
+
+  @override
+  String get updateFailed => '检查更新失败，请稍后再试。';
+
+  @override
+  String get updateOpenPage => '打开发布页';
+
+  @override
+  String get updateDownloading => '正在下载更新包…';
+
+  @override
+  String get updateDownloadFailed => '下载失败，请稍后再试。';
+
+  @override
+  String get updateInstallHint => '下载完成；若系统提示，请允许「安装未知应用」以完成更新。';
+
+  @override
+  String get updateNetNote => '检查更新会联网；除此之外，康途全程离线，数据只留在本机。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -7120,10 +7160,11 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get freeForeverWhy => '無訂閱、無廣告、沒有付費鎖定功能。';
 
   @override
-  String get fullyOffline => '100% 離線';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => '不需帳號、不連伺服器。你的訓練資料永遠不會離開這支手機。';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => '資料屬於你';
@@ -7170,7 +7211,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get welcomeKicker => '歡迎使用';
 
   @override
-  String get welcomeBlurb => '所有資料都留在手機上。不需帳號、不需網路、不用付費。';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => '開始';
@@ -8461,7 +8503,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get stepsInfoRead => '只讀取步數。不讀取其他任何內容，也不會寫入 Health Connect。';
 
   @override
-  String get stepsInfoLocal => '步數只保存在手機上。Kangtu 從不連網。';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => '可隨時在設定或 Health Connect 中關閉。';
@@ -10794,4 +10836,45 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String historyMore(int n) {
     return '另外 $n 個';
   }
+
+  @override
+  String get updateTitle => 'Check for updates';
+
+  @override
+  String get updateChecking => 'Checking for updates…';
+
+  @override
+  String updateLatest(String v) {
+    return 'You\'re on the latest version ($v)';
+  }
+
+  @override
+  String updateAvailable(String v) {
+    return 'Version $v is available';
+  }
+
+  @override
+  String get updateNow => 'Download & install';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateFailed => 'Update check failed. Please try again later.';
+
+  @override
+  String get updateOpenPage => 'Open releases page';
+
+  @override
+  String get updateDownloading => 'Downloading update…';
+
+  @override
+  String get updateDownloadFailed => 'Download failed. Please try again later.';
+
+  @override
+  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
+
+  @override
+  String get updateNetNote =>
+      'Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.';
 }

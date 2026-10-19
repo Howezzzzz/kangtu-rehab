@@ -2941,13 +2941,13 @@ abstract class AppLocalizations {
   /// No description provided for @fullyOffline.
   ///
   /// In en, this message translates to:
-  /// **'Fully offline'**
+  /// **'Offline first'**
   String get fullyOffline;
 
   /// No description provided for @fullyOfflineWhy.
   ///
   /// In en, this message translates to:
-  /// **'No account, no servers. Your training never leaves this phone.'**
+  /// **'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.'**
   String get fullyOfflineWhy;
 
   /// No description provided for @yoursToTake.
@@ -3031,7 +3031,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeBlurb.
   ///
   /// In en, this message translates to:
-  /// **'Everything stays on your phone. No account, no internet, nothing to pay.'**
+  /// **'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.'**
   String get welcomeBlurb;
 
   /// No description provided for @welcomeStart.
@@ -5389,7 +5389,7 @@ abstract class AppLocalizations {
   /// No description provided for @stepsInfoLocal.
   ///
   /// In en, this message translates to:
-  /// **'Your steps stay on your phone. Kangtu never connects to the internet.'**
+  /// **'Your steps stay on your phone. Kangtu only goes online to check for updates.'**
   String get stepsInfoLocal;
 
   /// No description provided for @stepsInfoOff.
@@ -10281,6 +10281,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'+{n} more'**
   String historyMore(int n);
+
+  /// No description provided for @updateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get updateTitle;
+
+  /// No description provided for @updateChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking for updates…'**
+  String get updateChecking;
+
+  /// No description provided for @updateLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re on the latest version ({v})'**
+  String updateLatest(String v);
+
+  /// No description provided for @updateAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {v} is available'**
+  String updateAvailable(String v);
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Download & install'**
+  String get updateNow;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Update check failed. Please try again later.'**
+  String get updateFailed;
+
+  /// No description provided for @updateOpenPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Open releases page'**
+  String get updateOpenPage;
+
+  /// No description provided for @updateDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading update…'**
+  String get updateDownloading;
+
+  /// No description provided for @updateDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed. Please try again later.'**
+  String get updateDownloadFailed;
+
+  /// No description provided for @updateInstallHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded. If prompted, allow \"install unknown apps\" to finish.'**
+  String get updateInstallHint;
+
+  /// No description provided for @updateNetNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.'**
+  String get updateNetNote;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

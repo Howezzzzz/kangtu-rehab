@@ -1,0 +1,11 @@
+{
+  "version": "1.6.0-kangtu",
+  "version_code": 21,
+  "desc": "上游 1.6.0 合并：PDF 导出训练计划、按月训练历史、12 个月活动日历、训练中看动作备注、平台期降载提示、食物奶昔标记",
+  "page_url": "https://github.com/Howezzzzz/kangtu-rehab/releases/latest",
+  "download_urls": {
+    "arm64-v8a": "https://github.com/Howezzzzz/kangtu-rehab/releases/latest",
+    "armeabi-v7a": "https://github.com/Howezzzzz/kangtu-rehab/releases/latest",
+    "x86_64": "https://github.com/Howezzzzz/kangtu-rehab/releases/latest"
+  }
+}

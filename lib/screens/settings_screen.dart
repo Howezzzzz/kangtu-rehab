@@ -18,6 +18,7 @@ import '../services/backup_zip.dart';
 import '../services/fitnotes_backup.dart';
 import '../services/home_widget_bridge.dart';
 import '../services/rest_alarm.dart';
+import '../services/update_service.dart';
 import '../services/sqlite_reader.dart';
 import '../services/workout_import.dart';
 import '../state/fit_state.dart';
@@ -436,6 +437,7 @@ class SettingsScreen extends StatelessWidget {
             ]),
             const SizedBox(height: 22),
             _linkGroup(gc, [
+              (PhosphorIconsRegular.arrowsClockwise, t.updateTitle, () => _checkUpdate(context)),
               (PhosphorIconsRegular.info, t.aboutGymmane, fit.goAbout),
             ]),
           ]),
@@ -652,6 +654,134 @@ class SettingsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // ---- 检查更新（康途唯一的联网功能）----
+  Future<void> _checkUpdate(BuildContext context) async {
+    final gc = context.gc;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      // 系统返回键也不能关掉（否则 await 后的 pop 会误把设置页路由弹掉）——ISS-141
+      builder: (_) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          backgroundColor: gc.bgRaised,
+          content: Row(mainAxisSize: MainAxisSize.min, children: [
+            const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)),
+            const SizedBox(width: 14),
+            Flexible(child: Text(t.updateChecking, style: AppTheme.f(14, weight: FontWeight.w500, color: gc.text))),
+          ]),
+        ),
+      ),
+    );
+    UpdateCheckResult res;
+    try {
+      res = await UpdateService.check();
+    } catch (_) {
+      res = const UpdateCheckResult(ok: false);
+    }
+    if (!context.mounted) return;
+    Navigator.of(context, rootNavigator: true).pop();
+    if (!context.mounted) return;
+
+    if (!res.ok) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          backgroundColor: gc.bgRaised,
+          title: Text(t.updateTitle, style: AppTheme.f(16, weight: FontWeight.w700, color: gc.text)),
+          content: Text(t.updateFailed, style: AppTheme.f(13.5, height: 1.45, color: gc.textSecondary)),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(t.updateLater, style: AppTheme.f(13.5, weight: FontWeight.w600, color: gc.textTertiary))),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  _open(context, UpdateService.releasesPage);
+                },
+                child: Text(t.updateOpenPage, style: AppTheme.f(13.5, weight: FontWeight.w700, color: gc.ember))),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (!res.hasUpdate) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          backgroundColor: gc.bgRaised,
+          title: Text(t.updateTitle, style: AppTheme.f(16, weight: FontWeight.w700, color: gc.text)),
+          content: Text(t.updateLatest(res.currentVersion),
+              style: AppTheme.f(13.5, height: 1.45, color: gc.textSecondary)),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(t.updateLater, style: AppTheme.f(13.5, weight: FontWeight.w700, color: gc.ember))),
+          ],
+        ),
+      );
+      return;
+    }
+
+    final info = res.info!;
+    final go = await askConfirm(
+      context,
+      title: t.updateAvailable(info.version),
+      body: '${info.desc.isEmpty ? '' : '${info.desc}\n\n'}${t.updateNetNote}',
+      confirmLabel: t.updateNow,
+      cancelLabel: t.updateLater,
+    );
+    if (go && context.mounted) await _downloadAndInstall(context, info);
+  }
+
+  Future<void> _downloadAndInstall(BuildContext context, UpdateInfo info) async {
+    final gc = context.gc;
+    final progress = ValueNotifier<double?>(null);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          backgroundColor: gc.bgRaised,
+          content: ValueListenableBuilder<double?>(
+            valueListenable: progress,
+            builder: (_, v, __) => Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(t.updateDownloading, style: AppTheme.f(14, weight: FontWeight.w500, color: gc.text)),
+                const SizedBox(height: 14),
+                LinearProgressIndicator(value: v, minHeight: 4, color: gc.ember, backgroundColor: gc.bgRaised2),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    File? apk;
+    var failed = false;
+    try {
+      apk = await UpdateService.download(info, onProgress: (p) => progress.value = p);
+    } catch (_) {
+      failed = true;
+    } finally {
+      if (context.mounted) {
+        Navigator.of(context, rootNavigator: true).pop();
+      }
+      // 无论是否 mounted 都要释放（ISS-141：原先提前 return 会漏 dispose）
+      progress.dispose();
+    }
+    if (!context.mounted) return;
+    if (failed || apk == null) {
+      _snack(context, t.updateDownloadFailed);
+      return;
+    }
+    final ok = await UpdateService.install(apk);
+    if (context.mounted) _snack(context, ok ? t.updateInstallHint : t.updateFailed);
   }
 
   Future<void> _exportCsv(BuildContext context) async {

@@ -1,15 +1,56 @@
 name: build-apk
 
+# push main → 自动：构建号+1 → 构建分 ABI APK → 建/更新 Release → 回写 assets/app_version.json
+# 应用侧「检查更新」读 app_version.json 比对构建号（versionCode）。
+
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
+  # ① 构建号 +1（versionName 仍跟随上游 + -kangtu 后缀；versionCode 严格递增，
+  #    否则 Android 不允许覆盖安装、更新器也认不出新版本）
+  prepare:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
+      build: ${{ steps.bump.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump build number
+        id: bump
+        run: |
+          set -e
+          V=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
+          NAME=${V%%+*}
+          BUILD=${V##*+}
+          NEW=$((BUILD+1))
+          sed -i "s|^version:.*|version: ${NAME}+${NEW}|" pubspec.yaml
+          echo "version=${NAME}" >> "$GITHUB_OUTPUT"
+          echo "build=${NEW}" >> "$GITHUB_OUTPUT"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pubspec.yaml
+          git commit -m "chore(version): ${NAME}+${NEW} [skip ci]"
+          git push origin HEAD:main
+
+  # ② 构建分 ABI release APK（显式传入新版本号，与 prepare 的输出一致）
   build:
+    needs: prepare
+    if: always() && (needs.prepare.result == 'success' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-java@v4
         with:
@@ -25,27 +66,105 @@ jobs:
       - name: Pub get
         run: flutter pub get
 
-      - name: Read version from pubspec
-        id: pkg
-        run: echo "version=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)" >> "$GITHUB_OUTPUT"
-
-      - name: Build release APK
-        run: flutter build apk --release
+      - name: Build split APKs
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-
-      - name: Rename APK to 康途-<版本号>.apk
         run: |
-          mv build/app/outputs/flutter-apk/app-release.apk \
-             "build/app/outputs/flutter-apk/康途-${{ steps.pkg.outputs.version }}.apk"
+          set -e
+          ARGS=""
+          if [ -n "${{ needs.prepare.outputs.build }}" ]; then
+            ARGS="--build-name=${{ needs.prepare.outputs.version }} --build-number=${{ needs.prepare.outputs.build }}"
+          else
+            ARGS="--build-name=$(sed -n 's/^version:\(.*\)+.*/\1/p' pubspec.yaml | head -1) --build-number=$(sed -n 's/^version:.*+//p' pubspec.yaml | head -1)"
+          fi
+          flutter build apk --release --split-per-abi $ARGS
           ls -l build/app/outputs/flutter-apk/
 
-      - name: Upload APK artifact
+      - name: Rename APKs
+        run: |
+          set -e
+          D=build/app/outputs/flutter-apk
+          mv $D/app-arm64-v8a-release.apk   "$D/kangtu-arm64-v8a.apk"
+          mv $D/app-armeabi-v7a-release.apk "$D/kangtu-armeabi-v7a.apk"
+          mv $D/app-x86_64-release.apk      "$D/kangtu-x86_64.apk"
+          ls -l $D
+
+      - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: 康途-${{ steps.pkg.outputs.version }}
-          path: build/app/outputs/flutter-apk/康途-*.apk
+          name: kangtu-apks
+          path: build/app/outputs/flutter-apk/kangtu-*.apk
+          if-no-files-found: error
           retention-days: 30
+
+  # ③ 建/更新 Release + 回写 app_version.json（应用端的版本清单）
+  publish:
+    needs: [prepare, build]
+    if: needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: kangtu-apks
+          path: apks
+
+      - name: Resolve version
+        id: v
+        run: |
+          set -e
+          if [ -n "${{ needs.prepare.outputs.version }}" ]; then
+            V="${{ needs.prepare.outputs.version }}"
+            B="${{ needs.prepare.outputs.build }}"
+          else
+            V=$(sed -n 's/^version:\(.*\)+.*/\1/p' pubspec.yaml | head -1)
+            B=$(sed -n 's/^version:.*+//p' pubspec.yaml | head -1)
+          fi
+          echo "name=${V}" >> "$GITHUB_OUTPUT"
+          echo "build=${B}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${V}+${B}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          TAG="${{ steps.v.outputs.tag }}"
+          TITLE="康途 ${{ steps.v.outputs.name }}+${{ steps.v.outputs.build }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" apks/*.apk --clobber
+          else
+            gh release create "$TAG" apks/*.apk --title "$TITLE" --notes "自动构建发布（$TAG）。"
+          fi
+
+      - name: Write back assets/app_version.json
+        run: |
+          set -e
+          TAG="${{ steps.v.outputs.tag }}"
+          BASE="https://github.com/Howezzzzz/kangtu-rehab/releases/download/${TAG}"
+          cat > assets/app_version.json <<EOF
+          {
+            "version": "${{ steps.v.outputs.name }}",
+            "version_code": ${{ steps.v.outputs.build }},
+            "desc": "",
+            "page_url": "https://github.com/Howezzzzz/kangtu-rehab/releases/latest",
+            "download_urls": {
+              "arm64-v8a": "${BASE}/kangtu-arm64-v8a.apk",
+              "armeabi-v7a": "${BASE}/kangtu-armeabi-v7a.apk",
+              "x86_64": "${BASE}/kangtu-x86_64.apk"
+            }
+          }
+          EOF
+          cat assets/app_version.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/app_version.json
+          git commit -m "chore(update): app_version.json -> ${{ steps.v.outputs.name }}+${{ steps.v.outputs.build }} [skip ci]" || echo "no changes"
+          git push origin HEAD:main

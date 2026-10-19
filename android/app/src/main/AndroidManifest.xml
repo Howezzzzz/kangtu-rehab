@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.health.READ_STEPS"/>
+    <!-- 检查更新是康途唯一的联网功能（Howe 2026-10-19）：其余功能全离线 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 应用内下载后调起系统安装器（Android 8+ 首次需用户允许“安装未知应用”） -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove"/>
 
     <uses-feature android:name="android.hardware.type.watch" android:required="false"/>
