@@ -3008,7 +3008,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Lit seulement ton nombre de pas. Ne lit rien d’autre et n’écrit jamais dans Health Connect.';
 
   @override
-  String get stepsInfoLocal => 'Tes pas restent sur ton téléphone. GymMane ne se connecte jamais à internet.';
+  String get stepsInfoLocal => 'Tes pas restent sur ton téléphone. Kangtu ne se connecte jamais à internet.';
 
   @override
   String get stepsInfoOff => 'Désactivable à tout moment dans les Réglages ou dans Health Connect.';
@@ -4427,7 +4427,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get nutritionAboutWhat =>
-      'Une façon simple de noter tes repas, ton eau, tes protéines et tes compléments juste à côté de tes séances. GymMane est d’abord une app de musculation : la nutrition est là pour que tout soit au même endroit, pas pour remplacer une vraie app de régime.';
+      'Une façon simple de noter tes repas, ton eau, tes protéines et tes compléments juste à côté de tes séances. Kangtu est d’abord une app de musculation : la nutrition est là pour que tout soit au même endroit, pas pour remplacer une vraie app de régime.';
 
   @override
   String get nutritionAboutScanTitle => 'Pas de scanner, jamais';
@@ -4441,7 +4441,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get nutritionAboutLocal =>
-      'Plus de 500 aliments avec photo sont inclus dans l’app. Tu peux ajouter les tiens, changer leurs photos et modifier leurs valeurs. Tout reste sur ton téléphone, comme le reste de GymMane.';
+      'Plus de 500 aliments avec photo sont inclus dans l’app. Tu peux ajouter les tiens, changer leurs photos et modifier leurs valeurs. Tout reste sur ton téléphone, comme le reste de Kangtu.';
 
   @override
   String get nutritionAboutBetaTitle => 'Encore en bêta';
@@ -4507,7 +4507,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get notifSuppTap => 'Tick it off in GymMane once you\'ve taken it.';
+  String get notifSuppTap => 'Tick it off in Kangtu once you\'ve taken it.';
 
   @override
   String get suppNoneToday => 'Nothing to take today.';
@@ -5695,4 +5695,140 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get rehabDoctorSaved => 'Saved — you can generate a plan now';
+
+  @override
+  String get heatRangeSetting => 'Calendrier d’activité';
+
+  @override
+  String get heatRangeWeeks => '12 semaines';
+
+  @override
+  String get heatRangeYear => '12 mois';
+
+  @override
+  String get heatRangeHint =>
+      '12 mois affiche toute l’année. Fais glisser sur le côté pour remonter jusqu’à ta première séance.';
+
+  @override
+  String get pdfPlan => 'Programme en PDF';
+
+  @override
+  String get pdfPlanHint => 'Une fiche nette avec ta semaine et chaque routine, prête à imprimer ou envoyer.';
+
+  @override
+  String get pdfExport => 'Exporter en PDF';
+
+  @override
+  String get pdfFooter => 'Gratuite, open source et hors ligne';
+
+  @override
+  String get shakeTag => 'It’s a shake';
+
+  @override
+  String get shakeTagHint => 'It shows up in Your shake';
+
+  @override
+  String get shakeNone => 'Mark your shakes and only those show up here.';
+
+  @override
+  String get shakeMarkLabel => 'MARK AS A SHAKE';
+
+  @override
+  String get shakeNew => 'New shake';
+
+  @override
+  String get shakeUntag => 'Not a shake';
+
+  @override
+  String get pdfKicker => 'PROGRAMME D’ENTRAÎNEMENT';
+
+  @override
+  String get pdfStatDays => 'JOURS / SEM.';
+
+  @override
+  String get pdfStatMinutes => 'MIN / SÉANCE';
+
+  @override
+  String pdfMinutes(int n) {
+    return '≈ $n min';
+  }
+
+  @override
+  String get workoutNotesTitle => 'Notes de l’exercice';
+
+  @override
+  String get workoutNoteEvery => 'À chaque fois';
+
+  @override
+  String get workoutNoteNext => 'La prochaine fois';
+
+  @override
+  String get workoutNoteEveryHint =>
+      'S’affiche à chaque fois. Idéal pour le réglage du siège ou de la poulie.';
+
+  @override
+  String get workoutNoteNextHint => 'S’affiche la prochaine fois seulement, puis disparaît.';
+
+  @override
+  String workoutNoteFromLast(String date) {
+    return 'De la dernière fois · $date';
+  }
+
+  @override
+  String get workoutNoteHint => 'Siège au trou 2, poulie à 19…';
+
+  @override
+  String get notePinWorkout => 'Afficher pendant la séance';
+
+  @override
+  String get assistedSetting => 'Machine assistée';
+
+  @override
+  String get assistedSettingHint =>
+      'Le poids t’aide, donc moins c’est mieux : records et suggestions vont vers le bas.';
+
+  @override
+  String get assistedRecordHint => 'Moins d’assistance';
+
+  @override
+  String get trainAgainLabel => 'Pas encore entraîné ? Me le rappeler';
+
+  @override
+  String get trainAgainOff => 'Non';
+
+  @override
+  String trainAgainAfter(int n) {
+    return '+$n h';
+  }
+
+  @override
+  String get trainAgainHint => 'Une seule fois, et seulement si tu n’as noté aucune séance ce jour-là.';
+
+  @override
+  String get notifTrainAgainBody => 'Il est encore temps de t’entraîner aujourd’hui.';
+
+  @override
+  String nextDeload(int n) {
+    return 'plus léger : $n séances d’affilée sans toutes les reps';
+  }
+
+  @override
+  String get historyTitle => 'Historique';
+
+  @override
+  String historyWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n SÉANCES', one: '1 SÉANCE');
+    return '$_temp0';
+  }
+
+  @override
+  String get historyEmpty => 'Aucune séance ce mois-ci';
+
+  @override
+  String get historyEmptyHint => 'Fais glisser sur le côté ou utilise les flèches pour voir d’autres mois.';
+
+  @override
+  String historyMore(int n) {
+    return '+$n de plus';
+  }
 }

@@ -5389,7 +5389,7 @@ abstract class AppLocalizations {
   /// No description provided for @stepsInfoLocal.
   ///
   /// In en, this message translates to:
-  /// **'Your steps stay on your phone. GymMane never connects to the internet.'**
+  /// **'Your steps stay on your phone. Kangtu never connects to the internet.'**
   String get stepsInfoLocal;
 
   /// No description provided for @stepsInfoOff.
@@ -7771,7 +7771,7 @@ abstract class AppLocalizations {
   /// No description provided for @nutritionAboutWhat.
   ///
   /// In en, this message translates to:
-  /// **'A simple way to log meals, water, protein and supplements right next to your workouts. GymMane is a gym app first: Nutrition is here so you can keep everything in one place, not to replace a dedicated diet app.'**
+  /// **'A simple way to log meals, water, protein and supplements right next to your workouts. Kangtu is a gym app first: Nutrition is here so you can keep everything in one place, not to replace a dedicated diet app.'**
   String get nutritionAboutWhat;
 
   /// No description provided for @nutritionAboutScanTitle.
@@ -7795,7 +7795,7 @@ abstract class AppLocalizations {
   /// No description provided for @nutritionAboutLocal.
   ///
   /// In en, this message translates to:
-  /// **'More than 500 foods with photos come inside the app. You can add your own, change their photos and edit their values. It all stays on your phone, like the rest of GymMane.'**
+  /// **'More than 500 foods with photos come inside the app. You can add your own, change their photos and edit their values. It all stays on your phone, like the rest of Kangtu.'**
   String get nutritionAboutLocal;
 
   /// No description provided for @nutritionAboutBetaTitle.
@@ -7903,7 +7903,7 @@ abstract class AppLocalizations {
   /// No description provided for @notifSuppTap.
   ///
   /// In en, this message translates to:
-  /// **'Tick it off in GymMane once you\'ve taken it.'**
+  /// **'Tick it off in Kangtu once you\'ve taken it.'**
   String get notifSuppTap;
 
   /// No description provided for @suppNoneToday.
@@ -10041,6 +10041,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved — you can generate a plan now'**
   String get rehabDoctorSaved;
+
+  /// No description provided for @heatRangeSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity calendar'**
+  String get heatRangeSetting;
+
+  /// No description provided for @heatRangeWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'12 weeks'**
+  String get heatRangeWeeks;
+
+  /// No description provided for @heatRangeYear.
+  ///
+  /// In en, this message translates to:
+  /// **'12 months'**
+  String get heatRangeYear;
+
+  /// No description provided for @heatRangeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'12 months shows the whole year. Swipe it sideways to go back, all the way to your first workout.'**
+  String get heatRangeHint;
+
+  /// No description provided for @pdfPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan as PDF'**
+  String get pdfPlan;
+
+  /// No description provided for @pdfPlanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A clean sheet with your week and every routine, ready to print or send.'**
+  String get pdfPlanHint;
+
+  /// No description provided for @pdfExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as PDF'**
+  String get pdfExport;
+
+  /// No description provided for @pdfFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Free, open source and offline'**
+  String get pdfFooter;
+
+  /// No description provided for @shakeTag.
+  ///
+  /// In en, this message translates to:
+  /// **'It’s a shake'**
+  String get shakeTag;
+
+  /// No description provided for @shakeTagHint.
+  ///
+  /// In en, this message translates to:
+  /// **'It shows up in Your shake'**
+  String get shakeTagHint;
+
+  /// No description provided for @shakeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark your shakes and only those show up here.'**
+  String get shakeNone;
+
+  /// No description provided for @shakeMarkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'MARK AS A SHAKE'**
+  String get shakeMarkLabel;
+
+  /// No description provided for @shakeNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New shake'**
+  String get shakeNew;
+
+  /// No description provided for @shakeUntag.
+  ///
+  /// In en, this message translates to:
+  /// **'Not a shake'**
+  String get shakeUntag;
+
+  /// No description provided for @pdfKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'TRAINING PLAN'**
+  String get pdfKicker;
+
+  /// No description provided for @pdfStatDays.
+  ///
+  /// In en, this message translates to:
+  /// **'DAYS / WEEK'**
+  String get pdfStatDays;
+
+  /// No description provided for @pdfStatMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'MIN / WORKOUT'**
+  String get pdfStatMinutes;
+
+  /// No description provided for @pdfMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'≈ {n} min'**
+  String pdfMinutes(int n);
+
+  /// No description provided for @workoutNotesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise notes'**
+  String get workoutNotesTitle;
+
+  /// No description provided for @workoutNoteEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'Every time'**
+  String get workoutNoteEvery;
+
+  /// No description provided for @workoutNoteNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next time'**
+  String get workoutNoteNext;
+
+  /// No description provided for @workoutNoteEveryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows each time you do this exercise. Good for seat or pulley settings.'**
+  String get workoutNoteEveryHint;
+
+  /// No description provided for @workoutNoteNextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows the next time only, then goes away.'**
+  String get workoutNoteNextHint;
+
+  /// No description provided for @workoutNoteFromLast.
+  ///
+  /// In en, this message translates to:
+  /// **'From last time · {date}'**
+  String workoutNoteFromLast(String date);
+
+  /// No description provided for @workoutNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Seat in hole 2, pulley at 19…'**
+  String get workoutNoteHint;
+
+  /// No description provided for @notePinWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Show during workouts'**
+  String get notePinWorkout;
+
+  /// No description provided for @assistedSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Assisted machine'**
+  String get assistedSetting;
+
+  /// No description provided for @assistedSettingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The weight helps you, so less is better: your records and suggestions go down.'**
+  String get assistedSettingHint;
+
+  /// No description provided for @assistedRecordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Least assistance'**
+  String get assistedRecordHint;
+
+  /// No description provided for @trainAgainLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Haven’t trained yet? Remind me again'**
+  String get trainAgainLabel;
+
+  /// No description provided for @trainAgainOff.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get trainAgainOff;
+
+  /// No description provided for @trainAgainAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} h'**
+  String trainAgainAfter(int n);
+
+  /// No description provided for @trainAgainHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Just once, and only if you haven’t logged a workout that day.'**
+  String get trainAgainHint;
+
+  /// No description provided for @notifTrainAgainBody.
+  ///
+  /// In en, this message translates to:
+  /// **'There’s still time to train today.'**
+  String get notifTrainAgainBody;
+
+  /// No description provided for @nextDeload.
+  ///
+  /// In en, this message translates to:
+  /// **'lighter: {n} workouts in a row without every rep'**
+  String nextDeload(int n);
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get historyTitle;
+
+  /// No description provided for @historyWorkouts.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, one{1 WORKOUT} other{{n} WORKOUTS}}'**
+  String historyWorkouts(int n);
+
+  /// No description provided for @historyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts this month'**
+  String get historyEmpty;
+
+  /// No description provided for @historyEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe sideways or use the arrows to see other months.'**
+  String get historyEmptyHint;
+
+  /// No description provided for @historyMore.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} more'**
+  String historyMore(int n);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

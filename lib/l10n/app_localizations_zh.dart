@@ -2866,7 +2866,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stepsInfoRead => '只读取步数。不读取其他任何内容，也不会写入 Health Connect。';
 
   @override
-  String get stepsInfoLocal => '步数只保存在手机上。GymMane 从不联网。';
+  String get stepsInfoLocal => '步数只保存在手机上。康途 从不联网。';
 
   @override
   String get stepsInfoOff => '可随时在设置或 Health Connect 中关闭。';
@@ -4215,7 +4215,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nutritionAboutWhat =>
-      '一种在训练旁边记录饮食、饮水、蛋白质和补剂的简单方式。GymMane 首先是一款健身房应用：饮食功能是为了让你把一切放在一个地方，而不是取代专门的饮食应用。';
+      '一种在训练旁边记录饮食、饮水、蛋白质和补剂的简单方式。康途 首先是一款健身房应用：饮食功能是为了让你把一切放在一个地方，而不是取代专门的饮食应用。';
 
   @override
   String get nutritionAboutScanTitle => '没有扫码，永远不会有';
@@ -4228,7 +4228,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nutritionAboutLocalTitle => '一切都在你的手机上';
 
   @override
-  String get nutritionAboutLocal => '应用内置 500 多种带图片的食物。你可以添加自己的食物、更换图片、编辑数值。和 GymMane 的其他部分一样，一切都留在你的手机上。';
+  String get nutritionAboutLocal => '应用内置 500 多种带图片的食物。你可以添加自己的食物、更换图片、编辑数值。和 康途 的其他部分一样，一切都留在你的手机上。';
 
   @override
   String get nutritionAboutBetaTitle => '仍是测试版';
@@ -5398,10 +5398,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get moveDown => '下移';
 
   @override
-  String get widgetNutritionOff => 'Turn on Nutrition in Settings › Beta to use this widget.';
+  String get widgetNutritionOff => '先在 设置 › Beta 里打开「营养」，才能用这个小部件。';
 
   @override
-  String get widgetPickShake => 'Pick your shake';
+  String get widgetPickShake => '选一个奶昔';
 
   @override
   String get rehabDoctorTitle => '诊断与医嘱';
@@ -5447,6 +5447,139 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get rehabDoctorSaved => '已保存，可以生成计划了';
+
+  @override
+  String get heatRangeSetting => '活动日历';
+
+  @override
+  String get heatRangeWeeks => '12 周';
+
+  @override
+  String get heatRangeYear => '12 个月';
+
+  @override
+  String get heatRangeHint => '12 个月显示一整年。左右滑动可一直回看到你的第一次训练。';
+
+  @override
+  String get pdfPlan => '计划导出为 PDF';
+
+  @override
+  String get pdfPlanHint => '一页清爽的周计划和所有训练，可直接打印或发送。';
+
+  @override
+  String get pdfExport => '导出为 PDF';
+
+  @override
+  String get pdfFooter => '免费、开源、离线可用';
+
+  @override
+  String get shakeTag => '标记为奶昔';
+
+  @override
+  String get shakeTagHint => '会显示在「我的奶昔」里';
+
+  @override
+  String get shakeNone => '标记你的奶昔，只有标记过的才会出现在这里。';
+
+  @override
+  String get shakeMarkLabel => '标记为奶昔';
+
+  @override
+  String get shakeNew => '新建奶昔';
+
+  @override
+  String get shakeUntag => '不是奶昔';
+
+  @override
+  String get pdfKicker => '训练计划';
+
+  @override
+  String get pdfStatDays => '天 / 周';
+
+  @override
+  String get pdfStatMinutes => '分钟 / 次';
+
+  @override
+  String pdfMinutes(int n) {
+    return '约 $n 分钟';
+  }
+
+  @override
+  String get workoutNotesTitle => '动作备注';
+
+  @override
+  String get workoutNoteEvery => '每次';
+
+  @override
+  String get workoutNoteNext => '下一次';
+
+  @override
+  String get workoutNoteEveryHint => '每次做这个动作都会显示，适合记座椅或滑轮的设置。';
+
+  @override
+  String get workoutNoteNextHint => '只在下一次显示，之后自动消失。';
+
+  @override
+  String workoutNoteFromLast(String date) {
+    return '上次留下 · $date';
+  }
+
+  @override
+  String get workoutNoteHint => '座椅第 2 孔，滑轮 19…';
+
+  @override
+  String get notePinWorkout => '训练时显示';
+
+  @override
+  String get assistedSetting => '助力器械';
+
+  @override
+  String get assistedSettingHint => '配重在帮你，所以越少越好：纪录和建议会往下走。';
+
+  @override
+  String get assistedRecordHint => '最少助力';
+
+  @override
+  String get trainAgainLabel => '还没练？再提醒一次';
+
+  @override
+  String get trainAgainOff => '不用';
+
+  @override
+  String trainAgainAfter(int n) {
+    return '+$n 小时';
+  }
+
+  @override
+  String get trainAgainHint => '只提醒一次，且仅在当天还没记录训练时。';
+
+  @override
+  String get notifTrainAgainBody => '今天还来得及练。';
+
+  @override
+  String nextDeload(int n) {
+    return '减轻：连续 $n 次没做满次数';
+  }
+
+  @override
+  String get historyTitle => '历史';
+
+  @override
+  String historyWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次训练');
+    return '$_temp0';
+  }
+
+  @override
+  String get historyEmpty => '本月没有训练';
+
+  @override
+  String get historyEmptyHint => '左右滑动或点箭头查看其他月份。';
+
+  @override
+  String historyMore(int n) {
+    return '另外 $n 个';
+  }
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -8328,7 +8461,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get stepsInfoRead => '只讀取步數。不讀取其他任何內容，也不會寫入 Health Connect。';
 
   @override
-  String get stepsInfoLocal => '步數只保存在手機上。GymMane 從不連網。';
+  String get stepsInfoLocal => '步數只保存在手機上。Kangtu 從不連網。';
 
   @override
   String get stepsInfoOff => '可隨時在設定或 Health Connect 中關閉。';
@@ -9589,7 +9722,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get nutritionAboutWhat =>
-      '一種在訓練旁邊記錄飲食、飲水、蛋白質和補充品的簡單方式。GymMane 首先是一款健身房 App：飲食功能是為了讓你把一切放在同一個地方，而不是取代專門的飲食 App。';
+      '一種在訓練旁邊記錄飲食、飲水、蛋白質和補充品的簡單方式。Kangtu 首先是一款健身房 App：飲食功能是為了讓你把一切放在同一個地方，而不是取代專門的飲食 App。';
 
   @override
   String get nutritionAboutScanTitle => '沒有掃描，永遠不會有';
@@ -9602,7 +9735,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get nutritionAboutLocalTitle => '一切都在你的手機上';
 
   @override
-  String get nutritionAboutLocal => 'App 內建 500 多種附照片的食物。你可以新增自己的食物、更換照片、編輯數值。和 GymMane 的其他部分一樣，一切都留在你的手機上。';
+  String get nutritionAboutLocal => 'App 內建 500 多種附照片的食物。你可以新增自己的食物、更換照片、編輯數值。和 Kangtu 的其他部分一樣，一切都留在你的手機上。';
 
   @override
   String get nutritionAboutBetaTitle => '仍是測試版';
@@ -10546,4 +10679,119 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get rehabDoctorSaved => 'Saved — you can generate a plan now';
+
+  @override
+  String get heatRangeSetting => '活動日曆';
+
+  @override
+  String get heatRangeWeeks => '12 週';
+
+  @override
+  String get heatRangeYear => '12 個月';
+
+  @override
+  String get heatRangeHint => '12 個月顯示一整年。左右滑動可一路回看到你的第一次訓練。';
+
+  @override
+  String get pdfPlan => '計畫匯出為 PDF';
+
+  @override
+  String get pdfPlanHint => '一頁清爽的週計畫和所有訓練，可直接列印或傳送。';
+
+  @override
+  String get pdfExport => '匯出為 PDF';
+
+  @override
+  String get pdfFooter => '免費、開源、離線可用';
+
+  @override
+  String get pdfKicker => '訓練計畫';
+
+  @override
+  String get pdfStatDays => '天 / 週';
+
+  @override
+  String get pdfStatMinutes => '分鐘 / 次';
+
+  @override
+  String pdfMinutes(int n) {
+    return '約 $n 分鐘';
+  }
+
+  @override
+  String get workoutNotesTitle => '動作備註';
+
+  @override
+  String get workoutNoteEvery => '每次';
+
+  @override
+  String get workoutNoteNext => '下一次';
+
+  @override
+  String get workoutNoteEveryHint => '每次做這個動作都會顯示，適合記座椅或滑輪的設定。';
+
+  @override
+  String get workoutNoteNextHint => '只在下一次顯示，之後自動消失。';
+
+  @override
+  String workoutNoteFromLast(String date) {
+    return '上次留下 · $date';
+  }
+
+  @override
+  String get workoutNoteHint => '座椅第 2 孔，滑輪 19…';
+
+  @override
+  String get notePinWorkout => '訓練時顯示';
+
+  @override
+  String get assistedSetting => '助力器械';
+
+  @override
+  String get assistedSettingHint => '配重在幫你，所以越少越好：紀錄和建議會往下走。';
+
+  @override
+  String get assistedRecordHint => '最少助力';
+
+  @override
+  String get trainAgainLabel => '還沒練？再提醒一次';
+
+  @override
+  String get trainAgainOff => '不用';
+
+  @override
+  String trainAgainAfter(int n) {
+    return '+$n 小時';
+  }
+
+  @override
+  String get trainAgainHint => '只提醒一次，且僅在當天還沒記錄訓練時。';
+
+  @override
+  String get notifTrainAgainBody => '今天還來得及練。';
+
+  @override
+  String nextDeload(int n) {
+    return '減輕：連續 $n 次沒做滿次數';
+  }
+
+  @override
+  String get historyTitle => '歷史';
+
+  @override
+  String historyWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 次訓練');
+    return '$_temp0';
+  }
+
+  @override
+  String get historyEmpty => '本月沒有訓練';
+
+  @override
+  String get historyEmptyHint => '左右滑動或點箭頭查看其他月份。';
+
+  @override
+  String historyMore(int n) {
+    return '另外 $n 個';
+  }
 }

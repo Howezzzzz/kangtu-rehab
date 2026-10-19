@@ -206,6 +206,7 @@ class FitState extends FitCore
     demoSize = data['demo'] as String? ?? 'large';
     demoLoop = data['demoLoop'] as String? ?? 'always';
     sessionLayout = data['layout'] == 'list' ? 'list' : 'cards';
+    heatmapRange = data['heatRange'] == 'year' ? 'year' : 'weeks';
     alarmStyle = data['alarmStyle'] as String? ?? 'quiet';
     RestAlarm.instance.style = alarmStyle;
     Beeper.instance.loud = alarmStyle == 'loud';
@@ -275,6 +276,8 @@ class FitState extends FitCore
     stepLb = _stepFrom(data['stepLb'], SettingsState.lbSteps, 5);
     trainReminderMin = (data['trainAt'] as num?)?.toInt();
     smartReminder = data['trainSmart'] as bool? ?? false;
+    final again = (data['trainAgain'] as num?)?.toInt() ?? 0;
+    trainAgainMin = SettingsState.trainAgainOptions.contains(again) ? again : 0;
     progressStep
       ..clear()
       ..addAll(((data['progress'] as Map?) ?? const {})
@@ -363,6 +366,12 @@ class FitState extends FitCore
     eachSideOff
       ..clear()
       ..addAll(((data['eachSideOff'] as List?) ?? const []).cast<String>());
+    assistedOn
+      ..clear()
+      ..addAll(((data['assisted'] as List?) ?? const []).cast<String>());
+    assistedOff
+      ..clear()
+      ..addAll(((data['assistedOff'] as List?) ?? const []).cast<String>());
   }
 
   void _loadShots(Map<String, dynamic> data, {Map<String, String>? restored}) {
@@ -470,6 +479,7 @@ class FitState extends FitCore
         'demo': demoSize,
         'demoLoop': demoLoop,
         'layout': sessionLayout,
+        'heatRange': heatmapRange,
         'alarmStyle': alarmStyle,
         'noSuggest': noSuggest.toList(),
         'archived': archived.toList(),
@@ -483,6 +493,7 @@ class FitState extends FitCore
         'exSecondary': secondaryOverride,
         'trainAt': trainReminderMin,
         'trainSmart': smartReminder,
+        if (trainAgainMin > 0) 'trainAgain': trainAgainMin,
         'alarmAskedAt': alarmAskedAt,
         'onboarded': onboarded,
         'favorites': favorites,
@@ -513,6 +524,8 @@ class FitState extends FitCore
         'repsOnlyOff': repsOnlyOff.toList(),
         'eachSide': eachSide.toList(),
         'eachSideOff': eachSideOff.toList(),
+        if (assistedOn.isNotEmpty) 'assisted': assistedOn.toList(),
+        if (assistedOff.isNotEmpty) 'assistedOff': assistedOff.toList(),
         'sessions': sessions.map((s) => s.toJson()).toList(),
         'bodyweight': bodyweight.map((b) => b.toJson()).toList(),
         'measures': measures.map((m) => m.toJson()).toList(),
@@ -577,6 +590,8 @@ class FitState extends FitCore
     repsOnlyOff.clear();
     eachSide.clear();
     eachSideOff.clear();
+    assistedOn.clear();
+    assistedOff.clear();
     exerciseRest.clear();
     progressStep.clear();
     programStates.clear();
@@ -596,6 +611,7 @@ class FitState extends FitCore
     demoSize = 'large';
     demoLoop = 'always';
     sessionLayout = 'cards';
+    heatmapRange = 'weeks';
     MediaStore.clearAll();
     favorites.clear();
     sessionPicks.clear();
@@ -620,6 +636,7 @@ class FitState extends FitCore
     stepLb = 5;
     trainReminderMin = null;
     smartReminder = false;
+    trainAgainMin = 0;
     TrainReminder.instance.cancel();
     onboarded = false;
     strengthExerciseId = null;
@@ -789,6 +806,7 @@ class FitState extends FitCore
       minuteOfDay: reminderMinute,
       weekdays: reminderWeekdays,
       skipToday: trainedToday,
+      againMinutes: trainAgainMin,
     );
   }
 

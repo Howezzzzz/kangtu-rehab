@@ -23,9 +23,7 @@ void main() {
   ) async {
     final day = DateTime(2026, 10, 12);
     fit.sessions.add(
-      // 新语义：day = date - durationSec（date 为结束时刻）。结束时刻取当天 00:30，
-      // 使开始日落在 2026-10-12（对齐上游「按开始日计训练」改动）。
-      LoggedSession(day.add(const Duration(seconds: 1800)), 1800, [
+      LoggedSession(DateTime(2026, 10, 12, 18), 1800, [
         LoggedExercise('plank', 'Plank', 'abdomen', [
           LoggedSet(0, 0, sec: 45),
           LoggedSet(0, 0, sec: 70),

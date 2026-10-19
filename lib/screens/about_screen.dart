@@ -11,7 +11,7 @@ import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
 
-const _kVersion = '1.5.0-kangtu';
+const _kVersion = '1.6.0-kangtu';
 const _kAuthor = '康途';
 const _kAuthorUrl = 'https://github.com/Howezzzzz';
 const _kRepoUrl = 'https://github.com/Howezzzzz/kangtu-rehab';

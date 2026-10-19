@@ -2915,7 +2915,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get stepsInfoRead => '걸음 수만 읽어요. 다른 건 읽지 않고 Health Connect에 쓰지도 않아요.';
 
   @override
-  String get stepsInfoLocal => '걸음 수는 휴대폰에만 남아요. GymMane은 인터넷에 연결하지 않아요.';
+  String get stepsInfoLocal => '걸음 수는 휴대폰에만 남아요. Kangtu은 인터넷에 연결하지 않아요.';
 
   @override
   String get stepsInfoOff => '설정이나 Health Connect에서 언제든 끌 수 있어요.';
@@ -4276,7 +4276,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nutritionAboutWhat =>
-      '식사, 물, 단백질, 보충제를 운동 바로 옆에 기록하는 간단한 방법입니다. GymMane은 무엇보다 헬스 앱입니다. 식단은 모든 것을 한곳에 모으기 위한 것이지, 다이어트 앱을 대신하려는 것이 아닙니다.';
+      '식사, 물, 단백질, 보충제를 운동 바로 옆에 기록하는 간단한 방법입니다. Kangtu은 무엇보다 헬스 앱입니다. 식단은 모든 것을 한곳에 모으기 위한 것이지, 다이어트 앱을 대신하려는 것이 아닙니다.';
 
   @override
   String get nutritionAboutScanTitle => '스캐너는 앞으로도 없음';
@@ -4290,7 +4290,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nutritionAboutLocal =>
-      '앱에는 사진이 있는 음식이 500개 넘게 들어 있습니다. 직접 음식을 추가하고, 사진을 바꾸고, 값을 수정할 수 있습니다. GymMane의 다른 부분처럼 모든 것이 휴대폰에 남습니다.';
+      '앱에는 사진이 있는 음식이 500개 넘게 들어 있습니다. 직접 음식을 추가하고, 사진을 바꾸고, 값을 수정할 수 있습니다. Kangtu의 다른 부분처럼 모든 것이 휴대폰에 남습니다.';
 
   @override
   String get nutritionAboutBetaTitle => '아직 베타';
@@ -4356,7 +4356,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get notifSuppTap => 'Tick it off in GymMane once you\'ve taken it.';
+  String get notifSuppTap => 'Tick it off in Kangtu once you\'ve taken it.';
 
   @override
   String get suppNoneToday => 'Nothing to take today.';
@@ -5540,4 +5540,137 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get rehabDoctorSaved => 'Saved — you can generate a plan now';
+
+  @override
+  String get heatRangeSetting => '활동 캘린더';
+
+  @override
+  String get heatRangeWeeks => '12주';
+
+  @override
+  String get heatRangeYear => '12개월';
+
+  @override
+  String get heatRangeHint => '12개월은 1년 전체를 보여줘요. 옆으로 밀면 첫 운동까지 거슬러 갈 수 있어요.';
+
+  @override
+  String get pdfPlan => '플랜을 PDF로';
+
+  @override
+  String get pdfPlanHint => '한 주와 모든 루틴을 담은 깔끔한 시트예요. 바로 인쇄하거나 보낼 수 있어요.';
+
+  @override
+  String get pdfExport => 'PDF로 내보내기';
+
+  @override
+  String get pdfFooter => '무료 · 오픈 소스 · 오프라인';
+
+  @override
+  String get shakeTag => 'It’s a shake';
+
+  @override
+  String get shakeTagHint => 'It shows up in Your shake';
+
+  @override
+  String get shakeNone => 'Mark your shakes and only those show up here.';
+
+  @override
+  String get shakeMarkLabel => 'MARK AS A SHAKE';
+
+  @override
+  String get shakeNew => 'New shake';
+
+  @override
+  String get shakeUntag => 'Not a shake';
+
+  @override
+  String get pdfKicker => '운동 계획';
+
+  @override
+  String get pdfStatDays => '일 / 주';
+
+  @override
+  String get pdfStatMinutes => '분 / 회';
+
+  @override
+  String pdfMinutes(int n) {
+    return '약 $n분';
+  }
+
+  @override
+  String get workoutNotesTitle => '운동 메모';
+
+  @override
+  String get workoutNoteEvery => '매번';
+
+  @override
+  String get workoutNoteNext => '다음번';
+
+  @override
+  String get workoutNoteEveryHint => '이 운동을 할 때마다 보여요. 시트나 케이블 설정에 좋아요.';
+
+  @override
+  String get workoutNoteNextHint => '다음번에만 보이고 그 뒤엔 사라져요.';
+
+  @override
+  String workoutNoteFromLast(String date) {
+    return '지난번 메모 · $date';
+  }
+
+  @override
+  String get workoutNoteHint => '시트 2번, 케이블 19…';
+
+  @override
+  String get notePinWorkout => '운동 중에 보기';
+
+  @override
+  String get assistedSetting => '어시스트 머신';
+
+  @override
+  String get assistedSettingHint => '무게가 도와주니 적을수록 좋아요. 기록과 추천이 내려가요.';
+
+  @override
+  String get assistedRecordHint => '최소 보조';
+
+  @override
+  String get trainAgainLabel => '아직 운동 안 했나요? 다시 알림';
+
+  @override
+  String get trainAgainOff => '안 함';
+
+  @override
+  String trainAgainAfter(int n) {
+    return '+$n시간';
+  }
+
+  @override
+  String get trainAgainHint => '한 번만, 그날 운동을 기록하지 않았을 때만요.';
+
+  @override
+  String get notifTrainAgainBody => '오늘 운동할 시간이 아직 있어요.';
+
+  @override
+  String nextDeload(int n) {
+    return '가볍게: $n회 연속 모든 반복 미달';
+  }
+
+  @override
+  String get historyTitle => '기록';
+
+  @override
+  String historyWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '운동 $n회');
+    return '$_temp0';
+  }
+
+  @override
+  String get historyEmpty => '이번 달 운동이 없어요';
+
+  @override
+  String get historyEmptyHint => '옆으로 밀거나 화살표로 다른 달을 볼 수 있어요.';
+
+  @override
+  String historyMore(int n) {
+    return '+$n개 더';
+  }
 }

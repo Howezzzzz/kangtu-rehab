@@ -3005,7 +3005,7 @@ class AppLocalizationsUk extends AppLocalizations {
       'Читає лише кількість кроків. Більше нічого не читає і нічого не пише в Health Connect.';
 
   @override
-  String get stepsInfoLocal => 'Кроки залишаються на телефоні. GymMane ніколи не підключається до інтернету.';
+  String get stepsInfoLocal => 'Кроки залишаються на телефоні. Kangtu ніколи не підключається до інтернету.';
 
   @override
   String get stepsInfoOff => 'Можна вимкнути будь-коли в Налаштуваннях або в Health Connect.';
@@ -4440,7 +4440,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get nutritionAboutWhat =>
-      'Простий спосіб записувати їжу, воду, білок і добавки поруч із тренуваннями. GymMane — передусім застосунок для залу: харчування тут, щоб усе було в одному місці, а не щоб замінити застосунок для дієти.';
+      'Простий спосіб записувати їжу, воду, білок і добавки поруч із тренуваннями. Kangtu — передусім застосунок для залу: харчування тут, щоб усе було в одному місці, а не щоб замінити застосунок для дієти.';
 
   @override
   String get nutritionAboutScanTitle => 'Без сканера, ніколи';
@@ -4454,7 +4454,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get nutritionAboutLocal =>
-      'У застосунку вже є понад 500 продуктів із фото. Можна додавати свої, змінювати їм фото й редагувати значення. Усе залишається на твоєму телефоні, як і решта GymMane.';
+      'У застосунку вже є понад 500 продуктів із фото. Можна додавати свої, змінювати їм фото й редагувати значення. Усе залишається на твоєму телефоні, як і решта Kangtu.';
 
   @override
   String get nutritionAboutBetaTitle => 'Поки що в беті';
@@ -4520,7 +4520,7 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
-  String get notifSuppTap => 'Tick it off in GymMane once you\'ve taken it.';
+  String get notifSuppTap => 'Tick it off in Kangtu once you\'ve taken it.';
 
   @override
   String get suppNoneToday => 'Nothing to take today.';
@@ -5707,4 +5707,145 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get rehabDoctorSaved => 'Saved — you can generate a plan now';
+
+  @override
+  String get heatRangeSetting => 'Календар активності';
+
+  @override
+  String get heatRangeWeeks => '12 тижнів';
+
+  @override
+  String get heatRangeYear => '12 місяців';
+
+  @override
+  String get heatRangeHint =>
+      '12 місяців показують увесь рік. Гортай убік, щоб повернутися назад, до першого тренування.';
+
+  @override
+  String get pdfPlan => 'План у PDF';
+
+  @override
+  String get pdfPlanHint => 'Охайний аркуш із тижнем і всіма програмами — можна роздрукувати чи надіслати.';
+
+  @override
+  String get pdfExport => 'Експорт у PDF';
+
+  @override
+  String get pdfFooter => 'Безкоштовно, з відкритим кодом і офлайн';
+
+  @override
+  String get shakeTag => 'It’s a shake';
+
+  @override
+  String get shakeTagHint => 'It shows up in Your shake';
+
+  @override
+  String get shakeNone => 'Mark your shakes and only those show up here.';
+
+  @override
+  String get shakeMarkLabel => 'MARK AS A SHAKE';
+
+  @override
+  String get shakeNew => 'New shake';
+
+  @override
+  String get shakeUntag => 'Not a shake';
+
+  @override
+  String get pdfKicker => 'ПЛАН ТРЕНУВАНЬ';
+
+  @override
+  String get pdfStatDays => 'ДНІВ / ТИЖД.';
+
+  @override
+  String get pdfStatMinutes => 'ХВ / ТРЕНУВАННЯ';
+
+  @override
+  String pdfMinutes(int n) {
+    return '≈ $n хв';
+  }
+
+  @override
+  String get workoutNotesTitle => 'Нотатки до вправи';
+
+  @override
+  String get workoutNoteEvery => 'Щоразу';
+
+  @override
+  String get workoutNoteNext => 'Наступного разу';
+
+  @override
+  String get workoutNoteEveryHint => 'Показується щоразу. Зручно для налаштувань сидіння чи блока.';
+
+  @override
+  String get workoutNoteNextHint => 'З’явиться лише наступного разу, потім зникне.';
+
+  @override
+  String workoutNoteFromLast(String date) {
+    return 'З минулого разу · $date';
+  }
+
+  @override
+  String get workoutNoteHint => 'Сидіння на 2, блок на 19…';
+
+  @override
+  String get notePinWorkout => 'Показувати на тренуванні';
+
+  @override
+  String get assistedSetting => 'Гравітрон';
+
+  @override
+  String get assistedSettingHint => 'Вага допомагає, тож менше — краще: рекорди й підказки йдуть униз.';
+
+  @override
+  String get assistedRecordHint => 'Найменше допомоги';
+
+  @override
+  String get trainAgainLabel => 'Ще не тренувався? Нагадати знову';
+
+  @override
+  String get trainAgainOff => 'Ні';
+
+  @override
+  String trainAgainAfter(int n) {
+    return '+$n год';
+  }
+
+  @override
+  String get trainAgainHint => 'Лише раз і лише якщо цього дня ти ще не записав тренування.';
+
+  @override
+  String get notifTrainAgainBody => 'Ще є час потренуватися сьогодні.';
+
+  @override
+  String nextDeload(int n) {
+    return 'легше: $n тренування поспіль без усіх повторів';
+  }
+
+  @override
+  String get historyTitle => 'Історія';
+
+  @override
+  String historyWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ТРЕНУВАННЯ',
+      many: '$n ТРЕНУВАНЬ',
+      few: '$n ТРЕНУВАННЯ',
+      one: '$n ТРЕНУВАННЯ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get historyEmpty => 'Цього місяця тренувань немає';
+
+  @override
+  String get historyEmptyHint => 'Гортай убік або тисни стрілки, щоб побачити інші місяці.';
+
+  @override
+  String historyMore(int n) {
+    return 'ще $n';
+  }
 }

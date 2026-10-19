@@ -1,4 +1,4 @@
-GymMane 1.5.0
+Kangtu 1.5.0
 
 • Nutrición (beta): más de 500 alimentos con foto, agua, batido, suplementos, planes y meal prep
 • Pasos de Health Connect en Inicio

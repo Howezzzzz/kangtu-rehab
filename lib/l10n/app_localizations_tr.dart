@@ -2999,7 +2999,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Yalnızca adım sayını okur. Başka hiçbir şey okumaz ve Health Connect\'e yazmaz.';
 
   @override
-  String get stepsInfoLocal => 'Adımların telefonunda kalır. GymMane asla internete bağlanmaz.';
+  String get stepsInfoLocal => 'Adımların telefonunda kalır. Kangtu asla internete bağlanmaz.';
 
   @override
   String get stepsInfoOff => 'İstediğin zaman Ayarlar\'dan veya Health Connect\'ten kapatabilirsin.';
@@ -4406,7 +4406,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nutritionAboutWhat =>
-      'Öğünlerini, suyunu, proteinini ve takviyelerini antrenmanlarının hemen yanında kaydetmenin basit bir yolu. GymMane her şeyden önce bir spor salonu uygulaması: Beslenme her şeyi tek bir yerde tutman için var, bir diyet uygulamasının yerini almak için değil.';
+      'Öğünlerini, suyunu, proteinini ve takviyelerini antrenmanlarının hemen yanında kaydetmenin basit bir yolu. Kangtu her şeyden önce bir spor salonu uygulaması: Beslenme her şeyi tek bir yerde tutman için var, bir diyet uygulamasının yerini almak için değil.';
 
   @override
   String get nutritionAboutScanTitle => 'Tarayıcı yok, asla';
@@ -4420,7 +4420,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nutritionAboutLocal =>
-      'Uygulamada fotoğraflı 500’den fazla yiyecek var. Kendi yiyeceklerini ekleyebilir, fotoğraflarını değiştirebilir ve değerlerini düzenleyebilirsin. GymMane’in geri kalanı gibi her şey telefonunda kalır.';
+      'Uygulamada fotoğraflı 500’den fazla yiyecek var. Kendi yiyeceklerini ekleyebilir, fotoğraflarını değiştirebilir ve değerlerini düzenleyebilirsin. Kangtu’in geri kalanı gibi her şey telefonunda kalır.';
 
   @override
   String get nutritionAboutBetaTitle => 'Hâlâ beta';
@@ -4486,7 +4486,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get notifSuppTap => 'Tick it off in GymMane once you\'ve taken it.';
+  String get notifSuppTap => 'Tick it off in Kangtu once you\'ve taken it.';
 
   @override
   String get suppNoneToday => 'Nothing to take today.';
@@ -5672,4 +5672,140 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get rehabDoctorSaved => 'Saved — you can generate a plan now';
+
+  @override
+  String get heatRangeSetting => 'Aktivite takvimi';
+
+  @override
+  String get heatRangeWeeks => '12 hafta';
+
+  @override
+  String get heatRangeYear => '12 ay';
+
+  @override
+  String get heatRangeHint => '12 ay tüm yılı gösterir. İlk antrenmanına kadar geri gitmek için yana kaydır.';
+
+  @override
+  String get pdfPlan => 'PDF olarak plan';
+
+  @override
+  String get pdfPlanHint =>
+      'Haftan ve tüm rutinlerinle düzenli bir sayfa; yazdırmaya ya da göndermeye hazır.';
+
+  @override
+  String get pdfExport => 'PDF olarak dışa aktar';
+
+  @override
+  String get pdfFooter => 'Ücretsiz, açık kaynak ve çevrimdışı';
+
+  @override
+  String get shakeTag => 'It’s a shake';
+
+  @override
+  String get shakeTagHint => 'It shows up in Your shake';
+
+  @override
+  String get shakeNone => 'Mark your shakes and only those show up here.';
+
+  @override
+  String get shakeMarkLabel => 'MARK AS A SHAKE';
+
+  @override
+  String get shakeNew => 'New shake';
+
+  @override
+  String get shakeUntag => 'Not a shake';
+
+  @override
+  String get pdfKicker => 'ANTRENMAN PLANI';
+
+  @override
+  String get pdfStatDays => 'GÜN / HAFTA';
+
+  @override
+  String get pdfStatMinutes => 'DK / ANTRENMAN';
+
+  @override
+  String pdfMinutes(int n) {
+    return '≈ $n dk';
+  }
+
+  @override
+  String get workoutNotesTitle => 'Egzersiz notları';
+
+  @override
+  String get workoutNoteEvery => 'Her seferinde';
+
+  @override
+  String get workoutNoteNext => 'Bir dahaki sefere';
+
+  @override
+  String get workoutNoteEveryHint =>
+      'Bu egzersizi her yaptığında görünür. Koltuk veya makara ayarı için ideal.';
+
+  @override
+  String get workoutNoteNextHint => 'Sadece bir dahaki sefere görünür, sonra kaybolur.';
+
+  @override
+  String workoutNoteFromLast(String date) {
+    return 'Geçen seferden · $date';
+  }
+
+  @override
+  String get workoutNoteHint => 'Koltuk 2. delikte, makara 19’da…';
+
+  @override
+  String get notePinWorkout => 'Antrenmanda göster';
+
+  @override
+  String get assistedSetting => 'Destekli makine';
+
+  @override
+  String get assistedSettingHint =>
+      'Ağırlık sana yardım eder, yani az olan daha iyi: rekorlar ve öneriler aşağı iner.';
+
+  @override
+  String get assistedRecordHint => 'En az destek';
+
+  @override
+  String get trainAgainLabel => 'Henüz antrenman yapmadın mı? Tekrar hatırlat';
+
+  @override
+  String get trainAgainOff => 'Hayır';
+
+  @override
+  String trainAgainAfter(int n) {
+    return '+$n sa';
+  }
+
+  @override
+  String get trainAgainHint => 'Yalnızca bir kez ve o gün antrenman kaydetmediysen.';
+
+  @override
+  String get notifTrainAgainBody => 'Bugün antrenman için hâlâ vaktin var.';
+
+  @override
+  String nextDeload(int n) {
+    return 'daha hafif: üst üste $n antrenmanda tüm tekrarlar yok';
+  }
+
+  @override
+  String get historyTitle => 'Geçmiş';
+
+  @override
+  String historyWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n ANTRENMAN');
+    return '$_temp0';
+  }
+
+  @override
+  String get historyEmpty => 'Bu ay antrenman yok';
+
+  @override
+  String get historyEmptyHint => 'Diğer ayları görmek için yana kaydır ya da okları kullan.';
+
+  @override
+  String historyMore(int n) {
+    return '+$n daha';
+  }
 }
