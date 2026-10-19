@@ -83,6 +83,74 @@ void main() {
       expect(res.hasUpdate, isFalse);
     });
 
+    test('先完成的源返回脏数据 → 不判失败，继续等另一个源', () async {
+      final res = await UpdateService.check(
+        current: ('1.6.0-kangtu', 21),
+        fetch: (url) {
+          if (url.contains('raw.githubusercontent')) {
+            return Future.value('not json'); // 秒回脏数据（非 JSON）
+          }
+          return Future.delayed(const Duration(milliseconds: 50), () => manifest(build: 22));
+        },
+      );
+      expect(res.ok, isTrue, reason: '脏数据不应抢占结果');
+      expect(res.hasUpdate, isTrue);
+    });
+
+    test('两源都成功但一源陈旧 → 取构建号更高者（ISS-145）', () async {
+      final res = await UpdateService.check(
+        current: ('1.6.0-kangtu', 21),
+        fetch: (url) => url.contains('raw')
+            ? Future.delayed(const Duration(milliseconds: 30), () => manifest(build: 23))
+            : Future.value(manifest(build: 22)), // 陈旧缓存，秒回
+      );
+      expect(res.info!.build, 23, reason: '不应被陈旧 CDN 抢答');
+    });
+
+    test('慢源超过宽限期 → 不阻塞（用先回者）', () async {
+      final slow = Completer<String>();
+      final sw = Stopwatch()..start();
+      final res = await UpdateService.check(
+        current: ('1.6.0-kangtu', 21),
+        fetch: (url) => url.contains('raw') ? slow.future : Future.value(manifest(build: 22)),
+      );
+      sw.stop();
+      expect(res.info!.build, 22);
+      expect(sw.elapsedMilliseconds, lessThan(2500), reason: '不应等慢源');
+      slow.complete(manifest(build: 23)); // 收尾
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+    });
+
+    test('所有源永不返回 → hardTimeout 兜底收口（ok=false）', () async {
+      final old = UpdateService.hardTimeout;
+      UpdateService.hardTimeout = const Duration(milliseconds: 200);
+      addTearDown(() => UpdateService.hardTimeout = old);
+      final hang = Completer<String>();
+      final res = await UpdateService.check(
+        current: ('1.6.0-kangtu', 21),
+        fetch: (_) => hang.future,
+      );
+      expect(res.ok, isFalse);
+      hang.complete('x'); // 收尾
+    });
+
+    test('两源并行：慢源（模拟被墙）不阻塞，快源先胜', () async {
+      final ctrl = Completer<String>();
+      var calls = 0;
+      final res = await UpdateService.check(
+        current: ('1.6.0-kangtu', 21),
+        fetch: (url) {
+          calls++;
+          if (url.contains('raw.githubusercontent')) return ctrl.future; // 永不返回
+          return Future.value(manifest(build: 22)); // 镜像秒回
+        },
+      );
+      expect(calls, 2, reason: '两源应被并行发起');
+      expect(res.ok, isTrue);
+      expect(res.hasUpdate, isTrue);
+      ctrl.complete('x'); // 收尾，避免悬挂
+    });
+
     test('主源失败 → 自动切备用源', () async {
       var calls = 0;
       final res = await UpdateService.check(
@@ -156,6 +224,8 @@ void main() {
       expect(info!.build, greaterThan(0));
       expect(info.version.isNotEmpty, isTrue);
       expect(info.downloadUrls.isNotEmpty, isTrue);
+      // 镜像字段哨兵（ISS-143）：清单必须带镜像兜底，否则国内下载基本不可用
+      expect(info.mirrorUrls.isNotEmpty, isTrue, reason: '清单缺 mirror_urls');
     });
   });
 
@@ -186,6 +256,104 @@ void main() {
       await expectLater(
         UpdateService.writeStreamToFile(f, bad(), total: 100),
         throwsA(isA<SocketException>()),
+      );
+      expect(f.existsSync(), isFalse);
+      dir.deleteSync(recursive: true);
+    });
+  });
+
+  group('pickUrls（直链优先、镜像兜底）', () {
+    UpdateInfo withUrls({Map<String, String>? direct, Map<String, String>? mirror}) {
+      final j = <String, dynamic>{'version': '1.0.0', 'version_code': 9};
+      if (direct != null) j['download_urls'] = direct;
+      if (mirror != null) j['mirror_urls'] = mirror;
+      return UpdateInfo.parse(jsonEncode(j))!;
+    }
+
+    test('直链在前、镜像在后', () {
+      final info = withUrls(
+        direct: {'arm64-v8a': 'https://d/a.apk'},
+        mirror: {'arm64-v8a': 'https://m/a.apk'},
+      );
+      expect(UpdateService.pickUrls(info), ['https://d/a.apk', 'https://m/a.apk']);
+    });
+
+    test('只有镜像时直接用镜像', () {
+      final info = withUrls(mirror: {'arm64-v8a': 'https://m/a.apk'});
+      expect(UpdateService.pickUrls(info), ['https://m/a.apk']);
+    });
+
+    test('镜像与直链相同 → 不重复', () {
+      final info = withUrls(
+        direct: {'arm64-v8a': 'https://x/a.apk'},
+        mirror: {'arm64-v8a': 'https://x/a.apk'},
+      );
+      expect(UpdateService.pickUrls(info), ['https://x/a.apk']);
+    });
+
+    test('都没有 → 返回空（不把发布页当 APK）', () {
+      final info = withUrls();
+      expect(UpdateService.pickUrls(info), isEmpty);
+    });
+
+    test('镜像与直链按同一 ABI 键配对（不做各自首选，ISS-146）', () {
+      final info = withUrls(
+        direct: {'arm64-v8a': 'https://d/arm64.apk'},
+        mirror: {'x86_64': 'https://m/x86.apk'},
+      );
+      expect(UpdateService.pickUrls(info), ['https://d/arm64.apk']);
+    });
+  });
+
+  group('apkFileName（消毒，ISS-149）', () {
+    test('版本名里的斜杠/怪异字符被替换', () {
+      final info = UpdateInfo.parse('{"version":"1.0/../evil","version_code":9}')!;
+      expect(UpdateService.apkFileName(info), 'kangtu-1.0_.._evil-9.apk');
+    });
+  });
+
+  group('下载候选兜底（ISS-143 回归）', () {
+    test('直链失败 → 自动换镜像成功', () async {
+      final dir = Directory.systemTemp.createTempSync('kt_upd_mir');
+      final f = File('${dir.path}/a.apk');
+      final tried = <String>[];
+      await UpdateService.downloadTo(
+        f,
+        ['https://d/a.apk', 'https://m/a.apk'],
+        one: (url, file, _) async {
+          tried.add(url);
+          if (url.startsWith('https://d')) throw const SocketException('blocked');
+          await file.writeAsBytes(List.filled(5, 1));
+        },
+      );
+      expect(tried, ['https://d/a.apk', 'https://m/a.apk']);
+      expect(f.existsSync(), isTrue);
+      dir.deleteSync(recursive: true);
+    });
+
+    test('全部候选失败 → 抛最后异常', () async {
+      final dir = Directory.systemTemp.createTempSync('kt_upd_all_bad');
+      final f = File('${dir.path}/b.apk');
+      await expectLater(
+        UpdateService.downloadTo(
+          f,
+          ['https://d/a.apk', 'https://m/a.apk'],
+          one: (url, file, _) async {
+            file.writeAsBytesSync(List.filled(3, 1));
+            throw const SocketException('down');
+          },
+        ),
+        throwsA(isA<SocketException>()),
+      );
+      dir.deleteSync(recursive: true);
+    });
+
+    test('无候选（ISS-147）→ 抛异常且不落盘', () async {
+      final dir = Directory.systemTemp.createTempSync('kt_upd_none');
+      final f = File('${dir.path}/c.apk');
+      await expectLater(
+        UpdateService.downloadTo(f, const [], one: (u, file, _) async {}),
+        throwsA(isA<HttpException>()),
       );
       expect(f.existsSync(), isFalse);
       dir.deleteSync(recursive: true);

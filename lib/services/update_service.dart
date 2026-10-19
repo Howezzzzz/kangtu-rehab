@@ -1,9 +1,10 @@
 /*
  * 检查更新 —— 唯一联网功能（Howe 2026-10-19 定）。
- * 优先读本仓库的版本清单（raw.githubusercontent → jsdelivr 备用），比对构建号；
- * 有新版本则应用内下载 APK 并调起系统安装器；失败回落打开发布页。
+ * 版本清单**两源并行拉取、谁先成功用谁**（raw.githubusercontent / jsdelivr）；
+ * 有新版本则应用内下载 APK（直链优先、失败自动换镜像）并调起系统安装器。
  *
  * 隐私：除本文件外，康途不发起任何网络请求；其余数据全程留在本机。
+ * 镜像仅代取公开的 APK 文件，不携带任何用户数据。
  */
 import 'dart:async';
 import 'dart:convert';
@@ -20,6 +21,7 @@ class UpdateInfo {
     required this.build,
     required this.desc,
     required this.downloadUrls,
+    this.mirrorUrls = const {},
     required this.pageUrl,
   });
 
@@ -27,26 +29,34 @@ class UpdateInfo {
   final int build;
   final String desc;
   final Map<String, String> downloadUrls;
+
+  /// 镜像地址（同键；直链失败时使用）。旧版清单无此字段时为空。
+  final Map<String, String> mirrorUrls;
   final String pageUrl;
 
   static UpdateInfo? parse(String raw) {
     try {
       final j = jsonDecode(raw);
       if (j is! Map) return null;
-      final urls = <String, String>{};
-      final m = j['download_urls'];
-      if (m is Map) {
-        m.forEach((k, v) {
-          if (v is String && v.isNotEmpty) urls['$k'] = v;
-        });
+      Map<String, String> urls(String key) {
+        final out = <String, String>{};
+        final m = j[key];
+        if (m is Map) {
+          m.forEach((k, v) {
+            if (v is String && v.isNotEmpty) out['$k'] = v;
+          });
+        }
+        return out;
       }
+
       return UpdateInfo(
         version: '${j['version'] ?? ''}',
         build: (j['version_code'] is int)
             ? j['version_code'] as int
             : int.tryParse('${j['version_code'] ?? ''}') ?? 0,
         desc: '${j['desc'] ?? ''}',
-        downloadUrls: urls,
+        downloadUrls: urls('download_urls'),
+        mirrorUrls: urls('mirror_urls'),
         pageUrl: '${j['page_url'] ?? UpdateService.releasesPage}',
       );
     } catch (_) {
@@ -87,12 +97,21 @@ class UpdateService {
 
   static const _timeout = Duration(seconds: 8);
 
+  /// 并行竞速的宽限期：先成功者不立即定稿，给另一源一个很短窗口，
+  /// 以免 CDN 陈旧缓存抢答（ISS-145）。
+  static const _graceWindow = Duration(milliseconds: 1200);
+
+  /// 整体兜底上限：任何情况下 check 都要收口（ISS-148；测试可调）
+  static Duration hardTimeout = const Duration(seconds: 12);
+
   /// 下载正文的空闲超时：服务端中途停发不会永久挂起（ISS-137）
   static const _idleTimeout = Duration(seconds: 20);
 
   /// 测试注入钩子（生产为 null）
   static Future<String> Function(String url)? debugFetch;
   static (String, int)? debugCurrent;
+  static Future<void> Function(String url, File file, void Function(double?)? onProgress)?
+      debugDownloadOne;
 
   /// 当前已安装版本（读系统真实值，避免与包体漂移）
   static Future<(String, int)> currentVersion() async {
@@ -105,28 +124,60 @@ class UpdateService {
   }
 
   /// 检查更新。[fetch] 可注入（测试用）；默认走 Http。
+  /// 两个源**并行**拉取，先成功者胜（ISS-142：不再先等主源 8s 超时）。
   static Future<UpdateCheckResult> check({
     Future<String> Function(String url)? fetch,
     (String, int)? current,
   }) async {
     final cur = current ?? debugCurrent ?? await currentVersion();
     final doFetch = fetch ?? debugFetch ?? _httpGet;
-    for (final url in sources) {
-      try {
-        final raw = await doFetch(url);
-        final info = UpdateInfo.parse(raw);
-        if (info == null || info.build <= 0) continue;
-        return UpdateCheckResult(
-          ok: true,
-          info: info,
-          currentVersion: cur.$1,
-          currentBuild: cur.$2,
-        );
-      } catch (_) {
-        continue; // 换下一个源
-      }
+    final info = await _fetchFirst(doFetch);
+    if (info == null) {
+      return UpdateCheckResult(ok: false, currentVersion: cur.$1, currentBuild: cur.$2);
     }
-    return UpdateCheckResult(ok: false, currentVersion: cur.$1, currentBuild: cur.$2);
+    return UpdateCheckResult(
+      ok: true,
+      info: info,
+      currentVersion: cur.$1,
+      currentBuild: cur.$2,
+    );
+  }
+
+  /// 并行打两个源：解析成功且构建号合法者可胜出；
+  /// 若另一源在 [_graceWindow] 内也成功，取**构建号更高**者（防旧缓存抢答 ISS-145）；
+  /// 全失败返回 null；任何情况都由 [hardTimeout] 兜底收口（ISS-148）。
+  static Future<UpdateInfo?> _fetchFirst(Future<String> Function(String url) doFetch) {
+    if (sources.isEmpty) return Future<UpdateInfo?>.value(null);
+    final c = Completer<UpdateInfo?>();
+    final got = <UpdateInfo>[];
+    var pending = sources.length;
+    Timer? grace;
+    void finish() {
+      if (c.isCompleted) return;
+      got.sort((a, b) => b.build.compareTo(a.build));
+      c.complete(got.isEmpty ? null : got.first);
+    }
+
+    for (final url in sources) {
+      unawaited(() async {
+        try {
+          final info = UpdateInfo.parse(await doFetch(url));
+          if (info != null && info.build > 0 && !c.isCompleted) {
+            got.add(info);
+            grace ??= Timer(_graceWindow, finish);
+          }
+        } catch (_) {
+          // 单源失败不影响其它源
+        } finally {
+          pending--;
+          if (pending == 0) {
+            grace?.cancel();
+            finish();
+          }
+        }
+      }());
+    }
+    return c.future.timeout(hardTimeout, onTimeout: () => null);
   }
 
   static Future<String> _httpGet(String url) async {
@@ -143,29 +194,82 @@ class UpdateService {
     }
   }
 
-  /// 按 ABI 选下载地址（缺失则回落 page_url / 首个直链）
-  static String pickUrl(UpdateInfo info) {
+  /// 候选下载地址：**直链优先，其次镜像；两侧按同一个 ABI 键配对**
+  /// （ISS-146：不可各自取首选，否则可能兜底到错架构包）。
+  /// 无任何 APK 直链时返回空列表——不把发布页 HTML 当 APK（ISS-147）。
+  static List<String> pickUrls(UpdateInfo info) {
     const order = ['arm64-v8a', 'armeabi-v7a', 'x86_64'];
+    String? key;
     for (final k in order) {
-      final u = info.downloadUrls[k];
-      if (u != null && u.isNotEmpty) return u;
+      if (info.downloadUrls.containsKey(k) || info.mirrorUrls.containsKey(k)) {
+        key = k;
+        break;
+      }
     }
-    return info.downloadUrls['arm64-v8a'] ??
-        (info.downloadUrls.isEmpty ? info.pageUrl : info.downloadUrls.values.first);
+    key ??= info.downloadUrls.keys.isNotEmpty
+        ? info.downloadUrls.keys.first
+        : (info.mirrorUrls.keys.isNotEmpty ? info.mirrorUrls.keys.first : null);
+    if (key == null) return const [];
+
+    final out = <String>[];
+    final direct = info.downloadUrls[key];
+    final mirror = info.mirrorUrls[key];
+    if (direct != null && direct.isNotEmpty) out.add(direct);
+    if (mirror != null && mirror.isNotEmpty && mirror != direct) out.add(mirror);
+    return out;
+  }
+
+  /// 单地址（兼容旧调用；无候选时返回发布页仅作展示用途）
+  static String pickUrl(UpdateInfo info) {
+    final urls = pickUrls(info);
+    return urls.isEmpty ? info.pageUrl : urls.first;
+  }
+
+  /// APK 落盘文件名（消毒 version 中的怪异字符，防路径穿越 ISS-149）
+  static String apkFileName(UpdateInfo info) {
+    final safe = info.version.replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
+    return 'kangtu-$safe-${info.build}.apk';
   }
 
   /// 下载 APK 到应用外部目录，返回文件。[onProgress] 0..1（未知总长时为 null）。
+  /// 候选顺序为直链→镜像，逐个尝试（ISS-143）。
   static Future<File> download(
     UpdateInfo info, {
     void Function(double? progress)? onProgress,
   }) async {
-    final url = pickUrl(info);
-    final name = 'kangtu-${info.version}-${info.build}.apk';
+    final name = apkFileName(info);
     final dir = await getExternalStorageDirectory() ??
         await getApplicationSupportDirectory();
     final target = Directory('${dir.path}/update')..createSync(recursive: true);
     final file = File('${target.path}/$name');
+    final one = debugDownloadOne ?? _downloadOne;
+    return downloadTo(file, pickUrls(info), onProgress: onProgress, one: one);
+  }
 
+  /// 依次尝试 [urls]（直链→镜像）：成功返回文件；全失败/无候选抛异常。
+  static Future<File> downloadTo(
+    File file,
+    List<String> urls, {
+    void Function(double? progress)? onProgress,
+    Future<void> Function(String url, File file, void Function(double?)? onProgress)? one,
+  }) async {
+    Object? last;
+    for (final url in urls) {
+      try {
+        await (one ?? _downloadOne)(url, file, onProgress);
+        return file;
+      } catch (e) {
+        last = e; // 换下一个候选（半成品已由 writeStreamToFile 清理）
+      }
+    }
+    throw last ?? HttpException('no download url');
+  }
+
+  static Future<void> _downloadOne(
+    String url,
+    File file,
+    void Function(double?)? onProgress,
+  ) async {
     final client = HttpClient()..connectionTimeout = _timeout;
     try {
       final req = await client.getUrl(Uri.parse(url)).timeout(_timeout);
@@ -177,7 +281,6 @@ class UpdateService {
         total: res.contentLength,
         onProgress: onProgress,
       );
-      return file;
     } finally {
       client.close(force: true);
     }
