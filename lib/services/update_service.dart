@@ -89,9 +89,16 @@ class UpdateService {
   /// 发布页（兜底）
   static const releasesPage = 'https://github.com/Howezzzzz/kangtu-rehab/releases/latest';
 
-  /// 版本清单地址（主 → 备用）
+  /// 版本清单地址（多源并行竞速，谁先成功用谁）。
+  /// 国内实测（2026-10-20）：raw.githubusercontent 不可达；gh-proxy 前缀最快（~0.3s）；
+  /// jsdelivr 系列（cdn/fastly/gcore）多数网络可达但有地区被污染。
   static const sources = <String>[
+    // 国内友好代理（最新、无缓存）
+    'https://gh-proxy.com/https://raw.githubusercontent.com/Howezzzzz/kangtu-rehab/main/assets/app_version.json',
+    // 直连（海外/未污染网络）
     'https://raw.githubusercontent.com/Howezzzzz/kangtu-rehab/main/assets/app_version.json',
+    // CDN 备用（两个域名提高命中率）
+    'https://fastly.jsdelivr.net/gh/Howezzzzz/kangtu-rehab@main/assets/app_version.json',
     'https://cdn.jsdelivr.net/gh/Howezzzzz/kangtu-rehab@main/assets/app_version.json',
   ];
 

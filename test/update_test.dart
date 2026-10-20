@@ -112,7 +112,7 @@ void main() {
       final sw = Stopwatch()..start();
       final res = await UpdateService.check(
         current: ('1.6.0-kangtu', 21),
-        fetch: (url) => url.contains('raw') ? slow.future : Future.value(manifest(build: 22)),
+        fetch: (url) => url.contains('gh-proxy') ? slow.future : Future.value(manifest(build: 22)),
       );
       sw.stop();
       expect(res.info!.build, 22);
@@ -141,11 +141,11 @@ void main() {
         current: ('1.6.0-kangtu', 21),
         fetch: (url) {
           calls++;
-          if (url.contains('raw.githubusercontent')) return ctrl.future; // 永不返回
-          return Future.value(manifest(build: 22)); // 镜像秒回
+          if (url.startsWith('https://raw.githubusercontent.com')) return ctrl.future; // 直连被墙，永不返回
+          return Future.value(manifest(build: 22)); // 其余源秒回
         },
       );
-      expect(calls, 2, reason: '两源应被并行发起');
+      expect(calls, UpdateService.sources.length, reason: '所有源应被并行发起');
       expect(res.ok, isTrue);
       expect(res.hasUpdate, isTrue);
       ctrl.complete('x'); // 收尾，避免悬挂
@@ -163,7 +163,7 @@ void main() {
       );
       expect(res.ok, isTrue);
       expect(res.hasUpdate, isTrue);
-      expect(calls, 2);
+      expect(calls, UpdateService.sources.length);
     });
 
     test('所有源都失败 → ok=false（不误报"已是最新"）', () async {
@@ -357,6 +357,19 @@ void main() {
       );
       expect(f.existsSync(), isFalse);
       dir.deleteSync(recursive: true);
+    });
+  });
+
+  group('清单源配置（国内可达性哨兵）', () {
+    test('sources 全部 https，且含国内友好源与 CDN 备用源', () {
+      final s = UpdateService.sources;
+      expect(s.length, greaterThanOrEqualTo(3));
+      expect(s.every((u) => u.startsWith('https://')), isTrue);
+      expect(s.any((u) => u.contains('gh-proxy.com')), isTrue, reason: '缺国内可用代理源');
+      expect(s.any((u) => u.contains('jsdelivr.net')), isTrue, reason: '缺 CDN 备用源');
+      expect(s.any((u) => u.contains('raw.githubusercontent.com')), isTrue);
+      // 均指向同一份清单
+      expect(s.every((u) => u.endsWith('assets/app_version.json')), isTrue);
     });
   });
 
