@@ -23,18 +23,21 @@ void runProgression(WorkoutState fit, Routine r, LoggedSession s) {
     if (inst.lastAdv == 0) {
       inst.lastAdv = now;
     } else if (now - inst.lastAdv >= day6) {
-      final len = cycleSpecs.values.first.weeks.length;
-      inst.week = (inst.week + 1) % len;
+      // RISK-046：week 存单调绝对周，各 spec 自行取模——周表长度不同也不会互相错位
+      inst.week++;
       inst.lastAdv = now;
-      if (inst.week == 0) {
-        for (final e in cycleSpecs.entries) {
-          final cur = inst.tm[e.key] ?? 40;
+      for (final e in cycleSpecs.entries) {
+        final len = e.value.weeks.length;
+        if (len > 0 && inst.week % len == 0) {
+          // 该 spec 自身跑完整轮 → 上训 TM（缺省时先用估算值自愈，不再死卡 40）
+          final cur = inst.tm[e.key] ?? estimateTrainingMax(fit, e.key) ?? 40;
           final next = roundHalf(cur + e.value.stepKg);
           inst.tm[e.key] = next;
           fit.progFeedback.add(t.progTmUp(_progName(fit, e.key), fit.weightLabel(next)));
         }
       }
-      fit.progFeedback.add(t.progWeekN(inst.week + 1));
+      final len0 = cycleSpecs.values.first.weeks.length;
+      fit.progFeedback.add(t.progWeekN(len0 > 0 ? inst.week % len0 + 1 : inst.week + 1));
     }
     // 周期动作:全部家族 routine 的 plan 同步到当前周
     for (final rt in fam) {
@@ -51,7 +54,7 @@ void runProgression(WorkoutState fit, Routine r, LoggedSession s) {
     final working = le.workingSets;
     if (working.isEmpty) continue;
     final name = _progName(fit, le.id, fallback: le.name);
-    final step = fit.progressStep[le.id] ?? spec.stepKg;
+    final step = spec.stepKg; // ISS-155 解耦：计划引擎只用自身 stepKg，不再读全局 progressStep
     final topWeight = working.map((x) => x.weight).reduce(math.max);
 
     switch (spec.kind) {
@@ -144,11 +147,14 @@ String _progName(LibraryState fit, String exId, {String? fallback}) {
 void rebuildSimplePlan(Routine r, String exId, ProgSpec spec,
     {int? repsTarget, double? weight}) {
   final reps = repsTarget ?? (spec.kind == ProgKind.linear ? spec.reps : spec.repMin);
+  // RISK-051：保留用户手加的热身组，只重建工作组
+  final warmups =
+      (r.plan[exId] ?? const <PlannedSet>[]).where((p) => p.kind == SetKind.warmup).toList();
   final sets = List<PlannedSet>.generate(
     spec.sets,
     (_) => PlannedSet(reps: reps, weightKg: (weight ?? 0) > 0 ? weight : null),
   );
-  r.plan[exId] = List.unmodifiable(sets);
+  r.plan[exId] = List.unmodifiable([...warmups, ...sets]);
   r.sets[exId] = spec.sets;
 }
 
@@ -156,8 +162,11 @@ void rebuildSimplePlan(Routine r, String exId, ProgSpec spec,
 void rebuildCyclePlan(Routine r, String exId, ProgSpec spec, ProgState inst) {
   final wk = spec.weeks[inst.week % spec.weeks.length];
   final tm = inst.tm[exId] ?? 40;
+  // RISK-051：保留用户手加的热身组
+  final warmups =
+      (r.plan[exId] ?? const <PlannedSet>[]).where((p) => p.kind == SetKind.warmup).toList();
   final sets = [for (final c in wk) PlannedSet(reps: c.reps, weightKg: roundHalf(c.pct * tm))];
-  r.plan[exId] = List.unmodifiable(sets);
+  r.plan[exId] = List.unmodifiable([...warmups, ...sets]);
   r.sets[exId] = sets.length;
 }
 

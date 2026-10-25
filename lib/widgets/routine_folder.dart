@@ -142,6 +142,17 @@ class RoutineFolder extends StatelessWidget {
                                   child: Icon(PhosphorIconsBold.caretRight, size: 13, color: gc.textSecondary),
                                 ),
                               ),
+                              if (r.hasProg)
+                                WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: Semantics(
+                                      label: t.progBadge,
+                                      child: Icon(PhosphorIconsFill.lightning, size: 12, color: gc.sage),
+                                    ),
+                                  ),
+                                ),
                             ]),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,

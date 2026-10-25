@@ -5,6 +5,76 @@ const int kDefaultRoutineSets = 3;
 mixin RoutinesState on FitCore, LibraryState {
   String? activeRoutineId;
   int _routineSeq = 0;
+  final List<SavedPlan> savedPlans = [];
+  String currentPlanId = '';
+
+  SavedPlan _snapshot(String id, String name) => SavedPlan(
+        id,
+        name,
+        Map.of(weeklyPlan),
+        {for (final e in planExtras.entries) e.key: List.of(e.value)},
+        multi: multiPlan,
+      );
+
+  List<SavedPlan> get savedPlansLive => [
+        for (final p in savedPlans) p.id == currentPlanId ? _snapshot(p.id, p.name) : p,
+      ];
+
+  void _storeCurrentPlan() {
+    final i = savedPlans.indexWhere((p) => p.id == currentPlanId);
+    if (i >= 0) savedPlans[i] = _snapshot(currentPlanId, savedPlans[i].name);
+  }
+
+  void savePlanAs(String name, {bool empty = false}) {
+    final n = name.trim();
+    if (n.isEmpty) return;
+    _storeCurrentPlan();
+    if (empty && currentPlanId.isEmpty && weeklyPlan.isNotEmpty) {
+      final mine = 'p${DateTime.now().microsecondsSinceEpoch}-${_routineSeq++}';
+      savedPlans.add(_snapshot(mine, t.planMine));
+    }
+    final id = 'p${DateTime.now().microsecondsSinceEpoch}-${_routineSeq++}';
+    if (empty) {
+      weeklyPlan.clear();
+      planExtras.clear();
+    }
+    savedPlans.add(_snapshot(id, n));
+    currentPlanId = id;
+    _planChanged();
+  }
+
+  void switchPlan(String id) {
+    if (id == currentPlanId) return;
+    final i = savedPlans.indexWhere((p) => p.id == id);
+    if (i < 0) return;
+    _storeCurrentPlan();
+    final p = savedPlans[i];
+    weeklyPlan
+      ..clear()
+      ..addAll(p.week);
+    planExtras
+      ..clear()
+      ..addAll({for (final e in p.extras.entries) e.key: List.of(e.value)});
+    multiPlan = p.multi;
+    currentPlanId = id;
+    _planChanged();
+  }
+
+  void renamePlan(String id, String name) {
+    final n = name.trim();
+    final i = savedPlans.indexWhere((p) => p.id == id);
+    if (i < 0 || n.isEmpty) return;
+    savedPlans[i].name = n;
+    _persist();
+    notifyListeners();
+  }
+
+  void deletePlan(String id) {
+    savedPlans.removeWhere((p) => p.id == id);
+    if (currentPlanId == id) currentPlanId = '';
+    _persist();
+    notifyListeners();
+  }
 
   void goRoutines() => pushRoute('routines');
 
@@ -42,10 +112,57 @@ mixin RoutinesState on FitCore, LibraryState {
     return last;
   }
 
+  List<Routine> get activeRoutines => [for (final r in routines) if (!r.archived) r];
+
+  List<Routine> get archivedRoutines => [for (final r in routines) if (r.archived) r];
+
+  bool showArchivedRoutines = false;
+
+  void toggleArchivedRoutines() {
+    showArchivedRoutines = !showArchivedRoutines;
+    notifyListeners();
+  }
+
+  VoidCallback? archiveRoutine(String id, bool on) {
+    final r = _routine(id);
+    if (r == null || r.archived == on) return null;
+    final week = {...weeklyPlan};
+    final extras = {for (final e in planExtras.entries) e.key: [...e.value]};
+    final moves = {for (final e in planMoves.entries) e.key: [...e.value]};
+    final rotation = [...rotationIds];
+    final next = rotationNextId;
+    r.archived = on;
+    if (on) _unplanRoutine(id);
+    _persist();
+    syncTrainReminder();
+    notifyListeners();
+    if (!on) return null;
+    return () {
+      r.archived = false;
+      weeklyPlan
+        ..clear()
+        ..addAll(week);
+      planExtras
+        ..clear()
+        ..addAll(extras);
+      planMoves
+        ..clear()
+        ..addAll(moves);
+      rotationIds
+        ..clear()
+        ..addAll(rotation);
+      rotationNextId = next;
+      _persist();
+      syncTrainReminder();
+      notifyListeners();
+    };
+  }
+
   List<Routine> get routinesByLastDone {
-    final last = {for (final r in routines) r.id: lastDoneOf(r.id)};
-    final order = {for (final (i, r) in routines.indexed) r.id: i};
-    return [...routines]..sort((a, b) {
+    final active = activeRoutines;
+    final last = {for (final r in active) r.id: lastDoneOf(r.id)};
+    final order = {for (final (i, r) in active.indexed) r.id: i};
+    return [...active]..sort((a, b) {
         final la = last[a.id], lb = last[b.id];
         if (la != null && lb != null && la != lb) return lb.compareTo(la);
         if ((la == null) != (lb == null)) return la == null ? 1 : -1;
@@ -139,7 +256,8 @@ mixin RoutinesState on FitCore, LibraryState {
     for (final e in planCycles.entries) {
       if (e.value.isTrainingDay(day) && !ids.contains(e.key)) ids.add(e.key);
     }
-    return [for (final id in ids) ?_routine(id)];
+    // ISS-151：归档例程不得再被 planCycles 补入（否则永久占位、当日永远打不了勾）
+    return [for (final id in ids) ?_routine(id)].where((r) => !r.archived).toList();
   }
   void setRotation(bool on) {
     if (rotation == on) return;
@@ -325,14 +443,14 @@ mixin RoutinesState on FitCore, LibraryState {
 
   List<String> get routineGroups {
     final out = <String>[];
-    for (final r in routines) {
+    for (final r in activeRoutines) {
       if (r.group.isNotEmpty && !out.contains(r.group)) out.add(r.group);
     }
     return out;
   }
 
   List<Routine> routinesInGroup(String group) =>
-      routines.where((r) => r.group == group).toList();
+      routines.where((r) => r.group == group && !r.archived).toList();
 
   void setRoutineGroup(String id, String group) {
     final r = _routine(id);
@@ -362,6 +480,25 @@ mixin RoutinesState on FitCore, LibraryState {
     made.rest.addAll(source.rest);
     made.group = source.group;
     made.color = source.color;
+    // RISK-045/049：连计划配置一起复制，并为其建独立进度实例（克隆源当前值，不归零）
+    if (source.prog.isNotEmpty) {
+      made.prog.addAll({for (final e in source.prog.entries) e.key: e.value.copyWith()});
+      final srcInst = source.progInst == null ? null : programStates[source.progInst!];
+      final nid = 'pi${DateTime.now().millisecondsSinceEpoch}x${programStates.length}';
+      final clone = ProgState(
+        tpl: srcInst?.tpl ?? '',
+        week: srcInst?.week ?? 0,
+        lastAdv: srcInst?.lastAdv ?? 0,
+      );
+      if (srcInst != null) {
+        clone.w.addAll(srcInst.w);
+        clone.tm.addAll(srcInst.tm);
+        clone.fails.addAll(srcInst.fails);
+        clone.reps.addAll(srcInst.reps);
+      }
+      programStates[nid] = clone;
+      made.progInst = nid;
+    }
     _persist();
     notifyListeners();
     return copy;
@@ -392,14 +529,23 @@ mixin RoutinesState on FitCore, LibraryState {
 
   void _dropRoutine(String id) {
     final doomedInst = _routine(id)?.progInst;
+    _unplanRoutine(id);
+    routines.removeWhere((r) => r.id == id);
+    planCycles.remove(id);
+    if (doomedInst != null && !routines.any((r) => r.progInst == doomedInst)) {
+      programStates.remove(doomedInst);
+    }
+    _fixRotationNext();
+    for (final p in savedPlans) {
+      p.drop(id);
+    }
+  }
+
+  void _unplanRoutine(String id) {
     final i = rotationIds.indexOf(id);
     if (i >= 0) {
       if (rotationNextId == id) rotationNextId = rotationIds[(i + 1) % rotationIds.length];
       rotationIds.removeAt(i);
-    }
-    routines.removeWhere((r) => r.id == id);
-    if (doomedInst != null && !routines.any((r) => r.progInst == doomedInst)) {
-      programStates.remove(doomedInst);
     }
     _fixRotationNext();
     weeklyPlan.removeWhere((_, v) => v == id);
@@ -427,6 +573,7 @@ mixin RoutinesState on FitCore, LibraryState {
       r.plan.remove(exId);
       r.rest.remove(exId);
       r.chained.remove(exId);
+      r.prog.remove(exId); // 计划周期：移除动作时清 ProgSpec，避免孤儿 spec 继续写 plan（ISS-153）
     } else {
       r.exerciseIds.add(exId);
     }
@@ -447,8 +594,104 @@ mixin RoutinesState on FitCore, LibraryState {
     final rest = r.rest.remove(from);
     if (rest != null) r.rest[to] = rest;
     if (r.chained.remove(from)) r.chained.add(to);
+    // ISS-155：连 prog 一并迁移（否则新动作失去计划驱动、旧 spec 变孤儿继续写 plan）
+    final prog = r.prog.remove(from);
+    if (prog != null) {
+      r.prog[to] = prog;
+      final inst = r.progInst == null ? null : programStates[r.progInst!];
+      if (inst != null) {
+        // ISS-158：渐进状态一同播种到新动作 id（否则 cycle TM 回落 40、linear 计划重量为空）
+        final w = inst.w[from];
+        if (w != null) inst.w[to] = w;
+        final tm = inst.tm[from];
+        if (tm != null) inst.tm[to] = tm;
+        final fails = inst.fails[from];
+        if (fails != null) inst.fails[to] = fails;
+        final reps = inst.reps[from];
+        if (reps != null) inst.reps[to] = reps;
+        buildInitialPlan(r, to, prog, inst);
+      }
+    }
     _persist();
     notifyListeners();
+  }
+
+  /// 计划引擎(prog)的步进：取该动作所属（非归档）例程的 spec.stepKg（首个匹配）。
+  double? progStepOf(String exId) {
+    for (final r in routines) {
+      if (r.archived) continue;
+      final spec = r.prog[exId];
+      if (spec != null) return spec.stepKg;
+    }
+    return null;
+  }
+
+  /// 调计划的"步进"（改 spec.stepKg，与上游 progressStep 解耦——ISS-155）。
+  void bumpProgStep(String exId, int dir) {
+    var changed = false;
+    for (final r in routines) {
+      if (r.archived) continue;
+      final spec = r.prog[exId];
+      if (spec == null) continue;
+      final cur = toDisplayWeight(spec.stepKg);
+      final next = (cur + dir * weightStep / 2).clamp(weightStep / 2, weightStep * 8);
+      r.prog[exId] = spec.copyWith(stepKg: fromDisplayWeight(next));
+      // 步进只影响“后续推进”，无需重建当前 plan（改后下次完训生效）
+      changed = true;
+    }
+    if (changed) {
+      _persist();
+      notifyListeners();
+    }
+  }
+
+  /// 周期(cycle)动作的训练最大值(kg)；无则返回 null。
+  double? progTmOf(String exId) {
+    for (final r in routines) {
+      if (r.archived) continue;
+      final spec = r.prog[exId];
+      if (spec == null || !spec.isCycle) continue;
+      final inst = r.progInst == null ? null : programStates[r.progInst!];
+      if (inst != null) return inst.tm[exId] ?? estimateTrainingMax(this, exId) ?? 40;
+    }
+    return null;
+  }
+
+  /// 该 TM 是否还是“自动估算/默认 40”（未被用户确认过）→ UI 提示偏低、可手调。
+  bool progTmUnconfirmed(String exId) {
+    for (final r in routines) {
+      if (r.archived) continue;
+      final spec = r.prog[exId];
+      if (spec == null || !spec.isCycle) continue;
+      final inst = r.progInst == null ? null : programStates[r.progInst!];
+      if (inst == null) return true;
+      final tm = inst.tm[exId];
+      if (tm == null || tm == 40) return true;
+      final est = estimateTrainingMax(this, exId);
+      if (est != null && (tm - est).abs() < 0.01) return true;
+    }
+    return false;
+  }
+
+  /// 手调周期动作的训练最大值，并同步重建该动作在各家族例程里的周期 plan。
+  void bumpProgTm(String exId, int dir) {
+    var changed = false;
+    for (final r in routines) {
+      if (r.archived) continue;
+      final spec = r.prog[exId];
+      if (spec == null || !spec.isCycle) continue;
+      final inst = r.progInst == null ? null : programStates[r.progInst!];
+      if (inst == null) continue;
+      final cur = toDisplayWeight(inst.tm[exId] ?? estimateTrainingMax(this, exId) ?? 40);
+      final next = (cur + dir * weightStep).clamp(weightStep, weightStep * 40);
+      inst.tm[exId] = fromDisplayWeight(next);
+      changed = true;
+      rebuildCyclePlan(r, exId, spec, inst);
+    }
+    if (changed) {
+      _persist();
+      notifyListeners();
+    }
   }
 
   VoidCallback? removeRoutineExercise(String routineId, String exId) {
@@ -460,6 +703,7 @@ mixin RoutinesState on FitCore, LibraryState {
     final plan = r.plan[exId];
     final rest = r.rest[exId];
     final chained = r.chained.contains(exId);
+    final prog = r.prog[exId];
     toggleRoutineExercise(routineId, exId);
     return () {
       final back = _routine(routineId);
@@ -469,6 +713,7 @@ mixin RoutinesState on FitCore, LibraryState {
       if (plan != null) back.plan[exId] = plan;
       if (rest != null) back.rest[exId] = rest;
       if (chained) back.chained.add(exId);
+      if (prog != null) back.prog[exId] = prog; // ISS-155：撤销一并恢复 ProgSpec
       _persist();
       notifyListeners();
     };
@@ -503,6 +748,23 @@ mixin RoutinesState on FitCore, LibraryState {
   void setRoutineSetCount(String routineId, String exId, int n) {
     final r = _routine(routineId);
     if (r == null || !r.exerciseIds.contains(exId)) return;
+    // RISK-051：prog 驱动时同步写 spec.sets，否则下次 rebuild 被恢复
+    final spec = r.prog[exId];
+    if (spec != null) {
+      for (final rr in routines) {
+        if (rr.archived) continue;
+        final sp = rr.prog[exId];
+        if (sp == null) continue;
+        final sp2 = sp.copyWith(sets: n.clamp(1, 12));
+        rr.prog[exId] = sp2;
+        final inst = rr.progInst == null ? null : programStates[rr.progInst!];
+        if (sp2.isCycle) {
+          if (inst != null) rebuildCyclePlan(rr, exId, sp2, inst);
+        } else {
+          rebuildSimplePlan(rr, exId, sp2);
+        }
+      }
+    }
     r.sets[exId] = n.clamp(1, 12);
     _persist();
     notifyListeners();
@@ -539,6 +801,31 @@ mixin RoutinesState on FitCore, LibraryState {
   void bumpRoutineSets(String routineId, String exId, int delta) {
     final r = _routine(routineId);
     if (r == null || !r.exerciseIds.contains(exId)) return;
+    // RISK-050/051：prog 驱动的动作其组数写回 spec.sets（否则 rebuild 会抹掉，且 531 各组数不同会被“删组”误砍）
+    final spec = r.prog[exId];
+    if (spec != null) {
+      final n = (spec.sets + delta).clamp(1, 12);
+      if (n != spec.sets) {
+        for (final rr in routines) {
+          if (rr.archived) continue;
+          final sp = rr.prog[exId];
+          if (sp == null) continue;
+          final sp2 = sp.copyWith(sets: n);
+          rr.prog[exId] = sp2;
+          rr.sets[exId] = n;
+          // 立刻重建 plan，否则下次开练仍按旧组数（改了不生效）
+          final inst = rr.progInst == null ? null : programStates[rr.progInst!];
+          if (sp2.isCycle) {
+            if (inst != null) rebuildCyclePlan(rr, exId, sp2, inst);
+          } else {
+            rebuildSimplePlan(rr, exId, sp2);
+          }
+        }
+        _persist();
+        notifyListeners();
+      }
+      return;
+    }
     final planned = r.plan[exId];
     if (planned != null && planned.isNotEmpty) {
       final next = [...planned];

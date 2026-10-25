@@ -68,6 +68,8 @@ abstract class FitCore extends ChangeNotifier {
   /// 本次训练结束后的渐进反馈(完成页展示,开练时清空)
   List<String> progFeedback = [];
 
+  /// 每个动作的渐进规则(上游引擎): exerciseId -> ProgressRule
+  final Map<String, ProgressRule> progressRules = {};
   final Set<String> autoWarmup = {};
 
   final Set<String> repsOnly = {};
@@ -126,13 +128,27 @@ abstract class FitCore extends ChangeNotifier {
 
   void refreshAwards({bool silent = false}) {}
 
+  int _dataRev = 0;
+  final Map<Object, (Object?, Object?)> _memo = {};
+
+  T _remember<T>(Object key, T Function() build, [Object? extra]) {
+    final stamp = (_dataRev, sessions.length, checkins.length, extra);
+    final hit = _memo[key];
+    if (hit != null && hit.$1 == stamp) return hit.$2 as T;
+    final value = build();
+    _memo[key] = (stamp, value);
+    return value;
+  }
+
   void _persist() {
+    _dataRev++;
     if (_loading) return;
     _saveDebounce?.cancel();
     _saveDebounce = Timer(const Duration(milliseconds: 400), persistNow);
   }
 
   void persistNow() {
+    _dataRev++;
     _saveDebounce?.cancel();
     _saveDebounce = null;
     if (_loading) return;

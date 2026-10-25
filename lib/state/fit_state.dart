@@ -174,6 +174,7 @@ class FitState extends FitCore
     _stampMemberSince();
     _seedCalculatorsFromProfile();
     _loading = false;
+    _freezeProgSteps(); // ISS-155：routine 就绪且退出 loading 后再冻结（否则 _persist 被吞）
     refreshAwards(silent: true);
     pendingAwards.clear();
     if (gamification) pendingAwards.addAll(unseenAwards);
@@ -201,6 +202,9 @@ class FitState extends FitCore
     final v = (raw as num?)?.toDouble();
     return v != null && allowed.contains(v) ? v : fallback;
   }
+
+  /// ISS-155：冻结迁移是否已执行（持久化，保证只跑一次）。
+  bool progStepFrozen = false;
 
   void _loadToggles(Map<String, dynamic> data) {
     demoSize = data['demo'] as String? ?? 'large';
@@ -252,6 +256,7 @@ class FitState extends FitCore
       ..clear()
       ..addAll(((data['exSecondary'] as Map?) ?? const {})
           .map((k, v) => MapEntry(k as String, (v as List).whereType<String>().toList())));
+    plateBar = (data['plateBar'] as num?)?.toDouble();
     _builtInExercises = null;
     bgDim = (data['bgDim'] as num?)?.toDouble() ?? 0.55;
     showFocus = data['showFocus'] as bool? ?? true;
@@ -264,6 +269,12 @@ class FitState extends FitCore
     heatmapLabels = data['heatLabels'] as bool? ?? true;
     hideShots = data['hideShots'] as bool? ?? false;
     multiPlan = data['multiPlan'] as bool? ?? false;
+    savedPlans
+      ..clear()
+      ..addAll(((data['savedPlans'] as List?) ?? const [])
+          .map((e) => SavedPlan.fromJson((e as Map).cast<String, dynamic>())));
+    currentPlanId = data['planId'] as String? ?? '';
+    if (!savedPlans.any((p) => p.id == currentPlanId)) currentPlanId = '';
     final weekStart = data['weekStart'];
     weekStartDay = SettingsState.weekStarts.contains(weekStart) ? weekStart as int : DateTime.monday;
     autoAdvance = data['autoAdvance'] as bool? ?? true;
@@ -282,6 +293,10 @@ class FitState extends FitCore
       ..clear()
       ..addAll(((data['progress'] as Map?) ?? const {})
           .map((k, v) => MapEntry(k as String, (v as num).toDouble())));
+    progressRules
+      ..clear()
+      ..addAll(((data['progressRules'] as Map?) ?? const {}).map(
+          (k, v) => MapEntry(k as String, ProgressRule.fromJson(Map<String, dynamic>.from(v as Map)))));
     autoWarmup
       ..clear()
       ..addAll(((data['warmup'] as List?) ?? const []).cast<String>());
@@ -289,6 +304,31 @@ class FitState extends FitCore
       ..clear()
       ..addAll(((data['progStates'] as Map?) ?? const {}).map((k, v) =>
           MapEntry(k as String, ProgState.fromJson((v as Map).cast<String, dynamic>()))));
+    progStepFrozen = data['progStepFrozen'] as bool? ?? false;
+  }
+
+  /// ISS-155 一次性迁移：解耦前 prog 引擎读全局 progressStep（与上游共享），
+  /// 解耦后只读 spec.stepKg。这里把“当时实际生效的步进”固化进 spec.stepKg，
+  /// 保证用户调过的值零丢失；靠 progStepFrozen 持久标记保证只跑一次。
+  void _freezeProgSteps() {
+    if (progStepFrozen) return;
+    var changed = false;
+    for (final r in routines) {
+      if (r.prog.isEmpty) continue;
+      for (final id in r.prog.keys.toList()) {
+        final shared = progressStep[id];
+        if (shared == null || shared <= 0) continue;
+        final spec = r.prog[id]!;
+        if (spec.stepKg == shared) continue;
+        r.prog[id] = spec.copyWith(stepKg: shared);
+        changed = true;
+      }
+    }
+    // 只在真的改了值时才置标记并落盘：否则会给存档平白多一个键，
+    // 破坏“备份往返完全一致”类测试（backup_roundtrip_test）。
+    if (!changed) return;
+    progStepFrozen = true;
+    _persist(); // 此时已在 _loading 之外，能真正落盘
   }
 
   void _loadPlanExtras(Map<String, dynamic> data) {
@@ -488,6 +528,7 @@ class FitState extends FitCore
         'levelShown': Map.of(levelShown),
         'goals': exerciseGoals.map((k, g) => MapEntry(k, {'t': g.target, if (g.due != null) 'd': g.due!.millisecondsSinceEpoch})),
         'barKg': exerciseBar,
+        if (plateBar != null) 'plateBar': plateBar,
         'marks': videoMarks.map((k, v) => MapEntry(k, v.map((i, ms) => MapEntry('$i', ms)))),
         'exMode': modeOverride,
         'exSecondary': secondaryOverride,
@@ -510,6 +551,8 @@ class FitState extends FitCore
         'weeklyPlan': weeklyPlan.map((k, v) => MapEntry(k.toString(), v)),
         'planExtras': planExtras.map((k, v) => MapEntry(k.toString(), v)),
         'multiPlan': multiPlan,
+        if (savedPlans.isNotEmpty) 'savedPlans': savedPlansLive.map((p) => p.toJson()).toList(),
+        if (currentPlanId.isNotEmpty) 'planId': currentPlanId,
         if (rotation) 'rotation': rotation,
         if (rotationIds.isNotEmpty) 'rotationIds': rotationIds,
         if (rotationNextId.isNotEmpty) 'rotationNext': rotationNextId,
@@ -518,7 +561,10 @@ class FitState extends FitCore
         'media': exerciseMedia,
         'exRest': exerciseRest,
         'progress': progressStep,
+        if (progStepFrozen) 'progStepFrozen': true,
         'progStates': programStates.map((k, v) => MapEntry(k, v.toJson())),
+        if (progressRules.isNotEmpty)
+          'progressRules': progressRules.map((k, v) => MapEntry(k, v.toJson())),
         'warmup': autoWarmup.toList(),
         'repsOnly': repsOnly.toList(),
         'repsOnlyOff': repsOnlyOff.toList(),
@@ -580,6 +626,8 @@ class FitState extends FitCore
     rehabEpisodes.clear();
     baselines.clear();
     planCycles.clear();
+    savedPlans.clear();
+    currentPlanId = '';
     rotation = false;
     rotationIds.clear();
     rotationNextId = '';
@@ -595,7 +643,9 @@ class FitState extends FitCore
     exerciseRest.clear();
     progressStep.clear();
     programStates.clear();
+    progStepFrozen = false; // ISS-155：重置后允许重新冻结
     progFeedback = [];
+    progressRules.clear();
     autoWarmup.clear();
     noSuggest.clear();
     archived.clear();
@@ -605,6 +655,7 @@ class FitState extends FitCore
     exerciseGoals.clear();
     videoMarks.clear();
     exerciseBar.clear();
+    plateBar = null;
     modeOverride.clear();
     secondaryOverride.clear();
     _builtInExercises = null;
@@ -659,8 +710,29 @@ class FitState extends FitCore
   bool importJson(String raw) {
     final map = Store.instance.tryParse(raw);
     if (map == null) return false;
-    applyBackup(map);
-    return true;
+    return tryApplyBackup(map);
+  }
+
+  bool tryApplyBackup(Map<String, dynamic> backup,
+      {Map<String, String>? restoredMedia,
+      Map<String, String>? restoredNoteMedia,
+      Map<String, String>? restoredShots,
+      Map<String, String>? restoredMoments,
+      Map<String, String>? restoredFoods}) {
+    final before = jsonDecode(jsonEncode(Store.finite(toJson()))) as Map<String, dynamic>;
+    try {
+      applyBackup(backup,
+          restoredMedia: restoredMedia,
+          restoredNoteMedia: restoredNoteMedia,
+          restoredShots: restoredShots,
+          restoredMoments: restoredMoments,
+          restoredFoods: restoredFoods);
+      return true;
+    } catch (e) {
+      debugPrint('applyBackup failed: $e');
+      applyBackup(before);
+      return false;
+    }
   }
 
   void applyBackup(Map<String, dynamic> backup,
@@ -847,7 +919,7 @@ class FitState extends FitCore
       sameDay[key] = id;
       setRoutineGroup(id, template.name);
       final r = _routine(id)!;
-      if (template.pro) r.progInst = instId;
+      r.progInst = instId; // RISK-044/⑥：无论是否 pro 都注册实例，避免“有 prog 无 inst”导致进度静默冻结
       for (final entry in matched.entries) {
         final exId = entry.key;
         final pe = entry.value;
@@ -858,10 +930,11 @@ class FitState extends FitCore
           continue;
         }
         r.prog[exId] = spec;
-        if (spec.kind == ProgKind.reps) repsOnly.add(exId);
+        // RISK-047：不覆盖用户显式关闭过的“只练次数”偏好
+        if (spec.kind == ProgKind.reps && !repsOnlyOff.contains(exId)) repsOnly.add(exId);
         if (spec.isCycle) {
           inst.tm[exId] =
-              tm?[pe.name] ?? estimateTrainingMax(this, exId) ?? 40;
+              tm?[pe.name] ?? tm?[exId] ?? estimateTrainingMax(this, exId) ?? 40;
         }
         buildInitialPlan(r, exId, spec, inst);
       }
@@ -869,7 +942,7 @@ class FitState extends FitCore
       made++;
     }
     if (made == 0) return 0;
-    if (template.pro) programStates[instId] = inst;
+    programStates[instId] = inst; // RISK-044/⑥：与 progInst 一并注册（不再仅 pro 模板）
     persistNow();
     syncTrainReminder();
     notifyListeners();
@@ -975,8 +1048,8 @@ class FitState extends FitCore
     return exerciseById(id);
   }
 
-  ({int routines, int added, List<String> missed}) previewPlan(List<PlanRoutine> plans) {
-    var made = 0, added = 0;
+  ({int routines, int added, List<String> missed, int owned}) previewPlan(List<PlanRoutine> plans) {
+    var made = 0, added = 0, owned = 0;
     final missed = <String>[];
     for (final plan in plans) {
       var found = 0;
@@ -989,9 +1062,28 @@ class FitState extends FitCore
         }
       }
       if (found > 0) made++;
+      if (found > 0 && ownsPlan(plan)) owned++;
       added += found;
     }
-    return (routines: made, added: added, missed: missed);
+    return (routines: made, added: added, missed: missed, owned: owned);
+  }
+
+  Routine? _ownedRoutine(PlanRoutine plan, List<String> ids) {
+    final name = plan.name.isEmpty ? t.newRoutineName : plan.name;
+    return routines.where((r) => _sameRoutine(r, name, ids) && r.group == plan.group).firstOrNull;
+  }
+
+  bool ownsPlan(PlanRoutine plan) {
+    final ids = <String>[];
+    for (final item in plan.items) {
+      final ex = _planExercise(item);
+      if (ex == null) {
+        if ((item.muscle ?? '').isNotEmpty) return false;
+        continue;
+      }
+      if (!ids.contains(ex.id)) ids.add(ex.id);
+    }
+    return ids.isNotEmpty && _ownedRoutine(plan, ids) != null;
   }
 
   bool _sameRoutine(Routine r, String name, List<String> ids) =>
@@ -1000,7 +1092,7 @@ class FitState extends FitCore
       [for (var i = 0; i < ids.length; i++) r.exerciseIds[i] == ids[i]].every((x) => x);
 
   ({int routines, int added, List<String> missed}) applyPlan(List<PlanRoutine> plans,
-      {bool schedule = false, PlanCycle? cycle}) {
+      {bool schedule = false, PlanCycle? cycle, bool copies = false}) {
     var made = 0, added = 0;
     final missed = <String>[];
     for (final plan in plans) {
@@ -1016,8 +1108,7 @@ class FitState extends FitCore
       }
       if (picked.isEmpty) continue;
       final name = plan.name.isEmpty ? t.newRoutineName : plan.name;
-      final ids = [for (final p in picked) p.$1.id];
-      final existing = routines.where((r) => _sameRoutine(r, name, ids) && r.group == plan.group).firstOrNull;
+      final existing = copies ? null : _ownedRoutine(plan, [for (final p in picked) p.$1.id]);
       final id = existing?.id ?? createRoutine(name);
       if (existing == null) {
         setRoutineGroup(id, plan.group);
@@ -1206,7 +1297,10 @@ class FitState extends FitCore
         if (ok) n++;
       }
     }
-    if (n > 0) persistNow();
+    if (n > 0) {
+      persistNow();
+      notifyListeners();
+    }
     return (adjusted: n, missed: missed.toSet().toList());
   }
 
@@ -1234,6 +1328,11 @@ class FitState extends FitCore
   /// 改组数：无 plan 时走简单模式；有 plan 时补 / 删工作组（warmup 不动）。
   void _rehabSetCount(Routine r, String exId, int n) {
     final count = n.clamp(1, 20);
+    // ISS-158：计划驱动动作必须写回 spec.sets 并重建，否则下次 rebuild 把康复调整抹掉
+    if (r.prog[exId] != null) {
+      setRoutineSetCount(r.id, exId, count);
+      return;
+    }
     final planned = r.plan[exId];
     if (planned == null || planned.isEmpty) {
       setRoutineSetCount(r.id, exId, count);
@@ -1259,6 +1358,28 @@ class FitState extends FitCore
 
   /// 改重量 / 次数：只改工作组（warmup 不动）；无 plan 时先建出工作组。
   void _rehabSetField(Routine r, String exId, String field, num value) {
+    // ISS-158：计划驱动动作要写进引擎状态（inst）并重建，否则被引擎回滚到原目标
+    final spec = r.prog[exId];
+    if (spec != null) {
+      final inst = r.progInst == null ? null : programStates[r.progInst!];
+      if (inst != null) {
+        if (field == 'weight') {
+          if (spec.isCycle) {
+            inst.tm[exId] = value.toDouble();
+            rebuildCyclePlan(r, exId, spec, inst);
+          } else {
+            inst.w[exId] = value.toDouble();
+            rebuildSimplePlan(r, exId, spec, weight: value.toDouble());
+          }
+        } else if (field == 'reps') {
+          r.prog[exId] = spec.copyWith(reps: value.toInt());
+          rebuildSimplePlan(r, exId, r.prog[exId]!);
+        }
+      }
+      _persist();
+      notifyListeners();
+      return;
+    }
     final planned = r.plan[exId];
     var next = planned == null ? <PlannedSet>[] : [...planned];
     if (next.isEmpty) {
@@ -1285,6 +1406,7 @@ class FitState extends FitCore
     r.plan.remove(ex.id);
     r.rest.remove(ex.id);
     r.chained.remove(ex.id);
+    r.prog.remove(ex.id); // ISS-155：同步清 ProgSpec，避免孤儿继续写 plan
     return true;
   }
 
@@ -1367,7 +1489,7 @@ class FitState extends FitCore
     ];
   }
 
-  static const _kindNames = ['normal', 'warmup', 'drop', 'failure', 'restpause'];
+  static const _kindNames = ['normal', 'warmup', 'drop', 'failure', 'restpause', 'cluster'];
 
   String exportPlanJson(List<Routine> list, {bool withSchedule = true}) {
     return encodePlan({

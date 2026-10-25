@@ -1,3 +1,11 @@
+/// ── 命名/持久化边界（勿混，2026-10-24 并存后补记）──
+/// 本文件含两套独立概念，共存但无关：
+///  • PlanCycle（排期周期，见 models/plan_cycle.dart + FitState.planCycles，按 routineId）
+///    ——「哪些天练」，与「练多重/多少组」无关。
+///  • ProgKind.cycle + CycleSet（531 波浪周）——「每组次数×%TM 的周期表」，属渐进引擎。
+/// Routine JSON 键：'p'=plan（目标组次）、'pr'=prog（ProgSpec 表）、'pi'=progInst。
+/// FitState JSON 键：'progress'=进展步长、'progressRules'=上游规则、'progStates'=ProgState、'planCycles'=排期周期。
+///
 /// 自动渐进引擎的数据模型。
 ///
 /// 四种渐进规则(参考公开训练方法论,原生实现):
@@ -62,6 +70,29 @@ class ProgSpec {
   final List<List<CycleSet>> weeks;
 
   bool get isCycle => kind == ProgKind.cycle && weeks.isNotEmpty;
+
+  ProgSpec copyWith({
+    ProgKind? kind,
+    int? sets,
+    int? reps,
+    double? stepKg,
+    int? failLimit,
+    double? deloadPct,
+    int? repMin,
+    int? repMax,
+    List<List<CycleSet>>? weeks,
+  }) =>
+      ProgSpec(
+        kind: kind ?? this.kind,
+        sets: sets ?? this.sets,
+        reps: reps ?? this.reps,
+        stepKg: stepKg ?? this.stepKg,
+        failLimit: failLimit ?? this.failLimit,
+        deloadPct: deloadPct ?? this.deloadPct,
+        repMin: repMin ?? this.repMin,
+        repMax: repMax ?? this.repMax,
+        weeks: weeks ?? this.weeks,
+      );
 
   Map<String, dynamic> toJson() => {
         'k': kind.index,
@@ -144,3 +175,75 @@ class ProgState {
 
 /// 重量取整到 0.5kg
 double roundHalf(double kg) => (kg * 2).roundToDouble() / 2;
+
+enum ProgressKind { manual, linear, double, volume, amrap }
+
+class ProgressRule {
+  const ProgressRule({
+    this.kind = ProgressKind.linear,
+    this.low = 8,
+    this.high = 12,
+    this.sets = 3,
+    this.maxSets = 5,
+    this.fails = 3,
+    this.deloadPct = 10,
+  });
+
+  final ProgressKind kind;
+  final int low;
+  final int high;
+  final int sets;
+  final int maxSets;
+  final int fails;
+  final int deloadPct;
+
+  bool get usesRange => kind == ProgressKind.double || kind == ProgressKind.volume;
+
+  ProgressRule copyWith({
+    ProgressKind? kind,
+    int? low,
+    int? high,
+    int? sets,
+    int? maxSets,
+    int? fails,
+    int? deloadPct,
+  }) {
+    final lo = (low ?? this.low).clamp(1, 50);
+    final hi = (high ?? this.high).clamp(lo + 1, 60);
+    final base = (sets ?? this.sets).clamp(1, 10);
+    return ProgressRule(
+      kind: kind ?? this.kind,
+      low: lo,
+      high: hi,
+      sets: base,
+      maxSets: (maxSets ?? this.maxSets).clamp(base + 1, 12),
+      fails: (fails ?? this.fails).clamp(1, 6),
+      deloadPct: (deloadPct ?? this.deloadPct).clamp(5, 30),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'k': kind.index,
+        'lo': low,
+        'hi': high,
+        's': sets,
+        'ms': maxSets,
+        'f': fails,
+        'd': deloadPct,
+      };
+
+  factory ProgressRule.fromJson(Map<String, dynamic> j) {
+    final k = (j['k'] as num?)?.toInt() ?? 1;
+    return const ProgressRule().copyWith(
+      kind: ProgressKind.values[k.clamp(0, ProgressKind.values.length - 1)],
+      low: (j['lo'] as num?)?.toInt(),
+      high: (j['hi'] as num?)?.toInt(),
+      sets: (j['s'] as num?)?.toInt(),
+      maxSets: (j['ms'] as num?)?.toInt(),
+      fails: (j['f'] as num?)?.toInt(),
+      deloadPct: (j['d'] as num?)?.toInt(),
+    );
+  }
+}
+
+enum NextMove { up, reps, addSet, hold, deload }

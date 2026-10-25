@@ -1909,6 +1909,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nextHold => 'حافظ على نفس الوزن حتى تكمل كل التكرارات';
 
   @override
+  String get nextByPlan => 'حسب خطتك';
+
+  @override
   String get bgPhoto => 'صورتك';
 
   @override
@@ -4371,7 +4374,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get planDeleteBody => 'Your logged days stay as they are.';
+  String get planDeleteBody => 'تبقى روتيناتك. يُحذف هذا الأسبوع المحفوظ فقط.';
 
   @override
   String get sectionBeta => 'تجريبي';
@@ -4564,7 +4567,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get planEdit => 'Edit plan';
 
   @override
-  String get planNameHint => 'Plan name';
+  String get planNameHint => 'صيف، سفر…';
 
   @override
   String get planDaysQuestion => 'Which days?';
@@ -5841,4 +5844,286 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get updateNetNote =>
       'Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.';
+
+  @override
+  String get stopwatch => 'ساعة الإيقاف';
+
+  @override
+  String get proteinSource => 'Protein source';
+
+  @override
+  String get proteinMixedShort => 'Mixed';
+
+  @override
+  String get kcalActive => 'نشطة';
+
+  @override
+  String get kcalEstimated => 'تقديري';
+
+  @override
+  String get kcalYours => 'قيمتك';
+
+  @override
+  String kcalTotalRest(String value) {
+    return '$value إجمالاً، مع ما تحرقه أثناء الراحة';
+  }
+
+  @override
+  String get inclineLabel => 'الميل';
+
+  @override
+  String get kcalUseOwn => 'استخدم قيمتي';
+
+  @override
+  String get kcalBackToEstimate => 'العودة إلى التقدير';
+
+  @override
+  String get kcalNeedsData => 'أضف المسافة والوقت لتقدير السعرات';
+
+  @override
+  String get kcalHowEstimated => 'تقدير من المسافة والوقت والميل ووزنك (معادلة ACSM).';
+
+  @override
+  String get kcalOwnTitle => 'السعرات النشطة';
+
+  @override
+  String get planMine => 'خطتي';
+
+  @override
+  String get planNew => 'خطة جديدة';
+
+  @override
+  String get planSaveWeek => 'احفظ هذا الأسبوع';
+
+  @override
+  String get planSaveWeekHint => 'احتفظ بالأسبوع الحالي كخطة تعود إليها';
+
+  @override
+  String get planEmptyWeek => 'ابدأ أسبوعاً فارغاً';
+
+  @override
+  String get planEmptyWeekHint => 'يبقى أسبوعك الحالي محفوظاً كخطة';
+
+  @override
+  String get planName => 'اسم الخطة';
+
+  @override
+  String get planRename => 'إعادة التسمية';
+
+  @override
+  String get planDelete => 'حذف الخطة';
+
+  @override
+  String get plansHint => 'تُحفظ تغييرات الأسبوع في الخطة المختارة';
+
+  @override
+  String get progression => 'التدرّج';
+
+  @override
+  String get progManual => 'يدوي';
+
+  @override
+  String get progManualHint => 'بلا اقتراحات: أنت تختار كل وزن.';
+
+  @override
+  String get progLinear => 'خطّي';
+
+  @override
+  String get progLinearHint => 'أكمل كل التكرارات فيرتفع الوزن.';
+
+  @override
+  String get progDouble => 'تدرّج مزدوج';
+
+  @override
+  String get progDoubleHint => 'تكرارات أكثر حتى أعلى النطاق، ثم وزن أكبر.';
+
+  @override
+  String get progVolume => 'تكرارات ومجموعات ووزن';
+
+  @override
+  String get progVolumeHint => 'تكرارات حتى الأعلى، ثم مجموعة إضافية، ثم وزن أكبر.';
+
+  @override
+  String get progAmrap => 'آخر مجموعة حتى النهاية';
+
+  @override
+  String get progAmrapHint => 'آخر مجموعة: أكبر عدد تستطيعه. ضاعف الهدف فيرتفع الوزن مرتين.';
+
+  @override
+  String get progStep => 'قفزة الوزن';
+
+  @override
+  String get progStepPlan => 'خطوة الخطة';
+
+  @override
+  String get progStepFree => 'خطوة التمرين الحر';
+
+  @override
+  String get freePlanHint => 'التمارين الحرة لا تحرك أهداف خطتك.';
+
+  @override
+  String get progTm => 'الحد الأقصى للتدريب';
+
+  @override
+  String get progTmHint => 'تقدير تلقائي — ارفعه إذا كان خفيفًا.';
+
+  @override
+  String get progRange => 'نطاق التكرارات';
+
+  @override
+  String get progSets => 'المجموعات';
+
+  @override
+  String get progDeload => 'أخفّ بعد';
+
+  @override
+  String progFails(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n محاولات فاشلة',
+      one: 'محاولة فاشلة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get progDeloadPct => 'خفّض بنسبة';
+
+  @override
+  String get progApply => 'املأ التمرين التالي';
+
+  @override
+  String get progApplyHint => 'عند الإيقاف يظهر كاقتراح فقط.';
+
+  @override
+  String get nextMoreReps => 'الوزن نفسه، تكرار إضافي';
+
+  @override
+  String get nextAddSet => 'مجموعة إضافية';
+
+  @override
+  String get nextAmrap => 'آخر مجموعة: أكبر عدد تستطيعه';
+
+  @override
+  String fillDay(String amount) {
+    return 'Fill your day · $amount';
+  }
+
+  @override
+  String leftAfterKcal(String kcal) {
+    return 'You\'ll have $kcal left';
+  }
+
+  @override
+  String leftAfterBoth(String kcal, String grams) {
+    return 'You\'ll have $kcal and $grams g protein left';
+  }
+
+  @override
+  String leftAfterOver(String kcal) {
+    return '$kcal over your goal';
+  }
+
+  @override
+  String perDayUnit(String unit) {
+    return '$unit a day';
+  }
+
+  @override
+  String get byZone => 'حسب المنطقة';
+
+  @override
+  String get importAlreadyHave => 'لديك هذه الروتينات بالفعل. يمكنك إضافتها مرة أخرى كنسخة.';
+
+  @override
+  String get importAsCopy => 'أضف كنسخة';
+
+  @override
+  String get importOwned => 'لديك';
+
+  @override
+  String get setDuplicated => 'تم نسخ المجموعة';
+
+  @override
+  String get setTypeCluster => 'كلستر';
+
+  @override
+  String get setTypeClusterInfo => 'مجموعة مقسّمة إلى كتل صغيرة بينها 15–30 ثانية. سجّل مجموع التكرارات.';
+
+  @override
+  String timesBodyweight(String value) {
+    return '$value× وزن جسمك';
+  }
+
+  @override
+  String get archiveRoutine => 'أرشفة الروتين';
+
+  @override
+  String get routineArchived => 'تمت أرشفة الروتين';
+
+  @override
+  String get archivedRoutines => 'المؤرشفة';
+
+  @override
+  String progDrivenIn(String name) {
+    return 'في «$name» تحدد دورة الخطة هذا';
+  }
+
+  @override
+  String get progDrivenFree => 'لا تزال هذه الإعدادات سارية في التدريبات الحرة.';
+
+  @override
+  String get progPlanAuto => 'تُنشأ الأهداف حسب دورة الخطة وتُستبدل بعد كل تمرين.';
+
+  @override
+  String get autoBackup => 'نسخ احتياطي تلقائي';
+
+  @override
+  String get autoBackupHint =>
+      'يحفظ ملف ZIP بكل بياناتك في المجلد الذي تختاره. زامن هذا المجلد مع Nextcloud أو Syncthing أو أي تطبيق مزامنة لتبقى نسخة خارج هاتفك.';
+
+  @override
+  String get autoBackupFolder => 'اختر مجلدًا';
+
+  @override
+  String get autoBackupNoFolder => 'لا يوجد مجلد';
+
+  @override
+  String get autoBackupOff => 'متوقف';
+
+  @override
+  String get autoBackupWorkout => 'بعد كل تمرين';
+
+  @override
+  String get autoBackupDaily => 'مرة في اليوم';
+
+  @override
+  String get autoBackupWeekly => 'مرة في الأسبوع';
+
+  @override
+  String get autoBackupOnLeave => 'عند مغادرة التطبيق';
+
+  @override
+  String get autoBackupKeep => 'عدد النسخ المحفوظة';
+
+  @override
+  String get autoBackupNow => 'انسخ الآن';
+
+  @override
+  String autoBackupLast(String when) {
+    return 'آخر نسخة $when';
+  }
+
+  @override
+  String get autoBackupNever => 'لا توجد نسخ بعد';
+
+  @override
+  String get autoBackupLost => 'تعذّر حفظ آخر نسخة. اختر المجلد مرة أخرى.';
+
+  @override
+  String get autoBackupSaved => 'تم حفظ النسخة';
+
+  @override
+  String get prepPortions => 'حصص';
 }

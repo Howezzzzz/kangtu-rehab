@@ -1,6 +1,6 @@
 import 'progression.dart';
 
-enum SetKind { normal, warmup, drop, failure, restPause }
+enum SetKind { normal, warmup, drop, failure, restPause, cluster }
 
 SetKind setKindFrom(Object? raw) {
   final i = (raw as num?)?.toInt() ?? 0;
@@ -71,11 +71,13 @@ enum PrKind {
 typedef PersonalRecord = ({String id, String name, PrKind kind, double best, double oneRm});
 
 class LoggedExercise {
-  LoggedExercise(this.id, this.name, this.primary, this.sets);
+  LoggedExercise(this.id, this.name, this.primary, this.sets, {this.incline, this.kcal});
   final String id;
   final String name;
   final String primary;
   final List<LoggedSet> sets;
+  double? incline;
+  int? kcal;
 
   List<LoggedSet> get workingSets => sets.where((s) => s.counts).toList();
 
@@ -95,12 +97,16 @@ class LoggedExercise {
         'n': name,
         'p': primary,
         's': sets.map((s) => s.toJson()).toList(),
+        if (incline != null) 'g': incline,
+        if (kcal != null) 'kc': kcal,
       };
   factory LoggedExercise.fromJson(Map<String, dynamic> j) => LoggedExercise(
         j['id'] as String,
         j['n'] as String,
         j['p'] as String,
         (j['s'] as List).map((e) => LoggedSet.fromJson(e as Map<String, dynamic>)).toList(),
+        incline: (j['g'] as num?)?.toDouble(),
+        kcal: (j['kc'] as num?)?.toInt(),
       );
 }
 
@@ -206,6 +212,45 @@ class PlannedSet {
       );
 }
 
+class SavedPlan {
+  SavedPlan(this.id, this.name, this.week, this.extras, {this.multi = false});
+  final String id;
+  String name;
+  final Map<int, String> week;
+  final Map<int, List<String>> extras;
+  final bool multi;
+
+  bool uses(String routineId) => week.containsValue(routineId) || extras.values.any((ids) => ids.contains(routineId));
+
+  void drop(String routineId) {
+    week.removeWhere((_, v) => v == routineId);
+    for (final ids in extras.values) {
+      ids.remove(routineId);
+    }
+    for (final day in [...extras.keys]) {
+      final ids = extras[day]!;
+      if (week[day] == null && ids.isNotEmpty) week[day] = ids.removeAt(0);
+      if (ids.isEmpty) extras.remove(day);
+    }
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'n': name,
+        'w': week.map((k, v) => MapEntry('$k', v)),
+        if (extras.isNotEmpty) 'x': extras.map((k, v) => MapEntry('$k', v)),
+        if (multi) 'm': true,
+      };
+  factory SavedPlan.fromJson(Map<String, dynamic> j) => SavedPlan(
+        j['id'] as String,
+        j['n'] as String? ?? '',
+        ((j['w'] as Map?) ?? const {}).map((k, v) => MapEntry(int.parse(k as String), v as String)),
+        ((j['x'] as Map?) ?? const {})
+            .map((k, v) => MapEntry(int.parse(k as String), (v as List).cast<String>().toList())),
+        multi: j['m'] as bool? ?? false,
+      );
+}
+
 class Routine {
   Routine(this.id, this.name, this.exerciseIds,
       {Map<String, int>? sets,
@@ -215,7 +260,8 @@ class Routine {
       Map<String, ProgSpec>? prog,
       this.progInst,
       this.group = '',
-      this.color = -1})
+      this.color = -1,
+      this.archived = false})
       : sets = sets ?? {},
         chained = chained ?? {},
         plan = plan ?? {},
@@ -225,6 +271,7 @@ class Routine {
   String name;
   String group;
   int color;
+  bool archived;
   final List<String> exerciseIds;
   final Map<String, int> sets;
   final Set<String> chained;
@@ -248,6 +295,7 @@ class Routine {
         if (chained.isNotEmpty) 'c': chained.toList(),
         if (group.isNotEmpty) 'g': group,
         if (color >= 0) 'k': color,
+        if (archived) 'a': true,
         if (plan.isNotEmpty)
           'p': plan.map((k, v) => MapEntry(k, v.map((s) => s.toJson()).toList())),
         if (prog.isNotEmpty) 'pr': prog.map((k, v) => MapEntry(k, v.toJson())),
@@ -271,5 +319,6 @@ class Routine {
         progInst: j['pi'] as String?,
         group: (j['g'] as String?) ?? '',
         color: (j['k'] as num?)?.toInt() ?? -1,
+        archived: j['a'] == true,
       );
 }

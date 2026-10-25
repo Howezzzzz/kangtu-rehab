@@ -125,7 +125,7 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: HomeFolder(
                     title: _tc(t.routines),
-                    detail: t.routineCount(fit.routines.length),
+                    detail: t.routineCount(fit.activeRoutines.length),
                     peek: const RoutinesPeek(),
                     onTap: fit.goRoutines,
                   ),
@@ -401,28 +401,30 @@ class HomeScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTheme.f(13, weight: FontWeight.w500, color: gc.textSecondary)),
                   const SizedBox(height: 20),
-                  PrimaryButton(
-                    label: done ? t.trainAgain : t.startWorkout,
-                    icon: Ic.play,
-                    height: 52,
-                    bg: done ? gc.bgRaised2 : null,
-                    fg: done ? gc.text : null,
-                    onTap: isRoutine ? () => fit.startRoutine(routine) : fit.startFocusWorkout,
-                  ),
+                  Row(children: [
+                    Expanded(
+                      child: PrimaryButton(
+                        label: done ? t.trainAgain : t.startWorkout,
+                        icon: Ic.play,
+                        height: 52,
+                        bg: done ? gc.bgRaised2 : null,
+                        fg: done ? gc.text : null,
+                        onTap: isRoutine ? () => fit.startRoutine(routine) : fit.startFocusWorkout,
+                      ),
+                    ),
+                    if (isRoutine && !done) ...[
+                      const SizedBox(width: 10),
+                      RoundAction(
+                        label: t.moreOptions,
+                        size: 52,
+                        onTap: () => showTodayPlanMenu(context, routine),
+                        child: Icon(PhosphorIconsBold.dotsThree, size: 22, color: gc.textSecondary),
+                      ),
+                    ],
+                  ]),
                 ],
               ),
             ),
-            if (isRoutine && !done)
-              Positioned(
-                right: 10,
-                top: 10,
-                child: RoundAction(
-                  label: t.moreOptions,
-                  size: 34,
-                  onTap: () => showTodayPlanMenu(context, routine),
-                  child: Icon(PhosphorIconsBold.dotsThree, size: 16, color: gc.textSecondary),
-                ),
-              ),
           ],
         ),
       ),
@@ -441,7 +443,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _weekDay(BuildContext context, GymColors gc, int i) {
-    final done = fit.isDayDone(i);
+    final done = fit.isDayDone(i) && !fit.isDayPartial(i);
     final isToday = i == fit.todayIndex;
     final isFuture = i > fit.todayIndex;
 
@@ -472,8 +474,7 @@ class HomeScreen extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: isToday && !done ? Border.all(color: gc.ember, width: 2) : null,
               ),
-              child:
-                  done ? Center(child: SvgPathIcon(Ic.checkBold, size: 13, color: gc.onEmber)) : null,
+              child: done ? Center(child: SvgPathIcon(Ic.checkBold, size: 13, color: gc.onEmber)) : null,
             ),
           ],
         ),

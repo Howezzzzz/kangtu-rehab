@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,6 +38,7 @@ import '../screens/timeline_screen.dart';
 import '../screens/tool_detail_screen.dart';
 import '../screens/tools_screen.dart';
 import '../screens/train_screen.dart';
+import '../services/auto_backup.dart';
 import '../services/health_steps.dart';
 import '../services/incoming_share.dart';
 import '../services/nutrition_widgets.dart';
@@ -241,7 +241,9 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
         state == AppLifecycleState.detached) {
       fit.persistNow();
     }
+    if (state == AppLifecycleState.paused) AutoBackup.instance.onLeave();
     if (state == AppLifecycleState.resumed) {
+      fit.rollNutritionDay();
       NutritionWidgets.takePending();
       fit.refreshAlarmPermission();
       fit.syncRest();
@@ -416,18 +418,13 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver {
             final shift = sideways
                 ? Offset((incoming ? 26 : -18) * dir * away, 0)
                 : Offset(0, incoming ? 22 * dir * away : -8 * dir * away);
-            final blur = incoming ? 6 * away : 0.0;
             return Opacity(
               opacity: v,
-              child: ImageFiltered(
-                enabled: blur > 0.25,
-                imageFilter: ImageFilter.blur(sigmaX: blur, sigmaY: blur, tileMode: TileMode.decal),
-                child: Transform.translate(
-                  offset: shift,
-                  child: Transform.scale(
-                    scale: incoming ? 1 + 0.03 * away : 1 - 0.04 * away,
-                    child: RepaintBoundary(child: inner),
-                  ),
+              child: Transform.translate(
+                offset: shift,
+                child: Transform.scale(
+                  scale: incoming ? 1 + 0.03 * away : 1 - 0.04 * away,
+                  child: RepaintBoundary(child: inner),
                 ),
               ),
             );

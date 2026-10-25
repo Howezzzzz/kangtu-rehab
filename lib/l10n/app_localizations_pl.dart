@@ -1920,6 +1920,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get nextHold => 'utrzymuj ten sam ciężar, aż wykonasz wszystkie powtórzenia';
 
   @override
+  String get nextByPlan => 'zgodnie z planem';
+
+  @override
   String get bgPhoto => 'Twoje zdjęcie';
 
   @override
@@ -4424,7 +4427,7 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get planDeleteBody => 'Your logged days stay as they are.';
+  String get planDeleteBody => 'Twoje rutyny zostają. Usuwany jest tylko ten zapisany tydzień.';
 
   @override
   String get sectionBeta => 'Beta';
@@ -4617,7 +4620,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get planEdit => 'Edit plan';
 
   @override
-  String get planNameHint => 'Plan name';
+  String get planNameHint => 'Lato, podróż…';
 
   @override
   String get planDaysQuestion => 'Which days?';
@@ -5900,4 +5903,285 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get updateNetNote =>
       'Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.';
+
+  @override
+  String get stopwatch => 'Stoper';
+
+  @override
+  String get proteinSource => 'Protein source';
+
+  @override
+  String get proteinMixedShort => 'Mixed';
+
+  @override
+  String get kcalActive => 'aktywne';
+
+  @override
+  String get kcalEstimated => 'szacunkowo';
+
+  @override
+  String get kcalYours => 'twoja wartość';
+
+  @override
+  String kcalTotalRest(String value) {
+    return '$value łącznie, z tym, co spalasz w spoczynku';
+  }
+
+  @override
+  String get inclineLabel => 'Nachylenie';
+
+  @override
+  String get kcalUseOwn => 'Użyj mojej wartości';
+
+  @override
+  String get kcalBackToEstimate => 'Wróć do szacunku';
+
+  @override
+  String get kcalNeedsData => 'Dodaj dystans i czas, aby oszacować kalorie';
+
+  @override
+  String get kcalHowEstimated =>
+      'Oszacowane na podstawie dystansu, czasu, nachylenia i twojej wagi (wzór ACSM).';
+
+  @override
+  String get kcalOwnTitle => 'Aktywne kalorie';
+
+  @override
+  String get planMine => 'Mój plan';
+
+  @override
+  String get planNew => 'Nowy plan';
+
+  @override
+  String get planSaveWeek => 'Zapisz ten tydzień';
+
+  @override
+  String get planSaveWeekHint => 'Zachowaj obecny tydzień jako plan, do którego wrócisz';
+
+  @override
+  String get planEmptyWeek => 'Zacznij pusty tydzień';
+
+  @override
+  String get planEmptyWeekHint => 'Obecny tydzień zostaje zapisany jako plan';
+
+  @override
+  String get planName => 'Nazwa planu';
+
+  @override
+  String get planRename => 'Zmień nazwę';
+
+  @override
+  String get planDelete => 'Usuń plan';
+
+  @override
+  String get plansHint => 'Zmiany w tygodniu zapisują się w wybranym planie';
+
+  @override
+  String get progression => 'Progresja';
+
+  @override
+  String get progManual => 'Ręcznie';
+
+  @override
+  String get progManualHint => 'Bez podpowiedzi: sam wybierasz każdy ciężar.';
+
+  @override
+  String get progLinear => 'Liniowa';
+
+  @override
+  String get progLinearHint => 'Zrób wszystkie powtórzenia, a ciężar wzrośnie.';
+
+  @override
+  String get progDouble => 'Podwójna progresja';
+
+  @override
+  String get progDoubleHint => 'Więcej powtórzeń do górnej granicy zakresu, potem większy ciężar.';
+
+  @override
+  String get progVolume => 'Powtórzenia, serie i ciężar';
+
+  @override
+  String get progVolumeHint =>
+      'Powtórzenia do górnej granicy, potem jedna seria więcej, potem większy ciężar.';
+
+  @override
+  String get progAmrap => 'Ostatnia seria na maksa';
+
+  @override
+  String get progAmrapHint =>
+      'Ostatnia seria: tyle powtórzeń, ile dasz radę. Podwój cel, a skok będzie podwójny.';
+
+  @override
+  String get progStep => 'Skok ciężaru';
+
+  @override
+  String get progStepPlan => 'Krok planu';
+
+  @override
+  String get progStepFree => 'Krok w wolnym treningu';
+
+  @override
+  String get freePlanHint => 'Wolne treningi nie przesuwają celów planu.';
+
+  @override
+  String get progTm => 'Maksimum treningowe';
+
+  @override
+  String get progTmHint => 'Szacowane automatycznie — zwiększ, jeśli jest za lekkie.';
+
+  @override
+  String get progRange => 'Zakres powtórzeń';
+
+  @override
+  String get progSets => 'Serie';
+
+  @override
+  String get progDeload => 'Lżej po';
+
+  @override
+  String progFails(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n porażkach', one: '1 porażce');
+    return '$_temp0';
+  }
+
+  @override
+  String get progDeloadPct => 'Zmniejsz o';
+
+  @override
+  String get progApply => 'Wypełnij następny trening';
+
+  @override
+  String get progApplyHint => 'Wyłączone: tylko jako podpowiedź.';
+
+  @override
+  String get nextMoreReps => 'ten sam ciężar, jedno powtórzenie więcej';
+
+  @override
+  String get nextAddSet => 'jedna seria więcej';
+
+  @override
+  String get nextAmrap => 'ostatnia seria: ile dasz radę';
+
+  @override
+  String fillDay(String amount) {
+    return 'Fill your day · $amount';
+  }
+
+  @override
+  String leftAfterKcal(String kcal) {
+    return 'You\'ll have $kcal left';
+  }
+
+  @override
+  String leftAfterBoth(String kcal, String grams) {
+    return 'You\'ll have $kcal and $grams g protein left';
+  }
+
+  @override
+  String leftAfterOver(String kcal) {
+    return '$kcal over your goal';
+  }
+
+  @override
+  String perDayUnit(String unit) {
+    return '$unit a day';
+  }
+
+  @override
+  String get byZone => 'Według partii';
+
+  @override
+  String get importAlreadyHave => 'Masz już te plany. Możesz dodać je ponownie jako kopię.';
+
+  @override
+  String get importAsCopy => 'Dodaj jako kopię';
+
+  @override
+  String get importOwned => 'Już masz';
+
+  @override
+  String get setDuplicated => 'Seria zduplikowana';
+
+  @override
+  String get setTypeCluster => 'Cluster';
+
+  @override
+  String get setTypeClusterInfo =>
+      'Seria podzielona na małe bloki z 15–30 sekundami przerwy. Zapisz łączną liczbę powtórzeń.';
+
+  @override
+  String timesBodyweight(String value) {
+    return '$value× twojej masy ciała';
+  }
+
+  @override
+  String get archiveRoutine => 'Archiwizuj plan';
+
+  @override
+  String get routineArchived => 'Plan zarchiwizowany';
+
+  @override
+  String get archivedRoutines => 'Zarchiwizowane';
+
+  @override
+  String progDrivenIn(String name) {
+    return 'W „$name” decyduje cykl planu';
+  }
+
+  @override
+  String get progDrivenFree => 'Te ustawienia nadal działają w treningu swobodnym.';
+
+  @override
+  String get progPlanAuto => 'Cele generuje cykl planu i nadpisuje po każdym treningu.';
+
+  @override
+  String get autoBackup => 'Automatyczna kopia';
+
+  @override
+  String get autoBackupHint =>
+      'Zapisuje ZIP ze wszystkimi danymi w wybranym folderze. Zsynchronizuj ten folder z Nextcloud, Syncthing lub inną aplikacją, aby mieć kopię poza telefonem.';
+
+  @override
+  String get autoBackupFolder => 'Wybierz folder';
+
+  @override
+  String get autoBackupNoFolder => 'Brak folderu';
+
+  @override
+  String get autoBackupOff => 'Wyłączona';
+
+  @override
+  String get autoBackupWorkout => 'Po każdym treningu';
+
+  @override
+  String get autoBackupDaily => 'Raz dziennie';
+
+  @override
+  String get autoBackupWeekly => 'Raz w tygodniu';
+
+  @override
+  String get autoBackupOnLeave => 'Po wyjściu z aplikacji';
+
+  @override
+  String get autoBackupKeep => 'Kopie do zachowania';
+
+  @override
+  String get autoBackupNow => 'Zrób kopię teraz';
+
+  @override
+  String autoBackupLast(String when) {
+    return 'Ostatnia kopia $when';
+  }
+
+  @override
+  String get autoBackupNever => 'Brak kopii';
+
+  @override
+  String get autoBackupLost => 'Nie udało się zapisać ostatniej kopii. Wybierz folder ponownie.';
+
+  @override
+  String get autoBackupSaved => 'Kopia zapisana';
+
+  @override
+  String get prepPortions => 'Porcje';
 }

@@ -59,22 +59,27 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
 
   DateTime get _weekStart => shiftDays(_dayKey(DateTime.now()), -todayIndex);
 
+  Map<DateTime, List<LoggedSession>> get _byDay => _remember('byDay', () {
+        final out = <DateTime, List<LoggedSession>>{};
+        for (final s in sessions) {
+          (out[_dayKey(s.day)] ??= []).add(s);
+        }
+        return out;
+      });
+
+  Map<DateTime, double> get _loadByDay => _remember('loadByDay', () => {
+        for (final e in _byDay.entries) e.key: e.value.fold(0.0, (a, s) => a + s.volume),
+      });
+
   Iterable<LoggedSession> get _thisWeekSessions {
     final start = _weekStart;
-    final end = shiftDays(start, 7);
-    return sessions.where((s) {
-      final k = _dayKey(s.day);
-      return !k.isBefore(start) && k.isBefore(end);
-    });
+    final byDay = _byDay;
+    return [for (var i = 0; i < 7; i++) ...?byDay[shiftDays(start, i)]];
   }
 
   List<double> _dailyVolumes(int days) {
     final today = _dayKey(DateTime.now());
-    final byDay = <DateTime, double>{};
-    for (final s in sessions) {
-      final k = _dayKey(s.day);
-      byDay[k] = (byDay[k] ?? 0) + s.volume;
-    }
+    final byDay = _loadByDay;
     return List.generate(days, (i) {
       final d = shiftDays(today, i - (days - 1));
       return byDay[d] ?? 0;
@@ -188,14 +193,13 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
   List<int> get heatmapLevels => heatmapLevelsFor(kHeatmapDays);
 
   List<int> heatmapLevelsFor(int days) {
-    final active = <DateTime>{..._checkinDays};
-    final load = <DateTime, double>{};
-    for (final s in sessions) {
-      final k = _dayKey(s.day);
-      active.add(k);
-      load[k] = (load[k] ?? 0) + s.volume;
-    }
     final today = _dayKey(DateTime.now());
+    return List.of(_remember(('heat', days), () => _heatLevels(days, today), today));
+  }
+
+  List<int> _heatLevels(int days, DateTime today) {
+    final active = <DateTime>{..._checkinDays, ..._byDay.keys};
+    final load = _loadByDay;
     final keys = List.generate(days, (i) => shiftDays(today, i - (days - 1)));
     final lifted = [for (final k in keys) if ((load[k] ?? 0) > 0) load[k]!]..sort();
     return [
@@ -215,8 +219,7 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
       shiftDays(_dayKey(DateTime.now()), i - (kHeatmapDays - 1));
 
   List<LoggedSession> sessionsOn(DateTime day) {
-    final k = _dayKey(day);
-    return sessions.where((s) => _dayKey(s.day) == k).toList()
+    return [...?_byDay[_dayKey(day)]]
       ..sort((a, b) => b.date.compareTo(a.date));
   }
 
@@ -292,7 +295,9 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
     return best;
   }
 
-  Map<LoggedSession, int> recordsBySession() {
+  Map<LoggedSession, int> recordsBySession() => Map.of(_remember('recordsBySession', _recordsBySession));
+
+  Map<LoggedSession, int> _recordsBySession() {
     final ordered = [...sessions]..sort((a, b) => a.date.compareTo(b.date));
     final best = <String, double>{};
     final out = <LoggedSession, int>{};
@@ -422,6 +427,68 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
 
   bool loggedDistance(LoggedExercise e) => isCardio(e.id) || e.sets.any((s) => (s.km ?? 0) > 0);
 
+  static const double _walkRunMpm = 120;
+  static const _walkRunIds = {'running', 'walking', 'treadmill-incline-walk', 'hiking'};
+  static final _walkRunName = RegExp(r'\b(walk|run|jog|treadmill|hik|camin|corr|carrer|trot|cinta|sender|marcha)');
+
+  bool walksOrRuns(LoggedExercise e) =>
+      _walkRunIds.contains(e.id) || (isCustom(e.id) && _walkRunName.hasMatch(e.name.toLowerCase()));
+
+  double _weightOn(DateTime day) {
+    BodyweightEntry? best;
+    for (final b in bodyweight) {
+      if (!b.date.isAfter(day) && (best == null || b.date.isAfter(best.date))) best = b;
+    }
+    final kg = best?.kg ?? latestBodyweight?.kg ?? profile.weightKg;
+    return kg > 0 ? kg : 75;
+  }
+
+  ({int active, int total, int sec, bool own})? cardioKcal(LoggedSession s, LoggedExercise e) {
+    if (!walksOrRuns(e)) return null;
+    final grade = (e.incline ?? 0) / 100;
+    final kg = _weightOn(s.day);
+    var active = 0.0, total = 0.0;
+    var sec = 0;
+    for (final st in e.sets) {
+      final km = st.km ?? 0, t = st.sec ?? 0;
+      if (km <= 0 || t <= 0) continue;
+      final min = t / 60;
+      final speed = km * 1000 / min;
+      final vo2 = speed < _walkRunMpm
+          ? 0.1 * speed + 1.8 * speed * grade + 3.5
+          : 0.2 * speed + 0.9 * speed * grade + 3.5;
+      total += vo2 * kg * min / 200;
+      active += (vo2 - 3.5) * kg * min / 200;
+      sec += t;
+    }
+    final own = e.kcal;
+    if (own != null) return (active: own, total: own + (3.5 * kg * sec / 60 / 200).round(), sec: sec, own: true);
+    if (sec == 0) return null;
+    return (active: active.round(), total: total.round(), sec: sec, own: false);
+  }
+
+  double? lastIncline(String id) {
+    for (final s in sessions.reversed) {
+      for (final e in s.exercises) {
+        if (e.id == id && e.incline != null) return e.incline;
+      }
+    }
+    return null;
+  }
+
+  void setLoggedIncline(LoggedExercise e, double pct) {
+    final v = (pct.clamp(0, 40) * 2).round() / 2;
+    e.incline = v > 0 ? v : null;
+    persistNow();
+    notifyListeners();
+  }
+
+  void setLoggedKcal(LoggedExercise e, int? kcal) {
+    e.kcal = kcal?.clamp(0, 9999);
+    persistNow();
+    notifyListeners();
+  }
+
   void setLoggedWeightShown(LoggedExercise e, int i, double shown) =>
       setLoggedWeight(e, i, fromDisplayWeight(shown));
 
@@ -498,7 +565,12 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
   }
 
   int get currentStreak {
-    final days = {...sessions.map((s) => _dayKey(s.day)), ..._checkinDays};
+    final today = _dayKey(DateTime.now());
+    return _remember('streak', _streak, today);
+  }
+
+  int _streak() {
+    final days = {..._byDay.keys, ..._checkinDays};
     if (days.isEmpty) return 0;
     final first = days.reduce((a, b) => a.isBefore(b) ? a : b);
     bool rest(DateTime d) => weeklyPlan.isNotEmpty && !weeklyPlan.containsKey(d.weekday);
@@ -518,8 +590,8 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
 
   List<bool> get weekMask {
     final start = _weekStart;
-    final days = sessions.map((s) => _dayKey(s.day)).toSet();
-    return List.generate(7, (i) => days.contains(shiftDays(start, i)));
+    final days = _byDay;
+    return List.generate(7, (i) => days.containsKey(shiftDays(start, i)));
   }
 
   String _dayId(DateTime d) => '${d.year}-${d.month}-${d.day}';
@@ -528,10 +600,7 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
 
   DateTime dateForWeekday(int i) => _dateForWeekday(i);
 
-  bool _hasSessionOn(DateTime day) {
-    final k = _dayKey(day);
-    return sessions.any((s) => _dayKey(s.day) == k);
-  }
+  bool _hasSessionOn(DateTime day) => _byDay.containsKey(_dayKey(day));
 
   bool isDayDone(int i) {
     final d = _dateForWeekday(i);
@@ -602,7 +671,9 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
     return (id: id, name: name, kind: kind, best: top(kind.score), oneRm: top((s) => s.oneRm));
   }
 
-  List<PersonalRecord> get personalRecords {
+  List<PersonalRecord> get personalRecords => List.of(_remember('records', _personalRecords));
+
+  List<PersonalRecord> _personalRecords() {
     final sets = <String, List<LoggedSet>>{};
     final names = <String, String>{};
     for (final s in sessions) {
@@ -665,7 +736,9 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
       ? (isAssisted(r.id) ? t.assistedRecordHint : t.oneRmEst(weightLabel(r.oneRm)))
       : t.prBestSet;
 
-  int get prsThisWeek {
+  int get prsThisWeek => _remember('prsThisWeek', _prsThisWeek, _weekStart);
+
+  int _prsThisWeek() {
     final kinds = {for (final r in personalRecords) r.id: r.kind};
     final bestScore = <String, double>{};
     final bestDate = <String, DateTime>{};
@@ -905,14 +978,19 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
     return ids.take(3).toList();
   }
 
-  List<({DateTime date, LoggedExercise ex})> exerciseHistory(String id) {
-    final out = <({DateTime date, LoggedExercise ex})>[];
+  List<({DateTime date, LoggedExercise ex})> exerciseHistory(String id) =>
+      List.of(_remember('history', _historyIndex)[id] ?? const []);
+
+  Map<String, List<({DateTime date, LoggedExercise ex})>> _historyIndex() {
+    final out = <String, List<({DateTime date, LoggedExercise ex})>>{};
     for (final s in sessions) {
       for (final e in s.exercises) {
-        if (e.id == id) out.add((date: s.date, ex: e));
+        (out[e.id] ??= []).add((date: s.date, ex: e));
       }
     }
-    out.sort((a, b) => b.date.compareTo(a.date));
+    for (final list in out.values) {
+      list.sort((a, b) => b.date.compareTo(a.date));
+    }
     return out;
   }
 
@@ -940,6 +1018,34 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
   }
 
   String? strengthExerciseId;
+
+  static const _ratioSteps = {
+    'EIeI8Vf': ([0.8, 1.15, 1.5, 2.0], [0.5, 0.7, 1.0, 1.3]),
+    'qXTaZnJ': ([1.0, 1.4, 1.9, 2.5], [0.75, 1.1, 1.5, 1.9]),
+    'ila4NZS': ([1.25, 1.75, 2.25, 3.0], [1.0, 1.35, 1.75, 2.3]),
+    'Kyd9Rz5': ([0.5, 0.7, 0.95, 1.25], [0.35, 0.45, 0.65, 0.85]),
+    'kTbSH9h': ([0.5, 0.7, 0.95, 1.25], [0.35, 0.45, 0.65, 0.85]),
+    'eZyBC3j': ([0.6, 0.85, 1.15, 1.5], [0.4, 0.6, 0.8, 1.05]),
+  };
+
+  ({double ratio, int level, double toNext})? relativeStrength(String id) {
+    final steps = _ratioSteps[id];
+    final body = latestBodyweight?.kg ?? profile.weightKg;
+    if (steps == null || body <= 0) return null;
+    final since = DateTime.now().subtract(const Duration(days: 90));
+    var best = 0.0;
+    for (final h in exerciseHistory(id)) {
+      if (h.date.isBefore(since)) break;
+      best = math.max(best, h.ex.bestOneRm);
+    }
+    if (best <= 0) return null;
+    final ratio = best / body;
+    final cuts = profile.sex == 'female' ? steps.$2 : steps.$1;
+    final level = cuts.where((c) => ratio >= c).length;
+    final lo = level == 0 ? 0.0 : cuts[level - 1];
+    final toNext = level >= cuts.length ? 1.0 : ((ratio - lo) / (cuts[level] - lo)).clamp(0.0, 1.0);
+    return (ratio: ratio, level: level, toNext: toNext);
+  }
 
   List<({String id, String name, int sessions})> get trackedExercises {
     final count = <String, int>{};
@@ -1028,8 +1134,7 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
 
   int get heatmapYearWeeks {
     DateTime? first;
-    for (final s in sessions) {
-      final d = _dayKey(s.day);
+    for (final d in _byDay.keys) {
       if (first == null || d.isBefore(first)) first = d;
     }
     for (final d in _checkinDays) {
