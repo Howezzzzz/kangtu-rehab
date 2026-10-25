@@ -808,16 +808,20 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: AlignmentDirectional.centerStart,
-                child: StepperControl(
-                  value: t.setCount(fit.routineSets(routine, ex.id)),
-                  minWidth: 62,
-                  btnSize: 24,
-                  gap: 8,
-                  fontSize: 12,
-                  btnRadius: 7,
-                  onDec: () => fit.bumpRoutineSets(_id, ex.id, -1),
-                  onInc: () => fit.bumpRoutineSets(_id, ex.id, 1),
-                ),
+                child: routine.prog[ex.id]?.isCycle == true
+                    // 周期动作组数由周表决定，不提供编辑（避免“改了不生效”）
+                    ? Text(t.setCount(fit.routineSets(routine, ex.id)),
+                        style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary))
+                    : StepperControl(
+                        value: t.setCount(fit.routineSets(routine, ex.id)),
+                        minWidth: 62,
+                        btnSize: 24,
+                        gap: 8,
+                        fontSize: 12,
+                        btnRadius: 7,
+                        onDec: () => fit.bumpRoutineSets(_id, ex.id, -1),
+                        onInc: () => fit.bumpRoutineSets(_id, ex.id, 1),
+                      ),
               ),
               if (plan.isNotEmpty) ...[
                 const SizedBox(height: 3),
@@ -1015,40 +1019,43 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
                     _planRow(sheet, gc, plan, i, plan[i].kind == SetKind.warmup ? 0 : ++working, mode,
                         repsOnly, edit, save),
                   const SizedBox(height: 8),
-                  Row(children: [
-                    Expanded(
-                      child: GhostButton(
-                        label: t.addSet.replaceFirst(RegExp(r'^\+\s*'), ''),
-                        icon: PhosphorIconsRegular.plus,
-                        onTap: () => save([
-                          ...plan,
-                          plan.lastWhere((p) => p.kind != SetKind.warmup, orElse: () => const PlannedSet())
-                              .copyWith(kind: SetKind.normal),
-                        ]),
-                      ),
-                    ),
-                    if (mode.isEmpty) ...[
-                      const SizedBox(width: 8),
+                  // ISS-160：周期动作的组次/组数由周表决定，不提供增删/清除（避免与引擎口径冲突）
+                  if (routine.prog[ex.id]?.isCycle != true) ...[
+                    Row(children: [
                       Expanded(
                         child: GhostButton(
-                          label: t.addWarmup,
-                          icon: PhosphorIconsRegular.fire,
-                          onTap: () => save([const PlannedSet(reps: 10, kind: SetKind.warmup), ...plan]),
+                          label: t.addSet.replaceFirst(RegExp(r'^\+\s*'), ''),
+                          icon: PhosphorIconsRegular.plus,
+                          onTap: () => save([
+                            ...plan,
+                            plan.lastWhere((p) => p.kind != SetKind.warmup, orElse: () => const PlannedSet())
+                                .copyWith(kind: SetKind.normal),
+                          ]),
                         ),
                       ),
-                    ],
-                  ]),
-                  if (fit.hasPlan(routine, ex.id))
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => save(const []),
-                      child: Container(
-                        height: 44,
-                        alignment: Alignment.center,
-                        child: Text(t.clearPlan,
-                            style: AppTheme.f(13, weight: FontWeight.w600, color: gc.accent)),
+                      if (mode.isEmpty) ...[
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: GhostButton(
+                            label: t.addWarmup,
+                            icon: PhosphorIconsRegular.fire,
+                            onTap: () => save([const PlannedSet(reps: 10, kind: SetKind.warmup), ...plan]),
+                          ),
+                        ),
+                      ],
+                    ]),
+                    if (fit.hasPlan(routine, ex.id))
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => save(const []),
+                        child: Container(
+                          height: 44,
+                          alignment: Alignment.center,
+                          child: Text(t.clearPlan,
+                              style: AppTheme.f(13, weight: FontWeight.w600, color: gc.accent)),
+                        ),
                       ),
-                    ),
+                  ],
                   const SizedBox(height: 10),
                   _restRow(sheet, gc, routine, ex),
                   const SizedBox(height: 14),

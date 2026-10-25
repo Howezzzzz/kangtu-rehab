@@ -149,6 +149,9 @@ class ProgState {
   /// 每个动作当前目标次数(dbl/reps)
   final Map<String, int> reps = {};
 
+  /// 用户手动确认过训练最大值的动作（≠自动估算/默认）
+  final Set<String> tmSet = {};
+
   Map<String, dynamic> toJson() => {
         't': tpl,
         if (week != 0) 'k': week,
@@ -157,6 +160,7 @@ class ProgState {
         if (tm.isNotEmpty) 'm': tm,
         if (fails.isNotEmpty) 'f': fails,
         if (reps.isNotEmpty) 'r': reps,
+        if (tmSet.isNotEmpty) 'q': tmSet.toList(),
       };
 
   factory ProgState.fromJson(Map<String, dynamic> j) {
@@ -169,6 +173,7 @@ class ProgState {
     s.tm.addAll(((j['m'] as Map?) ?? const {}).map((k, v) => MapEntry(k as String, (v as num).toDouble())));
     s.fails.addAll(((j['f'] as Map?) ?? const {}).map((k, v) => MapEntry(k as String, (v as num).toInt())));
     s.reps.addAll(((j['r'] as Map?) ?? const {}).map((k, v) => MapEntry(k as String, (v as num).toInt())));
+    s.tmSet.addAll(((j['q'] as List?) ?? const []).whereType<String>());
     return s;
   }
 }

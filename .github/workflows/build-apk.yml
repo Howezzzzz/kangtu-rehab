@@ -92,6 +92,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 生成发行说明需要完整历史与 tags
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -151,10 +153,23 @@ jobs:
           mv app-armeabi-v7a-release.apk   "康途-${{ steps.pkg.outputs.version }}-armeabi-v7a.apk"
           mv app-x86_64-release.apk        "康途-${{ steps.pkg.outputs.version }}-x86_64.apk"
 
+      - name: Build release notes
+        run: |
+          set -e
+          PREV=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || true)
+          {
+            if [ -n "$PREV" ]; then git log --no-merges --pretty=format:'- %s' "${PREV}..HEAD"; fi
+          } > raw.md || true
+          grep -vE 'chore\((version|update)\)|\[skip ci\]' raw.md > notes.md || true
+          if [ ! -s notes.md ]; then echo "- 维护更新（${{ inputs.tag }}）" > notes.md; fi
+          cat notes.md
+
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ inputs.tag }}
           name: 康途 ${{ inputs.tag }}
+          body_path: notes.md
+          prerelease: true
           files: |
             build/app/outputs/flutter-apk/康途-*.apk

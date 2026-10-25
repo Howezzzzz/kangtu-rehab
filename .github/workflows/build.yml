@@ -110,6 +110,7 @@ jobs:
         with:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # 生成发行说明需要完整历史与 tags
 
       - uses: actions/download-artifact@v4
         with:
@@ -131,6 +132,19 @@ jobs:
           echo "build=${B}" >> "$GITHUB_OUTPUT"
           echo "tag=v${V}+${B}" >> "$GITHUB_OUTPUT"
 
+      # 发行说明：取「上个 tag 之后」的提交（滤掉机器人 chore 提交），无则兜底一行
+      - name: Build release notes
+        run: |
+          set -e
+          PREV=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || true)
+          {
+            if [ -n "$PREV" ]; then git log --no-merges --pretty=format:'- %s' "${PREV}..HEAD"; fi
+          } > raw.md || true
+          grep -vE 'chore\((version|update)\)|\[skip ci\]' raw.md > notes.md || true
+          if [ ! -s notes.md ]; then echo "- 维护更新（${{ steps.v.outputs.tag }}）" > notes.md; fi
+          echo '--- notes ---'; cat notes.md
+
+      # 一律发「预发行版」（Howe 2026-10-25 定），并把发行说明写进去
       - name: Publish release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -140,8 +154,9 @@ jobs:
           TITLE="康途 ${{ steps.v.outputs.name }}+${{ steps.v.outputs.build }}"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" apks/*.apk --clobber
+            gh release edit "$TAG" --title "$TITLE" --notes-file notes.md --prerelease
           else
-            gh release create "$TAG" apks/*.apk --title "$TITLE" --notes "自动构建发布（$TAG）。"
+            gh release create "$TAG" apks/*.apk --title "$TITLE" --notes-file notes.md --prerelease
           fi
 
       - name: Write back assets/app_version.json
@@ -150,12 +165,15 @@ jobs:
           TAG="${{ steps.v.outputs.tag }}"
           BASE="https://github.com/Howezzzzz/kangtu-rehab/releases/download/${TAG}"
           MIRROR="https://gh-proxy.com/${BASE}"
+          # 更新内容写进清单 desc（App 更新弹窗会展示）；page_url 指向该 tag
+          # （不再用 /releases/latest —— 那个会跳过预发行版）
+          DESC=$(python3 -c "import json;print(json.dumps(open('notes.md',encoding='utf-8').read().strip(), ensure_ascii=False))")
           cat > assets/app_version.json <<EOF
           {
             "version": "${{ steps.v.outputs.name }}",
             "version_code": ${{ steps.v.outputs.build }},
-            "desc": "",
-            "page_url": "https://github.com/Howezzzzz/kangtu-rehab/releases/latest",
+            "desc": ${DESC},
+            "page_url": "https://github.com/Howezzzzz/kangtu-rehab/releases/tag/${TAG}",
             "download_urls": {
               "arm64-v8a": "${BASE}/kangtu-arm64-v8a.apk",
               "armeabi-v7a": "${BASE}/kangtu-armeabi-v7a.apk",

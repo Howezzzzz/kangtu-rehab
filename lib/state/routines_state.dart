@@ -495,6 +495,7 @@ mixin RoutinesState on FitCore, LibraryState {
         clone.tm.addAll(srcInst.tm);
         clone.fails.addAll(srcInst.fails);
         clone.reps.addAll(srcInst.reps);
+        clone.tmSet.addAll(srcInst.tmSet);
       }
       programStates[nid] = clone;
       made.progInst = nid;
@@ -609,6 +610,7 @@ mixin RoutinesState on FitCore, LibraryState {
         if (fails != null) inst.fails[to] = fails;
         final reps = inst.reps[from];
         if (reps != null) inst.reps[to] = reps;
+        if (inst.tmSet.contains(from)) inst.tmSet.add(to);
         buildInitialPlan(r, to, prog, inst);
       }
     }
@@ -665,10 +667,12 @@ mixin RoutinesState on FitCore, LibraryState {
       if (spec == null || !spec.isCycle) continue;
       final inst = r.progInst == null ? null : programStates[r.progInst!];
       if (inst == null) return true;
+      // 已确认（用户手调过）→ 确定；否则回落旧启发式，兼容升级前无 tmSet 的老数据（ISS-160）
+      if (inst.tmSet.contains(exId)) return false;
       final tm = inst.tm[exId];
       if (tm == null || tm == 40) return true;
       final est = estimateTrainingMax(this, exId);
-      if (est != null && (tm - est).abs() < 0.01) return true;
+      return est != null && (tm - est).abs() < 0.01;
     }
     return false;
   }
@@ -685,6 +689,7 @@ mixin RoutinesState on FitCore, LibraryState {
       final cur = toDisplayWeight(inst.tm[exId] ?? estimateTrainingMax(this, exId) ?? 40);
       final next = (cur + dir * weightStep).clamp(weightStep, weightStep * 40);
       inst.tm[exId] = fromDisplayWeight(next);
+      inst.tmSet.add(exId); // 用户已确认过
       changed = true;
       rebuildCyclePlan(r, exId, spec, inst);
     }
@@ -751,6 +756,7 @@ mixin RoutinesState on FitCore, LibraryState {
     // RISK-051：prog 驱动时同步写 spec.sets，否则下次 rebuild 被恢复
     final spec = r.prog[exId];
     if (spec != null) {
+      if (spec.isCycle) return; // 周期动作组数由周表决定，编辑无效 → 直接忽略
       for (final rr in routines) {
         if (rr.archived) continue;
         final sp = rr.prog[exId];
@@ -804,6 +810,7 @@ mixin RoutinesState on FitCore, LibraryState {
     // RISK-050/051：prog 驱动的动作其组数写回 spec.sets（否则 rebuild 会抹掉，且 531 各组数不同会被“删组”误砍）
     final spec = r.prog[exId];
     if (spec != null) {
+      if (spec.isCycle) return; // 周期动作组数由周表决定，编辑无效 → 直接忽略
       final n = (spec.sets + delta).clamp(1, 12);
       if (n != spec.sets) {
         for (final rr in routines) {

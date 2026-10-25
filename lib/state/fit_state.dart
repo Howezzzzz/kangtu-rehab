@@ -933,8 +933,9 @@ class FitState extends FitCore
         // RISK-047：不覆盖用户显式关闭过的“只练次数”偏好
         if (spec.kind == ProgKind.reps && !repsOnlyOff.contains(exId)) repsOnly.add(exId);
         if (spec.isCycle) {
-          inst.tm[exId] =
-              tm?[pe.name] ?? tm?[exId] ?? estimateTrainingMax(this, exId) ?? 40;
+          final entered = tm?[pe.name] ?? tm?[exId];
+          inst.tm[exId] = entered ?? estimateTrainingMax(this, exId) ?? 40;
+          if (entered != null) inst.tmSet.add(exId); // 用户导入时明确填过 → 视为已确认（ISS-160）
         }
         buildInitialPlan(r, exId, spec, inst);
       }

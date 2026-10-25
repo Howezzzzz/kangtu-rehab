@@ -14,8 +14,11 @@ void runProgression(WorkoutState fit, Routine r, LoggedSession s) {
 
   // ---- 周期计划:按时间推进波浪周(每 6 天 +1 周),整轮结束 TM 上调 ----
   final cycleSpecs = <String, ProgSpec>{
-    for (final e in r.prog.entries)
-      if (e.value.isCycle) e.key: e.value,
+    // ISS-160：按「家族」收集周期表——同 inst 的不同训练日可能各带不同主项，
+    // 只在完训例程里结算会导致别的主项永远不结算（TM 永久少加）
+    for (final rt in fam)
+      for (final e in rt.prog.entries)
+        if (e.value.isCycle) e.key: e.value,
   };
   if (cycleSpecs.isNotEmpty) {
     final now = DateTime.now().millisecondsSinceEpoch;
@@ -23,18 +26,26 @@ void runProgression(WorkoutState fit, Routine r, LoggedSession s) {
     if (inst.lastAdv == 0) {
       inst.lastAdv = now;
     } else if (now - inst.lastAdv >= day6) {
-      // RISK-046：week 存单调绝对周，各 spec 自行取模——周表长度不同也不会互相错位
-      inst.week++;
-      inst.lastAdv = now;
+      // RISK-046/053：week 存单调绝对周；断训跳过的周一次补齐（lastAdv 留余数防漂移）
+      // 兜底：时钟前跳时钳制，避免天文数字
+      final periods = math.min((now - inst.lastAdv) ~/ day6, 52);
+      final oldWeek = inst.week;
+      inst.week += periods;
+      inst.lastAdv += periods * day6;
       for (final e in cycleSpecs.entries) {
         final len = e.value.weeks.length;
-        if (len > 0 && inst.week % len == 0) {
-          // 该 spec 自身跑完整轮 → 上训 TM（缺省时先用估算值自愈，不再死卡 40）
-          final cur = inst.tm[e.key] ?? estimateTrainingMax(fit, e.key) ?? 40;
-          final next = roundHalf(cur + e.value.stepKg);
-          inst.tm[e.key] = next;
-          fit.progFeedback.add(t.progTmUp(_progName(fit, e.key), fit.weightLabel(next)));
+        if (len <= 0) continue;
+        final crossed = inst.week ~/ len - oldWeek ~/ len; // 该 spec 跨过几个整轮
+        if (crossed <= 0) continue;
+        final base = inst.tm[e.key] ?? estimateTrainingMax(fit, e.key) ?? 40;
+        if (!inst.tmSet.contains(e.key)) {
+          // 未确认的自动值：只落地基准值，不累积跨轮加量（避免久断归后盲目连加）
+          inst.tm[e.key] = base;
+          continue;
         }
+        final next = roundHalf(base + e.value.stepKg * crossed);
+        inst.tm[e.key] = next;
+        fit.progFeedback.add(t.progTmUp(_progName(fit, e.key), fit.weightLabel(next)));
       }
       final len0 = cycleSpecs.values.first.weeks.length;
       fit.progFeedback.add(t.progWeekN(len0 > 0 ? inst.week % len0 + 1 : inst.week + 1));

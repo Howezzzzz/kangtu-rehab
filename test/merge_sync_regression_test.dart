@@ -447,5 +447,141 @@ void main() {
       expect(t, isNotNull);
       expect(t!.weightKg, 100);
     });
+
+    test('TM 手调后不再显示“未确认”（即使值恰为 40）', () {
+      final id = fit.createRoutine('TC');
+      final exId = fit.matchExerciseByName('Barbell Front Squat')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.cycle, sets: 3, reps: 5, weeks: [
+        [CycleSet(5, 0.65)],
+      ]);
+      r.progInst = 'piTC';
+      fit.programStates['piTC'] = ProgState(tpl: 't');
+      expect(fit.progTmUnconfirmed(exId), isTrue);
+      fit.bumpProgTm(exId, 1);
+      fit.programStates['piTC']!.tm[exId] = 40; // 手调恰为 40 也不应误报
+      expect(fit.progTmUnconfirmed(exId), isFalse);
+    });
+
+    test('周期动作的组数编辑被忽略（组数由周表决定）', () {
+      final id = fit.createRoutine('CS');
+      final exId = fit.matchExerciseByName('Barbell Front Squat')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.cycle, sets: 3, reps: 5, weeks: [
+        [CycleSet(5, 0.65)],
+      ]);
+      r.progInst = 'piCS';
+      fit.programStates['piCS'] = ProgState(tpl: 't');
+      final before = r.prog[exId]!.sets;
+      fit.bumpRoutineSets(id, exId, 1);
+      fit.setRoutineSetCount(id, exId, 8);
+      expect(r.prog[exId]!.sets, before);
+    });
+
+    test('断训补账：间隔 3 个周期一次补 3 周', () {
+      final id = fit.createRoutine('CW');
+      final exId = fit.matchExerciseByName('Barbell Full Squat')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.cycle, sets: 3, reps: 5, weeks: [
+        [CycleSet(5, 0.65)],
+        [CycleSet(3, 0.75)],
+        [CycleSet(1, 0.85)],
+      ]);
+      r.progInst = 'piCW';
+      final inst = ProgState(tpl: 't')..tm[exId] = 100;
+      inst.tmSet.add(exId); // 已确认（未确认的自动值不累积跨轮加量）
+      inst.lastAdv = DateTime.now().millisecondsSinceEpoch - 21 * 24 * 3600 * 1000;
+      fit.programStates['piCW'] = inst;
+      fit.startRoutine(r);
+      for (final e in fit.session!.exercises) {
+        for (final st in e.sets) {
+          st.done = true;
+        }
+      }
+      fit.finishSession();
+      expect(inst.week, greaterThanOrEqualTo(3));
+      expect(inst.tm[exId], greaterThan(100));
+      fit.saveAndExit();
+    });
+
+    test('周期家族：完训 A 例程时 B 例程的周期动作也结算 TM', () {
+      final a = fit.createRoutine('FA');
+      final b = fit.createRoutine('FB');
+      final exA = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      final exB = fit.matchExerciseByName('Barbell Full Squat')!.id;
+      fit.toggleRoutineExercise(a, exA);
+      fit.toggleRoutineExercise(b, exB);
+      final ra = fit.routines.firstWhere((x) => x.id == a);
+      final rb = fit.routines.firstWhere((x) => x.id == b);
+      const spec = ProgSpec(kind: ProgKind.cycle, sets: 3, reps: 5, weeks: [
+        [CycleSet(5, 0.65)],
+        [CycleSet(3, 0.75)],
+        [CycleSet(1, 0.85)],
+      ]);
+      ra.prog[exA] = spec;
+      rb.prog[exB] = spec;
+      ra.progInst = 'piF';
+      rb.progInst = 'piF';
+      final inst = ProgState(tpl: 't')
+        ..tm[exA] = 100
+        ..tm[exB] = 100;
+      inst.tmSet
+        ..add(exA)
+        ..add(exB);
+      inst.lastAdv = DateTime.now().millisecondsSinceEpoch - 21 * 24 * 3600 * 1000;
+      fit.programStates['piF'] = inst;
+      fit.startRoutine(ra);
+      for (final e in fit.session!.exercises) {
+        for (final st in e.sets) {
+          st.done = true;
+        }
+      }
+      fit.finishSession();
+      expect(inst.tm[exB], greaterThan(100)); // B 不在本次完训例程，也应结算
+      expect(inst.tm[exA], greaterThan(100));
+      fit.saveAndExit();
+    });
+
+    test('老数据（无 tmSet）按旧启发式判定，不误报未确认', () {
+      final id = fit.createRoutine('LG');
+      final exId = fit.matchExerciseByName('Barbell Front Squat')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.cycle, sets: 3, reps: 5, weeks: [
+        [CycleSet(5, 0.65)],
+      ]);
+      r.progInst = 'piLG';
+      fit.programStates['piLG'] = ProgState(tpl: 't')..tm[exId] = 120; // 无 tmSet = 老数据
+      expect(fit.progTmUnconfirmed(exId), isFalse);
+    });
+
+    test('未确认的自动 TM 不累积跨轮加量', () {
+      final id = fit.createRoutine('UC');
+      final exId = fit.matchExerciseByName('Barbell Full Squat')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.cycle, sets: 3, reps: 5, weeks: [
+        [CycleSet(5, 0.65)],
+        [CycleSet(3, 0.75)],
+        [CycleSet(1, 0.85)],
+      ]);
+      r.progInst = 'piUC';
+      final inst = ProgState(tpl: 't'); // tm 未设、tmSet 空 = 未确认
+      inst.lastAdv = DateTime.now().millisecondsSinceEpoch - 21 * 24 * 3600 * 1000;
+      fit.programStates['piUC'] = inst;
+      fit.startRoutine(r);
+      for (final e in fit.session!.exercises) {
+        for (final st in e.sets) {
+          st.done = true;
+        }
+      }
+      fit.finishSession();
+      expect(inst.week, greaterThanOrEqualTo(3));
+      expect(inst.tm[exId], estimateTrainingMax(fit, exId) ?? 40); // 只落基值，不因跨轮而连加
+      fit.saveAndExit();
+    });
   });
 }

@@ -86,8 +86,9 @@ class UpdateCheckResult {
 }
 
 class UpdateService {
-  /// 发布页（兜底）
-  static const releasesPage = 'https://github.com/Howezzzzz/kangtu-rehab/releases/latest';
+  /// 发布页（兜底）。用 /releases 而不是 /releases/latest ——
+  /// 我们一律发预发行版，而 /latest 会跳过预发行版指向旧版。
+  static const releasesPage = 'https://github.com/Howezzzzz/kangtu-rehab/releases';
 
   /// 版本清单地址（多源并行竞速，谁先成功用谁）。
   /// 国内实测（2026-10-20）：raw.githubusercontent 不可达；gh-proxy 前缀最快（~0.3s）；
