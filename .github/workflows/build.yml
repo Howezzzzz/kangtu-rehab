@@ -2,6 +2,7 @@ name: build-apk
 
 # push main → 自动：构建号+1 → 构建分 ABI APK → 建/更新 Release → 回写 assets/app_version.json
 # 应用侧「检查更新」读 app_version.json 比对构建号（versionCode）。
+# 版本名 = 康途独立版本线（发布前手动定名，不再跟随上游），构建号严格递增。
 
 on:
   push:
@@ -12,8 +13,8 @@ permissions:
   contents: write
 
 jobs:
-  # ① 构建号 +1（versionName 仍跟随上游 + -kangtu 后缀；versionCode 严格递增，
-  #    否则 Android 不允许覆盖安装、更新器也认不出新版本）
+  # ① 构建号 +1（versionName = 康途独立版本线，发布前在 pubspec 手动定名；
+  #    versionCode 严格递增，否则 Android 不允许覆盖安装、更新器也认不出新版本）
   prepare:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -130,7 +131,7 @@ jobs:
           fi
           echo "name=${V}" >> "$GITHUB_OUTPUT"
           echo "build=${B}" >> "$GITHUB_OUTPUT"
-          echo "tag=v${V}+${B}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${V}.${B}" >> "$GITHUB_OUTPUT"
 
       # 发行说明：取「上个 tag 之后」的提交（滤掉机器人 chore 提交），无则兜底一行
       - name: Build release notes
@@ -151,7 +152,7 @@ jobs:
         run: |
           set -e
           TAG="${{ steps.v.outputs.tag }}"
-          TITLE="康途 ${{ steps.v.outputs.name }}+${{ steps.v.outputs.build }}"
+          TITLE="康途 ${{ steps.v.outputs.name }} (${{ steps.v.outputs.build }})"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" apks/*.apk --clobber
             gh release edit "$TAG" --title "$TITLE" --notes-file notes.md --prerelease
@@ -190,5 +191,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/app_version.json
-          git commit -m "chore(update): app_version.json -> ${{ steps.v.outputs.name }}+${{ steps.v.outputs.build }} [skip ci]" || echo "no changes"
+          git commit -m "chore(update): app_version.json -> ${{ steps.v.outputs.name }}.${{ steps.v.outputs.build }} [skip ci]" || echo "no changes"
           git push origin HEAD:main

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,7 +12,6 @@ import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
 
-const _kVersion = '1.7.0-kangtu';
 const _kAuthor = '康途';
 const _kAuthorUrl = 'https://github.com/Howezzzzz';
 const _kRepoUrl = 'https://github.com/Howezzzzz/kangtu-rehab';
@@ -126,8 +126,19 @@ class AboutScreen extends StatelessWidget {
                     color: gc.bgRaised2,
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  child: Text(t.version(_kVersion),
-                      style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textSecondary)),
+                  child: FutureBuilder<PackageInfo>(
+                    future: PackageInfo.fromPlatform(),
+                    builder: (context, snap) {
+                      final p = snap.data;
+                      // 运行时读系统真实版本（versionName + versionCode），
+                      // 避免源码硬编码与 pubspec/清单三处失同步（2026-10-26 重构）。
+                      final label =
+                          p == null ? '' : '${p.version} (${p.buildNumber})';
+                      return Text(t.version(label),
+                          style: AppTheme.f(11.5,
+                              weight: FontWeight.w600, color: gc.textSecondary));
+                    },
+                  ),
                 ),
               ],
             ),

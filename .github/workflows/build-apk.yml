@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag / version, e.g. v1.0.0'
+        description: 'Release tag / version, e.g. v1.0.0.29'
         required: true
         type: string
 
@@ -58,19 +58,23 @@ jobs:
 
       - name: Read version from pubspec
         id: pkg
-        run: echo "version=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)" >> "$GITHUB_OUTPUT"
+        run: |
+          V=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
+          echo "version=${V}" >> "$GITHUB_OUTPUT"
+          # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
+          echo "filever=${V//+/\\.}" >> "$GITHUB_OUTPUT"
 
       - name: Rename APKs to 康途-<版本号>-<abi>.apk
         run: |
           cd build/app/outputs/flutter-apk
-          mv app-arm64-v8a-release.apk     "康途-${{ steps.pkg.outputs.version }}-arm64-v8a.apk"
-          mv app-armeabi-v7a-release.apk   "康途-${{ steps.pkg.outputs.version }}-armeabi-v7a.apk"
-          mv app-x86_64-release.apk        "康途-${{ steps.pkg.outputs.version }}-x86_64.apk"
+          mv app-arm64-v8a-release.apk     "康途-${{ steps.pkg.outputs.filever }}-arm64-v8a.apk"
+          mv app-armeabi-v7a-release.apk   "康途-${{ steps.pkg.outputs.filever }}-armeabi-v7a.apk"
+          mv app-x86_64-release.apk        "康途-${{ steps.pkg.outputs.filever }}-x86_64.apk"
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: 康途-${{ steps.pkg.outputs.version }}-apks
+          name: 康途-${{ steps.pkg.outputs.filever }}-apks
           path: build/app/outputs/flutter-apk/康途-*.apk
           if-no-files-found: error
 
@@ -144,14 +148,18 @@ jobs:
 
       - name: Read version from pubspec
         id: pkg
-        run: echo "version=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)" >> "$GITHUB_OUTPUT"
+        run: |
+          V=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
+          echo "version=${V}" >> "$GITHUB_OUTPUT"
+          # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
+          echo "filever=${V//+/\\.}" >> "$GITHUB_OUTPUT"
 
       - name: Rename APKs to 康途-<版本号>-<abi>.apk
         run: |
           cd build/app/outputs/flutter-apk
-          mv app-arm64-v8a-release.apk     "康途-${{ steps.pkg.outputs.version }}-arm64-v8a.apk"
-          mv app-armeabi-v7a-release.apk   "康途-${{ steps.pkg.outputs.version }}-armeabi-v7a.apk"
-          mv app-x86_64-release.apk        "康途-${{ steps.pkg.outputs.version }}-x86_64.apk"
+          mv app-arm64-v8a-release.apk     "康途-${{ steps.pkg.outputs.filever }}-arm64-v8a.apk"
+          mv app-armeabi-v7a-release.apk   "康途-${{ steps.pkg.outputs.filever }}-armeabi-v7a.apk"
+          mv app-x86_64-release.apk        "康途-${{ steps.pkg.outputs.filever }}-x86_64.apk"
 
       - name: Build release notes
         run: |
