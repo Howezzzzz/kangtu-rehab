@@ -62,7 +62,7 @@ jobs:
           V=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
           echo "version=${V}" >> "$GITHUB_OUTPUT"
           # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
-          echo "filever=${V//+/\\.}" >> "$GITHUB_OUTPUT"
+          echo "filever=${V//+/\.}" >> "$GITHUB_OUTPUT"
 
       - name: Rename APKs to 康途-<版本号>-<abi>.apk
         run: |
@@ -152,7 +152,7 @@ jobs:
           V=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
           echo "version=${V}" >> "$GITHUB_OUTPUT"
           # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
-          echo "filever=${V//+/\\.}" >> "$GITHUB_OUTPUT"
+          echo "filever=${V//+/\.}" >> "$GITHUB_OUTPUT"
 
       - name: Rename APKs to 康途-<版本号>-<abi>.apk
         run: |
