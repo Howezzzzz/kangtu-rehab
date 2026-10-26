@@ -1,16 +1,16 @@
 {
   "version": "1.0.0",
-  "version_code": 29,
-  "desc": "",
-  "page_url": "https://github.com/Howezzzzz/kangtu-rehab/releases/tag/v1.0.0.29",
+  "version_code": 30,
+  "desc": "- fix(ci): artifact 名里 filever 多一层反斜杠转义（1.0.0\\.29 → 1.0.0.29）\n- refactor(version): 版本号体系重构——康途独立版本线 1.0.0+29（不再跟随上游）",
+  "page_url": "https://github.com/Howezzzzz/kangtu-rehab/releases/tag/v1.0.0.30",
   "download_urls": {
-    "arm64-v8a": "https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.29/kangtu-arm64-v8a.apk",
-    "armeabi-v7a": "https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.29/kangtu-armeabi-v7a.apk",
-    "x86_64": "https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.29/kangtu-x86_64.apk"
+    "arm64-v8a": "https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.30/kangtu-arm64-v8a.apk",
+    "armeabi-v7a": "https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.30/kangtu-armeabi-v7a.apk",
+    "x86_64": "https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.30/kangtu-x86_64.apk"
   },
   "mirror_urls": {
-    "arm64-v8a": "https://gh-proxy.com/https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.29/kangtu-arm64-v8a.apk",
-    "armeabi-v7a": "https://gh-proxy.com/https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.29/kangtu-armeabi-v7a.apk",
-    "x86_64": "https://gh-proxy.com/https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.29/kangtu-x86_64.apk"
+    "arm64-v8a": "https://gh-proxy.com/https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.30/kangtu-arm64-v8a.apk",
+    "armeabi-v7a": "https://gh-proxy.com/https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.30/kangtu-armeabi-v7a.apk",
+    "x86_64": "https://gh-proxy.com/https://github.com/Howezzzzz/kangtu-rehab/releases/download/v1.0.0.30/kangtu-x86_64.apk"
   }
 }
