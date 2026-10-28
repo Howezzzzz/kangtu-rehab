@@ -226,6 +226,12 @@ void main() {
       expect(info.downloadUrls.isNotEmpty, isTrue);
       // 镜像字段哨兵（ISS-143）：清单必须带镜像兜底，否则国内下载基本不可用
       expect(info.mirrorUrls.isNotEmpty, isTrue, reason: '清单缺 mirror_urls');
+      // 多镜像链哨兵（RISK-031/035）：单镜像易挂，每个 ABI 至少两条备选
+      expect(info.mirrorChains.isNotEmpty, isTrue, reason: '清单缺 mirrors 多镜像链');
+      for (final e in info.mirrorChains.entries) {
+        expect(e.value.length, greaterThanOrEqualTo(2),
+            reason: 'ABI ${e.key} 镜像链不足两条');
+      }
     });
   });
 
@@ -263,10 +269,15 @@ void main() {
   });
 
   group('pickUrls（直链优先、镜像兜底）', () {
-    UpdateInfo withUrls({Map<String, String>? direct, Map<String, String>? mirror}) {
+    UpdateInfo withUrls({
+      Map<String, String>? direct,
+      Map<String, String>? mirror,
+      Map<String, List<String>>? chains,
+    }) {
       final j = <String, dynamic>{'version': '1.0.0', 'version_code': 9};
       if (direct != null) j['download_urls'] = direct;
       if (mirror != null) j['mirror_urls'] = mirror;
+      if (chains != null) j['mirrors'] = chains;
       return UpdateInfo.parse(jsonEncode(j))!;
     }
 
@@ -302,6 +313,55 @@ void main() {
         mirror: {'x86_64': 'https://m/x86.apk'},
       );
       expect(UpdateService.pickUrls(info), ['https://d/arm64.apk']);
+    });
+
+    test('多镜像链：直链在前、镜像按清单顺序逐个兜底（RISK-031/035）', () {
+      final info = withUrls(
+        direct: {'arm64-v8a': 'https://d/a.apk'},
+        chains: {
+          'arm64-v8a': ['https://m1/a.apk', 'https://m2/a.apk', 'https://m3/a.apk'],
+        },
+      );
+      expect(UpdateService.pickUrls(info),
+          ['https://d/a.apk', 'https://m1/a.apk', 'https://m2/a.apk', 'https://m3/a.apk']);
+    });
+
+    test('有 mirrors 时优先于单镜像 mirror_urls，且与直链去重', () {
+      final info = withUrls(
+        direct: {'arm64-v8a': 'https://d/a.apk'},
+        mirror: {'arm64-v8a': 'https://m1/a.apk'},
+        chains: {
+          'arm64-v8a': ['https://m1/a.apk', 'https://m2/a.apk'],
+        },
+      );
+      expect(UpdateService.pickUrls(info), ['https://d/a.apk', 'https://m1/a.apk', 'https://m2/a.apk']);
+    });
+
+    test('chains 里的空串/非字符串项被消毒', () {
+      final info = UpdateInfo.parse(jsonEncode({
+        'version': '1.0.0',
+        'version_code': 9,
+        'mirrors': {
+          'arm64-v8a': ['', 'https://m1/a.apk', 42, 'https://m2/a.apk'],
+        },
+      }))!;
+      expect(UpdateService.pickUrls(info), ['https://m1/a.apk', 'https://m2/a.apk']);
+    });
+
+    test('chains 值为字符串（容错）→ 视作单元素链', () {
+      final info = UpdateInfo.parse(jsonEncode({
+        'version': '1.0.0',
+        'version_code': 9,
+        'mirrors': {'arm64-v8a': 'https://m1/a.apk'},
+      }))!;
+      expect(UpdateService.pickUrls(info), ['https://m1/a.apk']);
+    });
+
+    test('只有多镜像链（无直链/单镜像）→ 用整条链', () {
+      final info = withUrls(chains: {
+        'x86_64': ['https://m1/x.apk', 'https://m2/x.apk'],
+      });
+      expect(UpdateService.pickUrls(info), ['https://m1/x.apk', 'https://m2/x.apk']);
     });
   });
 

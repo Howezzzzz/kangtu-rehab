@@ -6184,4 +6184,30 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get prepPortions => 'Porcje';
+
+  @override
+  String get supersetUnlink => 'Odłącz od następnego';
+
+  @override
+  String get foodCategory => 'CATEGORY';
+
+  @override
+  String get rotationAddRest => 'Dodaj dzień odpoczynku';
+
+  @override
+  String get rotationRestHint => 'Mija sam następnego dnia';
+
+  @override
+  String get rotationRestToday => 'Dziś';
+
+  @override
+  String get rotationSkipRest => 'Pomiń ten odpoczynek';
+
+  @override
+  String rotationRestUpNext(String name) {
+    return 'Potem: $name';
+  }
+
+  @override
+  String get trainAnyway => 'Trenuj mimo to';
 }

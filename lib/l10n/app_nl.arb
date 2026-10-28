@@ -1670,5 +1670,12 @@
   "autoBackupNever": "Nog geen back-up",
   "autoBackupLost": "De laatste back-up is mislukt. Kies de map opnieuw.",
   "autoBackupSaved": "Back-up opgeslagen",
-  "prepPortions": "Porties"
+  "prepPortions": "Porties",
+  "supersetUnlink": "Loskoppelen van de volgende",
+  "rotationAddRest": "Rustdag toevoegen",
+  "rotationRestHint": "Gaat de volgende dag vanzelf verder",
+  "rotationRestToday": "Vandaag",
+  "rotationSkipRest": "Deze rustdag overslaan",
+  "rotationRestUpNext": "Daarna: {name}",
+  "trainAnyway": "Toch trainen"
 }

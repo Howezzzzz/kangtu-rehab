@@ -269,12 +269,16 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final last = lastSetsFor(id).where((l) => l.counts).toList();
     final mode = modeOf(id);
     final List<SessionSet> base;
+    // RISK-043/040：prog 驱动时开场组走计划——**有无历史都适用**（_nextPlan 对
+    // mode 非空会自行返回 null）。无历史若不走计划，会落到硬编码默认（20kg），
+    // 使「计划只标首组重量、其余留空」的组继承到错值（RISK-040）。
+    final plan = (hasProgress(id) || _progDriven(id)) ? _nextPlan(id) : null;
     if (mode.isNotEmpty) {
       base = _modeOpeners(mode, last);
+    } else if (plan != null) {
+      base = plan.sets;
     } else if (last.isNotEmpty) {
-      // RISK-043：prog 驱动时即使未开上游规则，开场组也走计划（与会话外详情页一致）
-      final plan = (hasProgress(id) || _progDriven(id)) ? _nextPlan(id) : null;
-      base = plan?.sets ?? last.map((l) => SessionSet(l.reps, l.weight, false)).toList();
+      base = last.map((l) => SessionSet(l.reps, l.weight, false)).toList();
     } else {
       final w = isRepsOnly(id) ? 0.0 : 20.0;
       base = [for (var i = 0; i < kDefaultRoutineSets; i++) SessionSet(10, w, false)];
@@ -750,6 +754,14 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final to = exIdx + delta;
     if (exIdx < 0 || exIdx >= s.exercises.length || to < 0 || to >= s.exercises.length) return;
     reorderSessionExercise(exIdx, delta > 0 ? to + 1 : to);
+  }
+
+  void toggleSessionLink(int exIdx) {
+    final s = session;
+    if (s == null || exIdx < 0 || exIdx >= s.exercises.length - 1) return;
+    s.exercises[exIdx].linkedNext = !s.exercises[exIdx].linkedNext;
+    _persist();
+    notifyListeners();
   }
 
   double get sessionVolumeKg {
@@ -1526,8 +1538,8 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       _carriedFeedback = null;
       sessions.add(entry);
       sessions.sort((a, b) => a.date.compareTo(b.date));
-      _rotationBefore = rotationNextId;
-      _advanceRotation(entry.routineId);
+      _rotationBefore = (rotationNextId, rotationRestDay);
+      _advanceRotation(entry.routineId, entry.date);
       _filed = entry;
       _computeSummaryHighlights(entry);
       _offerLevelUp(entry);
@@ -1805,7 +1817,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
   LoggedSession? _filed;
   /// FB-06：续训时暂存用户已填的反馈，等本次训练真正完成再写回新归档条目
   LoggedSession? _carriedFeedback;
-  String? _rotationBefore;
+  (String, DateTime?)? _rotationBefore;
 
   /// 刚结束的那次训练（完成页用来写反馈）
   LoggedSession? get filedSession => _filed;
@@ -1865,7 +1877,10 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       // FB-06：续训不等于放弃，用户已填的反馈先存着
       if (filed.hasFeedback) _carriedFeedback = filed;
       final back = _rotationBefore;
-      if (back != null) rotationNextId = back;
+      if (back != null) {
+        rotationNextId = back.$1;
+        rotationRestDay = back.$2;
+      }
     }
     _filed = null;
     _rotationBefore = null;

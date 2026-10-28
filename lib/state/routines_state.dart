@@ -220,19 +220,59 @@ mixin RoutinesState on FitCore, LibraryState {
 
   bool movedOn(DateTime day) => planMoves.containsKey(_moveKey(day));
 
+  Routine? routineById(String id) => _routine(id);
+
   bool get rotating => rotation && rotationRoutines.isNotEmpty;
 
   List<Routine> get rotationRoutines => [for (final id in rotationIds) ?_routine(id)];
 
-  Routine? get rotationNext {
-    final list = rotationRoutines;
-    if (list.isEmpty) return null;
-    return _routine(rotationNextId) ?? list.first;
+  static bool isRestStep(String id) => id.startsWith('rest-');
+
+  List<String> get rotationSteps => [
+        for (final id in rotationIds)
+          if (isRestStep(id) || _routine(id) != null) id,
+      ];
+
+  ({int index, DateTime? rest}) get _rotationCursor {
+    final steps = rotationSteps;
+    if (rotationRoutines.isEmpty) return (index: 0, rest: null);
+    var i = steps.indexOf(rotationNextId);
+    if (i < 0) i = 0;
+    if (!isRestStep(steps[i])) return (index: i, rest: null);
+    final today = _dayKey(DateTime.now());
+    var day = _dayKey(rotationRestDay ?? today);
+    while (isRestStep(steps[i]) && day.isBefore(today)) {
+      i = (i + 1) % steps.length;
+      day = shiftDays(day, 1);
+    }
+    return (index: i, rest: isRestStep(steps[i]) ? day : null);
   }
 
-  int get rotationStep {
-    final next = rotationNext;
-    return next == null ? 0 : rotationRoutines.indexOf(next);
+  Routine? get rotationNext {
+    if (rotationRoutines.isEmpty) return null;
+    final c = _rotationCursor;
+    return c.rest == null ? _routine(rotationSteps[c.index]) : null;
+  }
+
+  Routine? get rotationUpcoming {
+    final steps = rotationSteps;
+    if (rotationRoutines.isEmpty) return null;
+    var i = _rotationCursor.index;
+    while (isRestStep(steps[i])) {
+      i = (i + 1) % steps.length;
+    }
+    return _routine(steps[i]);
+  }
+
+  int get rotationStep => rotationRoutines.isEmpty ? 0 : _rotationCursor.index;
+
+  bool get restingToday => rotationRestOn(DateTime.now());
+
+  bool rotationRestOn(DateTime day) {
+    if (!rotating) return false;
+    final key = _dayKey(day);
+    if (key.isBefore(_dayKey(DateTime.now())) || sessions.any((s) => _dayKey(s.day) == key)) return false;
+    return _rotationOn(day).isEmpty;
   }
 
   List<Routine> _rotationOn(DateTime day) {
@@ -243,7 +283,17 @@ mixin RoutinesState on FitCore, LibraryState {
         if (_dayKey(s.day) == key && s.routineId != null && rotationIds.contains(s.routineId)) ?_routine(s.routineId!),
     ];
     if (key.isBefore(today) || done.isNotEmpty) return done;
-    return [?rotationNext];
+    final steps = rotationSteps;
+    final c = _rotationCursor;
+    var rest = c.rest;
+    if (rest == null) return [?_routine(steps[c.index])];
+    var i = c.index;
+    while (isRestStep(steps[i])) {
+      if (!key.isAfter(rest!)) return const [];
+      i = (i + 1) % steps.length;
+      rest = shiftDays(rest, 1);
+    }
+    return [?_routine(steps[i])];
   }
 
   @override
@@ -273,8 +323,41 @@ mixin RoutinesState on FitCore, LibraryState {
     _planChanged();
   }
 
+  void addRotationRest() {
+    var n = 1;
+    while (rotationIds.contains('rest-$n')) {
+      n++;
+    }
+    rotationIds.add('rest-$n');
+    _planChanged();
+  }
+
+  void removeRotationRest(String id) {
+    final steps = rotationSteps;
+    final i = steps.indexOf(id);
+    if (i < 0 || !isRestStep(id)) return;
+    _settleRotation();
+    if (rotationNextId == id) _pointRotation(steps[(i + 1) % steps.length]);
+    rotationIds.remove(id);
+    _fixRotationNext();
+    _planChanged();
+  }
+
+  void _settleRotation() {
+    if (rotationRoutines.isEmpty) return;
+    final c = _rotationCursor;
+    rotationNextId = rotationSteps[c.index];
+    rotationRestDay = c.rest;
+  }
+
+  void _pointRotation(String id, [DateTime? rest]) {
+    rotationNextId = id;
+    rotationRestDay = isRestStep(id) ? _dayKey(rest ?? DateTime.now()) : null;
+  }
+
   void toggleRotationRoutine(String id) {
     if (_routine(id) == null) return;
+    _settleRotation();
     if (rotationIds.remove(id)) {
       if (rotationNextId == id) rotationNextId = '';
     } else {
@@ -286,6 +369,7 @@ mixin RoutinesState on FitCore, LibraryState {
 
   void reorderRotation(int from, int to) {
     if (from < 0 || from >= rotationIds.length) return;
+    _settleRotation();
     if (to > from) to -= 1;
     rotationIds.insert(to.clamp(0, rotationIds.length), rotationIds.removeAt(from));
     _planChanged();
@@ -293,36 +377,36 @@ mixin RoutinesState on FitCore, LibraryState {
 
   void setRotationNext(String id) {
     if (!rotationIds.contains(id)) return;
-    rotationNextId = id;
+    _pointRotation(id);
     _planChanged();
   }
 
   void skipRotation() {
-    final list = rotationRoutines;
-    final next = rotationNext;
-    if (next == null) return;
-    rotationNextId = list[(list.indexOf(next) + 1) % list.length].id;
+    final steps = rotationSteps;
+    if (rotationRoutines.isEmpty) return;
+    _pointRotation(steps[(_rotationCursor.index + 1) % steps.length]);
     _planChanged();
   }
 
   void restartRotation() {
-    final list = rotationRoutines;
-    if (list.isEmpty) return;
-    rotationNextId = list.first.id;
+    final steps = rotationSteps;
+    if (rotationRoutines.isEmpty) return;
+    _pointRotation(steps.first);
     _planChanged();
   }
 
-  void _advanceRotation(String? routineId) {
+  void _advanceRotation(String? routineId, DateTime on) {
     if (!rotation || routineId == null) return;
-    final list = rotationRoutines;
-    final i = list.indexWhere((r) => r.id == routineId);
+    final steps = rotationSteps;
+    final i = steps.indexOf(routineId);
     if (i < 0) return;
-    rotationNextId = list[(i + 1) % list.length].id;
+    _pointRotation(steps[(i + 1) % steps.length], shiftDays(on, 1));
   }
 
   void _fixRotationNext() {
-    rotationIds.removeWhere((id) => _routine(id) == null);
-    if (!rotationIds.contains(rotationNextId)) rotationNextId = rotationIds.isEmpty ? '' : rotationIds.first;
+    rotationIds.removeWhere((id) => !isRestStep(id) && _routine(id) == null);
+    if (rotationIds.contains(rotationNextId)) return;
+    _pointRotation(rotationIds.isEmpty ? '' : rotationIds.first);
   }
 
   VoidCallback? moveRoutineDay(String routineId, DateTime from, DateTime to) {
@@ -545,7 +629,7 @@ mixin RoutinesState on FitCore, LibraryState {
   void _unplanRoutine(String id) {
     final i = rotationIds.indexOf(id);
     if (i >= 0) {
-      if (rotationNextId == id) rotationNextId = rotationIds[(i + 1) % rotationIds.length];
+      if (rotationNextId == id) _pointRotation(rotationIds[(i + 1) % rotationIds.length]);
       rotationIds.removeAt(i);
     }
     _fixRotationNext();
@@ -575,6 +659,9 @@ mixin RoutinesState on FitCore, LibraryState {
       r.rest.remove(exId);
       r.chained.remove(exId);
       r.prog.remove(exId); // 计划周期：移除动作时清 ProgSpec，避免孤儿 spec 继续写 plan（ISS-153）
+      // RISK-055：若该动作已从本实例的所有例程移除，清掉实例里的残留状态
+      // （否则换走再换回会带着过期 TM/重量/失败数复活，且 tmSet 会压掉校准提示）
+      if (r.progInst != null) _pruneInstState(r.progInst!, exId);
     } else {
       r.exerciseIds.add(exId);
     }
@@ -614,6 +701,8 @@ mixin RoutinesState on FitCore, LibraryState {
         buildInitialPlan(r, to, prog, inst);
       }
     }
+    // RISK-055：换走的旧动作若已不再被本实例任何例程引用，清掉它的残留状态
+    if (r.progInst != null) _pruneInstState(r.progInst!, from);
     _persist();
     notifyListeners();
   }
@@ -709,6 +798,14 @@ mixin RoutinesState on FitCore, LibraryState {
     final rest = r.rest[exId];
     final chained = r.chained.contains(exId);
     final prog = r.prog[exId];
+    // RISK-055：toggle 移除时可能清掉实例残留；撤销需一并还原（否则撤销就丢状态）
+    final instId = r.progInst;
+    final instBefore = instId == null ? null : programStates[instId];
+    final snapW = instBefore?.w[exId];
+    final snapTm = instBefore?.tm[exId];
+    final snapFails = instBefore?.fails[exId];
+    final snapReps = instBefore?.reps[exId];
+    final snapTmSet = instBefore?.tmSet.contains(exId) ?? false;
     toggleRoutineExercise(routineId, exId);
     return () {
       final back = _routine(routineId);
@@ -719,9 +816,36 @@ mixin RoutinesState on FitCore, LibraryState {
       if (rest != null) back.rest[exId] = rest;
       if (chained) back.chained.add(exId);
       if (prog != null) back.prog[exId] = prog; // ISS-155：撤销一并恢复 ProgSpec
+      // RISK-055：还原被清掉的实例状态
+      final inst = instId == null ? null : programStates[instId];
+      if (inst != null) {
+        if (snapW != null) inst.w[exId] = snapW;
+        if (snapTm != null) inst.tm[exId] = snapTm;
+        if (snapFails != null) inst.fails[exId] = snapFails;
+        if (snapReps != null) inst.reps[exId] = snapReps;
+        if (snapTmSet) inst.tmSet.add(exId);
+      }
       _persist();
       notifyListeners();
     };
+  }
+
+  /// RISK-055：动作已从某渐进实例(progInst)的所有（非归档）例程移除后，
+  /// 清掉它在实例中的残留状态（工作重量/训练最大值/失败数/目标次数/已确认标记）。
+  /// 不清的话：换走再换回（或加进同实例的别的例程）会带着过期状态复活，
+  /// 残留的 tmSet 还会压掉「TM 偏低、建议校准」的提示。
+  void _pruneInstState(String instId, String exId) {
+    for (final r in routines) {
+      if (r.archived || r.progInst != instId) continue;
+      if (r.exerciseIds.contains(exId) || r.prog.containsKey(exId)) return; // 仍有用例在使用
+    }
+    final inst = programStates[instId];
+    if (inst == null) return;
+    inst.w.remove(exId);
+    inst.tm.remove(exId);
+    inst.fails.remove(exId);
+    inst.reps.remove(exId);
+    inst.tmSet.remove(exId);
   }
 
   int routineSets(Routine r, String exId) {

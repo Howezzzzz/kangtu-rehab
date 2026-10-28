@@ -6157,4 +6157,30 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get prepPortions => 'Portions';
+
+  @override
+  String get supersetUnlink => 'Séparer du suivant';
+
+  @override
+  String get foodCategory => 'CATEGORY';
+
+  @override
+  String get rotationAddRest => 'Ajouter un jour de repos';
+
+  @override
+  String get rotationRestHint => 'Passe toute seule le lendemain';
+
+  @override
+  String get rotationRestToday => 'Aujourd’hui';
+
+  @override
+  String get rotationSkipRest => 'Sauter ce jour de repos';
+
+  @override
+  String rotationRestUpNext(String name) {
+    return 'Ensuite : $name';
+  }
+
+  @override
+  String get trainAnyway => 'M’entraîner quand même';
 }

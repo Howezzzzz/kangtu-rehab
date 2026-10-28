@@ -6254,4 +6254,30 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get prepPortions => 'Порции';
+
+  @override
+  String get supersetUnlink => 'Отвязать от следующего';
+
+  @override
+  String get foodCategory => 'CATEGORY';
+
+  @override
+  String get rotationAddRest => 'Добавить день отдыха';
+
+  @override
+  String get rotationRestHint => 'Сам сменится на следующий день';
+
+  @override
+  String get rotationRestToday => 'Сегодня';
+
+  @override
+  String get rotationSkipRest => 'Пропустить этот отдых';
+
+  @override
+  String rotationRestUpNext(String name) {
+    return 'Дальше: $name';
+  }
+
+  @override
+  String get trainAnyway => 'Всё равно тренироваться';
 }

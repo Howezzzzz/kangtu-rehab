@@ -344,6 +344,7 @@ class FitState extends FitCore
       ..clear()
       ..addAll(((data['rotationIds'] as List?) ?? const []).cast<String>());
     rotationNextId = data['rotationNext'] as String? ?? '';
+    rotationRestDay = DateTime.tryParse(data['rotationRest'] as String? ?? '');
     planMoves
       ..clear()
       ..addAll(((data['planMoves'] as Map?) ?? const {})
@@ -556,6 +557,7 @@ class FitState extends FitCore
         if (rotation) 'rotation': rotation,
         if (rotationIds.isNotEmpty) 'rotationIds': rotationIds,
         if (rotationNextId.isNotEmpty) 'rotationNext': rotationNextId,
+        if (rotationRestDay != null) 'rotationRest': RoutinesState._moveKey(rotationRestDay!),
         if (planMoves.isNotEmpty) 'planMoves': planMoves,
         'custom': customExercises.map((e) => e.toJson()).toList(),
         'media': exerciseMedia,
@@ -631,6 +633,7 @@ class FitState extends FitCore
     rotation = false;
     rotationIds.clear();
     rotationNextId = '';
+    rotationRestDay = null;
     planMoves.clear();
     customExercises.clear();
     exerciseMedia.clear();
@@ -879,6 +882,7 @@ class FitState extends FitCore
       weekdays: reminderWeekdays,
       skipToday: trainedToday,
       againMinutes: trainAgainMin,
+      restOn: rotating ? rotationRestOn : null,
     );
   }
 
@@ -890,6 +894,7 @@ class FitState extends FitCore
       final days = usualWeekdays;
       if (days.isNotEmpty) return days.toSet();
     }
+    if (rotating) return const {};
     return weeklyPlan.keys.toSet();
   }
 

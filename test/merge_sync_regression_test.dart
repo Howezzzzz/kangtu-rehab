@@ -10,6 +10,7 @@ import 'package:gymmane/catalog/exercise_catalog.dart';
 import 'package:gymmane/catalog/exercises_ext.dart';
 import 'package:gymmane/catalog/exercises_rep.dart';
 import 'package:gymmane/models/exercise.dart';
+import 'package:gymmane/models/nutrition.dart';
 import 'package:gymmane/l10n/l10n.dart';
 import 'package:gymmane/models/plan_cycle.dart';
 import 'package:gymmane/models/progression.dart';
@@ -582,6 +583,191 @@ void main() {
       expect(inst.week, greaterThanOrEqualTo(3));
       expect(inst.tm[exId], estimateTrainingMax(fit, exId) ?? 40); // 只落基值，不因跨轮而连加
       fit.saveAndExit();
+    });
+  });
+
+  // RISK-040 回归：prog 计划注入时，非首组「留空重量」须沿用计划重量
+  //   （旧实现 _workingOpeners 只在有历史时走计划，无历史落到硬编码 20kg）
+  group('RISK-040 计划非首组缺省重量', () {
+    test('计划只标首组重量 → 其余组沿用首组，不再落到默认 20', () {
+      final id = fit.createRoutine('R040');
+      final exId = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5, stepKg: 2.5);
+      fit.setPlannedSets(id, exId, const [
+        PlannedSet(reps: 5, weightKg: 100),
+        PlannedSet(reps: 5),
+        PlannedSet(reps: 5),
+      ]);
+      fit.startRoutine(r);
+      final sets = fit.session!.exercises
+          .firstWhere((e) => e.id == exId)
+          .sets
+          .where((s) => s.kind != SetKind.warmup)
+          .toList();
+      expect(sets.map((s) => s.weight).toList(), [100.0, 100.0, 100.0]);
+      expect(sets.every((s) => s.reps == 5), isTrue);
+      fit.saveAndExit();
+    });
+  });
+
+  // RISK-055 回归：换/删动作时须清掉该动作在渐进实例里的残留状态
+  //   （否则换回来会带着过期 TM/重量/失败数复活，残留 tmSet 还会压掉校准提示）
+  group('RISK-055 换/删动作清实例残留', () {
+    test('换动作后旧动作的实例状态被清，状态播种给新动作', () {
+      final id = fit.createRoutine('S055');
+      final a = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      final b = fit.matchExerciseByName('Barbell Squat')!.id;
+      fit.toggleRoutineExercise(id, a);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[a] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5);
+      r.progInst = 'piT055';
+      final inst = ProgState(tpl: 't');
+      inst.w[a] = 77.5;
+      inst.fails[a] = 2;
+      inst.tmSet.add(a);
+      fit.programStates['piT055'] = inst;
+
+      fit.replaceRoutineExercise(id, a, b);
+
+      expect(inst.w.containsKey(a), isFalse, reason: '换走的旧动作残留工作重量');
+      expect(inst.fails.containsKey(a), isFalse, reason: '换走的旧动作残留失败数');
+      expect(inst.tmSet.contains(a), isFalse, reason: '残留 tmSet 会压掉「TM 偏低」校准提示');
+      expect(inst.w.containsKey(b) || inst.tm.containsKey(b), isTrue, reason: '新动作应被播种状态');
+      fit.saveAndExit();
+    });
+
+    test('同实例还有别的例程在用该动作 → 不误清', () {
+      final a = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      final b = fit.matchExerciseByName('Barbell Squat')!.id;
+      final id1 = fit.createRoutine('S1');
+      final id2 = fit.createRoutine('S2');
+      fit.toggleRoutineExercise(id1, a);
+      fit.toggleRoutineExercise(id2, a);
+      final r1 = fit.routines.firstWhere((x) => x.id == id1);
+      final r2 = fit.routines.firstWhere((x) => x.id == id2);
+      r1.prog[a] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5);
+      r1.progInst = 'piShare';
+      r2.progInst = 'piShare';
+      final inst = ProgState(tpl: 't');
+      inst.w[a] = 80;
+      fit.programStates['piShare'] = inst;
+
+      fit.replaceRoutineExercise(id1, a, b);
+
+      expect(inst.w[a], 80, reason: '另一个例程仍在用该动作，不该清');
+      fit.saveAndExit();
+    });
+
+    test('移除动作后撤销 → 实例状态完整还原', () {
+      final id = fit.createRoutine('S2u');
+      final a = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      fit.toggleRoutineExercise(id, a);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[a] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5);
+      r.progInst = 'piU';
+      final inst = ProgState(tpl: 't');
+      inst.w[a] = 90;
+      inst.tm[a] = 100;
+      inst.fails[a] = 1;
+      inst.reps[a] = 6;
+      inst.tmSet.add(a);
+      fit.programStates['piU'] = inst;
+
+      final undo = fit.removeRoutineExercise(id, a);
+      expect(undo, isNotNull);
+      expect(inst.w.containsKey(a), isFalse, reason: '移除后应清残留');
+
+      undo!();
+      expect(inst.w[a], 90);
+      expect(inst.tm[a], 100);
+      expect(inst.fails[a], 1);
+      expect(inst.reps[a], 6);
+      expect(inst.tmSet.contains(a), isTrue);
+      fit.saveAndExit();
+    });
+  });
+
+  // RISK-064 回归：渐进实例按「实例」隔离——清一个实例的残留不得跨实例误伤
+  group('RISK-064 渐进实例隔离', () {
+    test('同一动作挂在不同实例上 → 清 piA 不影响 piB', () {
+      final a = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      final b = fit.matchExerciseByName('Barbell Squat')!.id;
+      final id1 = fit.createRoutine('X1');
+      final id2 = fit.createRoutine('X2');
+      fit.toggleRoutineExercise(id1, a);
+      fit.toggleRoutineExercise(id2, a);
+      final r1 = fit.routines.firstWhere((x) => x.id == id1);
+      final r2 = fit.routines.firstWhere((x) => x.id == id2);
+      r1.prog[a] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5);
+      r1.progInst = 'piA';
+      r2.progInst = 'piB';
+      final i1 = ProgState(tpl: 't')..w[a] = 70;
+      final i2 = ProgState(tpl: 't')..w[a] = 85;
+      fit.programStates['piA'] = i1;
+      fit.programStates['piB'] = i2;
+
+      fit.replaceRoutineExercise(id1, a, b); // 只该清 piA 里的 a
+
+      expect(i1.w.containsKey(a), isFalse, reason: 'piA 里的 a 该清');
+      expect(i2.w[a], 85, reason: 'piB 里的 a 不该被跨实例误清');
+      fit.saveAndExit();
+    });
+  });
+
+  // RISK-065 回归：开场组解析改动的「其它路径」行为护栏
+  //   （本次只让 prog 驱动无历史也走计划，不得波及非计划/纯次数等旧行为）
+  group('RISK-065 开场组非计划路径保持', () {
+    test('普通例程（无计划无历史）→ 默认 20kg', () {
+      final id = fit.createRoutine('O1');
+      final exId = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      fit.startRoutine(r);
+      final sets = fit.session!.exercises.firstWhere((e) => e.id == exId).sets;
+      expect(sets.isNotEmpty, isTrue);
+      expect(sets.every((s) => s.weight == 20.0), isTrue, reason: '无计划无历史应保持默认 20kg');
+      fit.saveAndExit();
+    });
+
+    test('prog 计划重量全为空 → 回落默认 20kg（不显示 0）', () {
+      final id = fit.createRoutine('O2');
+      final exId = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5);
+      fit.setPlannedSets(id, exId, const [PlannedSet(reps: 5), PlannedSet(reps: 5), PlannedSet(reps: 5)]);
+      fit.startRoutine(r);
+      final sets = fit.session!.exercises
+          .firstWhere((e) => e.id == exId)
+          .sets
+          .where((s) => s.kind != SetKind.warmup)
+          .toList();
+      expect(sets.every((s) => s.weight == 20.0), isTrue, reason: '计划无重量应回落默认，而非 0');
+      fit.saveAndExit();
+    });
+
+    test('纯次数动作（无历史无计划）→ 0kg 自重', () {
+      final id = fit.createRoutine('O3');
+      final exId = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      fit.repsOnly.add(exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      fit.startRoutine(r);
+      final sets = fit.session!.exercises.firstWhere((e) => e.id == exId).sets;
+      expect(sets.every((s) => s.weight == 0.0), isTrue, reason: '纯次数动作应 0kg 自重');
+      fit.saveAndExit();
+    });
+  });
+
+  // RISK-060 审出的小卫生问题：切数据源（清除数据/恢复备份）须重置「选中的餐」
+  group('RISK-060 审出项：选中餐随数据源重置', () {
+    test('loadNutrition 后 pickedMeal 归零', () {
+      fit.pickMeal(Meal.lunch);
+      expect(fit.pickedMeal, Meal.lunch);
+      fit.loadNutrition(null);
+      expect(fit.pickedMeal, isNull, reason: '切数据源后应清掉选中餐');
     });
   });
 }

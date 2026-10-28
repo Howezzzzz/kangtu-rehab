@@ -1670,5 +1670,12 @@
   "autoBackupNever": "Aucune sauvegarde",
   "autoBackupLost": "La dernière sauvegarde a échoué. Choisis à nouveau le dossier.",
   "autoBackupSaved": "Sauvegarde enregistrée",
-  "prepPortions": "Portions"
+  "prepPortions": "Portions",
+  "supersetUnlink": "Séparer du suivant",
+  "rotationAddRest": "Ajouter un jour de repos",
+  "rotationRestHint": "Passe toute seule le lendemain",
+  "rotationRestToday": "Aujourd’hui",
+  "rotationSkipRest": "Sauter ce jour de repos",
+  "rotationRestUpNext": "Ensuite : {name}",
+  "trainAnyway": "M’entraîner quand même"
 }

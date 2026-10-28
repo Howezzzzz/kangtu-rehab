@@ -77,10 +77,20 @@ jobs:
           set -e
           ARGS=""
           if [ -n "${{ needs.prepare.outputs.build }}" ]; then
-            ARGS="--build-name=${{ needs.prepare.outputs.version }} --build-number=${{ needs.prepare.outputs.build }}"
+            NAME="${{ needs.prepare.outputs.version }}"
+            BUILD="${{ needs.prepare.outputs.build }}"
           else
-            ARGS="--build-name=$(sed -n 's/^version:\(.*\)+.*/\1/p' pubspec.yaml | head -1) --build-number=$(sed -n 's/^version:.*+//p' pubspec.yaml | head -1)"
+            # 兜底（手动 dispatch 无 prepare 输出）：与 prepare 步同一套解析，
+            # 用 [[:space:]]* 吃掉“version: ”后的空格，避免 name 带前导空格（ISS-156）
+            RAW=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
+            NAME=${RAW%%+*}
+            BUILD=${RAW##*+}
           fi
+          # fail-loud：版本名不得为空或含空白（B7，防再出 ISS-156 类静默滑过）
+          case "$NAME" in
+            ""|*[[:space:]]*) echo "::error::bad version name '$NAME'"; exit 1 ;;
+          esac
+          ARGS="--build-name=${NAME} --build-number=${BUILD}"
           flutter build apk --release --split-per-abi $ARGS
           ls -l build/app/outputs/flutter-apk/
 
@@ -126,9 +136,15 @@ jobs:
             V="${{ needs.prepare.outputs.version }}"
             B="${{ needs.prepare.outputs.build }}"
           else
-            V=$(sed -n 's/^version:\(.*\)+.*/\1/p' pubspec.yaml | head -1)
-            B=$(sed -n 's/^version:.*+//p' pubspec.yaml | head -1)
+            # 兜底：同 build 步，吃掉“version: ”后的空格（ISS-156）
+            RAW=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
+            V=${RAW%%+*}
+            B=${RAW##*+}
           fi
+          # fail-loud：空/含空白版本名直接失败（避免生成非法 tag，如 “v 1.1.0.31”）
+          case "$V" in
+            ""|*[[:space:]]*) echo "::error::bad version name '$V'"; exit 1 ;;
+          esac
           echo "name=${V}" >> "$GITHUB_OUTPUT"
           echo "build=${B}" >> "$GITHUB_OUTPUT"
           echo "tag=v${V}.${B}" >> "$GITHUB_OUTPUT"
@@ -166,6 +182,8 @@ jobs:
           TAG="${{ steps.v.outputs.tag }}"
           BASE="https://github.com/Howezzzzz/kangtu-rehab/releases/download/${TAG}"
           MIRROR="https://gh-proxy.com/${BASE}"
+          MIRROR2="https://ghproxy.net/${BASE}"
+          MIRROR3="https://ghproxy.cc/${BASE}"
           # 更新内容写进清单 desc（App 更新弹窗会展示）；page_url 指向该 tag
           # （不再用 /releases/latest —— 那个会跳过预发行版）
           DESC=$(python3 -c "import json;print(json.dumps(open('notes.md',encoding='utf-8').read().strip(), ensure_ascii=False))")
@@ -184,6 +202,11 @@ jobs:
               "arm64-v8a": "${MIRROR}/kangtu-arm64-v8a.apk",
               "armeabi-v7a": "${MIRROR}/kangtu-armeabi-v7a.apk",
               "x86_64": "${MIRROR}/kangtu-x86_64.apk"
+            },
+            "mirrors": {
+              "arm64-v8a": ["${MIRROR}/kangtu-arm64-v8a.apk", "${MIRROR2}/kangtu-arm64-v8a.apk", "${MIRROR3}/kangtu-arm64-v8a.apk"],
+              "armeabi-v7a": ["${MIRROR}/kangtu-armeabi-v7a.apk", "${MIRROR2}/kangtu-armeabi-v7a.apk", "${MIRROR3}/kangtu-armeabi-v7a.apk"],
+              "x86_64": ["${MIRROR}/kangtu-x86_64.apk", "${MIRROR2}/kangtu-x86_64.apk", "${MIRROR3}/kangtu-x86_64.apk"]
             }
           }
           EOF

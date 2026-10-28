@@ -3431,5 +3431,20 @@
   "autoBackupNever": "No backup yet",
   "autoBackupLost": "Couldn't save the last backup. Choose the folder again.",
   "autoBackupSaved": "Backup saved",
-  "prepPortions": "Portions"
+  "prepPortions": "Portions",
+  "supersetUnlink": "Unchain from the next one",
+  "foodCategory": "CATEGORY",
+  "rotationAddRest": "Add a rest day",
+  "rotationRestHint": "Moves on by itself the next day",
+  "rotationRestToday": "Today",
+  "rotationSkipRest": "Skip this rest day",
+  "rotationRestUpNext": "Next: {name}",
+  "@rotationRestUpNext": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "trainAnyway": "Train anyway"
 }

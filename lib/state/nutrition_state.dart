@@ -274,6 +274,18 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
     return mealSlots.any((s) => s.meal == Meal.lunch) ? Meal.lunch : mealSlots.first.meal;
   }
 
+  Meal? pickedMeal;
+
+  Meal get openMeal {
+    final picked = pickedMeal;
+    return picked != null && mealsShown.contains(picked) ? picked : defaultMeal;
+  }
+
+  void pickMeal(Meal meal) {
+    pickedMeal = meal;
+    notifyListeners();
+  }
+
   bool trackerOn(Tracker t) => trackers.contains(t);
 
   void setTracker(Tracker t, bool on) {
@@ -647,11 +659,11 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
     ];
   }
 
-  List<FoodItem> searchFoods(String query) {
+  List<FoodItem> searchFoods(String query, {FoodCat? cat}) {
     final q = foldText(query.trim());
     return [
       for (final f in foodsByUse)
-        if (q.isEmpty || foldText(f.name).contains(q)) f,
+        if ((q.isEmpty || foldText(f.name).contains(q)) && (cat == null || f.cat == cat)) f,
     ];
   }
 
@@ -1074,6 +1086,7 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
     bool liquid = false,
     double cookedYield = 0,
     Macros macros = Macros.zero,
+    FoodCat? cat,
   }) {
     final clean = name.trim();
     final i = id == null ? -1 : foods.indexWhere((f) => f.id == id);
@@ -1087,7 +1100,8 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
           grams: grams,
           liquid: liquid,
           macros: macros,
-          cookedYield: cookedYield);
+          cookedYield: cookedYield,
+          cat: () => cat);
       _persist();
       notifyListeners();
       return foods[i];
@@ -1101,6 +1115,7 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
       liquid: liquid,
       cookedYield: cookedYield,
       macros: macros,
+      cat: cat,
     );
     foods.add(food);
     _persist();
@@ -1299,10 +1314,13 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
   bool get hasNutritionData =>
       foodLog.isNotEmpty || waterLog.isNotEmpty || foods.isNotEmpty || recipes.isNotEmpty || batches.isNotEmpty;
 
+  static const kNutritionDaysAhead = 7;
+
   void setNutritionDay(DateTime day) {
     final key = _dayKey(day);
     final today = _dayKey(DateTime.now());
-    nutritionDay = key.isAfter(today) ? today : key;
+    final last = shiftDays(today, kNutritionDaysAhead);
+    nutritionDay = key.isAfter(last) ? last : key;
     _nutritionSetOn = today;
     notifyListeners();
   }
@@ -1361,6 +1379,9 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
 
   void loadNutrition(Map<String, dynamic>? j, {Map<String, String>? restored}) {
     _dropCaches();
+    // RISK-060 审出的小卫生问题：切数据源（清除数据/恢复备份）时重置「选中的餐」，
+    // 否则营养页会停留在上一份数据的餐签。
+    pickedMeal = null;
     List<Map<String, dynamic>> list(String k) => [
           for (final e in (j?[k] as List?) ?? const [])
             if (e is Map) e.cast<String, dynamic>(),

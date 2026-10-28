@@ -22,6 +22,7 @@ class UpdateInfo {
     required this.desc,
     required this.downloadUrls,
     this.mirrorUrls = const {},
+    this.mirrorChains = const {},
     required this.pageUrl,
   });
 
@@ -32,6 +33,10 @@ class UpdateInfo {
 
   /// 镜像地址（同键；直链失败时使用）。旧版清单无此字段时为空。
   final Map<String, String> mirrorUrls;
+
+  /// 多镜像链（同键，按顺序试；RISK-031/035）。新清单的 `mirrors` 字段；
+  /// 旧版清单无此字段，此时回落到 [mirrorUrls]（单镜像，向后兼容）。
+  final Map<String, List<String>> mirrorChains;
   final String pageUrl;
 
   static UpdateInfo? parse(String raw) {
@@ -49,6 +54,23 @@ class UpdateInfo {
         return out;
       }
 
+      // mirrors: {"abi": [url, url, ...]} —— 多镜像链，逐项消毒空串
+      Map<String, List<String>> chains(String key) {
+        final out = <String, List<String>>{};
+        final m = j[key];
+        if (m is Map) {
+          m.forEach((k, v) {
+            if (v is List) {
+              final list = v.whereType<String>().where((e) => e.isNotEmpty).toList();
+              if (list.isNotEmpty) out['$k'] = list;
+            } else if (v is String && v.isNotEmpty) {
+              out['$k'] = [v];
+            }
+          });
+        }
+        return out;
+      }
+
       return UpdateInfo(
         version: '${j['version'] ?? ''}',
         build: (j['version_code'] is int)
@@ -57,6 +79,7 @@ class UpdateInfo {
         desc: '${j['desc'] ?? ''}',
         downloadUrls: urls('download_urls'),
         mirrorUrls: urls('mirror_urls'),
+        mirrorChains: chains('mirrors'),
         pageUrl: '${j['page_url'] ?? UpdateService.releasesPage}',
       );
     } catch (_) {
@@ -202,28 +225,43 @@ class UpdateService {
     }
   }
 
-  /// 候选下载地址：**直链优先，其次镜像；两侧按同一个 ABI 键配对**
+  /// 候选下载地址：**直链优先，其次镜像链；两侧按同一个 ABI 键配对**
   /// （ISS-146：不可各自取首选，否则可能兜底到错架构包）。
+  /// 镜像优先取多镜像链 `mirrors[abi]`，无则回落单镜像 `mirror_urls[abi]`
+  /// （RISK-031/035：国内单镜像易挂，需多备）。去重保序。
   /// 无任何 APK 直链时返回空列表——不把发布页 HTML 当 APK（ISS-147）。
   static List<String> pickUrls(UpdateInfo info) {
     const order = ['arm64-v8a', 'armeabi-v7a', 'x86_64'];
     String? key;
     for (final k in order) {
-      if (info.downloadUrls.containsKey(k) || info.mirrorUrls.containsKey(k)) {
+      if (info.downloadUrls.containsKey(k) ||
+          info.mirrorChains.containsKey(k) ||
+          info.mirrorUrls.containsKey(k)) {
         key = k;
         break;
       }
     }
     key ??= info.downloadUrls.keys.isNotEmpty
         ? info.downloadUrls.keys.first
-        : (info.mirrorUrls.keys.isNotEmpty ? info.mirrorUrls.keys.first : null);
+        : (info.mirrorChains.keys.isNotEmpty
+            ? info.mirrorChains.keys.first
+            : (info.mirrorUrls.keys.isNotEmpty ? info.mirrorUrls.keys.first : null));
     if (key == null) return const [];
 
     final out = <String>[];
-    final direct = info.downloadUrls[key];
-    final mirror = info.mirrorUrls[key];
-    if (direct != null && direct.isNotEmpty) out.add(direct);
-    if (mirror != null && mirror.isNotEmpty && mirror != direct) out.add(mirror);
+    void add(String? u) {
+      if (u != null && u.isNotEmpty && !out.contains(u)) out.add(u);
+    }
+
+    add(info.downloadUrls[key]);
+    final chain = info.mirrorChains[key];
+    if (chain != null && chain.isNotEmpty) {
+      for (final u in chain) {
+        add(u);
+      }
+    } else {
+      add(info.mirrorUrls[key]);
+    }
     return out;
   }
 

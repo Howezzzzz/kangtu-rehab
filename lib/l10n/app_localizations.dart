@@ -10869,6 +10869,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Portions'**
   String get prepPortions;
+
+  /// No description provided for @supersetUnlink.
+  ///
+  /// In en, this message translates to:
+  /// **'Unchain from the next one'**
+  String get supersetUnlink;
+
+  /// No description provided for @foodCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'CATEGORY'**
+  String get foodCategory;
+
+  /// No description provided for @rotationAddRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a rest day'**
+  String get rotationAddRest;
+
+  /// No description provided for @rotationRestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves on by itself the next day'**
+  String get rotationRestHint;
+
+  /// No description provided for @rotationRestToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get rotationRestToday;
+
+  /// No description provided for @rotationSkipRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this rest day'**
+  String get rotationSkipRest;
+
+  /// No description provided for @rotationRestUpNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {name}'**
+  String rotationRestUpNext(String name);
+
+  /// No description provided for @trainAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'Train anyway'**
+  String get trainAnyway;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

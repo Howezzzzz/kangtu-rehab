@@ -6104,4 +6104,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prepPortions => 'Portions';
+
+  @override
+  String get supersetUnlink => 'Unchain from the next one';
+
+  @override
+  String get foodCategory => 'CATEGORY';
+
+  @override
+  String get rotationAddRest => 'Add a rest day';
+
+  @override
+  String get rotationRestHint => 'Moves on by itself the next day';
+
+  @override
+  String get rotationRestToday => 'Today';
+
+  @override
+  String get rotationSkipRest => 'Skip this rest day';
+
+  @override
+  String rotationRestUpNext(String name) {
+    return 'Next: $name';
+  }
+
+  @override
+  String get trainAnyway => 'Train anyway';
 }
