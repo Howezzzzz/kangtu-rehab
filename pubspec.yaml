@@ -1,7 +1,7 @@
 name: gymmane
 description: "康途 (Kangtu) — an offline, ad-free rehab \u0026 gym log for Android and iOS."
 publish_to: 'none'
-version: 1.1.1+31
+version: 1.1.1+32
 environment:
   sdk: ^3.11.5
 
