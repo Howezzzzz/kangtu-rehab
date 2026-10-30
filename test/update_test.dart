@@ -517,4 +517,77 @@ void main() {
       expect(find.text(t.updateLatest('1.6.0-kangtu')), findsOneWidget);
     });
   });
+
+  // ISS-167 回归：Android versionCode 被 ABI 后缀规则放大 10 倍（build*10+abi），
+  //   而版本清单 version_code 是原始构建号 → 旧实现两者直接比，永远「已是最新」。
+  //   修复：比较前把安装版 versionCode 还原成构建号。
+  group('ISS-167 构建号尺度统一', () {
+    test('versionCode → 构建号（302→30、312→31；未加后缀的调试包原样）', () {
+      expect(UpdateService.buildNumberFromVersionCode(302), 30);
+      expect(UpdateService.buildNumberFromVersionCode(312), 31);
+      expect(UpdateService.buildNumberFromVersionCode(311), 31);
+      expect(UpdateService.buildNumberFromVersionCode(1), 1);
+      expect(UpdateService.buildNumberFromVersionCode(0), 0);
+    });
+
+    test('真实场景：装 1.0.0(versionCode 302) 看线上 1.1.0(build 31) → 有更新', () async {
+      final res = await UpdateService.check(
+        fetch: (_) async => manifest(build: 31),
+        current: ('1.0.0', UpdateService.buildNumberFromVersionCode(302)),
+      );
+      expect(res.hasUpdate, isTrue, reason: '修复前 31 > 302 为 false → 永远显示已是最新');
+    });
+
+    test('装 1.1.0(versionCode 312) 看 1.1.0(build 31) → 已是最新', () async {
+      final res = await UpdateService.check(
+        fetch: (_) async => manifest(build: 31),
+        current: ('1.1.0', UpdateService.buildNumberFromVersionCode(312)),
+      );
+      expect(res.hasUpdate, isFalse);
+    });
+  });
+
+  // ISS-168 回归：按设备实际 ABI 选包（旧实现写死 arm64 优先，32 位设备会下到装不上的包）
+  group('ISS-168 按设备 ABI 选包', () {
+    UpdateInfo allAbis() => UpdateInfo.parse(jsonEncode({
+          'version': '1.1.0',
+          'version_code': 31,
+          'download_urls': {
+            'arm64-v8a': 'https://d/arm64.apk',
+            'armeabi-v7a': 'https://d/v7a.apk',
+            'x86_64': 'https://d/x64.apk',
+          },
+        }))!;
+
+    test('armeabi-v7a 设备取 v7a 包', () {
+      expect(UpdateService.pickUrls(allAbis(), abi: 'armeabi-v7a'), ['https://d/v7a.apk']);
+    });
+    test('x86_64 设备取 x64 包', () {
+      expect(UpdateService.pickUrls(allAbis(), abi: 'x86_64'), ['https://d/x64.apk']);
+    });
+    test('arm64 设备取 arm64 包', () {
+      expect(UpdateService.pickUrls(allAbis(), abi: 'arm64-v8a'), ['https://d/arm64.apk']);
+    });
+    test('设备 ABI 不在清单里 → 回落固定顺序取首个', () {
+      expect(UpdateService.pickUrls(allAbis(), abi: 'mips'), ['https://d/arm64.apk']);
+    });
+    test('不传 abi → 保持旧行为（arm64 优先）', () {
+      expect(UpdateService.pickUrls(allAbis()), ['https://d/arm64.apk']);
+    });
+  });
+
+  // 静态哨兵（Fail-loud）：gradle 的 versionCode 后缀因子必须与 Dart 常量一致，
+  //   否则「安装版 versionCode → 构建号」的还原会算错（防 ISS-167 再犯）。
+  group('静态哨兵：ABI versionCode 后缀因子一致', () {
+    test('build.gradle.kts 的 *N 后缀因子 == UpdateService.abiVersionCodeFactor', () {
+      final f = File('android/app/build.gradle.kts');
+      expect(f.existsSync(), isTrue, reason: '找不到 android/app/build.gradle.kts');
+      final s = f.readAsStringSync();
+      final m = RegExp(r'versionCodeOverride\s*=\s*[^;]*?\*\s*(\d+)').firstMatch(s);
+      expect(m, isNotNull,
+          reason: '未找到 versionCodeOverride 的 *N 后缀规则；若已改方案，请同步 update_service.dart 的 abiVersionCodeFactor 与还原逻辑');
+      expect(int.parse(m!.group(1)!), UpdateService.abiVersionCodeFactor,
+          reason: 'gradle 后缀因子与 Dart 常量不一致 → 更新判断会算错');
+    });
+  });
 }

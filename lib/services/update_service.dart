@@ -8,6 +8,7 @@
  */
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi' show Abi;
 import 'dart:io';
 
 import 'package:open_filex/open_filex.dart';
@@ -113,6 +114,37 @@ class UpdateService {
   /// 我们一律发预发行版，而 /latest 会跳过预发行版指向旧版。
   static const releasesPage = 'https://github.com/Howezzzzz/kangtu-rehab/releases';
 
+  /// Android 侧给每个 ABI 加了 versionCode 后缀（见 android/app/build.gradle.kts：
+  /// `versionCodeOverride = variant.versionCode * 10 + abiVersionCode`，abi 码 1/2/3），
+  /// 而版本清单的 `version_code` 是**原始构建号** → 两者相差 10 倍。
+  /// 直接比较会「永远显示已是最新」（ISS-167），比较前必须用
+  /// [buildNumberFromVersionCode] 把安装版 versionCode 还原成构建号。
+  static const int abiVersionCodeFactor = 10;
+
+  /// 由 Android versionCode 还原构建号（302 -> 30、312 -> 31）。
+  /// versionCode 小于 [abiVersionCodeFactor]（如未加后缀的调试包）时原样返回。
+  static int buildNumberFromVersionCode(int versionCode) =>
+      versionCode >= abiVersionCodeFactor ? versionCode ~/ abiVersionCodeFactor : versionCode;
+
+  /// 设备 ABI 对应的清单键（用 dart:ffi 的 [Abi]，不引入新依赖）。
+  /// 返回 null = 识别不出 → 调用方回落「按清单顺序取首个」的旧行为。
+  static String? deviceAbiKey() {
+    try {
+      switch (Abi.current()) {
+        case Abi.androidArm64:
+          return 'arm64-v8a';
+        case Abi.androidArm:
+          return 'armeabi-v7a';
+        case Abi.androidX64:
+          return 'x86_64';
+        default:
+          return null;
+      }
+    } catch (_) {
+      return null;
+    }
+  }
+
   /// 版本清单地址（多源并行竞速，谁先成功用谁）。
   /// 国内实测（2026-10-20）：raw.githubusercontent 不可达；gh-proxy 前缀最快（~0.3s）；
   /// jsdelivr 系列（cdn/fastly/gcore）多数网络可达但有地区被污染。
@@ -144,11 +176,14 @@ class UpdateService {
   static Future<void> Function(String url, File file, void Function(double?)? onProgress)?
       debugDownloadOne;
 
-  /// 当前已安装版本（读系统真实值，避免与包体漂移）
+  /// 当前已安装版本（读系统真实值，避免与包体漂移）。
+  /// PackageInfo 的 buildNumber 是 Android **versionCode**（被 ABI 后缀放大过），
+  /// 这里统一还原成构建号，才能与清单的 `version_code` 同尺度比较（ISS-167）。
   static Future<(String, int)> currentVersion() async {
     try {
       final info = await PackageInfo.fromPlatform();
-      return (info.version, int.tryParse(info.buildNumber) ?? 0);
+      final versionCode = int.tryParse(info.buildNumber) ?? 0;
+      return (info.version, buildNumberFromVersionCode(versionCode));
     } catch (_) {
       return ('', 0);
     }
@@ -227,25 +262,29 @@ class UpdateService {
 
   /// 候选下载地址：**直链优先，其次镜像链；两侧按同一个 ABI 键配对**
   /// （ISS-146：不可各自取首选，否则可能兜底到错架构包）。
+  /// [abi] 为设备实际 ABI（ISS-168：旧实现写死 arm64 优先，32 位设备会下到装不上的包）；
+  /// 传入且清单有该键时优先用它，否则回落「固定顺序取首个」。
   /// 镜像优先取多镜像链 `mirrors[abi]`，无则回落单镜像 `mirror_urls[abi]`
   /// （RISK-031/035：国内单镜像易挂，需多备）。去重保序。
   /// 无任何 APK 直链时返回空列表——不把发布页 HTML 当 APK（ISS-147）。
-  static List<String> pickUrls(UpdateInfo info) {
-    const order = ['arm64-v8a', 'armeabi-v7a', 'x86_64'];
+  static List<String> pickUrls(UpdateInfo info, {String? abi}) {
+    final avail = <String>{
+      ...info.downloadUrls.keys,
+      ...info.mirrorChains.keys,
+      ...info.mirrorUrls.keys,
+    };
     String? key;
-    for (final k in order) {
-      if (info.downloadUrls.containsKey(k) ||
-          info.mirrorChains.containsKey(k) ||
-          info.mirrorUrls.containsKey(k)) {
-        key = k;
-        break;
+    if (abi != null && avail.contains(abi)) key = abi;
+    const order = ['arm64-v8a', 'armeabi-v7a', 'x86_64'];
+    if (key == null) {
+      for (final k in order) {
+        if (avail.contains(k)) {
+          key = k;
+          break;
+        }
       }
     }
-    key ??= info.downloadUrls.keys.isNotEmpty
-        ? info.downloadUrls.keys.first
-        : (info.mirrorChains.keys.isNotEmpty
-            ? info.mirrorChains.keys.first
-            : (info.mirrorUrls.keys.isNotEmpty ? info.mirrorUrls.keys.first : null));
+    key ??= avail.isNotEmpty ? avail.first : null;
     if (key == null) return const [];
 
     final out = <String>[];
@@ -266,8 +305,8 @@ class UpdateService {
   }
 
   /// 单地址（兼容旧调用；无候选时返回发布页仅作展示用途）
-  static String pickUrl(UpdateInfo info) {
-    final urls = pickUrls(info);
+  static String pickUrl(UpdateInfo info, {String? abi}) {
+    final urls = pickUrls(info, abi: abi);
     return urls.isEmpty ? info.pageUrl : urls.first;
   }
 
@@ -289,7 +328,8 @@ class UpdateService {
     final target = Directory('${dir.path}/update')..createSync(recursive: true);
     final file = File('${target.path}/$name');
     final one = debugDownloadOne ?? _downloadOne;
-    return downloadTo(file, pickUrls(info), onProgress: onProgress, one: one);
+    // ISS-168：按设备实际 ABI 选包，不再写死 arm64 优先
+    return downloadTo(file, pickUrls(info, abi: deviceAbiKey()), onProgress: onProgress, one: one);
   }
 
   /// 依次尝试 [urls]（直链→镜像）：成功返回文件；全失败/无候选抛异常。
