@@ -809,7 +809,11 @@ class _NavBarState extends State<_NavBar> {
     return LayoutBuilder(
         builder: (context, c) {
           _slotW = c.maxWidth - 28;
-          _gap = ((_slotW - 4 * _iw - _fabW) / 4).clamp(0.0, 40.0);
+          // 间隙必须与 Row 里实际用的间距**完全一致**：不做上限截断（截断后
+          // spaceBetween 仍会均分更大的剩余空间 → 气泡与真实标签错位，宽屏尤甚）。
+          // 2026-10-31 用户报告「标签与阴影又对不上」＝上游 1.8.0 把此处改回 clamp(0,40)；
+          // 回归测试见 test/tab_bar_alignment_test.dart，请勿再截断。
+          _gap = ((_slotW - 4 * _iw - _fabW) / 4).clamp(0.0, double.infinity);
           final drag = _dragX;
 
           return Stack(
@@ -866,14 +870,20 @@ class _NavBarState extends State<_NavBar> {
                     if (_dragX != null) _dragEnd();
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    // 用显式间隙而非 spaceBetween：气泡(_slotX)与真图标共用同一个 _gap，
+                    // 从构造上保证对齐（不依赖 Flutter 的 spaceBetween 分配）。
                     children: [
                       _item(context, 0, PhosphorIconsRegular.house, PhosphorIconsFill.house, t.home, fit.goHome),
+                      SizedBox(width: _gap),
                       _item(context, 1, PhosphorIconsRegular.chartLineUp, PhosphorIconsFill.chartLineUp, t.progress,
                           fit.goProgress),
+                      SizedBox(width: _gap),
                       _fab(context),
+                      SizedBox(width: _gap),
                       _item(context, 2, PhosphorIconsRegular.barbell, PhosphorIconsFill.barbell, t.exercises,
                           fit.goExercises),
+                      SizedBox(width: _gap),
                       _item(context, 3, PhosphorIconsRegular.userCircle, PhosphorIconsFill.userCircle, t.profile.toUpperCase(),
                           fit.goSettings),
                     ],
