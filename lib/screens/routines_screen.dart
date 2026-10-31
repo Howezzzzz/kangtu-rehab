@@ -4,13 +4,13 @@ import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 import '../catalog/program_templates.dart';
 import '../l10n/l10n.dart';
-import '../models/progression.dart';
 import '../models/workout.dart';
 import '../services/plan_pdf.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import '../widgets/dialogs.dart';
+import '../widgets/entrance.dart';
 import '../widgets/glass.dart';
 import '../widgets/liquid_notch.dart';
 import '../widgets/routine_folder.dart';
@@ -24,14 +24,17 @@ class RoutinesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gc = context.gc;
-    return SafeArea(
+    return RiseScope(
+      id: 'routines',
+      child: SafeArea(
       bottom: false,
       child: SingleChildScrollView(
+        key: const PageStorageKey('routines'),
         clipBehavior: Clip.none,
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: riseAll([
             ScreenHeader(
               title: t.routines,
               onBack: fit.backFromRoutines,
@@ -61,10 +64,23 @@ class RoutinesScreen extends StatelessWidget {
             const SizedBox(height: 22),
             Row(children: [
               Expanded(
-                child: Text(fit.rotation ? t.rotationTitle : t.weeklyPlan,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, a) => FadeTransition(
+                    opacity: CurvedAnimation(parent: a, curve: const Interval(0.45, 1)),
+                    child: child,
+                  ),
+                  layoutBuilder: (current, previous) =>
+                      Stack(alignment: Alignment.centerLeft, children: [...previous, ?current]),
+                  child: Padding(
+                    key: ValueKey(fit.rotation),
+                    padding: const EdgeInsets.only(left: 4),
+                    child: Text((fit.rotation ? t.rotationTitle : t.weeklyPlan).toUpperCase(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: _label(gc)),
+                  ),
+                ),
               ),
               const SizedBox(width: 8),
               SegToggle(
@@ -78,30 +94,63 @@ class RoutinesScreen extends StatelessWidget {
               ),
             ]),
             const SizedBox(height: 10),
-            if (fit.rotation)
-              _rotationCard(context, gc)
-            else
-              SoftCard(
-                radius: 20,
-                borderColor: Colors.transparent,
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                child: Column(children: [for (int i = 0; i < 7; i++) _dayRow(context, gc, i)]),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 380),
+              curve: Curves.easeOutCubic,
+              alignment: Alignment.topCenter,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 320),
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeInCubic,
+                layoutBuilder: (current, previous) =>
+                    Stack(alignment: Alignment.topCenter, children: [...previous, ?current]),
+                transitionBuilder: (child, a) => FadeTransition(
+                  opacity: CurvedAnimation(parent: a, curve: const Interval(0.45, 1)),
+                  child: SlideTransition(
+                    position: Tween(
+                      begin: Offset(child.key == const ValueKey(true) ? 0.06 : -0.06, 0),
+                      end: Offset.zero,
+                    ).animate(a),
+                    child: child,
+                  ),
+                ),
+                child: KeyedSubtree(
+                  key: ValueKey(fit.rotation),
+                  child: fit.rotation
+                      ? _rotationCard(context, gc)
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SoftCard(
+                              radius: 22,
+                              borderColor: Colors.transparent,
+                              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                              child: Column(children: [for (int i = 0; i < 7; i++) _dayRow(context, gc, i)]),
+                            ),
+                            if (fit.activeRoutines.isNotEmpty) ...[
+                              const SizedBox(height: 10),
+                              _plansRow(context, gc),
+                            ],
+                          ],
+                        ),
+                ),
               ),
-            if (!fit.rotation && fit.activeRoutines.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              _plansRow(context, gc),
-            ],
-            const SizedBox(height: 26),
+            ),
+            const SizedBox(height: 30),
             if (fit.planCycles.isNotEmpty) ...[
-              Text(t.cycleTitle,
-                  style: AppTheme.f(12,
-                      weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
-              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: Text(t.cycleTitle.toUpperCase(), style: _label(gc)),
+              ),
+              const SizedBox(height: 12),
               for (final e in fit.planCycles.entries) _cycleStatus(context, gc, e.key),
-              const SizedBox(height: 26),
+              const SizedBox(height: 30),
             ],
-            Text(t.yourRoutines, style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
-            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(t.yourRoutines.toUpperCase(), style: _label(gc)),
+            ),
+            const SizedBox(height: 12),
             if (fit.activeRoutines.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 26),
@@ -119,7 +168,18 @@ class RoutinesScreen extends StatelessWidget {
             if (fit.archivedRoutines.isNotEmpty) ...[
               const SizedBox(height: 6),
               _archivedHeader(gc),
-              if (fit.showArchivedRoutines) Opacity(opacity: 0.6, child: _folders(context, fit.archivedRoutines)),
+              AnimatedSize(
+                duration: const Duration(milliseconds: 340),
+                curve: Curves.easeOutCubic,
+                alignment: Alignment.topCenter,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 260),
+                  opacity: fit.showArchivedRoutines ? 0.6 : 0,
+                  child: fit.showArchivedRoutines
+                      ? _folders(context, fit.archivedRoutines)
+                      : const SizedBox(width: double.infinity),
+                ),
+              ),
             ],
             const SizedBox(height: 16),
             PrimaryButton(
@@ -144,11 +204,15 @@ class RoutinesScreen extends StatelessWidget {
               icon: PhosphorIconsRegular.sparkle,
               onTap: fit.goAiPlan,
             ),
-          ],
+          ]),
         ),
+      ),
       ),
     );
   }
+
+  TextStyle _label(GymColors gc) =>
+      AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4);
 
   void _shareMenu(BuildContext context) {
     final gc = context.gc;
@@ -205,6 +269,46 @@ class RoutinesScreen extends StatelessWidget {
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _cycleStatus(BuildContext context, GymColors gc, String routineId) {
+    final c = fit.cycleOf(routineId);
+    final r = fit.routines.where((x) => x.id == routineId).firstOrNull;
+    if (c == null || r == null) return const SizedBox.shrink();
+    final wk = c.weekIndex(DateTime.now());
+    final done = fit.cycleDoneSessions(routineId);
+    final whole = c.weeks * c.perWeek;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: SoftCard(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(r.name, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
+                  const SizedBox(height: 2),
+                  Text(
+                    '${wk == null ? t.cycleComplete : t.cycleWeekXY('$wk', '${c.weeks}')}'
+                    ' · ${t.cycleDone('$done', '$whole')}'
+                    '${c.round > 1 ? ' · ${t.cycleRound(c.round)}' : ''}',
+                    style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textSecondary),
+                  ),
+                ],
+              ),
+            ),
+            if (c.expired)
+              TextButton(
+                onPressed: () => fit.advanceCycle(routineId),
+                child: Text(t.cycleRenew,
+                    style: AppTheme.f(12.5, weight: FontWeight.w700, color: gc.ember)),
+              ),
+          ],
         ),
       ),
     );
@@ -388,7 +492,6 @@ class RoutinesScreen extends StatelessWidget {
               const SizedBox(height: 16),
               for (final template in kProgramTemplates)
                 _templateCard(context, gc, sheet, template),
-              const SizedBox(height: 8),
             ],
           ),
         ),
@@ -401,8 +504,11 @@ class RoutinesScreen extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
+        final made = fit.applyTemplate(template);
         Navigator.pop(sheet);
-        _templateDetail(context, template);
+        if (made == 0 || !context.mounted) return;
+        showNotchToast(context, t.templateAdded(made),
+            subtitle: template.name, icon: PhosphorIconsFill.stack, accent: context.gc.sage);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
@@ -424,30 +530,8 @@ class RoutinesScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
-                    Flexible(
-                      child: Text(t.templateName(template.id, template.name),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTheme.f(15, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.5)),
-                    ),
-                    if (template.pro) ...[
-                      const SizedBox(width: 6),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: gc.sage.withOpacity(0.14),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Row(mainAxisSize: MainAxisSize.min, children: [
-                          Icon(PhosphorIconsFill.lightning, size: 9, color: gc.sage),
-                          const SizedBox(width: 3),
-                          Text(t.progBadge,
-                              style: AppTheme.f(9, weight: FontWeight.w700, color: gc.sage, letterSpacing: 0.3)),
-                        ]),
-                      ),
-                    ],
-                  ]),
+                  Text(template.name,
+                      style: AppTheme.f(15, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.5)),
                   const SizedBox(height: 2),
                   Text(t.templateBlurb(template.id),
                       style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.35)),
@@ -459,290 +543,6 @@ class RoutinesScreen extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Icon(PhosphorIconsRegular.plus, size: 16, color: gc.textSecondary),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // ---- 计划详情页(融合式:展示周结构/组次/渐进规则,一键开始) ----
-
-  void _templateDetail(BuildContext context, ProgramTemplate template) {
-    final gc = context.gc;
-    // 同名训练日合并展示(如 5×5 的 A 日周一/周五)
-    final dayNames = <String>[];
-    final dayWds = <String, List<int>>{};
-    final dayExs = <String, List<ProgramExercise>>{};
-    for (final d in template.days) {
-      if (!dayExs.containsKey(d.name)) {
-        dayNames.add(d.name);
-        dayExs[d.name] = d.exercises;
-        dayWds[d.name] = [];
-      }
-      if (d.weekday != null) dayWds[d.name]!.add(d.weekday!);
-    }
-    showAppSheet<void>(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (sheet) => Container(
-        padding: sheetPad(sheet),
-        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.88),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SheetHandle(),
-              const SizedBox(height: 16),
-              SheetTitle(t.templateName(template.id, template.name),
-                  subtitle: t.templateBlurb(template.id)),
-              const SizedBox(height: 14),
-              if (template.pro) ...[_progBadges(context, gc, template), const SizedBox(height: 14)],
-              for (final name in dayNames) ...[
-                _dayDetailCard(context, gc, name, dayWds[name]!, dayExs[name]!),
-                const SizedBox(height: 10),
-              ],
-              const SizedBox(height: 6),
-              PrimaryButton(
-                label: t.tplStart,
-                onTap: () => _startProgram(context, sheet, template),
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _progBadges(BuildContext context, GymColors gc, ProgramTemplate template) {
-    final kinds = <ProgKind>{};
-    for (final d in template.days) {
-      for (final e in d.exercises) {
-        if (e.spec != null) kinds.add(e.spec!.kind);
-      }
-    }
-    String label(ProgKind k) => switch (k) {
-          ProgKind.linear => t.progLinShort,
-          ProgKind.dbl => t.progDblShort,
-          ProgKind.reps => t.progRepsShort,
-          ProgKind.cycle => t.progCycleShort,
-        };
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: gc.sage.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Icon(PhosphorIconsFill.lightning, size: 14, color: gc.sage),
-          const SizedBox(width: 6),
-          Text(t.progBadge, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.sage)),
-        ]),
-        const SizedBox(height: 6),
-        for (final k in kinds)
-          Padding(
-            padding: const EdgeInsets.only(top: 2),
-            child: Text('· ${label(k)}',
-                style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.4)),
-          ),
-      ]),
-    );
-  }
-
-  Widget _dayDetailCard(
-      BuildContext context, GymColors gc, String dayName, List<int> weekdays, List<ProgramExercise> exs) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: gc.bgRaised2,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Expanded(
-            child: Text(dayName,
-                style: AppTheme.f(14, weight: FontWeight.w700, color: gc.text)),
-          ),
-          if (weekdays.isNotEmpty)
-            Text(weekdays.map((w) => t.weekdayShort(w)).join(' · '),
-                style: AppTheme.f(11, weight: FontWeight.w600, color: gc.ember)),
-        ]),
-        const SizedBox(height: 8),
-        for (final pe in exs)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5),
-            child: Row(children: [
-              Expanded(
-                child: Text(_tplExerciseName(pe.name),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTheme.f(13, weight: FontWeight.w500, color: gc.textSecondary)),
-              ),
-              const SizedBox(width: 8),
-              Text(_schemeLabel(pe),
-                  style: AppTheme.f(12, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.3)),
-            ]),
-          ),
-      ]),
-    );
-  }
-
-  String _tplExerciseName(String name) {
-    final ex = fit.matchExerciseByName(name);
-    if (ex == null) return name;
-    return t.catalogName(ex.id, ex.name);
-  }
-
-  String _schemeLabel(ProgramExercise pe) {
-    final s = pe.spec;
-    if (s == null) return '${pe.sets} ×';
-    return switch (s.kind) {
-      ProgKind.linear => '${s.sets}×${s.reps}',
-      ProgKind.dbl || ProgKind.reps => '${s.sets}×${s.repMin}-${s.repMax}',
-      ProgKind.cycle => t.progCycleWeeks(s.weeks.length),
-    };
-  }
-
-  Future<void> _startProgram(
-      BuildContext context, BuildContext sheet, ProgramTemplate template) async {
-    Map<String, double>? tm;
-    if (template.hasCycle) {
-      tm = await _askTrainingMax(context, template);
-      if (tm == null) return;
-    }
-    final made = fit.applyTemplate(template, tm: tm);
-    if (!context.mounted) return;
-    Navigator.pop(sheet);
-    if (made == 0) return;
-    showNotchToast(context, t.templateAdded(made),
-        subtitle: t.templateName(template.id, template.name),
-        icon: PhosphorIconsFill.stack,
-        accent: context.gc.sage);
-  }
-
-  Future<Map<String, double>?> _askTrainingMax(
-      BuildContext context, ProgramTemplate template) {
-    final gc = context.gc;
-    final lifts = template.cycleLifts;
-    final controllers = <String, TextEditingController>{};
-    for (final name in lifts) {
-      final ex = fit.matchExerciseByName(name);
-      final est = ex == null ? null : estimateTrainingMax(fit, ex.id);
-      final shown = fit.toDisplayWeight(est ?? 40);
-      controllers[name] = TextEditingController(
-          text: shown == shown.roundToDouble()
-              ? shown.toStringAsFixed(0)
-              : shown.toStringAsFixed(1));
-    }
-    return showDialog<Map<String, double>>(
-      context: context,
-      builder: (dlg) => AlertDialog(
-        backgroundColor: gc.bgRaised,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(t.tmTitle,
-            style: AppTheme.f(16, weight: FontWeight.w700, color: gc.text)),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(t.tmHint(fit.units),
-                  style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.45)),
-              const SizedBox(height: 14),
-              for (final name in lifts) ...[
-                Text(_tplExerciseName(name),
-                    style: AppTheme.f(13, weight: FontWeight.w600, color: gc.text)),
-                const SizedBox(height: 4),
-                TextField(
-                  controller: controllers[name],
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  style: AppTheme.f(14, weight: FontWeight.w600, color: gc.text),
-                  decoration: InputDecoration(
-                    isDense: true,
-                    suffixText: fit.units,
-                    suffixStyle: AppTheme.f(12, color: gc.textTertiary),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    filled: true,
-                    fillColor: gc.bgRaised2,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-              ],
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dlg),
-            child: Text(t.cancel,
-                style: AppTheme.f(13, weight: FontWeight.w600, color: gc.textSecondary)),
-          ),
-          TextButton(
-            onPressed: () {
-              final out = <String, double>{};
-              for (final e in controllers.entries) {
-                final v = double.tryParse(e.value.text.trim().replaceAll(',', '.'));
-                if (v != null && v > 0) out[e.key] = fit.fromDisplayWeight(v);
-              }
-              Navigator.pop(dlg, out);
-            },
-            child: Text(t.done,
-                style: AppTheme.f(13, weight: FontWeight.w700, color: gc.ember)),
-          ),
-        ],
-      ),
-    ).whenComplete(() {
-      for (final c in controllers.values) {
-        c.dispose();
-      }
-    });
-  }
-
-  Widget _cycleStatus(BuildContext context, GymColors gc, String routineId) {
-    final c = fit.cycleOf(routineId);
-    final r = fit.routines.where((x) => x.id == routineId).firstOrNull;
-    if (c == null || r == null) return const SizedBox.shrink();
-    final wk = c.weekIndex(DateTime.now());
-    final done = fit.cycleDoneSessions(routineId);
-    final whole = c.weeks * c.perWeek;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: SoftCard(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(r.name, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
-                  const SizedBox(height: 2),
-                  Text(
-                    '${wk == null ? t.cycleComplete : t.cycleWeekXY('$wk', '${c.weeks}')}'
-                    ' · ${t.cycleDone('$done', '$whole')}'
-                    '${c.round > 1 ? ' · ${t.cycleRound(c.round)}' : ''}',
-                    style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textSecondary),
-                  ),
-                ],
-              ),
-            ),
-            if (c.expired)
-              TextButton(
-                onPressed: () => fit.advanceCycle(routineId),
-                child: Text(t.cycleRenew,
-                    style: AppTheme.f(12.5, weight: FontWeight.w700, color: gc.ember)),
-              ),
           ],
         ),
       ),
@@ -1173,11 +973,11 @@ class RoutinesScreen extends StatelessWidget {
     final assigned = fit.routinesOn(day);
     final isToday = DateTime.now().weekday == weekday;
     final moved = fit.movedOn(day);
-    return GestureDetector(
+    return Pressable(
+      scale: 0.98,
       onTap: () => _pickRoutine(context, weekday, day),
-      behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
         child: Row(
           children: [
             Text(t.weekdayShort(weekday),

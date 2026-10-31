@@ -436,7 +436,8 @@ void main() {
   group('设置页入口', () {
     testWidgets('设置页显示「检查更新」行（不触发网络）', (tester) async {
       fit.onboarded = true;
-      fit.route = 'preferences';
+      // 上游 1.8.0 起设置页改为「首页分区 + 子页」，检查更新入口在「支持」分区
+      fit.route = 'preferences/support';
       await tester.pumpWidget(const GymManeApp());
       await tester.pumpAndSettle();
       expect(find.text(t.updateTitle), findsOneWidget);
@@ -444,7 +445,7 @@ void main() {
 
     Future<void> openSettings(WidgetTester tester) async {
       fit.onboarded = true;
-      fit.route = 'preferences';
+      fit.route = 'preferences/support';
       await tester.pumpWidget(const GymManeApp());
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text(t.updateTitle), 400,
@@ -498,7 +499,7 @@ void main() {
         UpdateService.debugFetch = null;
       });
       fit.onboarded = true;
-      fit.route = 'preferences';
+      fit.route = 'preferences/support';
       await tester.pumpWidget(const GymManeApp());
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text(t.updateTitle), 400,

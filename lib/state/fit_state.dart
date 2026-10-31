@@ -4,10 +4,12 @@ import 'dart:math' as math;
 import 'dart:ui' show PlatformDispatcher;
 
 import 'package:app_settings/app_settings.dart';
+import 'package:flutter/foundation.dart' show listEquals, setEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widgets/glass.dart';
 import '../catalog/exercise_catalog.dart';
 import '../catalog/exercises_ext.dart';
 import '../catalog/exercises_rep.dart';
@@ -15,6 +17,7 @@ import '../catalog/program_templates.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';
 import '../models/baseline.dart';
+import '../models/gym_pass.dart';
 import '../models/live_session.dart';
 import '../models/plan_cycle.dart';
 import '../models/rehab_log.dart';
@@ -31,6 +34,7 @@ import '../services/alarm_store.dart';
 import '../services/beeper.dart';
 import '../services/exercise_match.dart';
 import '../services/food_library.dart';
+import '../services/health_metrics.dart';
 import '../services/health_steps.dart';
 import '../services/local_store.dart';
 import '../services/media_store.dart';
@@ -46,6 +50,8 @@ import '../services/workout_import.dart';
 part 'awards_state.dart';
 part 'baseline_state.dart';
 part 'fit_core.dart';
+part 'gym_pass_state.dart';
+part 'health_state.dart';
 part 'library_state.dart';
 part 'measures_state.dart';
 part 'moments_state.dart';
@@ -63,7 +69,7 @@ part 'tools_state.dart';
 part 'workout_state.dart';
 
 class FitState extends FitCore
-    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, NutritionState, AwardsState, RoutinesState, WorkoutState, RehabState, BaselineState {
+    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, GymPassState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, HealthState, NutritionState, AwardsState, RoutinesState, WorkoutState, RehabState, BaselineState {
   void loadFromStore() {
     final data = withMergedExercises(Store.instance.load());
     _loading = true;
@@ -107,6 +113,7 @@ class FitState extends FitCore
 
       _applyLanguage(data['language'] as String? ?? language);
       restSeconds = (data['rest'] as num?)?.toInt() ?? 90;
+      miniRestSeconds = (data['miniRest'] as num?)?.toInt() ?? 20;
       alarmSound = data['alarmSound'] as String?;
       alarmSoundName = data['alarmSoundName'] as String?;
       RestAlarm.instance.customSoundPath = alarmSoundPath;
@@ -125,6 +132,7 @@ class FitState extends FitCore
         ..addAll(((data['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(k as String, v as bool)));
       _loadNotes(data);
       _loadPlaces(data);
+      _loadGymPasses(data);
       checkins
         ..clear()
         ..addAll(((data['checkins'] as List?) ?? []).cast<String>());
@@ -144,6 +152,7 @@ class FitState extends FitCore
       _loadMedia(data);
       _loadRepsOnly(data);
       _loadExerciseRest(data);
+      _loadExerciseUnits(data);
       sessions
         ..clear()
         ..addAll(((data['sessions'] as List?) ?? [])
@@ -169,6 +178,7 @@ class FitState extends FitCore
       bodyTimeline = data['bodyTl'] as bool? ?? false;
       loadNutrition((data['nutrition'] as Map?)?.cast<String, dynamic>());
       loadSteps((data['steps'] as Map?)?.cast<String, dynamic>());
+      loadHealth((data['health'] as Map?)?.cast<String, dynamic>());
       _restoreLiveSession(data);
     }
     _stampMemberSince();
@@ -279,8 +289,12 @@ class FitState extends FitCore
     weekStartDay = SettingsState.weekStarts.contains(weekStart) ? weekStart as int : DateTime.monday;
     autoAdvance = data['autoAdvance'] as bool? ?? true;
     keepScreenOn = data['keepAwake'] as bool? ?? true;
+    blurOn = data['blur'] as bool? ?? true;
+    blurEffects = blurOn;
+    lowEndAsked = data['lowEndAsked'] as bool? ?? false;
     startCountdown = data['countdown'] as bool? ?? true;
     gamification = data['gamify'] as bool? ?? true;
+    passOn = data['pass'] as bool? ?? true;
     logRpe = data['rpe'] as bool? ?? false;
     effortScale = data['effort'] == 'rir' ? 'rir' : 'rpe';
     stepKg = _stepFrom(data['stepKg'], SettingsState.kgSteps, 2.5);
@@ -394,6 +408,13 @@ class FitState extends FitCore
     });
   }
 
+  void _loadExerciseUnits(Map<String, dynamic> data) {
+    exerciseUnits.clear();
+    ((data['exUnits'] as Map?) ?? const {}).forEach((k, v) {
+      if (k is String && (v == 'kg' || v == 'lb')) exerciseUnits[k] = v as String;
+    });
+  }
+
   void _loadRepsOnly(Map<String, dynamic> data) {
     repsOnly
       ..clear()
@@ -495,6 +516,7 @@ class FitState extends FitCore
         'units': units,
         'language': language,
         'rest': restSeconds,
+        'miniRest': miniRestSeconds,
         'alarmSound': alarmSound,
         'alarmSoundName': alarmSoundName,
         'bg': bgPattern,
@@ -511,8 +533,11 @@ class FitState extends FitCore
         'weekStart': weekStartDay,
         'autoAdvance': autoAdvance,
         'keepAwake': keepScreenOn,
+        if (!blurOn) 'blur': false,
+        if (lowEndAsked) 'lowEndAsked': true,
         'countdown': startCountdown,
         'gamify': gamification,
+        'pass': passOn,
         'rpe': logRpe,
         'effort': effortScale,
         'stepKg': stepKg,
@@ -547,6 +572,8 @@ class FitState extends FitCore
         'planCycles': planCycles.map((k, v) => MapEntry(k, v.toJson())),
         'places': places.map((p) => p.toJson()).toList(),
         'place': activePlaceId,
+        if (gymPasses.isNotEmpty) 'passes': gymPasses.map((p) => p.toJson()).toList(),
+        if (lastPassId.isNotEmpty) 'lastPass': lastPassId,
         'checkins': checkins.toList(),
         'routines': routines.map((r) => r.toJson()).toList(),
         'weeklyPlan': weeklyPlan.map((k, v) => MapEntry(k.toString(), v)),
@@ -562,6 +589,7 @@ class FitState extends FitCore
         'custom': customExercises.map((e) => e.toJson()).toList(),
         'media': exerciseMedia,
         'exRest': exerciseRest,
+        if (exerciseUnits.isNotEmpty) 'exUnits': exerciseUnits,
         'progress': progressStep,
         if (progStepFrozen) 'progStepFrozen': true,
         'progStates': programStates.map((k, v) => MapEntry(k, v.toJson())),
@@ -574,7 +602,7 @@ class FitState extends FitCore
         'eachSideOff': eachSideOff.toList(),
         if (assistedOn.isNotEmpty) 'assisted': assistedOn.toList(),
         if (assistedOff.isNotEmpty) 'assistedOff': assistedOff.toList(),
-        'sessions': sessions.map((s) => s.toJson()).toList(),
+        'sessions': _stored('sessions', sessions, (s) => s.toJson(), parts: _sessionParts),
         'bodyweight': bodyweight.map((b) => b.toJson()).toList(),
         'measures': measures.map((m) => m.toJson()).toList(),
         'shots': shots.map((s) => s.toJson()).toList(),
@@ -585,6 +613,7 @@ class FitState extends FitCore
         'bodyTl': bodyTimeline,
         'nutrition': nutritionJson(),
         'steps': stepsJson(),
+        'health': healthJson(),
         if (session != null && !session!.complete) ...{
           'live': session!.toJson(),
           'liveStart': _runningSince?.toIso8601String(),
@@ -592,6 +621,14 @@ class FitState extends FitCore
           'livePaused': sessionPaused,
         },
       };
+
+  static List<Object?> _sessionParts(LoggedSession s) => [
+        s.date,
+        s.durationSec,
+        s.routineId,
+        s.name,
+        for (final e in s.exercises) ...[e, e.incline, e.kcal, e.sets.length, ...e.sets],
+      ];
 
   void resetAllData() {
     _saveDebounce?.cancel();
@@ -613,11 +650,15 @@ class FitState extends FitCore
     moments.clear();
     loadNutrition(null);
     loadSteps(null);
+    loadHealth(null);
+    healthGranted = {};
     awards.clear();
     awardsSeen.clear();
     pendingAwards.clear();
     places.clear();
     activePlaceId = '';
+    gymPasses.clear();
+    lastPassId = '';
     checkins.clear();
     routines.clear();
     weeklyPlan.clear();
@@ -644,6 +685,7 @@ class FitState extends FitCore
     assistedOn.clear();
     assistedOff.clear();
     exerciseRest.clear();
+    exerciseUnits.clear();
     progressStep.clear();
     programStates.clear();
     progStepFrozen = false; // ISS-155：重置后允许重新冻结
@@ -684,6 +726,7 @@ class FitState extends FitCore
     autoAdvance = true;
     startCountdown = true;
     gamification = true;
+    passOn = true;
     logRpe = false;
     effortScale = 'rpe';
     stepKg = 2.5;
@@ -752,6 +795,7 @@ class FitState extends FitCore
     units = map['units'] as String? ?? units;
     _applyLanguage(map['language'] as String? ?? language);
     restSeconds = (map['rest'] as num?)?.toInt() ?? restSeconds;
+    miniRestSeconds = (map['miniRest'] as num?)?.toInt() ?? miniRestSeconds;
     bgPattern = map['bg'] as String? ?? bgPattern;
     heatTone = map['heatTone'] as String? ?? heatTone;
     _loadToggles(map);
@@ -760,6 +804,7 @@ class FitState extends FitCore
       ..clear()
       ..addAll(((map['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(k as String, v as bool)));
     _loadPlaces(map);
+    _loadGymPasses(map);
     _loadNotes(map);
     if (restoredNoteMedia != null) _remapNoteMedia(restoredNoteMedia);
     checkins
@@ -781,6 +826,7 @@ class FitState extends FitCore
     _loadMedia(map, restored: restoredMedia);
     _loadRepsOnly(map);
     _loadExerciseRest(map);
+    _loadExerciseUnits(map);
     sessions
       ..clear()
       ..addAll(((map['sessions'] as List?) ?? [])
@@ -825,6 +871,7 @@ class FitState extends FitCore
         ..addAll((map['planCycles'] as Map).map((k, v) =>
             MapEntry(k as String, PlanCycle.fromJson((v as Map).cast<String, dynamic>()))));
     }
+    loadHealth((map['health'] as Map?)?.cast<String, dynamic>());
     _seedCalculatorsFromProfile();
     _loading = false;
     _persist();
@@ -1127,6 +1174,12 @@ class FitState extends FitCore
             setRoutineSetCount(id, ex.id, item.sets!);
           }
           if (item.superset) toggleChain(id, ex.id);
+          if (item.ladder.isNotEmpty) {
+            final steps = [
+              for (final name in item.ladder) ?_planExercise(PlanItem(name, null))?.id,
+            ];
+            setLadder(id, ex.id, steps.contains(ex.id) ? steps : [ex.id, ...steps]);
+          }
           final rest = item.restSec;
           if (rest != null) setRoutineRest(id, ex.id, rest);
         }
@@ -1528,6 +1581,8 @@ class FitState extends FitCore
                           },
                       ],
                     if (chainsToNext(r, id)) 'superset': true,
+                    if (ladderIn(r, id) case final steps?)
+                      'progression': [for (final s in steps) ?exerciseById(s)?.name],
                     'rest': ?(routineRest(r.id, id) ?? (hasCustomRest(id) ? restFor(id) : null)),
                     if (isCustom(id))
                       'custom': {
@@ -1639,6 +1694,8 @@ class FitState extends FitCore
         backFromMeasures();
       case 'places':
         backFromPlaces();
+      case 'passes':
+        backFromGymPasses();
       case 'timeline':
         backFromTimeline();
       case 'compare':

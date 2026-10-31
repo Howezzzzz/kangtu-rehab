@@ -22,6 +22,7 @@ import '../widgets/svg_icon.dart';
 import '../widgets/timer_panel.dart';
 import '../widgets/ui_kit.dart';
 import 'exercises_screen.dart';
+import 'ladder_sheet.dart';
 import 'plan_import_sheet.dart';
 
 class RoutineEditScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       TextEditingController(text: fit.activeRoutine?.name ?? '');
   final TextEditingController _search = TextEditingController();
   String _q = '';
+  late final Set<String> _seen = {...?fit.activeRoutine?.exerciseIds};
 
   @override
   void dispose() {
@@ -114,13 +116,22 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
               ],
             ),
           ),
-          if (start) ...[
+          if (start)
             const Positioned(left: 0, right: 0, bottom: 0, child: EdgeBlur(top: false, height: 112, sigma: 11, shade: 0.35)),
-            Positioned(
-              left: 20,
-              right: 20,
-              bottom: 16,
-              child: Row(children: [
+          Positioned(
+            left: 20,
+            right: 20,
+            bottom: 16,
+            child: IgnorePointer(
+              ignoring: !start,
+              child: AnimatedSlide(
+                offset: start ? Offset.zero : const Offset(0, 1.6),
+                duration: const Duration(milliseconds: 340),
+                curve: start ? Curves.easeOutBack : Curves.easeInCubic,
+                child: AnimatedOpacity(
+                  opacity: start ? 1 : 0,
+                  duration: const Duration(milliseconds: 220),
+                  child: Row(children: [
                 Expanded(
                   flex: 2,
                   child: Pressable(
@@ -148,8 +159,10 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
                   ),
                 ),
               ]),
+                ),
+              ),
             ),
-          ],
+          ),
         ],
       ),
     );
@@ -218,7 +231,8 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
             Semantics(
               button: true,
               label: t.shareRoutine,
-              child: GestureDetector(
+              child: Pressable(
+                scale: 0.85,
                 onTap: () => _shareIntro(routine),
                 child: Padding(
                   padding: const EdgeInsets.all(6),
@@ -230,7 +244,8 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
           Semantics(
             button: true,
             label: t.duplicateRoutine,
-            child: GestureDetector(
+            child: Pressable(
+              scale: 0.85,
               onTap: () => fit.openRoutine(fit.duplicateRoutine(_id)),
               child: Padding(
                 padding: const EdgeInsets.all(6),
@@ -239,7 +254,8 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
             ),
           ),
           const SizedBox(width: 4),
-          GestureDetector(
+          Pressable(
+            scale: 0.85,
             onTap: _confirmDelete,
             child: Padding(
               padding: const EdgeInsets.all(6),
@@ -252,11 +268,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
         const SizedBox(height: 22),
         Row(
           children: [
-            Expanded(
-              child: Text(t.schedule,
-                  style: AppTheme.f(12,
-                      weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
-            ),
+            Expanded(child: _label(gc, t.schedule)),
             GestureDetector(
               onTap: () => _toggleCycle(routine),
               child: Row(children: [
@@ -268,7 +280,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         if (fit.cycleOf(routine.id) != null) _cycleCard(gc, routine),
         Text(fit.cycleOf(routine.id) != null ? t.cyclePinHint : t.schedule,
             style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textTertiary)),
@@ -278,14 +290,14 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
           children: [for (int i = 0; i < 7; i++) _dayToggle(gc, i)],
         ),
         const SizedBox(height: 18),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
+        Pressable(
+          scale: 0.98,
           onTap: () => _pickGroup(routine),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
             decoration: BoxDecoration(
               color: gc.bgRaised,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(18),
             ),
             child: Row(
               children: [
@@ -304,8 +316,8 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
           ),
         ),
         const SizedBox(height: 24),
-        Text(t.exercisesWithCount(count), style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 1.5)),
-        const SizedBox(height: 10),
+        _label(gc, t.exercisesWithCount(count)),
+        const SizedBox(height: 12),
         if (routine.exerciseIds.isEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: 6),
@@ -318,6 +330,12 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       ],
     );
   }
+
+  Widget _label(GymColors gc, String text) => Padding(
+        padding: const EdgeInsets.only(left: 4),
+        child: Text(text.toUpperCase(),
+            style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4)),
+      );
 
   Widget _chosenList(GymColors gc) {
     final routine = fit.activeRoutine!;
@@ -418,8 +436,10 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
     final weekday = fit.weekdayAt(i);
     final c = fit.cycleOf(_id);
     final on = c != null ? c.pinnedDays.contains(weekday) : fit.plannedOn(weekday, _id);
-    return GestureDetector(
+    return Pressable(
+      scale: 0.86,
       onTap: () {
+        HapticFeedback.selectionClick();
         if (c == null) {
           fit.togglePlanDay(weekday, _id);
         } else {
@@ -437,7 +457,9 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
         }
         setState(() {});
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOutCubic,
         width: 38,
         height: 38,
         decoration: BoxDecoration(
@@ -445,8 +467,11 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
           shape: BoxShape.circle,
         ),
         alignment: Alignment.center,
-        child: Text(t.weekdayInitial(weekday),
-            style: AppTheme.f(14, weight: FontWeight.w700, color: on ? gc.onEmber : gc.textSecondary)),
+        child: AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 220),
+          style: AppTheme.f(14, weight: FontWeight.w700, color: on ? gc.onEmber : gc.textSecondary),
+          child: Text(t.weekdayInitial(weekday)),
+        ),
       ),
     );
   }
@@ -719,8 +744,11 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
     final anyChain = [
       for (var i = 0; i < routine.exerciseIds.length - 1; i++) fit.chainsToNext(routine, routine.exerciseIds[i]),
     ].any((x) => x);
-    return Padding(
+    final fresh = _seen.add(ex.id);
+    return _GrowIn(
       key: ValueKey(ex.id),
+      play: fresh,
+      child: Padding(
       padding: EdgeInsets.only(bottom: linksNext ? 0 : 8),
       child: Dismissible(
         key: ValueKey('swipe-${ex.id}'),
@@ -730,7 +758,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
           margin: EdgeInsets.only(bottom: linksNext ? 4 : 0),
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.only(right: 22),
-          decoration: BoxDecoration(color: gc.warn.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(14)),
+          decoration: BoxDecoration(color: gc.warn.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(18)),
           child: Icon(PhosphorIconsFill.trash, size: 20, color: gc.warn),
         ),
         child: IntrinsicHeight(
@@ -747,6 +775,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
           ),
         ),
       ),
+      ),
     );
   }
 
@@ -757,7 +786,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: gc.bgRaised,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Row(children: [
         ReorderableDragStartListener(
@@ -804,6 +833,11 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
                 const SizedBox(height: 2),
                 Text(t.superset.toUpperCase(),
                     style: AppTheme.f(9.5, weight: FontWeight.w700, color: gc.brass, letterSpacing: 1)),
+              ],
+              if (fit.ladderIn(routine, ex.id) case final ladder?) ...[
+                const SizedBox(height: 2),
+                Text('${t.ladderTitle} · ${ladder.indexOf(ex.id) + 1}/${ladder.length}'.toUpperCase(),
+                    style: AppTheme.f(9.5, weight: FontWeight.w700, color: gc.sage, letterSpacing: 1)),
               ],
               const SizedBox(height: 2),
               FittedBox(
@@ -852,12 +886,18 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
                 width: 38,
                 height: 44,
                 child: Center(
-                  child: Icon(
-                    routine.chained.contains(ex.id)
-                        ? PhosphorIconsFill.link
-                        : PhosphorIconsRegular.link,
-                    size: 17,
-                    color: routine.chained.contains(ex.id) ? gc.ember : gc.textTertiary,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 240),
+                    transitionBuilder: (child, a) => ScaleTransition(
+                      scale: Tween(begin: 0.5, end: 1.0).animate(CurvedAnimation(parent: a, curve: Curves.easeOutBack)),
+                      child: FadeTransition(opacity: a, child: child),
+                    ),
+                    child: Icon(
+                      routine.chained.contains(ex.id) ? PhosphorIconsFill.link : PhosphorIconsRegular.link,
+                      key: ValueKey(routine.chained.contains(ex.id)),
+                      size: 17,
+                      color: routine.chained.contains(ex.id) ? gc.ember : gc.textTertiary,
+                    ),
                   ),
                 ),
               ),
@@ -885,17 +925,22 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
 
   Widget _pickRow(GymColors gc, Exercise ex) {
     final inRoutine = fit.routineHas(_id, ex.id);
-    return GestureDetector(
-      onTap: () => fit.toggleRoutineExercise(_id, ex.id),
+    return Pressable(
+      scale: 0.98,
+      onTap: () {
+        HapticFeedback.selectionClick();
+        fit.toggleRoutineExercise(_id, ex.id);
+      },
       onLongPress: () => _preview(ex),
-      behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOutCubic,
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: gc.bgRaised,
-          border: Border.all(color: inRoutine ? gc.ember : gc.border),
-          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: inRoutine ? gc.ember.withValues(alpha: 0.75) : Colors.transparent),
+          borderRadius: BorderRadius.circular(18),
         ),
         child: Row(children: [
           GestureDetector(
@@ -913,7 +958,9 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
               ],
             ),
           ),
-          Container(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
             width: 30,
             height: 30,
             decoration: BoxDecoration(
@@ -921,9 +968,19 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
               shape: BoxShape.circle,
               border: Border.all(color: inRoutine ? gc.ember : gc.border, width: 2),
             ),
-            child: inRoutine
-                ? SvgPathIcon(Ic.checkBold, size: 14, color: gc.onEmber)
-                : Icon(PhosphorIconsRegular.plus, size: 15, color: gc.textSecondary),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 260),
+              transitionBuilder: (child, a) => ScaleTransition(
+                scale: CurvedAnimation(parent: a, curve: Curves.easeOutBack),
+                child: child,
+              ),
+              child: KeyedSubtree(
+                key: ValueKey(inRoutine),
+                child: inRoutine
+                    ? SvgPathIcon(Ic.checkBold, size: 14, color: gc.onEmber)
+                    : Icon(PhosphorIconsRegular.plus, size: 15, color: gc.textSecondary),
+              ),
+            ),
           ),
         ]),
       ),
@@ -1062,6 +1119,10 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
                   ],
                   const SizedBox(height: 10),
                   _restRow(sheet, gc, routine, ex),
+                  if (fit.modeOf(ex.id).isEmpty) ...[
+                    const SizedBox(height: 8),
+                    _ladderRow(sheet, gc, routine, ex),
+                  ],
                   const SizedBox(height: 14),
                   PrimaryButton(label: t.done, onTap: () => Navigator.of(sheet).pop()),
                 ],
@@ -1069,6 +1130,42 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _ladderRow(BuildContext sheet, GymColors gc, Routine routine, Exercise ex) {
+    final own = fit.ladderIn(routine, ex.id);
+    final next = fit.nextStepIn(routine, ex.id);
+    final nextEx = next == null ? null : fit.exerciseById(next);
+    return Pressable(
+      scale: 0.98,
+      onTap: () => showLadderSheet(sheet, routine.id, ex),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
+        decoration: BoxDecoration(color: gc.bgRaised2, borderRadius: BorderRadius.circular(18)),
+        child: Row(children: [
+          Icon(PhosphorIconsRegular.stairs, size: 19, color: own != null ? gc.sage : gc.textSecondary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(t.ladderTitle, style: AppTheme.f(14, weight: FontWeight.w600, color: gc.text)),
+              const SizedBox(height: 3),
+              Text(
+                  nextEx == null
+                      ? t.ladderNone
+                      : [
+                          if (own != null) t.ladderStep(own.indexOf(ex.id) + 1, own.length),
+                          t.rotationRestUpNext(exerciseName(nextEx)),
+                        ].join(' · '),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.3)),
+            ]),
+          ),
+          const SizedBox(width: 8),
+          Icon(PhosphorIconsBold.caretRight, size: 13, color: gc.textTertiary),
+        ]),
       ),
     );
   }
@@ -1206,7 +1303,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       () => ask(
           t.weightTitle(fit.units.toUpperCase()),
           p.weightKg == null ? (fit.isLb ? 45 : 20) : fit.toDisplayWeight(p.weightKg!),
-          fit.isLb ? 660 : 300,
+          fit.isLb ? 1540 : 700,
           fit.rulerStep,
           10,
           fit.units,
@@ -1454,4 +1551,42 @@ class _ShareArt extends StatelessWidget {
       ),
     );
   }
+}
+
+class _GrowIn extends StatefulWidget {
+  const _GrowIn({super.key, required this.play, required this.child});
+
+  final bool play;
+  final Widget child;
+
+  @override
+  State<_GrowIn> createState() => _GrowInState();
+}
+
+class _GrowInState extends State<_GrowIn> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 380),
+    value: widget.play ? 0 : 1,
+  )..forward();
+  late final Animation<double> _v = CurvedAnimation(parent: _c, curve: Curves.easeOutCubic);
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => SizeTransition(
+        sizeFactor: _v,
+        axisAlignment: -1,
+        child: FadeTransition(
+          opacity: _v,
+          child: SlideTransition(
+            position: Tween(begin: const Offset(0, -0.15), end: Offset.zero).animate(_v),
+            child: widget.child,
+          ),
+        ),
+      );
 }
