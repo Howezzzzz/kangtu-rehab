@@ -72,7 +72,7 @@ class AboutScreen extends StatelessWidget {
   }
 
   Widget _sectionLabel(GymColors gc, String label) => Text(label.toUpperCase(),
-      style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.3));
+      style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4));
 
   Widget _hero(GymColors gc) {
     return Container(

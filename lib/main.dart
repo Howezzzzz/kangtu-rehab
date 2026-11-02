@@ -35,6 +35,7 @@ Future<void> main() async {
   fit.loadFromStore();
   await fit.migrateRehabLog();
   fit.syncPhotoReminder();
+  fit.syncMeasureReminder();
   fit.syncTrainReminder();
 
   final watch = await DeviceKind.isWatch();

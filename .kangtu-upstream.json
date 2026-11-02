@@ -1,8 +1,8 @@
 {
   "fork": "https://github.com/Howezzzzz/kangtu-rehab",
   "upstream": "https://github.com/InlitX/GymMane",
-  "last_synced_upstream_sha": "1346ab18a9dc2edf816fe8748f85cf1382d75c6e",
-  "last_synced_at": "2026-10-28",
+  "last_synced_upstream_sha": "7a9baf4476f5825520d6a548583566bb0a3a6495",
+  "last_synced_at": "2026-11-02",
   "policy": "本仓库与上游无共同祖先 → 禁止 git merge。同步一律以上次同步点 sha 为基线，逐文件三方合并（git merge-file --diff3）；arb 走三方 key 级并集（tool 或 文件/康途/脚本/同步/arb_union.py）。下次同步基线 = 本文件的 last_synced_upstream_sha。",
-  "note": "同步后请更新 last_synced_upstream_sha / last_synced_at，并同步 文件/康途/状态/upstream-sync.json。"
+  "note": "2026-11-02 同步上游 1.9.0（26 提交，b15fab52..7a9baf44）。同步后请更新 last_synced_upstream_sha / last_synced_at，并同步 文件/康途/状态/upstream-sync.json。"
 }

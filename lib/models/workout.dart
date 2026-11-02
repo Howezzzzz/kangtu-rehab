@@ -19,8 +19,9 @@ double? rpePercent(int reps, double? rpe) {
 }
 
 class LoggedSet {
-  LoggedSet(this.reps, this.weight, {this.kind = SetKind.normal, this.rpe, this.sec, this.km});
+  LoggedSet(this.reps, this.weight, {this.kind = SetKind.normal, this.rpe, this.sec, this.km, this.note = ''});
   final int reps;
+  final String note;
   final double weight;
   final SetKind kind;
   final double? rpe;
@@ -43,6 +44,7 @@ class LoggedSet {
         if (rpe != null) 'e': rpe,
         if (sec != null) 't': sec,
         if (km != null) 'km': km,
+        if (note.isNotEmpty) 'n': note,
       };
   factory LoggedSet.fromJson(Map<String, dynamic> j) => LoggedSet(
         (j['r'] as num).toInt(),
@@ -51,6 +53,7 @@ class LoggedSet {
         rpe: (j['e'] as num?)?.toDouble(),
         sec: (j['t'] as num?)?.toInt(),
         km: (j['km'] as num?)?.toDouble(),
+        note: j['n'] as String? ?? '',
       );
 }
 
@@ -111,13 +114,17 @@ class LoggedExercise {
 }
 
 class LoggedSession {
-  LoggedSession(this.date, this.durationSec, this.exercises,
-      {this.routineId, this.name, this.feel, this.painArea = '', this.painLevel = 0, this.note = ''});
+LoggedSession(this.date, this.durationSec, this.exercises,
+      {this.routineId, this.name, this.hrAvg, this.hrMax, this.sleep, this.energy, this.feel, this.painArea = '', this.painLevel = 0, this.note = ''});
   final DateTime date;
   int durationSec;
   final List<LoggedExercise> exercises;
   final String? routineId;
   String? name;
+  int? hrAvg;
+  int? hrMax;
+  int? sleep;
+  int? energy;
 
   /// 训练后主观反馈：整体感觉 0=很轻松 1=刚好 2=吃力 3=拼到底（null 未记录）
   int? feel;
@@ -144,6 +151,10 @@ class LoggedSession {
         if (routineId != null) 'r': routineId,
         if (name != null) 'n': name,
 
+        if (hrAvg != null) 'hra': hrAvg,
+        if (hrMax != null) 'hrm': hrMax,
+        if (sleep != null) 'sl': sleep,
+        if (energy != null) 'en': energy,
         if (feel != null) 'feel': feel,
         if (painArea.isNotEmpty) 'pa': painArea,
         if (painLevel > 0) 'pl': painLevel,
@@ -155,6 +166,11 @@ class LoggedSession {
         (j['ex'] as List).map((e) => LoggedExercise.fromJson(e as Map<String, dynamic>)).toList(),
         routineId: j['r'] as String?,
         name: j['n'] as String?,
+
+        hrAvg: (j['hra'] as num?)?.toInt(),
+        hrMax: (j['hrm'] as num?)?.toInt(),
+        sleep: (j['sl'] as num?)?.toInt().clamp(1, 5),
+        energy: (j['en'] as num?)?.toInt().clamp(1, 5),
         feel: (j['feel'] as num?)?.toInt(),
         painArea: (j['pa'] ?? '') as String,
         painLevel: ((j['pl'] ?? 0) as num).toInt(),

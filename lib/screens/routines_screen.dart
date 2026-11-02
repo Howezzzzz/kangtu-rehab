@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/body_map.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
@@ -16,6 +17,7 @@ import '../widgets/liquid_notch.dart';
 import '../widgets/routine_folder.dart';
 import '../widgets/svg_icon.dart';
 import '../widgets/ui_kit.dart';
+import 'circuit_screen.dart';
 import 'plan_import_sheet.dart';
 
 class RoutinesScreen extends StatelessWidget {
@@ -204,6 +206,8 @@ class RoutinesScreen extends StatelessWidget {
               icon: PhosphorIconsRegular.sparkle,
               onTap: fit.goAiPlan,
             ),
+            const SizedBox(height: 30),
+            const CircuitSection(),
           ]),
         ),
       ),
@@ -224,10 +228,7 @@ class RoutinesScreen extends StatelessWidget {
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
         constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.85),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -251,7 +252,7 @@ class RoutinesScreen extends StatelessWidget {
               }),
               const SizedBox(height: 14),
               Text(t.shareRoutine.toUpperCase(),
-                  style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.3)),
+                  style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4)),
               const SizedBox(height: 8),
               for (final r in [
                 for (final group in fit.routineGroups) ...fit.routinesInGroup(group),
@@ -365,10 +366,7 @@ class RoutinesScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -398,10 +396,7 @@ class RoutinesScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -477,10 +472,7 @@ class RoutinesScreen extends StatelessWidget {
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
         constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.85),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -554,7 +546,7 @@ class RoutinesScreen extends StatelessWidget {
     final step = fit.rotationStep;
     final routines = fit.rotationRoutines;
     return SoftCard(
-      radius: 20,
+      radius: 22,
       borderColor: Colors.transparent,
       padding: const EdgeInsets.fromLTRB(6, 14, 6, 8),
       child: Column(
@@ -737,10 +729,7 @@ class RoutinesScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -847,6 +836,10 @@ class RoutinesScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (r.exerciseIds.isNotEmpty && fit.showMiniBody) ...[
+                  const SizedBox(width: 8),
+                  MiniBody(sets: fit.routineMuscleSets(r), height: 38),
+                ],
               ]),
             ),
           ),
@@ -873,10 +866,7 @@ class RoutinesScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -930,10 +920,7 @@ class RoutinesScreen extends StatelessWidget {
         builder: (sheet, _) => Container(
           constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.72),
           padding: sheetPad(sheet),
-          decoration: BoxDecoration(
-            color: gc.bgRaised,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-          ),
+          decoration: sheetDecoration(gc),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1076,10 +1063,7 @@ class RoutinesScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1149,10 +1133,7 @@ class RoutinesScreen extends StatelessWidget {
         builder: (sheet, _) => Container(
         constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.72),
         padding: sheetPad(sheet),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1221,10 +1202,7 @@ void showTodayPlanMenu(BuildContext context, Routine r) {
     backgroundColor: Colors.transparent,
     builder: (sheet) => Container(
       padding: sheetPad(sheet),
-      decoration: BoxDecoration(
-        color: gc.bgRaised,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-      ),
+      decoration: sheetDecoration(gc),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1271,10 +1249,7 @@ void showMoveDaySheet(BuildContext context, Routine r) {
     builder: (sheet) => Container(
       constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.8),
       padding: sheetPad(sheet),
-      decoration: BoxDecoration(
-        color: gc.bgRaised,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-      ),
+      decoration: sheetDecoration(gc),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1327,10 +1302,7 @@ void showRoutineMenu(BuildContext context, Routine r) {
     backgroundColor: Colors.transparent,
     builder: (sheet) => Container(
       padding: sheetPad(sheet),
-      decoration: BoxDecoration(
-        color: gc.bgRaised,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-      ),
+      decoration: sheetDecoration(gc),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,

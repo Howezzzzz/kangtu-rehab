@@ -36,6 +36,12 @@ int heatLevel(double v) {
 abstract class FitCore extends ChangeNotifier {
   Map<String, dynamic> toJson();
 
+  void healthSave(LoggedSession s) {}
+
+  void healthForget(LoggedSession s) {}
+
+  Future<void> stepsAllowed() async {}
+
   String route = 'home';
   final List<String> _routeStack = [];
   final Map<String, bool> favorites = {};
@@ -67,6 +73,7 @@ abstract class FitCore extends ChangeNotifier {
   final Map<String, String> exerciseUnits = {};
 
   final Map<String, double> progressStep = {};
+  final Map<String, int> holdStep = {};
 
   /// 计划实例状态(自动渐进引擎): instId -> ProgState
   final Map<String, ProgState> programStates = {};
@@ -103,6 +110,44 @@ abstract class FitCore extends ChangeNotifier {
   final Map<String, Map<int, int>> videoMarks = {};
 
   final Map<String, double> exerciseBar = {};
+  final Map<String, List<double>> weightStacks = {};
+
+  List<double>? stackFor(String id) {
+    final s = weightStacks[id];
+    return s == null || s.isEmpty ? null : s;
+  }
+
+  double snapToStack(String id, double kg, {int dir = 0}) {
+    final s = stackFor(id);
+    if (s == null) return kg;
+    if (dir > 0) {
+      for (final v in s) {
+        if (v > kg + 0.001) return v;
+      }
+      return s.last;
+    }
+    if (dir < 0) {
+      for (final v in s.reversed) {
+        if (v < kg - 0.001) return v;
+      }
+      return s.first;
+    }
+    var best = s.first;
+    for (final v in s) {
+      if ((v - kg).abs() < (best - kg).abs()) best = v;
+    }
+    return best;
+  }
+
+  double floorToStack(String id, double kg) {
+    final s = stackFor(id);
+    if (s == null) return kg;
+    var out = s.first;
+    for (final v in s) {
+      if (v <= kg + 0.001) out = v;
+    }
+    return out;
+  }
 
   final Map<String, String> modeOverride = {};
 
@@ -136,6 +181,8 @@ abstract class FitCore extends ChangeNotifier {
 
   int _dataRev = 0;
   final Map<Object, (Object?, Object?)> _memo = {};
+
+  bool countsForMuscles(String id) => true;
 
   T _remember<T>(Object key, T Function() build, [Object? extra]) {
     final stamp = (

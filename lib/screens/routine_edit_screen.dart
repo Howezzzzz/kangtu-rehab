@@ -685,10 +685,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
         final gc = sheet.gc;
         return Container(
           padding: sheetPad(sheet),
-          decoration: BoxDecoration(
-            color: gc.bgRaised,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-          ),
+          decoration: sheetDecoration(gc),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1009,10 +1006,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
           return Container(
             padding: sheetPad(sheet),
             constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheet).height * 0.9),
-            decoration: BoxDecoration(
-              color: gc.bgRaised,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-            ),
+            decoration: sheetDecoration(gc),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -1229,7 +1223,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       'time' => [t.timeCol, if (!repsOnly) t.weightCol(fit.units.toUpperCase())],
       _ => [t.repsCol, if (!repsOnly) t.weightCol(fit.units.toUpperCase())],
     };
-    final style = AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1);
+    final style = AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4);
     return Row(children: [
       SizedBox(width: 40, child: Center(child: Text(t.setCol, style: style))),
       const SizedBox(width: 8),
@@ -1392,10 +1386,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       backgroundColor: Colors.transparent,
       builder: (sheet) => Container(
         padding: sheetPad(sheet),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        ),
+        decoration: sheetDecoration(gc),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1478,7 +1469,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
     showAppSheet<void>(
       context: context,
       backgroundColor: gc.bgRaised,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      shape: sheetShape(gc),
       builder: (_) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
