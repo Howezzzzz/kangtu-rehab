@@ -18,6 +18,10 @@ String get decimalSeparator =>
 
 String decimalText(String s) => s.replaceFirst('.', decimalSeparator);
 
+final _grouped = <String, NumberFormat>{};
+
+String groupedInt(int n) => (_grouped[intlLocale] ??= NumberFormat.decimalPattern(intlLocale)).format(n);
+
 const Map<String, Map<String, String>> _catalogNames = {'es': kExerciseNameEs, 'it': kExerciseNameIt, 'zh': {...kExerciseNameZh, ...kExerciseNameZhExt, ...kExerciseNameZhRep}};
 const Map<String, Map<String, List<String>>> _catalogSteps = {'es': kExerciseStepsEs, 'it': kExerciseStepsIt, 'zh': {...kExerciseStepsZh, ...kExerciseStepsZhExt, ...kExerciseStepsZhRep}};
 
@@ -316,6 +320,8 @@ extension GymL10n on AppLocalizations {
   String weekday(int w) =>
       _capitalize(_dates(DateFormat.EEEE).format(DateTime(2024, 1, w)));
 
+  String weekdayInline(int w) => _dates(DateFormat.EEEE).format(DateTime(2024, 1, w));
+
   String weekdayShort(int w) =>
       _capitalize(_dates(DateFormat.E).format(DateTime(2024, 1, w)));
 
@@ -327,6 +333,8 @@ extension GymL10n on AppLocalizations {
 
   String monthShort(int m) =>
       _capitalize(_dates(DateFormat.MMM).format(DateTime(2024, m)).replaceAll('.', ''));
+
+  String monthInline(int m) => _dates(DateFormat.MMMM).format(DateTime(2024, m));
 
   String monthName(int m) =>
       _capitalize(_dates(DateFormat.MMMM).format(DateTime(2024, m)));

@@ -70,9 +70,18 @@ mixin LibraryState on FitCore {
     notifyListeners();
   }
 
+  /// 按 id 取动作。**被合并掉的历史 id 会重定向到保留项**（RISK-086）：
+  /// 存档在加载时已用 `withMergedExercises` 整体重映射，这里再兜一层，
+  /// 避免任何遗漏路径（旧备份片段、代码里残留的常量 id）解析不到动作。
   Exercise? exerciseById(String id) {
     for (final e in allExercises) {
       if (e.id == id) return e;
+    }
+    final alias = canonicalExerciseId(id);
+    if (alias != id) {
+      for (final e in allExercises) {
+        if (e.id == alias) return e;
+      }
     }
     return null;
   }

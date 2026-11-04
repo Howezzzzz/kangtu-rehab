@@ -7,6 +7,9 @@ part of 'fit_state.dart';
 /// _openingSets 会直接用这份 plan,无需改训练流程。
 /// 反馈文案写进 fit.progFeedback,完成页展示。
 void runProgression(WorkoutState fit, Routine r, LoggedSession s) {
+  // M1 / RISK-079b：减载周不计入渐进——整段冻结（linear/dbl/reps 不推进、
+  // 周期波浪周也不推进），与上游文案「这一周不计入渐进」对齐。
+  if (s.deload) return;
   final inst = r.progInst == null ? null : fit.programStates[r.progInst!];
   if (r.prog.isEmpty || inst == null) return;
 

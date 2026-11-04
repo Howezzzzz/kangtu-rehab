@@ -234,7 +234,7 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
       await file.writeAsString(fit.planRequestText());
       if (!mounted) return;
       await SharePlus.instance.share(
-        ShareParams(files: [XFile(file.path)], subject: '康途 动作列表'),
+        ShareParams(files: [XFile(file.path)], subject: t.shareSubjectExercises(t.appName)),
       );
     } catch (_) {}
   }

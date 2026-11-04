@@ -9,7 +9,9 @@ import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/charts.dart';
+import '../widgets/day_off_sheet.dart';
 import '../widgets/entrance.dart';
+import '../widgets/entry_row.dart';
 import '../widgets/exercise_media.dart';
 import '../widgets/glass.dart';
 import '../widgets/home_folder.dart';
@@ -147,9 +149,9 @@ class HomeScreen extends StatelessWidget {
               ],
             ), dim: 0),
             const SizedBox(height: 14),
-            _rehabCard(gc),
+            _rehabCard(),
             const SizedBox(height: 12),
-            _logCard(gc),
+            _logCard(),
             if (fit.nutritionBeta) ...[
               const SizedBox(height: 12),
               HomeFolder(
@@ -168,75 +170,25 @@ class HomeScreen extends StatelessWidget {
   }
 
   /// 康复入口（与训练计划/工具/日志并列）——康复档案为主，手册在模块内。
-  Widget _rehabCard(GymColors gc) {
+  /// 融合 2.5：卡片规格改由 EntryRow 统一定义（与「我的」页三个康复入口同一套）。
+  Widget _rehabCard() {
     final ep = fit.rehabEpisodes.isEmpty ? null : fit.rehabEpisodes.first;
-    return Pressable(
+    return EntryRow(
+      icon: EntryIcons.rehab,
+      title: t.rehabTitle,
+      // 顺带修 i18n 漏：原来这里硬编码中文「计划 N 个」，非中文用户会看到中文
+      detail: rehabEntryDetail(t.rehabCardBlurb, ep?.title, ep?.routineIds.length ?? 0),
       onTap: fit.goRehab,
-      child: SoftCard(
-        radius: 22,
-        child: Row(
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(color: gc.emberSoft, shape: BoxShape.circle),
-              child: Icon(PhosphorIconsRegular.heartbeat, size: 18, color: gc.ember),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(t.rehabTitle, style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
-                  const SizedBox(height: 2),
-                  Text(
-                    ep == null
-                        ? t.rehabCardBlurb
-                        : '${ep.title} · 计划 ${ep.routineIds.length} 个',
-                    style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary),
-                  ),
-                ],
-              ),
-            ),
-            Text(t.rehabEnter, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
-          ],
-        ),
-      ),
     );
   }
 
   /// 统一「日志」入口（训练 + 康复）。
-  Widget _logCard(GymColors gc) {
-    return Pressable(
+  Widget _logCard() {
+    return EntryRow(
+      icon: EntryIcons.log,
+      title: t.rehabTabLog,
+      detail: t.logSubtitle,
       onTap: fit.goLog,
-      child: SoftCard(
-        radius: 22,
-        child: Row(
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(color: gc.emberSoft, shape: BoxShape.circle),
-              child: Icon(PhosphorIconsRegular.bookOpenText, size: 18, color: gc.ember),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(t.rehabTabLog, style: AppTheme.f(15, weight: FontWeight.w800, color: gc.text)),
-                  const SizedBox(height: 2),
-                  Text(t.logSubtitle,
-                      style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary)),
-                ],
-              ),
-            ),
-            Text(t.rehabEnter, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.ember)),
-          ],
-        ),
-      ),
     );
   }
 
@@ -265,10 +217,13 @@ class HomeScreen extends StatelessWidget {
                   style: AppTheme.f(10.5,
                       weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4)),
               const SizedBox(height: 3),
-              Text(t.longDate(DateTime.now()),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTheme.f(30, weight: FontWeight.w800, color: gc.text, letterSpacing: -0.8, height: 1.1)),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(t.longDate(DateTime.now()),
+                    maxLines: 1,
+                    style: AppTheme.f(30, weight: FontWeight.w800, color: gc.text, letterSpacing: -0.8, height: 1.1)),
+              ),
             ],
           ),
         ),
@@ -308,7 +263,7 @@ class HomeScreen extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onMore,
       child: Padding(
-        padding: const EdgeInsets.only(left: 4),
+        padding: const EdgeInsetsDirectional.only(start: 4),
         child: SizedBox(
           height: 30,
           child: Row(
@@ -508,14 +463,20 @@ class HomeScreen extends StatelessWidget {
     final done = fit.isDayDone(i) && !fit.isDayPartial(i);
     final isToday = i == fit.todayIndex;
     final isFuture = i > fit.todayIndex;
+    final date = fit.dateForWeekday(i);
+    final off = fit.dayOffOn(date);
+    final session = fit.isSessionDay(i);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: isFuture
-          ? null
-          : fit.isSessionDay(i)
-              ? () => showDaySheet(context, fit.dateForWeekday(i))
-              : () => fit.toggleCheckin(i),
+      onTap: session
+          ? () => showDaySheet(context, date)
+          : isToday && off == null
+              ? () => fit.toggleCheckin(i)
+              : fit.isCheckedIn(date)
+                  ? () => fit.toggleCheckin(i)
+                  : () => showDayOffSheet(context, date),
+      onLongPress: session ? null : () => showDayOffSheet(context, date),
       child: Opacity(
         opacity: isFuture ? 0.5 : 1,
         child: Column(
@@ -538,9 +499,11 @@ class HomeScreen extends StatelessWidget {
               ),
               child: done
                   ? Center(child: SvgPathIcon(Ic.checkBold, size: 13, color: gc.onEmber))
-                  : fit.restOn(fit.dateForWeekday(i))
-                      ? Icon(PhosphorIconsFill.bed, size: 14, color: gc.sage)
-                      : null,
+                  : off != null
+                      ? Icon(dayOffIcon(off), size: 15, color: gc.textSecondary)
+                      : fit.restOn(date)
+                          ? Icon(PhosphorIconsFill.bed, size: 14, color: gc.sage)
+                          : null,
             ),
           ],
         ),

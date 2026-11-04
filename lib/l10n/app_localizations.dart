@@ -355,7 +355,7 @@ abstract class AppLocalizations {
   /// No description provided for @tapMuscles.
   ///
   /// In en, this message translates to:
-  /// **'Tap the muscles you want to train — front and back.'**
+  /// **'Tap the muscles you want to train, front and back.'**
   String get tapMuscles;
 
   /// No description provided for @continueBtn.
@@ -379,7 +379,7 @@ abstract class AppLocalizations {
   /// No description provided for @pickedHint.
   ///
   /// In en, this message translates to:
-  /// **'We picked a session for you — tap to add or drop any of the {n}.'**
+  /// **'We picked a session for you. Tap to add or drop any of the {n}.'**
   String pickedHint(int n);
 
   /// No description provided for @pickAnExercise.
@@ -685,7 +685,7 @@ abstract class AppLocalizations {
   /// No description provided for @restOverBody.
   ///
   /// In en, this message translates to:
-  /// **'Back to it — next set is waiting.'**
+  /// **'Back to it, next set is waiting.'**
   String get restOverBody;
 
   /// No description provided for @allTimeSessions.
@@ -871,7 +871,7 @@ abstract class AppLocalizations {
   /// No description provided for @restDay.
   ///
   /// In en, this message translates to:
-  /// **'Rest day — nothing logged.'**
+  /// **'Rest day, nothing logged.'**
   String get restDay;
 
   /// No description provided for @delete.
@@ -1171,7 +1171,7 @@ abstract class AppLocalizations {
   /// No description provided for @placeDeleteBody.
   ///
   /// In en, this message translates to:
-  /// **'Only the place goes — your exercises and sessions stay.'**
+  /// **'Only the place goes. Your exercises and sessions stay.'**
   String get placeDeleteBody;
 
   /// No description provided for @placeGym.
@@ -1279,7 +1279,7 @@ abstract class AppLocalizations {
   /// No description provided for @noteEmptyBody.
   ///
   /// In en, this message translates to:
-  /// **'Cues, plans for next time, how a session felt — with photos or video if you want.'**
+  /// **'Cues, plans for next time, how a session felt. With photos or video if you want.'**
   String get noteEmptyBody;
 
   /// No description provided for @noteNoneForExercise.
@@ -1411,7 +1411,7 @@ abstract class AppLocalizations {
   /// No description provided for @measuresHint.
   ///
   /// In en, this message translates to:
-  /// **'Neck to calf — watch your body change, not just the bar.'**
+  /// **'Neck to calf: watch your body change, not just the bar.'**
   String get measuresHint;
 
   /// No description provided for @measureCount.
@@ -1573,7 +1573,7 @@ abstract class AppLocalizations {
   /// No description provided for @photoDueNow.
   ///
   /// In en, this message translates to:
-  /// **'Photo due — grab it today'**
+  /// **'Photo due: grab it today'**
   String get photoDueNow;
 
   /// No description provided for @addTodayPhotos.
@@ -1645,7 +1645,7 @@ abstract class AppLocalizations {
   /// No description provided for @timelineBodyHint.
   ///
   /// In en, this message translates to:
-  /// **'Built from your own sets — nothing to upload.'**
+  /// **'Built from your own sets, nothing to upload.'**
   String get timelineBodyHint;
 
   /// No description provided for @timelineWindow.
@@ -1927,7 +1927,7 @@ abstract class AppLocalizations {
   /// No description provided for @dragToReorder.
   ///
   /// In en, this message translates to:
-  /// **'Drag the dotted handle to reorder — this is the order you train in.'**
+  /// **'Drag the dotted handle to reorder, this is the order you train in.'**
   String get dragToReorder;
 
   /// No description provided for @reorderHandle.
@@ -1975,7 +1975,7 @@ abstract class AppLocalizations {
   /// No description provided for @resetBody.
   ///
   /// In en, this message translates to:
-  /// **'Sessions, records, routines, notes and profile. This cannot be undone — export a backup first if you might want it.'**
+  /// **'Sessions, records, routines, notes and profile. This cannot be undone: export a backup first if you might want it.'**
   String get resetBody;
 
   /// No description provided for @resetConfirm.
@@ -2131,7 +2131,7 @@ abstract class AppLocalizations {
   /// No description provided for @alarmSoundHint.
   ///
   /// In en, this message translates to:
-  /// **'Use your own — up to 15 seconds'**
+  /// **'Use your own, up to 15 seconds'**
   String get alarmSoundHint;
 
   /// No description provided for @alarmChoose.
@@ -2437,7 +2437,7 @@ abstract class AppLocalizations {
   /// No description provided for @nothingToExport.
   ///
   /// In en, this message translates to:
-  /// **'Nothing to export yet — log a session first'**
+  /// **'Nothing to export yet: log a session first'**
   String get nothingToExport;
 
   /// No description provided for @calculatorsCount.
@@ -2989,7 +2989,7 @@ abstract class AppLocalizations {
   /// No description provided for @calculatorsInsideWhy.
   ///
   /// In en, this message translates to:
-  /// **'1RM, plates, BMI, calories, body fat, FFMI, warm-up, RPE load, and DOTS and Wilks strength scores — all with published formulas.'**
+  /// **'1RM, plates, BMI, calories, body fat, FFMI, warm-up, RPE load, and DOTS and Wilks strength scores, all with published formulas.'**
   String get calculatorsInsideWhy;
 
   /// No description provided for @mathInside.
@@ -3160,6 +3160,48 @@ abstract class AppLocalizations {
   /// **'SOURCE CODE'**
   String get sourceCode;
 
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'Kangtu'**
+  String get appName;
+
+  /// No description provided for @shareSubjectWorkouts.
+  ///
+  /// In en, this message translates to:
+  /// **'{app} workouts'**
+  String shareSubjectWorkouts(String app);
+
+  /// No description provided for @shareSubjectBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'{app} backup'**
+  String shareSubjectBackup(String app);
+
+  /// No description provided for @shareSubjectExercises.
+  ///
+  /// In en, this message translates to:
+  /// **'{app} exercise list'**
+  String shareSubjectExercises(String app);
+
+  /// No description provided for @aboutRepdbNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise data from RepDB (repdb.co)'**
+  String get aboutRepdbNote;
+
+  /// No description provided for @aboutOssTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'OPEN-SOURCE CREDIT'**
+  String get aboutOssTitle;
+
+  /// No description provided for @aboutOssBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on GymMane by InlitX'**
+  String get aboutOssBody;
+
   /// No description provided for @suggested.
   ///
   /// In en, this message translates to:
@@ -3325,8 +3367,8 @@ abstract class AppLocalizations {
   /// No description provided for @autoProgressHint.
   ///
   /// In en, this message translates to:
-  /// **'Hit every rep and the next session starts {w} heavier.'**
-  String autoProgressHint(String w);
+  /// **'When you start a workout, Kangtu fills in the next step for each exercise. With Add reps you add one rep per set up to 12, then the weight goes up and you start again at 8. You can still tune each exercise on its page. Exercises inside a plan cycle follow the cycle; this setting covers the rest.'**
+  String get autoProgressHint;
 
   /// No description provided for @placePlates.
   ///
@@ -3697,7 +3739,7 @@ abstract class AppLocalizations {
   /// No description provided for @supersetHint.
   ///
   /// In en, this message translates to:
-  /// **'No rest between chained exercises — you go straight to the next one.'**
+  /// **'No rest between chained exercises, you go straight to the next one.'**
   String get supersetHint;
 
   /// No description provided for @aiRoutine.
@@ -4303,7 +4345,7 @@ abstract class AppLocalizations {
   /// No description provided for @momentsEmptyHint.
   ///
   /// In en, this message translates to:
-  /// **'Snap the gym, the whiteboard, a plate setup — anything you want to remember. They stay on the phone and only you see them.'**
+  /// **'Snap the gym, the whiteboard, a plate setup. Anything you want to remember. They stay on the phone and only you see them.'**
   String get momentsEmptyHint;
 
   /// No description provided for @awardStreak100Line.
@@ -4339,7 +4381,7 @@ abstract class AppLocalizations {
   /// No description provided for @logHint.
   ///
   /// In en, this message translates to:
-  /// **'No timer — just fill in what you did.'**
+  /// **'No timer, just fill in what you did.'**
   String get logHint;
 
   /// No description provided for @orStartFrom.
@@ -4813,7 +4855,7 @@ abstract class AppLocalizations {
   /// No description provided for @shareMessage.
   ///
   /// In en, this message translates to:
-  /// **'{name} — open the file with Kangtu to add it.'**
+  /// **'{name}: open the file with Kangtu to add it.'**
   String shareMessage(String name);
 
   /// No description provided for @importRoutines.
@@ -5389,7 +5431,7 @@ abstract class AppLocalizations {
   /// No description provided for @stepsInfoRead.
   ///
   /// In en, this message translates to:
-  /// **'It only reads your step count. It never reads anything else or writes to Health Connect.'**
+  /// **'This card only reads your step count. Other Health Connect reads and writes are described under Health data.'**
   String get stepsInfoRead;
 
   /// No description provided for @stepsInfoLocal.
@@ -8611,13 +8653,13 @@ abstract class AppLocalizations {
   /// No description provided for @rehabBookBlurb.
   ///
   /// In en, this message translates to:
-  /// **'12-week low-back programme · offline reference'**
+  /// **'Currently covers: 12-week low-back programme · offline reference'**
   String get rehabBookBlurb;
 
   /// No description provided for @rehabBookBlurbShort.
   ///
   /// In en, this message translates to:
-  /// **'12-week low-back programme · offline'**
+  /// **'Currently covers: 12-week low-back programme · offline'**
   String get rehabBookBlurbShort;
 
   /// No description provided for @rehabEnter.
@@ -9385,13 +9427,13 @@ abstract class AppLocalizations {
   /// No description provided for @baselineTitle.
   ///
   /// In en, this message translates to:
-  /// **'Baseline test'**
+  /// **'Rehab self-check'**
   String get baselineTitle;
 
   /// No description provided for @baselineSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Measure your baseline, then set your starting level'**
+  /// **'A few measures to set your starting level. Skip anything you can\'t measure.'**
   String get baselineSubtitle;
 
   /// No description provided for @baselineGateTitle.
@@ -9433,13 +9475,13 @@ abstract class AppLocalizations {
   /// No description provided for @baselineSave.
   ///
   /// In en, this message translates to:
-  /// **'Save baseline'**
+  /// **'Save self-check'**
   String get baselineSave;
 
   /// No description provided for @baselineSaved.
   ///
   /// In en, this message translates to:
-  /// **'Baseline saved'**
+  /// **'Self-check saved'**
   String get baselineSaved;
 
   /// No description provided for @baselineDisclaimer.
@@ -9451,7 +9493,7 @@ abstract class AppLocalizations {
   /// No description provided for @baselineResultTitle.
   ///
   /// In en, this message translates to:
-  /// **'Baseline result'**
+  /// **'Self-check result'**
   String get baselineResultTitle;
 
   /// No description provided for @baselineLast.
@@ -9463,7 +9505,7 @@ abstract class AppLocalizations {
   /// No description provided for @baselineInputHint.
   ///
   /// In en, this message translates to:
-  /// **'Enter a value'**
+  /// **'Value (optional)'**
   String get baselineInputHint;
 
   /// No description provided for @baselineNmRestingHr.
@@ -9657,6 +9699,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'End cycle'**
   String get cycleOff;
+
+  /// No description provided for @cycleRotationOff.
+  ///
+  /// In en, this message translates to:
+  /// **'With rotation on, the rotation sets the order, and this cycle stays paused.'**
+  String get cycleRotationOff;
 
   /// No description provided for @cycleRound.
   ///
@@ -11185,7 +11233,7 @@ abstract class AppLocalizations {
   /// No description provided for @healthPickHint.
   ///
   /// In en, this message translates to:
-  /// **'Pick what to bring from Health Connect. Android asks once for each one. It\'s only read, and it never leaves your phone.'**
+  /// **'Choose what to read from Health Connect. Android asks once per item. Your data never leaves this phone. While Health data is on, your workouts are also written to Health Connect as exercise sessions.'**
   String get healthPickHint;
 
   /// No description provided for @healthGroupHeart.
@@ -11383,7 +11431,7 @@ abstract class AppLocalizations {
   /// No description provided for @ladderHint.
   ///
   /// In en, this message translates to:
-  /// **'Order the steps from easiest to hardest. When you do 3 sets of 8 two sessions in a row (5 on slow ones), GymMane offers the next step.'**
+  /// **'Order the steps from easiest to hardest. When you do 3 sets of 8 two sessions in a row (5 on slow ones), Kangtu offers the next step.'**
   String get ladderHint;
 
   /// No description provided for @ladderBuiltIn.
@@ -13171,8 +13219,1430 @@ abstract class AppLocalizations {
   /// No description provided for @supportThanksBody.
   ///
   /// In en, this message translates to:
-  /// **'GymMane is free and always will be, with no ads and nothing hidden.\n\nIf it helps you train, buying me a coffee makes my day ☕\nAnd if you can\'t, no worries: a star on GitHub does too ⭐'**
+  /// **'Kangtu is free and always will be, with no ads and nothing hidden.\n\nIf it helps you train, buying me a coffee makes my day ☕\nAnd if you can\'t, no worries: a star on GitHub does too ⭐'**
   String get supportThanksBody;
+
+  /// No description provided for @perfSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance'**
+  String get perfSetting;
+
+  /// No description provided for @perfSheetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How much of your phone Kangtu uses. You can change each part below.'**
+  String get perfSheetHint;
+
+  /// No description provided for @perfLite.
+  ///
+  /// In en, this message translates to:
+  /// **'Saver'**
+  String get perfLite;
+
+  /// No description provided for @perfLiteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'No blur and calmer motion. For phones that struggle.'**
+  String get perfLiteHint;
+
+  /// No description provided for @perfBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get perfBalanced;
+
+  /// No description provided for @perfBalancedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Blur and animations without draining the battery.'**
+  String get perfBalancedHint;
+
+  /// No description provided for @perfMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum'**
+  String get perfMax;
+
+  /// No description provided for @perfMaxHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Finer blur and the screen at {hz} Hz. For high-end phones.'**
+  String perfMaxHint(int hz);
+
+  /// No description provided for @perfMaxHintNoHz.
+  ///
+  /// In en, this message translates to:
+  /// **'Finer blur everywhere. For high-end phones.'**
+  String get perfMaxHintNoHz;
+
+  /// No description provided for @perfCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get perfCustom;
+
+  /// No description provided for @perfTweak.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine-tuning'**
+  String get perfTweak;
+
+  /// No description provided for @perfFine.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine blur'**
+  String get perfFine;
+
+  /// No description provided for @perfFineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Softer edges and a sharper backdrop behind sheets'**
+  String get perfFineHint;
+
+  /// No description provided for @perfHz.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen at {hz} Hz'**
+  String perfHz(int hz);
+
+  /// No description provided for @perfHzHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything scrolls smoother, at a little more battery'**
+  String get perfHzHint;
+
+  /// No description provided for @lowEndLiteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Saver mode (no blur, calmer motion) will run smoother on it. You can change it in Settings → General → Performance.'**
+  String get lowEndLiteBody;
+
+  /// No description provided for @lowEndLiteOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on Saver'**
+  String get lowEndLiteOn;
+
+  /// No description provided for @dayOffHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your streak and the reminder leave this day alone'**
+  String get dayOffHint;
+
+  /// No description provided for @dayOffTrained.
+  ///
+  /// In en, this message translates to:
+  /// **'I trained, just didn\'t log it'**
+  String get dayOffTrained;
+
+  /// No description provided for @dayOffSick.
+  ///
+  /// In en, this message translates to:
+  /// **'Illness'**
+  String get dayOffSick;
+
+  /// No description provided for @dayOffTravel.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get dayOffTravel;
+
+  /// No description provided for @dayOffInjury.
+  ///
+  /// In en, this message translates to:
+  /// **'Injury'**
+  String get dayOffInjury;
+
+  /// No description provided for @dayOffRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get dayOffRest;
+
+  /// No description provided for @altsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups'**
+  String get altsTitle;
+
+  /// No description provided for @altsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'In case the machine is taken'**
+  String get altsHint;
+
+  /// No description provided for @altsPickHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up to {count}. If the machine is taken, swap in one tap.'**
+  String altsPickHint(int count);
+
+  /// No description provided for @placeDumbbells.
+  ///
+  /// In en, this message translates to:
+  /// **'Dumbbells'**
+  String get placeDumbbells;
+
+  /// No description provided for @dumbbellsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The weight of one dumbbell. Progression and the + and − buttons will only land on these here.'**
+  String get dumbbellsHint;
+
+  /// No description provided for @dumbbellOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Another weight'**
+  String get dumbbellOther;
+
+  /// No description provided for @tuneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s volume'**
+  String get tuneTitle;
+
+  /// No description provided for @tuneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell me how each muscle felt and I\'ll adjust the sets for next time.'**
+  String get tuneHint;
+
+  /// No description provided for @tuneLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Too little'**
+  String get tuneLess;
+
+  /// No description provided for @tuneRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get tuneRight;
+
+  /// No description provided for @tuneMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Too much'**
+  String get tuneMore;
+
+  /// No description provided for @tuneNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next time: {sets} of {name}'**
+  String tuneNext(String sets, String name);
+
+  /// No description provided for @tuneSame.
+  ///
+  /// In en, this message translates to:
+  /// **'Stays the same next time'**
+  String get tuneSame;
+
+  /// No description provided for @tuneSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Tune sets per muscle'**
+  String get tuneSetting;
+
+  /// No description provided for @tuneSettingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'After a routine, rate each muscle and the sets adjust'**
+  String get tuneSettingHint;
+
+  /// No description provided for @insightLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct} % more sets than your usual week. Watch your recovery.'**
+  String insightLoad(int pct);
+
+  /// No description provided for @insightMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'{muscle}: {days} days untouched.'**
+  String insightMuscle(String muscle, int days);
+
+  /// No description provided for @insightPushHeavy.
+  ///
+  /// In en, this message translates to:
+  /// **'You push more than you pull: {a} sets against {b} in four weeks.'**
+  String insightPushHeavy(int a, int b);
+
+  /// No description provided for @insightPullHeavy.
+  ///
+  /// In en, this message translates to:
+  /// **'You pull more than you push: {a} sets against {b} in four weeks.'**
+  String insightPullHeavy(int a, int b);
+
+  /// No description provided for @insightStronger.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {pct} % stronger than last month.'**
+  String insightStronger(String name, int pct);
+
+  /// No description provided for @recapPull.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep pulling to see your {month}'**
+  String recapPull(String month);
+
+  /// No description provided for @recapRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'Let go'**
+  String get recapRelease;
+
+  /// No description provided for @recapHi.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi, {name}'**
+  String recapHi(String name);
+
+  /// No description provided for @recapReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Shall we see what you did in {month}?'**
+  String recapReady(String month);
+
+  /// No description provided for @recapGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s go'**
+  String get recapGo;
+
+  /// No description provided for @recapEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts in {month} yet. Your first one opens this up.'**
+  String recapEmpty(String month);
+
+  /// No description provided for @recapClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get recapClose;
+
+  /// No description provided for @recapShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get recapShare;
+
+  /// No description provided for @recapWorkoutsKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'This month you trained'**
+  String get recapWorkoutsKicker;
+
+  /// No description provided for @recapWorkouts.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{workout} other{workouts}}'**
+  String recapWorkouts(int n);
+
+  /// No description provided for @recapDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{On one day} other{On {n} different days}}'**
+  String recapDays(int n);
+
+  /// No description provided for @recapTimeKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Time under the bar'**
+  String get recapTimeKicker;
+
+  /// No description provided for @recapLongest.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest session: {time}, on {date}'**
+  String recapLongest(String time, String date);
+
+  /// No description provided for @recapVolumeKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'You moved'**
+  String get recapVolumeKicker;
+
+  /// No description provided for @recapCars.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Like lifting a car} other{Like lifting {count} cars}}'**
+  String recapCars(int n, String count);
+
+  /// No description provided for @recapTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Most of it: {name}, {volume}'**
+  String recapTop(String name, String volume);
+
+  /// No description provided for @recapMuscleKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle of the month'**
+  String get recapMuscleKicker;
+
+  /// No description provided for @recapRecordsKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'New records'**
+  String get recapRecordsKicker;
+
+  /// No description provided for @recapNoRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'No records this time, but {n} sets went in the bank.'**
+  String recapNoRecords(int n);
+
+  /// No description provided for @recapHabitKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Your moment'**
+  String get recapHabitKicker;
+
+  /// No description provided for @recapHabitStart.
+  ///
+  /// In en, this message translates to:
+  /// **'You usually start at {time}'**
+  String recapHabitStart(String time);
+
+  /// No description provided for @recapShareKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Your month, ready to share'**
+  String get recapShareKicker;
+
+  /// No description provided for @recapTickWorkouts.
+  ///
+  /// In en, this message translates to:
+  /// **'Workouts'**
+  String get recapTickWorkouts;
+
+  /// No description provided for @recapTickTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get recapTickTime;
+
+  /// No description provided for @recapTickVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'Load'**
+  String get recapTickVolume;
+
+  /// No description provided for @recapTickRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Records'**
+  String get recapTickRecords;
+
+  /// No description provided for @recapAvg.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min per workout on average'**
+  String recapAvg(int n);
+
+  /// No description provided for @recapLiftKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise of the month'**
+  String get recapLiftKicker;
+
+  /// No description provided for @recapBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best'**
+  String get recapBest;
+
+  /// No description provided for @recapTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get recapTimes;
+
+  /// No description provided for @recapDaysLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get recapDaysLabel;
+
+  /// No description provided for @recapAvgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Average'**
+  String get recapAvgLabel;
+
+  /// No description provided for @recapCalendarLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{workouts} workouts on {days} days'**
+  String recapCalendarLine(int workouts, int days);
+
+  /// No description provided for @recapFavLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your day'**
+  String get recapFavLabel;
+
+  /// No description provided for @recapWatermark.
+  ///
+  /// In en, this message translates to:
+  /// **'free gym log'**
+  String get recapWatermark;
+
+  /// No description provided for @recapTickSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get recapTickSteps;
+
+  /// No description provided for @recapTickFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get recapTickFood;
+
+  /// No description provided for @recapCardioKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Cardio'**
+  String get recapCardioKicker;
+
+  /// No description provided for @recapCardioTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min across {n, plural, =1{one workout} other{{n} workouts}}'**
+  String recapCardioTime(int minutes, int n);
+
+  /// No description provided for @recapCardioCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One cardio workout} other{{n} cardio workouts}}'**
+  String recapCardioCount(int n);
+
+  /// No description provided for @recapCardioTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Your go-to: {name}'**
+  String recapCardioTop(String name);
+
+  /// No description provided for @recapStepsKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'You walked'**
+  String get recapStepsKicker;
+
+  /// No description provided for @recapStepsWord.
+  ///
+  /// In en, this message translates to:
+  /// **'steps'**
+  String get recapStepsWord;
+
+  /// No description provided for @recapStepsAvg.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} a day on average'**
+  String recapStepsAvg(String value);
+
+  /// No description provided for @recapStepsBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best day: {value}, {date}'**
+  String recapStepsBest(String value, String date);
+
+  /// No description provided for @recapFoodKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'On your plate'**
+  String get recapFoodKicker;
+
+  /// No description provided for @recapLiftRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Right behind it'**
+  String get recapLiftRest;
+
+  /// No description provided for @recapSameAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as in {month}'**
+  String recapSameAs(String month);
+
+  /// No description provided for @recapMoreThan.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} more than in {month}'**
+  String recapMoreThan(String value, String month);
+
+  /// No description provided for @recapLessThan.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} less than in {month}'**
+  String recapLessThan(String value, String month);
+
+  /// No description provided for @recapTickMedals.
+  ///
+  /// In en, this message translates to:
+  /// **'Medals'**
+  String get recapTickMedals;
+
+  /// No description provided for @recapTickSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get recapTickSleep;
+
+  /// No description provided for @recapMedalsKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Medals you won'**
+  String get recapMedalsKicker;
+
+  /// No description provided for @recapMedalsMore.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{And one more} other{And {n} more}}'**
+  String recapMedalsMore(int n);
+
+  /// No description provided for @recapSleepKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'You slept'**
+  String get recapSleepKicker;
+
+  /// No description provided for @recapSleepAvg.
+  ///
+  /// In en, this message translates to:
+  /// **'a night on average'**
+  String get recapSleepAvg;
+
+  /// No description provided for @recapSleepBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best night: {value}, {date}'**
+  String recapSleepBest(String value, String date);
+
+  /// No description provided for @recapCardSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get recapCardSummary;
+
+  /// No description provided for @recapCardCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get recapCardCalendar;
+
+  /// No description provided for @recapCardLift.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise'**
+  String get recapCardLift;
+
+  /// No description provided for @recapPeakKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Your toughest session'**
+  String get recapPeakKicker;
+
+  /// No description provided for @recapTickPeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Session'**
+  String get recapTickPeak;
+
+  /// No description provided for @recapFreshKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'First time this month'**
+  String get recapFreshKicker;
+
+  /// No description provided for @recapFresh.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{new exercise} other{new exercises}}'**
+  String recapFresh(int n);
+
+  /// No description provided for @recapTickFresh.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get recapTickFresh;
+
+  /// No description provided for @recapStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days in a row, your longest streak'**
+  String recapStreak(int n);
+
+  /// No description provided for @recapYearAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'A year ago: {n, plural, =1{1 workout} other{{n} workouts}}'**
+  String recapYearAgo(int n);
+
+  /// No description provided for @recapForgot.
+  ///
+  /// In en, this message translates to:
+  /// **'Left out this month: {muscle}'**
+  String recapForgot(String muscle);
+
+  /// No description provided for @recapFoodProtein.
+  ///
+  /// In en, this message translates to:
+  /// **'protein a day · goal {goal} g'**
+  String recapFoodProtein(int goal);
+
+  /// No description provided for @recapFoodStarDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{On your plate 1 day} other{On your plate {n} days}}'**
+  String recapFoodStarDays(int n);
+
+  /// No description provided for @recapFoodProteinLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Protein · g/day'**
+  String get recapFoodProteinLabel;
+
+  /// No description provided for @recapFoodGoalDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal met'**
+  String get recapFoodGoalDays;
+
+  /// No description provided for @recapFoodWaterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Water/day'**
+  String get recapFoodWaterLabel;
+
+  /// No description provided for @recapFoodTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day} other{{n} days}}'**
+  String recapFoodTimes(int n);
+
+  /// No description provided for @recapFoodStarKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Your food of the month'**
+  String get recapFoodStarKicker;
+
+  /// No description provided for @onbSpeedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Make it run smooth'**
+  String get onbSpeedTitle;
+
+  /// No description provided for @onbSpeedWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone seems to be working hard. Turn these off and everything will flow better: try them and watch the preview.'**
+  String get onbSpeedWhy;
+
+  /// No description provided for @onbSpeedMotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Animations'**
+  String get onbSpeedMotion;
+
+  /// No description provided for @onbSpeedBlurHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Frosted glass behind sheets and bars'**
+  String get onbSpeedBlurHint;
+
+  /// No description provided for @onbSpeedMotionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Screens and sheets that slide in'**
+  String get onbSpeedMotionHint;
+
+  /// No description provided for @onbSpeedLater.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change it anytime in Settings › General › Performance.'**
+  String get onbSpeedLater;
+
+  /// No description provided for @notifSoundSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification sounds'**
+  String get notifSoundSetting;
+
+  /// No description provided for @notifSoundRowHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How each kind of reminder sounds'**
+  String get notifSoundRowHint;
+
+  /// No description provided for @notifSoundHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a sound for each kind of reminder. From phone opens your phone sounds, and on most phones you can add your own song there.'**
+  String get notifSoundHint;
+
+  /// No description provided for @notifSoundTrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Workouts'**
+  String get notifSoundTrain;
+
+  /// No description provided for @notifSoundFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food, supplements and fasting'**
+  String get notifSoundFood;
+
+  /// No description provided for @notifSoundOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos and measurements'**
+  String get notifSoundOther;
+
+  /// No description provided for @notifSoundNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get notifSoundNormal;
+
+  /// No description provided for @notifSoundPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'From phone'**
+  String get notifSoundPhone;
+
+  /// No description provided for @notifSoundSilent.
+  ///
+  /// In en, this message translates to:
+  /// **'Silent'**
+  String get notifSoundSilent;
+
+  /// No description provided for @notifSoundPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap one to hear it. It saves right away.'**
+  String get notifSoundPhoneHint;
+
+  /// No description provided for @notifSoundMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Another file…'**
+  String get notifSoundMore;
+
+  /// No description provided for @notifSoundChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get notifSoundChange;
+
+  /// No description provided for @workoutNoteAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned note: seat, grip, machine…'**
+  String get workoutNoteAdd;
+
+  /// No description provided for @autoProgressSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto progression'**
+  String get autoProgressSetting;
+
+  /// No description provided for @autoProgressRowHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What it suggests for next time'**
+  String get autoProgressRowHint;
+
+  /// No description provided for @autoProgressOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get autoProgressOff;
+
+  /// No description provided for @autoProgressWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Add weight'**
+  String get autoProgressWeight;
+
+  /// No description provided for @autoProgressReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Add reps'**
+  String get autoProgressReps;
+
+  /// No description provided for @noteFolders.
+  ///
+  /// In en, this message translates to:
+  /// **'Folders'**
+  String get noteFolders;
+
+  /// No description provided for @noteFolderNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New folder'**
+  String get noteFolderNew;
+
+  /// No description provided for @noteFolderEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit folder'**
+  String get noteFolderEdit;
+
+  /// No description provided for @noteFolderName.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder name'**
+  String get noteFolderName;
+
+  /// No description provided for @noteFolderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder'**
+  String get noteFolderLabel;
+
+  /// No description provided for @noteFolderNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No folder'**
+  String get noteFolderNone;
+
+  /// No description provided for @noteFolderDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the folder?'**
+  String get noteFolderDelete;
+
+  /// No description provided for @noteFolderDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes are kept: they just leave the folder.'**
+  String get noteFolderDeleteBody;
+
+  /// No description provided for @foodArchivedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Food archived'**
+  String get foodArchivedToast;
+
+  /// No description provided for @planArchivedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan archived'**
+  String get planArchivedToast;
+
+  /// No description provided for @suppArchivedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplement archived'**
+  String get suppArchivedToast;
+
+  /// No description provided for @voiceSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout voice'**
+  String get voiceSetting;
+
+  /// No description provided for @voiceSettingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Says your next set and counts down the end of the rest, with the phone voice'**
+  String get voiceSettingHint;
+
+  /// No description provided for @voiceHello.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice on'**
+  String get voiceHello;
+
+  /// No description provided for @voiceRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest {time}.'**
+  String voiceRest(String time);
+
+  /// No description provided for @voiceNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {name}, {load}.'**
+  String voiceNext(String name, String load);
+
+  /// No description provided for @voiceLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'{reps} reps at {weight}'**
+  String voiceLoad(int reps, String weight);
+
+  /// No description provided for @voiceReps.
+  ///
+  /// In en, this message translates to:
+  /// **'{reps} reps'**
+  String voiceReps(int reps);
+
+  /// No description provided for @voiceGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s go!'**
+  String get voiceGo;
+
+  /// No description provided for @deloadSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Deload week'**
+  String get deloadSetting;
+
+  /// No description provided for @deloadOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get deloadOff;
+
+  /// No description provided for @deloadEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {weeks} weeks'**
+  String deloadEvery(int weeks);
+
+  /// No description provided for @deloadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Every few weeks, an easier one to recover: half the sets and 10 % less weight. That week does not count for progression.'**
+  String get deloadHint;
+
+  /// No description provided for @deloadRowHint.
+  ///
+  /// In en, this message translates to:
+  /// **'An easy week every few weeks'**
+  String get deloadRowHint;
+
+  /// No description provided for @deloadNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Deload week'**
+  String get deloadNow;
+
+  /// No description provided for @deloadNowHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, half the sets and 10 % less weight'**
+  String get deloadNowHint;
+
+  /// No description provided for @deloadIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{weeks, plural, =0{This week} =1{Next week} other{In {weeks} weeks}}'**
+  String deloadIn(int weeks);
+
+  /// No description provided for @deloadSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Train as usual'**
+  String get deloadSkip;
+
+  /// No description provided for @voiceSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How the voice works'**
+  String get voiceSheetTitle;
+
+  /// No description provided for @voicePointRest.
+  ///
+  /// In en, this message translates to:
+  /// **'When you tick a set, it tells you the rest time and what comes next.'**
+  String get voicePointRest;
+
+  /// No description provided for @voicePointCount.
+  ///
+  /// In en, this message translates to:
+  /// **'It counts 3, 2, 1 at the end of the rest and calls you back.'**
+  String get voicePointCount;
+
+  /// No description provided for @voicePointPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'It uses your phone\'s voice and plays over your music.'**
+  String get voicePointPhone;
+
+  /// No description provided for @voiceTry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try the voice'**
+  String get voiceTry;
+
+  /// No description provided for @voiceNoEngine.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone has no voice engine turned on.'**
+  String get voiceNoEngine;
+
+  /// No description provided for @voiceNoLang.
+  ///
+  /// In en, this message translates to:
+  /// **'Your language\'s voice is missing. Download it in your phone\'s voice settings.'**
+  String get voiceNoLang;
+
+  /// No description provided for @voiceOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice settings'**
+  String get voiceOpenSettings;
+
+  /// No description provided for @voiceMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 minute} other{{count} minutes}}'**
+  String voiceMinutes(int count);
+
+  /// No description provided for @voiceSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 second} other{{count} seconds}}'**
+  String voiceSeconds(int count);
+
+  /// No description provided for @voiceAnd.
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get voiceAnd;
+
+  /// No description provided for @rehabPromptIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'You are an exercise-rehabilitation assistant. Based on my situation, my current plan and recent training feedback below, give me a progressive rehabilitation plan I can carry out on my own; if a plan already exists, adjust that plan directly.'**
+  String get rehabPromptIntro;
+
+  /// No description provided for @rehabPromptSecProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'About me'**
+  String get rehabPromptSecProfile;
+
+  /// No description provided for @rehabPromptProfileLine.
+  ///
+  /// In en, this message translates to:
+  /// **'- Sex / age / height / weight: {sex}, age {age}, {height}, {weight}'**
+  String rehabPromptProfileLine(String sex, String age, String height, String weight);
+
+  /// No description provided for @rehabPromptRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'- Sessions in the last 30 days: {n}'**
+  String rehabPromptRecent(String n);
+
+  /// No description provided for @rehabPromptDaysPerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'- Training days available per week: {n}'**
+  String rehabPromptDaysPerWeek(String n);
+
+  /// No description provided for @rehabPromptGear.
+  ///
+  /// In en, this message translates to:
+  /// **'- Available equipment: {gear}'**
+  String rehabPromptGear(String gear);
+
+  /// No description provided for @rehabPromptGoals.
+  ///
+  /// In en, this message translates to:
+  /// **'- Rehabilitation goals: {goals}'**
+  String rehabPromptGoals(String goals);
+
+  /// No description provided for @rehabPromptSecIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Current problem'**
+  String get rehabPromptSecIssue;
+
+  /// No description provided for @rehabPromptArea.
+  ///
+  /// In en, this message translates to:
+  /// **'- Area: {area}'**
+  String rehabPromptArea(String area);
+
+  /// No description provided for @rehabPromptDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'- How long I have had it: {duration}'**
+  String rehabPromptDuration(String duration);
+
+  /// No description provided for @rehabPromptPain.
+  ///
+  /// In en, this message translates to:
+  /// **'- Current discomfort level: {pain}/10'**
+  String rehabPromptPain(String pain);
+
+  /// No description provided for @rehabPromptFactors.
+  ///
+  /// In en, this message translates to:
+  /// **'- Aggravating / relieving factors: {factors}'**
+  String rehabPromptFactors(String factors);
+
+  /// No description provided for @rehabPromptFlagNone.
+  ///
+  /// In en, this message translates to:
+  /// **'- Safety screening: no red flags found'**
+  String get rehabPromptFlagNone;
+
+  /// No description provided for @rehabPromptFlagHit.
+  ///
+  /// In en, this message translates to:
+  /// **'- Safety screening, red flags present: {flags}'**
+  String rehabPromptFlagHit(String flags);
+
+  /// No description provided for @rehabPromptSecDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor\'s diagnosis and instructions'**
+  String get rehabPromptSecDoctor;
+
+  /// No description provided for @rehabPromptDx.
+  ///
+  /// In en, this message translates to:
+  /// **'- Diagnosis: {dx}'**
+  String rehabPromptDx(String dx);
+
+  /// No description provided for @rehabPromptIcd.
+  ///
+  /// In en, this message translates to:
+  /// **' (ICD: {code})'**
+  String rehabPromptIcd(String code);
+
+  /// No description provided for @rehabPromptVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'- Visit date: {date}'**
+  String rehabPromptVisit(String date);
+
+  /// No description provided for @rehabPromptOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'- Doctor\'s instructions, verbatim: {text}'**
+  String rehabPromptOrders(String text);
+
+  /// No description provided for @rehabPromptAdvisedCare.
+  ///
+  /// In en, this message translates to:
+  /// **'- Treatments / exercises the doctor advised: {text}'**
+  String rehabPromptAdvisedCare(String text);
+
+  /// No description provided for @rehabPromptRestrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'- Restrictions and contraindications (must be followed): {text}'**
+  String rehabPromptRestrictions(String text);
+
+  /// No description provided for @rehabPromptImaging.
+  ///
+  /// In en, this message translates to:
+  /// **'- Imaging / test findings: {text}'**
+  String rehabPromptImaging(String text);
+
+  /// No description provided for @rehabPromptFollowUp.
+  ///
+  /// In en, this message translates to:
+  /// **'- Follow-up appointment: {date}'**
+  String rehabPromptFollowUp(String date);
+
+  /// No description provided for @rehabPromptSecPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Current plan'**
+  String get rehabPromptSecPlan;
+
+  /// No description provided for @rehabPromptNoPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'No plan yet (create one in the routines field as described under output requirements)'**
+  String get rehabPromptNoPlan;
+
+  /// No description provided for @rehabPromptSecFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent training feedback'**
+  String get rehabPromptSecFeedback;
+
+  /// No description provided for @rehabPromptNoFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'No training feedback recorded'**
+  String get rehabPromptNoFeedback;
+
+  /// No description provided for @rehabPromptSecOutput.
+  ///
+  /// In en, this message translates to:
+  /// **'Output requirements'**
+  String get rehabPromptSecOutput;
+
+  /// No description provided for @rehabPromptRule1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Output a single JSON object only, with no extra prose.'**
+  String get rehabPromptRule1;
+
+  /// No description provided for @rehabPromptRule2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Put \"cautions + stop rules\" in the advice field (a string).'**
+  String get rehabPromptRule2;
+
+  /// No description provided for @rehabPromptRule3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. If the \"Current plan\" section is empty, give a whole new plan in the routines field, copying the template structure below:'**
+  String get rehabPromptRule3;
+
+  /// No description provided for @rehabPromptRule4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. If the \"Current plan\" section is not empty, give changes to the current plan in an adjust array (use an empty array [] if nothing needs changing), copying the structure below:'**
+  String get rehabPromptRule4;
+
+  /// No description provided for @rehabPromptAdjustSet.
+  ///
+  /// In en, this message translates to:
+  /// **'   - set: field may only be weight / sets / reps / rest; value is the new target value.'**
+  String get rehabPromptAdjustSet;
+
+  /// No description provided for @rehabPromptAdjustRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'   - remove: delete that exercise from the plan.'**
+  String get rehabPromptAdjustRemove;
+
+  /// No description provided for @rehabPromptAdjustAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'   - add: add an exercise to the plan; sets / reps / weight are optional.'**
+  String get rehabPromptAdjustAdd;
+
+  /// No description provided for @rehabPromptAdjustRoutine.
+  ///
+  /// In en, this message translates to:
+  /// **'   - routine may be omitted (omitted = applies to every current plan).'**
+  String get rehabPromptAdjustRoutine;
+
+  /// No description provided for @rehabPromptRule5.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Take exercise names from the \"Exercise library\" list below (English names) so they match the app\'s library automatically.'**
+  String get rehabPromptRule5;
+
+  /// No description provided for @rehabPromptRule6.
+  ///
+  /// In en, this message translates to:
+  /// **'6. Keep intensity conservative: never aggravate symptoms; pain during training must stay at or below 3/10; mobility first, then stability, then strength.'**
+  String get rehabPromptRule6;
+
+  /// No description provided for @rehabPromptRule7.
+  ///
+  /// In en, this message translates to:
+  /// **'7. The advice field must include: {stopRules}'**
+  String rehabPromptRule7(String stopRules);
+
+  /// No description provided for @rehabPromptRule8Doctor.
+  ///
+  /// In en, this message translates to:
+  /// **'8. When the \"Doctor\'s diagnosis and instructions\" section is present, give a plan even if the safety gate has not passed: you may output routines/adjust, but you must strictly follow the listed restrictions and contraindications and must not schedule any forbidden movement; if it conflicts with the doctor\'s instructions, the doctor\'s instructions win.'**
+  String get rehabPromptRule8Doctor;
+
+  /// No description provided for @rehabPromptRule8Gate.
+  ///
+  /// In en, this message translates to:
+  /// **'8. If the safety gate has not passed, give the advice field only and output neither routines nor adjust.'**
+  String get rehabPromptRule8Gate;
+
+  /// No description provided for @rehabPromptSecLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise library — English name (localised name) | muscle group | equipment | difficulty | mode'**
+  String get rehabPromptSecLibrary;
+
+  /// No description provided for @rehabListSep.
+  ///
+  /// In en, this message translates to:
+  /// **', '**
+  String get rehabListSep;
+
+  /// No description provided for @rehabSemiSep.
+  ///
+  /// In en, this message translates to:
+  /// **'; '**
+  String get rehabSemiSep;
+
+  /// No description provided for @rehabFbDefaultArea.
+  ///
+  /// In en, this message translates to:
+  /// **'discomfort'**
+  String get rehabFbDefaultArea;
+
+  /// No description provided for @rehabFbPainWithArea.
+  ///
+  /// In en, this message translates to:
+  /// **'{area} {n}/10 discomfort'**
+  String rehabFbPainWithArea(String area, String n);
+
+  /// No description provided for @rehabFbNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: {text}'**
+  String rehabFbNote(String text);
+
+  /// No description provided for @rehabFbNoDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'(no detail)'**
+  String get rehabFbNoDetail;
+
+  /// No description provided for @rehabFbLine.
+  ///
+  /// In en, this message translates to:
+  /// **'- {date}: {body}'**
+  String rehabFbLine(String date, String body);
+
+  /// No description provided for @rehabMissGateAdjust.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety gate not passed — every plan adjustment was ignored.'**
+  String get rehabMissGateAdjust;
+
+  /// No description provided for @rehabMissNoLinkedPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'This record has no linked plan, so the adjustments could not be applied.'**
+  String get rehabMissNoLinkedPlan;
+
+  /// No description provided for @rehabMissNoSuchPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan \"{name}\" does not exist.'**
+  String rehabMissNoSuchPlan(String name);
+
+  /// No description provided for @rehabMissGateReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety gate not passed — the plan and the adjustments were ignored.'**
+  String get rehabMissGateReply;
+
+  /// No description provided for @baselineUnitRep.
+  ///
+  /// In en, this message translates to:
+  /// **'rep'**
+  String get baselineUnitRep;
+
+  /// No description provided for @baselineUnitSec.
+  ///
+  /// In en, this message translates to:
+  /// **'sec'**
+  String get baselineUnitSec;
+
+  /// No description provided for @defaultAthleteName.
+  ///
+  /// In en, this message translates to:
+  /// **'Athlete'**
+  String get defaultAthleteName;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

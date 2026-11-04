@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gymmane/l10n/l10n.dart';
 import 'package:gymmane/services/plan_share.dart';
 import 'package:gymmane/state/fit_state.dart';
 
@@ -119,7 +120,8 @@ void main() {
 
   test('la lista para la IA lleva cabecera y ejercicios', () {
     final text = fit.planRequestText();
-    expect(text.contains('GymMane'), isTrue);
+    // RISK-100：品牌名走 arb（本用例跑在 es → 'Kangtu'），不再断言硬编码中文
+    expect(text.contains(t.appName), isTrue);
     expect(text.contains('Barbell Bench Press'), isTrue);
     expect(text.split('\n').length, greaterThan(50));
   });

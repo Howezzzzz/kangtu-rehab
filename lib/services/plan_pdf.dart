@@ -197,7 +197,7 @@ class _PlanDoc {
   void _header(List<Routine> routines, {required bool week, required DateTime now}) {
     final logo = Rect.fromLTWH(_x(_margin, 26), _y, 26, 26);
     _add((c) => _logo(c, logo));
-    _text('GymMane', _st(14, weight: FontWeight.w900), _margin + 34, _y + 4, 140);
+    _text('Kangtu', _st(14, weight: FontWeight.w900), _margin + 34, _y + 4, 140);
     final who = [if (fit.profile.name.trim().isNotEmpty) fit.profile.name.trim(), t.shortDateYear(now)].join(' · ');
     _text(who, _st(9, color: _faint), _pageW - _margin - 220, _y + 8, 220, align: TextAlign.end);
     _y += 50;
@@ -590,7 +590,7 @@ class _PlanDoc {
     _logo(c, Rect.fromLTWH(_x(_margin, 12), y - 1, 12, 12));
     final brand = TextPainter(
       text: TextSpan(children: [
-        TextSpan(text: 'GymMane', style: _st(8.5, weight: FontWeight.w900)),
+        TextSpan(text: 'Kangtu', style: _st(8.5, weight: FontWeight.w900)),
         TextSpan(text: '  ·  ${t.pdfFooter}', style: _st(8, color: _faint)),
       ]),
       textDirection: _dir,
@@ -616,8 +616,8 @@ class _PlanDoc {
 }
 
 const _author = 'InlitX';
-const _app = 'GymMane';
-const _site = 'https://github.com/InlitX/GymMane';
+const _app = 'Kangtu';
+const _site = 'https://github.com/Howezzzzz/kangtu-rehab';
 
 String _two(int n) => n.toString().padLeft(2, '0');
 

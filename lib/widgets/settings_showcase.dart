@@ -107,7 +107,7 @@ class _Tile extends StatelessWidget {
         height: h,
         padding: EdgeInsets.all(pad),
         decoration: BoxDecoration(color: context.gc.bgRaised2, borderRadius: BorderRadius.circular(24)),
-        child: child,
+        child: MediaQuery.withNoTextScaling(child: child),
       ));
 }
 
@@ -184,7 +184,7 @@ class AlertsShowcase extends StatelessWidget {
               child: Icon(icon, size: 12, color: tone),
             ),
             const SizedBox(width: 8),
-            Text('GymMane', style: AppTheme.f(12, weight: FontWeight.w700, color: gc.textSecondary)),
+            Text(t.appName, style: AppTheme.f(12, weight: FontWeight.w700, color: gc.textSecondary)),
             if (when.isNotEmpty)
               Flexible(
                 child: Text(' · $when',
@@ -257,11 +257,15 @@ class AlertsShowcase extends StatelessWidget {
       when: t.liveChannel,
       extra: Padding(
         padding: const EdgeInsets.only(top: 12),
-        child: Row(children: [
-          _pill(gc, t.liveDoneSet, strong: true),
-          const SizedBox(width: 8),
-          _pill(gc, t.liveSkipRest),
-        ]),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: AlignmentDirectional.centerStart,
+          child: Row(children: [
+            _pill(gc, t.liveDoneSet, strong: true),
+            const SizedBox(width: 8),
+            _pill(gc, t.liveSkipRest),
+          ]),
+        ),
       ),
     );
     final restNote = _note(gc,
@@ -400,7 +404,7 @@ class HomeExtrasShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gc = context.gc;
-    const pass = GymPass(id: 'demo', name: 'GymMane Fit', code: 'GYMMANE-2026-0042', hue: 0);
+    final pass = GymPass(id: 'demo', name: '${t.appName} Fit', code: 'KANGTU-2026-0042', hue: 0);
     final steps = _Tile(
       w: 150,
       h: 170,
@@ -444,7 +448,8 @@ class HomeExtrasShowcase extends StatelessWidget {
     );
     final medal = _Tile(w: 150, h: 150, child: Center(child: Medal(id: AwardId.values[1], size: 96)));
     final medalLocked = _Tile(w: 150, h: 150, child: Center(child: Medal(id: AwardId.values[6], size: 96, locked: true)));
-    final passCard = SizedBox(width: 330, child: _lift(const GymPassCard(pass: pass, hero: false), radius: 22));
+    // pass 的名字走 t.appName（品牌按语言出康途/Kangtu）→ 不是编译期常量，故这里不能 const
+    final passCard = SizedBox(width: 330, child: _lift(GymPassCard(pass: pass, hero: false), radius: 22));
     final heart = _Tile(
       w: 330,
       h: 130,

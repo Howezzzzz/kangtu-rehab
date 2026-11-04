@@ -47,6 +47,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /android/.gradle/
+# Gradle 构建产物（上游 .gitignore 也没盖到这一层，我方 1.6.0 批量导入时误提了一个
+# problems-report.html，2026-11-04 清掉并补上规则）
+/android/build/
 /android/local.properties
 
 # Python tooling

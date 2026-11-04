@@ -211,15 +211,28 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                                   children: [
                                     _cardLabel(gc, t.personalRecord),
                                     const SizedBox(height: 8),
-                                    Text(fit.recordLabel(pr),
-                                        style: AppTheme.f(30,
-                                            weight: FontWeight.w800, color: gc.text, height: 1)),
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      alignment: AlignmentDirectional.centerStart,
+                                      child: Text(fit.recordLabel(pr),
+                                          maxLines: 1,
+                                          style: AppTheme.f(30,
+                                              weight: FontWeight.w800, color: gc.text, height: 1)),
+                                    ),
                                   ],
                                 ),
                               ),
-                              Text(fit.recordDetail(pr),
-                                  style: AppTheme.f(12,
-                                      weight: FontWeight.w500, color: gc.textSecondary)),
+                              const SizedBox(width: 10),
+                              Flexible(
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  alignment: AlignmentDirectional.centerEnd,
+                                  child: Text(fit.recordDetail(pr),
+                                      maxLines: 1,
+                                      style: AppTheme.f(12,
+                                          weight: FontWeight.w500, color: gc.textSecondary)),
+                                ),
+                              ),
                             ],
                           ),
                           if (history.length > 1) _bests(gc, ex.id, pr.kind),
@@ -391,7 +404,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
           ),
           const SizedBox(height: 4),
           Padding(
-            padding: const EdgeInsets.only(left: 26),
+            padding: const EdgeInsetsDirectional.only(start: 26),
             child: Text(t.notHereWhy, style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.4)),
           ),
           const SizedBox(height: 14),
@@ -865,7 +878,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
             if (i < rows.length - 1)
               Container(
                 height: 1,
-                margin: const EdgeInsets.only(left: 16),
+                margin: const EdgeInsetsDirectional.only(start: 16),
                 color: gc.border.withValues(alpha: 0.55),
               ),
           ],
@@ -907,7 +920,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   }
 
   Widget _stackRow(BuildContext context, GymColors gc, String id) {
-    final stack = fit.stackFor(id);
+    final stack = fit.ownStackFor(id);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => showWeightStackSheet(context, id),
@@ -1057,7 +1070,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   }
 
   Widget _rowIcon(GymColors gc, IconData icon, bool on) => Padding(
-        padding: const EdgeInsets.only(right: 14),
+        padding: const EdgeInsetsDirectional.only(end: 14),
         child: SizedBox(
           width: 22,
           child: Icon(icon, size: 19, color: on ? gc.text : gc.textSecondary),
@@ -1357,7 +1370,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 14),
+              padding: const EdgeInsetsDirectional.only(end: 14),
               child: SizedBox(
                 width: 22,
                 child: SvgPathIcon(Ic.trendUp, size: 19, color: on ? gc.text : gc.textSecondary),
@@ -1528,34 +1541,46 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                       ),
                       const SizedBox(height: 12),
                     ],
-                    OptionGroup([
-                      for (final k in ProgressKind.values)
-                        OptionItem(
-                          _kindName(k),
-                          detail: k == rule.kind ? _kindHint(k) : null,
-                          selected: k == rule.kind,
-                          onTap: () => set(rule.copyWith(kind: k)),
-                        ),
-                    ]),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 240),
-                      curve: Curves.easeOutCubic,
-                      alignment: Alignment.topCenter,
-                      child: rule.kind == ProgressKind.manual
-                          ? const SizedBox(width: double.infinity)
-                          : Container(
-                              margin: const EdgeInsets.only(top: 12),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: gc.border),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(children: [
-                                for (var i = 0; i < params.length; i++) ...[
-                                  if (i > 0) Divider(height: 1, thickness: 1, indent: 16, endIndent: 16, color: gc.border),
-                                  params[i],
-                                ],
-                              ]),
+                    // 融合 2.1：被「计划周期」接管的动作，把上游规则控件收进「进阶选项」二级并
+                    // 默认折叠（要手动覆盖时再展开）；未被接管的动作保持原样直接展开、不显示
+                    // 折叠头 —— 一个动作在同一屏只暴露一个渐进来源。
+                    _RulesCollapse(
+                      open: progRs.isEmpty,
+                      showHeader: progRs.isNotEmpty,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                            OptionGroup([
+                              for (final k in ProgressKind.values)
+                                OptionItem(
+                                  _kindName(k),
+                                  detail: k == rule.kind ? _kindHint(k) : null,
+                                  selected: k == rule.kind,
+                                  onTap: () => set(rule.copyWith(kind: k)),
+                                ),
+                            ]),
+                            AnimatedSize(
+                              duration: const Duration(milliseconds: 240),
+                              curve: Curves.easeOutCubic,
+                              alignment: Alignment.topCenter,
+                              child: rule.kind == ProgressKind.manual
+                                  ? const SizedBox(width: double.infinity)
+                                  : Container(
+                                      margin: const EdgeInsets.only(top: 12),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: gc.border),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Column(children: [
+                                        for (var i = 0; i < params.length; i++) ...[
+                                          if (i > 0) Divider(height: 1, thickness: 1, indent: 16, endIndent: 16, color: gc.border),
+                                          params[i],
+                                        ],
+                                      ]),
+                                    ),
                             ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -1758,6 +1783,66 @@ class _MergeTargetSheetState extends State<_MergeTargetSheet> {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// 「进阶选项」折叠区（融合 2.1）。
+///
+/// 被计划周期接管的动作：上游渐进规则默认收起，需要手动覆盖时再展开，
+/// 避免同一屏出现「计划驱动」与「规则驱动」两种渐进语义互相打架。
+/// 未被接管的动作：[showHeader] 为 false、[open] 为 true —— 与改造前完全一致。
+class _RulesCollapse extends StatefulWidget {
+  const _RulesCollapse({required this.child, this.open = false, this.showHeader = true});
+
+  final Widget child;
+  final bool open;
+  final bool showHeader;
+
+  @override
+  State<_RulesCollapse> createState() => _RulesCollapseState();
+}
+
+class _RulesCollapseState extends State<_RulesCollapse> {
+  late bool _open = widget.open;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.showHeader) return widget.child;
+    final gc = context.gc;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          button: true,
+          expanded: _open,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => setState(() => _open = !_open),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(children: [
+                Expanded(
+                  child: Text(t.advanced.toUpperCase(),
+                      style: AppTheme.f(10.5,
+                          weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4)),
+                ),
+                AnimatedRotation(
+                  turns: _open ? 0.5 : 0,
+                  duration: const Duration(milliseconds: 220),
+                  child: Icon(PhosphorIconsRegular.caretDown, size: 15, color: gc.textTertiary),
+                ),
+              ]),
+            ),
+          ),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 240),
+          curve: Curves.easeOutCubic,
+          alignment: Alignment.topCenter,
+          child: _open ? widget.child : const SizedBox(width: double.infinity),
+        ),
+      ],
     );
   }
 }

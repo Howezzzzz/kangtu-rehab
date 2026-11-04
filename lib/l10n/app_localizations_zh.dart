@@ -130,7 +130,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get buildSession => '定制本次训练';
 
   @override
-  String get tapMuscles => '点击你想训练的肌肉部位 — 正面与背面。';
+  String get tapMuscles => '点击你想训练的肌肉部位，正面与背面。';
 
   @override
   String get continueBtn => '继续';
@@ -143,7 +143,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String pickedHint(int n) {
-    return '已为你推荐一组动作 — 点击可添加或删减这 $n 项动作。';
+    return '已为你推荐一组动作，点击可添加或删减这 $n 项动作。';
   }
 
   @override
@@ -316,7 +316,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get restOverTitle => '休息结束';
 
   @override
-  String get restOverBody => '准备就绪 — 该开始下一组了！';
+  String get restOverBody => '准备就绪，该开始下一组了！';
 
   @override
   String get allTimeSessions => '总训练次数';
@@ -424,7 +424,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get restDayShort => '休息日';
 
   @override
-  String get restDay => '休息日 — 未记录训练。';
+  String get restDay => '休息日，未记录训练。';
 
   @override
   String get delete => '删除';
@@ -1045,7 +1045,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get resetTitle => '确定清空所有数据？';
 
   @override
-  String get resetBody => '将清空所有训练记录、个人纪录、计划、笔记及个人资料。此操作不可逆 — 如有需要，请先导出备份。';
+  String get resetBody => '将清空所有训练记录、个人纪录、计划、笔记及个人资料。此操作不可逆，如有需要，请先导出备份。';
 
   @override
   String get resetConfirm => '清空全部数据';
@@ -1123,7 +1123,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get alarmDefaultName => '默认声音';
 
   @override
-  String get alarmSoundHint => '可导入自定义音频 — 长度不超过 15 秒';
+  String get alarmSoundHint => '可导入自定义音频，长度不超过 15 秒';
 
   @override
   String get alarmChoose => '选择音频文件…';
@@ -1284,7 +1284,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get backupFailed => '无法读取该备份文件';
 
   @override
-  String get nothingToExport => '暂无可导出的数据 — 请先记录一次训练';
+  String get nothingToExport => '暂无可导出的数据，请先记录一次训练';
 
   @override
   String calculatorsCount(int n) {
@@ -1663,6 +1663,33 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sourceCode => '开源代码';
 
   @override
+  String get appName => '康途';
+
+  @override
+  String shareSubjectWorkouts(String app) {
+    return '$app 训练记录';
+  }
+
+  @override
+  String shareSubjectBackup(String app) {
+    return '$app 备份';
+  }
+
+  @override
+  String shareSubjectExercises(String app) {
+    return '$app 动作列表';
+  }
+
+  @override
+  String get aboutRepdbNote => '动作数据来自 RepDB (repdb.co)';
+
+  @override
+  String get aboutOssTitle => '开源署名';
+
+  @override
+  String get aboutOssBody => '基于 InlitX 的 GymMane';
+
+  @override
   String get suggested => '推荐动作';
 
   @override
@@ -1748,9 +1775,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get autoProgress => '下次自动加重';
 
   @override
-  String autoProgressHint(String w) {
-    return '完成全部次数后，下次训练自动增加 $w。';
-  }
+  String get autoProgressHint =>
+      '开始训练时，康途会为每个动作填好下一步。选「加次数」时每组多 1 次、最多到 12 次，然后加重量、回到 8 次重新开始。你也可以在动作页单独微调。已排入「计划周期」的动作由周期接管，这里的设置用于其余动作。';
 
   @override
   String get placePlates => '杠铃片和杠铃杆';
@@ -2550,7 +2576,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String shareMessage(String name) {
-    return '$name —— 用 康途 打开这个文件即可添加。';
+    return '$name，用 康途 打开这个文件即可添加。';
   }
 
   @override
@@ -2866,7 +2892,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stepsGrant => '点按以在 Health Connect 中允许';
 
   @override
-  String get stepsInfoRead => '只读取步数。不读取其他任何内容，也不会写入 Health Connect。';
+  String get stepsInfoRead => '这一项只读取步数。应用对 Health Connect 的其他读取与写入，见「健康数据」里的说明。';
 
   @override
   String get stepsInfoLocal => '步数只保存在手机上。康途仅在检查更新时联网。';
@@ -4687,10 +4713,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get rehabBookTitle => '康复手册';
 
   @override
-  String get rehabBookBlurb => '12 周腰痛康复 · 离线可看的参考内容';
+  String get rehabBookBlurb => '当前收录：12 周腰痛康复 · 离线可看的参考内容';
 
   @override
-  String get rehabBookBlurbShort => '12 周腰痛康复 · 离线可用';
+  String get rehabBookBlurbShort => '当前收录：12 周腰痛康复 · 离线可用';
 
   @override
   String get rehabEnter => '进入';
@@ -5099,10 +5125,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get logTagRehab => '康复';
 
   @override
-  String get baselineTitle => '自测基线';
+  String get baselineTitle => '康复自评';
 
   @override
-  String get baselineSubtitle => '先测基础值，再定训练起始强度';
+  String get baselineSubtitle => '测基础值、定训练起始强度；填不上的可留空';
 
   @override
   String get baselineGateTitle => '运动前安全自查';
@@ -5123,22 +5149,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get baselineGateFail => '有一项打勾：请先咨询医生，暂不进行自测。';
 
   @override
-  String get baselineSave => '保存基线';
+  String get baselineSave => '保存自评';
 
   @override
-  String get baselineSaved => '基线已保存';
+  String get baselineSaved => '自评已保存';
 
   @override
   String get baselineDisclaimer => '自测结果仅供参考，非医疗诊断。';
 
   @override
-  String get baselineResultTitle => '基线结果';
+  String get baselineResultTitle => '自评结果';
 
   @override
   String get baselineLast => '上次';
 
   @override
-  String get baselineInputHint => '填入数值';
+  String get baselineInputHint => '数值（可留空）';
 
   @override
   String get baselineNmRestingHr => '静息心率';
@@ -5239,6 +5265,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cycleOff => '结束周期';
+
+  @override
+  String get cycleRotationOff => '轮换开启时由轮换决定顺序，这里的周期暂不生效。';
 
   @override
   String cycleRound(Object n) {
@@ -5628,10 +5657,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stopwatch => '秒表';
 
   @override
-  String get proteinSource => 'Protein source';
+  String get proteinSource => '蛋白来源';
 
   @override
-  String get proteinMixedShort => 'Mixed';
+  String get proteinMixedShort => '混合';
 
   @override
   String get kcalActive => '活动';
@@ -5781,27 +5810,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String fillDay(String amount) {
-    return 'Fill your day · $amount';
+    return '把今天填满 · $amount';
   }
 
   @override
   String leftAfterKcal(String kcal) {
-    return 'You\'ll have $kcal left';
+    return '还能再吃 $kcal';
   }
 
   @override
   String leftAfterBoth(String kcal, String grams) {
-    return 'You\'ll have $kcal and $grams g protein left';
+    return '还能再吃 $kcal、$grams 克蛋白';
   }
 
   @override
   String leftAfterOver(String kcal) {
-    return '$kcal over your goal';
+    return '超出目标 $kcal';
   }
 
   @override
   String perDayUnit(String unit) {
-    return '$unit a day';
+    return '每天 $unit';
   }
 
   @override
@@ -6061,7 +6090,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get healthPickTitle => '健康数据';
 
   @override
-  String get healthPickHint => '选择要从 Health Connect 读取的项目。Android 会为每一项询问一次。数据只读取，永远不会离开手机。';
+  String get healthPickHint =>
+      '选择要从 Health Connect 读取的项目。Android 会为每一项询问一次。数据不会离开手机。开启「健康数据」后，你的训练也会作为运动记录写回 Health Connect。';
 
   @override
   String get healthGroupHeart => '心脏';
@@ -6160,7 +6190,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ladderTitle => '进阶';
 
   @override
-  String get ladderHint => '按从易到难排列步骤。连续两次训练完成 3 组 8 次（慢速动作 5 次）后，GymMane 会建议下一步。';
+  String get ladderHint => '按从易到难排列步骤。连续两次训练完成 3 组 8 次（慢速动作 5 次）后，康途 会建议下一步。';
 
   @override
   String get ladderBuiltIn => '基于应用自带的进阶。添加、删除或重新排序步骤后，它就属于此计划。';
@@ -6255,7 +6285,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get awardsPickHint => '点选你想在个人资料中展示的';
 
   @override
-  String get quickAddAmount => 'How much you had';
+  String get quickAddAmount => '你吃了多少';
 
   @override
   String get homeCardsTitle => '首页卡片';
@@ -6300,13 +6330,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get calmMotionHint => '页面出现时不再滑入';
 
   @override
-  String get dishArchive => 'Archive';
+  String get dishArchive => '归档';
 
   @override
-  String get dishUnarchive => 'Restore';
+  String get dishUnarchive => '恢复';
 
   @override
-  String get dishArchivedToast => 'Dish archived';
+  String get dishArchivedToast => '菜品已归档';
 
   @override
   String get filterShowLabel => '显示';
@@ -6342,13 +6372,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cardioNoSets => '有氧不计入每周各肌群组数';
 
   @override
-  String get countsAsWater => 'Counts toward water';
+  String get countsAsWater => '计入饮水';
 
   @override
-  String get countsAsWaterHint => 'For shakes made with water: logging it adds to your water too';
+  String get countsAsWaterHint => '用水冲的奶昔：记录后也会计入饮水量';
 
   @override
-  String get waterPerServing => 'Water per serving';
+  String get waterPerServing => '每份含水';
 
   @override
   String get estOneRm => '估算 1RM';
@@ -6783,30 +6813,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get circuitUpNext => '接下来';
 
   @override
-  String get foodGroupNew => 'New category';
+  String get foodGroupNew => '新建分类';
 
   @override
-  String get foodGroupHint => 'Ready meals, frozen…';
+  String get foodGroupHint => '即食餐、冷冻食品…';
 
   @override
   String foodGroupCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n foods',
-      one: '1 food',
-      zero: 'No foods yet',
+      other: '$n 种食物',
+      one: '1 种食物',
+      zero: '还没有食物',
     );
     return '$_temp0';
   }
 
   @override
   String foodGroupDeleteTitle(String name) {
-    return 'Delete $name?';
+    return '删除 $name？';
   }
 
   @override
-  String get foodGroupDeleteBody => 'Your foods stay, just without this category.';
+  String get foodGroupDeleteBody => '食物会保留，只是不再属于这个分类。';
 
   @override
   String onbHello(String name) {
@@ -7023,131 +7053,131 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String fastMinutes(int n) {
-    return '$n min';
+    return '$n 分钟';
   }
 
   @override
   String fastHours(int n) {
-    return '$n h';
+    return '$n 小时';
   }
 
   @override
   String fastHoursMinutes(int h, int m) {
-    return '$h h $m min';
+    return '$h 小时 $m 分';
   }
 
   @override
-  String get fastTracker => 'Intermittent fasting';
+  String get fastTracker => '间歇性禁食';
 
   @override
   String fastTitle(int fast, int eat) {
-    return 'Fasting $fast:$eat';
+    return '禁食 $fast:$eat';
   }
 
   @override
-  String get fastOptions => 'Fasting options';
+  String get fastOptions => '禁食设置';
 
   @override
-  String get fastWindowOpen => 'Eating window open';
+  String get fastWindowOpen => '进食窗口已开启';
 
   @override
-  String get fastLeft => 'Left';
+  String get fastLeft => '剩余';
 
   @override
-  String get fastDoneLabel => 'Goal reached';
+  String get fastDoneLabel => '已达目标';
 
   @override
-  String get fastIdle => 'Start it after your last meal';
+  String get fastIdle => '吃完最后一餐后开始';
 
   @override
   String fastLast(String time) {
-    return 'Last fast: $time';
+    return '上次禁食：$time';
   }
 
   @override
   String fastStreak(int n) {
-    return '$n in a row';
+    return '连续 $n 次';
   }
 
   @override
   String fastReached(String time) {
-    return '$time past your goal';
+    return '超过目标 $time';
   }
 
   @override
   String fastEndsAt(String time) {
-    return 'Ends at $time';
+    return '$time 结束';
   }
 
   @override
   String fastSince(String time) {
-    return 'Since $time';
+    return '自 $time 起';
   }
 
   @override
-  String get fastStartedAt => 'When did you start fasting?';
+  String get fastStartedAt => '什么时候开始禁食的？';
 
   @override
-  String get fastStart => 'Start fast';
+  String get fastStart => '开始禁食';
 
   @override
   String fastFromMeal(String time) {
-    return 'From $time';
+    return '从 $time';
   }
 
   @override
-  String get fastEnd => 'End fast';
+  String get fastEnd => '结束禁食';
 
   @override
-  String get fastCancel => 'Cancel this fast';
+  String get fastCancel => '取消本次禁食';
 
   @override
-  String get fastPlan => 'Fasting plan';
+  String get fastPlan => '禁食计划';
 
   @override
-  String get fastPlanHint => 'Hours fasting : hours to eat';
+  String get fastPlanHint => '禁食小时数 : 进食小时数';
 
   @override
-  String get fastThisWeek => 'Last 7 days';
+  String get fastThisWeek => '最近 7 天';
 
   @override
-  String get fastCount => 'Fasts';
+  String get fastCount => '禁食次数';
 
   @override
-  String get fastReachedCount => 'Reached';
+  String get fastReachedCount => '达标';
 
   @override
-  String get fastAverage => 'Average';
+  String get fastAverage => '平均';
 
   @override
-  String get fastHistory => 'Recent fasts';
+  String get fastHistory => '最近禁食';
 
   @override
-  String get notifFastLiveChannel => 'Fasting in progress';
+  String get notifFastLiveChannel => '禁食进行中';
 
   @override
-  String get notifFastLiveChannelWhy => 'A quiet countdown while you fast.';
+  String get notifFastLiveChannelWhy => '禁食时的静默倒计时。';
 
   @override
-  String get notifFastChannel => 'Fasting';
+  String get notifFastChannel => '禁食';
 
   @override
-  String get notifFastChannelWhy => 'Tells you when your fast is done.';
+  String get notifFastChannelWhy => '禁食结束时提醒你。';
 
   @override
-  String get notifFastLiveTitle => 'Fasting';
+  String get notifFastLiveTitle => '禁食中';
 
   @override
   String notifFastLiveBody(String time) {
-    return 'Your eating window opens at $time';
+    return '进食窗口将于 $time 开启';
   }
 
   @override
-  String get notifFastDoneTitle => 'Fast done';
+  String get notifFastDoneTitle => '禁食完成';
 
   @override
   String notifFastDoneBody(int n) {
-    return '$n hours. Your eating window is open.';
+    return '$n 小时。进食窗口已开启。';
   }
 
   @override
@@ -7158,7 +7188,879 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get supportThanksBody =>
-      'GymMane 永远免费，没有广告，也没有任何隐藏收费。\n\n如果它对你的训练有帮助，请我喝杯咖啡会让我开心一整天 ☕\n如果不方便也没关系：在 GitHub 上点一颗星也一样 ⭐';
+      '康途 永远免费，没有广告，也没有任何隐藏收费。\n\n如果它对你的训练有帮助，请我喝杯咖啡会让我开心一整天 ☕\n如果不方便也没关系：在 GitHub 上点一颗星也一样 ⭐';
+
+  @override
+  String get perfSetting => '性能';
+
+  @override
+  String get perfSheetHint => '康途占用手机资源的程度。下面可逐项调整。';
+
+  @override
+  String get perfLite => '省电';
+
+  @override
+  String get perfLiteHint => '无毛玻璃、动效更克制。适合较吃力的手机。';
+
+  @override
+  String get perfBalanced => '均衡';
+
+  @override
+  String get perfBalancedHint => '保留毛玻璃和动画，又不怎么耗电。';
+
+  @override
+  String get perfMax => '最高';
+
+  @override
+  String perfMaxHint(int hz) {
+    return '更精细的毛玻璃、屏幕 $hz Hz。适合高端手机。';
+  }
+
+  @override
+  String get perfMaxHintNoHz => '全局更精细的毛玻璃。适合高端手机。';
+
+  @override
+  String get perfCustom => '自定义';
+
+  @override
+  String get perfTweak => '微调';
+
+  @override
+  String get perfFine => '精细毛玻璃';
+
+  @override
+  String get perfFineHint => '边缘更柔和，面板后面的背景更清晰';
+
+  @override
+  String perfHz(int hz) {
+    return '屏幕 $hz Hz';
+  }
+
+  @override
+  String get perfHzHint => '滚动更顺滑，略费一点电';
+
+  @override
+  String get lowEndLiteBody => '省电模式（无毛玻璃、动效更克制）在这台手机上会更流畅。可在 设置 → 通用 → 性能 中更改。';
+
+  @override
+  String get lowEndLiteOn => '开启省电';
+
+  @override
+  String get dayOffHint => '连续记录和提醒都会跳过这一天';
+
+  @override
+  String get dayOffTrained => '练了，只是没记';
+
+  @override
+  String get dayOffSick => '生病';
+
+  @override
+  String get dayOffTravel => '出行';
+
+  @override
+  String get dayOffInjury => '受伤';
+
+  @override
+  String get dayOffRest => '休息';
+
+  @override
+  String get altsTitle => '备选动作';
+
+  @override
+  String get altsHint => '器械被占用时备用';
+
+  @override
+  String altsPickHint(int count) {
+    return '最多选 $count 个。器械被占用时一键替换。';
+  }
+
+  @override
+  String get placeDumbbells => '哑铃';
+
+  @override
+  String get dumbbellsHint => '单只哑铃的重量。渐进计算和 +/− 按钮在此只会落在这些重量上。';
+
+  @override
+  String get dumbbellOther => '其它重量';
+
+  @override
+  String get tuneTitle => '今日训练量';
+
+  @override
+  String get tuneHint => '告诉我各部位的感觉，我会调整下次的组数。';
+
+  @override
+  String get tuneLess => '太少';
+
+  @override
+  String get tuneRight => '刚好';
+
+  @override
+  String get tuneMore => '太多';
+
+  @override
+  String tuneNext(String sets, String name) {
+    return '下次：$name $sets 组';
+  }
+
+  @override
+  String get tuneSame => '下次保持不变';
+
+  @override
+  String get tuneSetting => '按部位调整组数';
+
+  @override
+  String get tuneSettingHint => '练完例程后给各部位打分，组数会自动调整';
+
+  @override
+  String insightLoad(int pct) {
+    return '比平时一周多 $pct% 的组数。注意恢复。';
+  }
+
+  @override
+  String insightMuscle(String muscle, int days) {
+    return '$muscle：$days 天没练了。';
+  }
+
+  @override
+  String insightPushHeavy(int a, int b) {
+    return '推力多于拉力：四周内 $a 组对 $b 组。';
+  }
+
+  @override
+  String insightPullHeavy(int a, int b) {
+    return '拉力多于推力：四周内 $a 组对 $b 组。';
+  }
+
+  @override
+  String insightStronger(String name, int pct) {
+    return '$name：比上月强 $pct%。';
+  }
+
+  @override
+  String recapPull(String month) {
+    return '继续下拉查看你的$month';
+  }
+
+  @override
+  String get recapRelease => '松手';
+
+  @override
+  String recapHi(String name) {
+    return '你好，$name';
+  }
+
+  @override
+  String recapReady(String month) {
+    return '看看你在$month都练了什么？';
+  }
+
+  @override
+  String get recapGo => '开始';
+
+  @override
+  String recapEmpty(String month) {
+    return '$month还没有训练。完成第一次就能解锁。';
+  }
+
+  @override
+  String get recapClose => '关闭';
+
+  @override
+  String get recapShare => '分享';
+
+  @override
+  String get recapWorkoutsKicker => '这个月你训练了';
+
+  @override
+  String recapWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '次');
+    return '$_temp0';
+  }
+
+  @override
+  String recapDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '分布在$n天', one: '只在1天');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapTimeKicker => '杠铃下的时间';
+
+  @override
+  String recapLongest(String time, String date) {
+    return '最长训练：$time，$date';
+  }
+
+  @override
+  String get recapVolumeKicker => '你举起了';
+
+  @override
+  String recapCars(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '相当于举起$count辆车', one: '相当于举起一辆车');
+    return '$_temp0';
+  }
+
+  @override
+  String recapTop(String name, String volume) {
+    return '最多：$name，$volume';
+  }
+
+  @override
+  String get recapMuscleKicker => '本月肌肉';
+
+  @override
+  String get recapRecordsKicker => '新纪录';
+
+  @override
+  String recapNoRecords(int n) {
+    return '这次没有新纪录，但你完成了$n组。';
+  }
+
+  @override
+  String get recapHabitKicker => '你的时段';
+
+  @override
+  String recapHabitStart(String time) {
+    return '你通常在$time开始';
+  }
+
+  @override
+  String get recapShareKicker => '你的月度回顾，可以分享了';
+
+  @override
+  String get recapTickWorkouts => '训练';
+
+  @override
+  String get recapTickTime => '时间';
+
+  @override
+  String get recapTickVolume => '负重';
+
+  @override
+  String get recapTickRecords => '纪录';
+
+  @override
+  String recapAvg(int n) {
+    return '平均每次$n分钟';
+  }
+
+  @override
+  String get recapLiftKicker => '本月动作';
+
+  @override
+  String get recapBest => '最佳';
+
+  @override
+  String get recapTimes => '天数';
+
+  @override
+  String get recapDaysLabel => '天数';
+
+  @override
+  String get recapAvgLabel => '平均';
+
+  @override
+  String recapCalendarLine(int workouts, int days) {
+    return '$days天训练$workouts次';
+  }
+
+  @override
+  String get recapFavLabel => '你的日子';
+
+  @override
+  String get recapWatermark => '免费健身日志';
+
+  @override
+  String get recapTickSteps => '步数';
+
+  @override
+  String get recapTickFood => '饮食';
+
+  @override
+  String get recapCardioKicker => '有氧';
+
+  @override
+  String recapCardioTime(int minutes, int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n次训练', one: '1次训练');
+    return '$_temp0共$minutes分钟';
+  }
+
+  @override
+  String recapCardioCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n次有氧训练');
+    return '$_temp0';
+  }
+
+  @override
+  String recapCardioTop(String name) {
+    return '最常做：$name';
+  }
+
+  @override
+  String get recapStepsKicker => '你走了';
+
+  @override
+  String get recapStepsWord => '步';
+
+  @override
+  String recapStepsAvg(String value) {
+    return '日均$value';
+  }
+
+  @override
+  String recapStepsBest(String value, String date) {
+    return '最佳一天：$value，$date';
+  }
+
+  @override
+  String get recapFoodKicker => '你的餐盘';
+
+  @override
+  String get recapLiftRest => '紧随其后';
+
+  @override
+  String recapSameAs(String month) {
+    return '与$month持平';
+  }
+
+  @override
+  String recapMoreThan(String value, String month) {
+    return '比$month多$value';
+  }
+
+  @override
+  String recapLessThan(String value, String month) {
+    return '比$month少$value';
+  }
+
+  @override
+  String get recapTickMedals => '奖牌';
+
+  @override
+  String get recapTickSleep => '睡眠';
+
+  @override
+  String get recapMedalsKicker => '获得的奖牌';
+
+  @override
+  String recapMedalsMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '还有$n枚');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapSleepKicker => '你睡了';
+
+  @override
+  String get recapSleepAvg => '平均每晚';
+
+  @override
+  String recapSleepBest(String value, String date) {
+    return '最佳一晚：$value，$date';
+  }
+
+  @override
+  String get recapCardSummary => '总结';
+
+  @override
+  String get recapCardCalendar => '日历';
+
+  @override
+  String get recapCardLift => '动作';
+
+  @override
+  String get recapPeakKicker => '最艰苦的一次训练';
+
+  @override
+  String get recapTickPeak => '训练';
+
+  @override
+  String get recapFreshKicker => '本月首次尝试';
+
+  @override
+  String recapFresh(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '个新动作');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapTickFresh => '新';
+
+  @override
+  String recapStreak(int n) {
+    return '连续$n天，你的最长连续记录';
+  }
+
+  @override
+  String recapYearAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n次训练');
+    return '一年前：$_temp0';
+  }
+
+  @override
+  String recapForgot(String muscle) {
+    return '本月遗漏：$muscle';
+  }
+
+  @override
+  String recapFoodProtein(int goal) {
+    return '每日蛋白质 · 目标 $goal g';
+  }
+
+  @override
+  String recapFoodStarDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '出现在餐盘$n天');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapFoodProteinLabel => '蛋白质 · g/天';
+
+  @override
+  String get recapFoodGoalDays => '达标';
+
+  @override
+  String get recapFoodWaterLabel => '饮水/天';
+
+  @override
+  String recapFoodTimes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n天');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapFoodStarKicker => '本月食物';
+
+  @override
+  String get onbSpeedTitle => '让它跑得更顺';
+
+  @override
+  String get onbSpeedWhy => '这台手机似乎有点吃力。关掉这些会更流畅：试试看，注意预览效果。';
+
+  @override
+  String get onbSpeedMotion => '动画';
+
+  @override
+  String get onbSpeedBlurHint => '面板和栏后面的毛玻璃';
+
+  @override
+  String get onbSpeedMotionHint => '滑入的页面和面板';
+
+  @override
+  String get onbSpeedLater => '随时可在 设置 › 通用 › 性能 中更改。';
+
+  @override
+  String get notifSoundSetting => '通知铃声';
+
+  @override
+  String get notifSoundRowHint => '各类提醒的铃声';
+
+  @override
+  String get notifSoundHint => '为每类提醒挑选铃声。「从手机」会打开手机铃声，多数手机可在那里添加自己的歌曲。';
+
+  @override
+  String get notifSoundTrain => '训练';
+
+  @override
+  String get notifSoundFood => '饮食、补剂和禁食';
+
+  @override
+  String get notifSoundOther => '照片和测量';
+
+  @override
+  String get notifSoundNormal => '默认';
+
+  @override
+  String get notifSoundPhone => '从手机';
+
+  @override
+  String get notifSoundSilent => '静音';
+
+  @override
+  String get notifSoundPhoneHint => '点一下试听，会立即保存。';
+
+  @override
+  String get notifSoundMore => '其它文件…';
+
+  @override
+  String get notifSoundChange => '更改';
+
+  @override
+  String get workoutNoteAdd => '固定笔记：座位、握法、器械…';
+
+  @override
+  String get autoProgressSetting => '自动渐进';
+
+  @override
+  String get autoProgressRowHint => '下次的建议';
+
+  @override
+  String get autoProgressOff => '关闭';
+
+  @override
+  String get autoProgressWeight => '加重量';
+
+  @override
+  String get autoProgressReps => '加次数';
+
+  @override
+  String get noteFolders => '文件夹';
+
+  @override
+  String get noteFolderNew => '新建文件夹';
+
+  @override
+  String get noteFolderEdit => '编辑文件夹';
+
+  @override
+  String get noteFolderName => '文件夹名称';
+
+  @override
+  String get noteFolderLabel => '文件夹';
+
+  @override
+  String get noteFolderNone => '无文件夹';
+
+  @override
+  String get noteFolderDelete => '删除文件夹？';
+
+  @override
+  String get noteFolderDeleteBody => '笔记会保留，只是移出文件夹。';
+
+  @override
+  String get foodArchivedToast => '食物已归档';
+
+  @override
+  String get planArchivedToast => '计划已归档';
+
+  @override
+  String get suppArchivedToast => '补剂已归档';
+
+  @override
+  String get voiceSetting => '训练语音';
+
+  @override
+  String get voiceSettingHint => '用手机语音报出下一组，并在休息结束前倒计时';
+
+  @override
+  String get voiceHello => '语音已开启';
+
+  @override
+  String voiceRest(String time) {
+    return '休息 $time。';
+  }
+
+  @override
+  String voiceNext(String name, String load) {
+    return '下一个：$name，$load。';
+  }
+
+  @override
+  String voiceLoad(int reps, String weight) {
+    return '$weight 做 $reps 次';
+  }
+
+  @override
+  String voiceReps(int reps) {
+    return '$reps 次';
+  }
+
+  @override
+  String get voiceGo => '开始吧！';
+
+  @override
+  String get deloadSetting => '减载周';
+
+  @override
+  String get deloadOff => '从不';
+
+  @override
+  String deloadEvery(int weeks) {
+    return '每 $weeks 周';
+  }
+
+  @override
+  String get deloadHint => '每隔几周来一个轻松周用于恢复：组数减半、重量减 10%。这一周不计入渐进。';
+
+  @override
+  String get deloadRowHint => '每隔几周的轻松周';
+
+  @override
+  String get deloadNow => '减载周';
+
+  @override
+  String get deloadNowHint => '今天组数减半、重量减 10%';
+
+  @override
+  String deloadIn(int weeks) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks 周后',
+      one: '下周',
+      zero: '本周',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deloadSkip => '照常训练';
+
+  @override
+  String get voiceSheetTitle => '语音如何工作';
+
+  @override
+  String get voicePointRest => '勾选一组后，它会报出休息时间和下一项。';
+
+  @override
+  String get voicePointCount => '休息结束时倒数 3、2、1，提醒你回来。';
+
+  @override
+  String get voicePointPhone => '使用手机的语音，盖过音乐播放。';
+
+  @override
+  String get voiceTry => '试听语音';
+
+  @override
+  String get voiceNoEngine => '你的手机没有开启语音引擎。';
+
+  @override
+  String get voiceNoLang => '缺少你语言的语音包。请在手机的语音设置中下载。';
+
+  @override
+  String get voiceOpenSettings => '语音设置';
+
+  @override
+  String voiceMinutes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count 分钟', one: '1 分钟');
+    return '$_temp0';
+  }
+
+  @override
+  String voiceSeconds(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count 秒', one: '1 秒');
+    return '$_temp0';
+  }
+
+  @override
+  String get voiceAnd => '和';
+
+  @override
+  String get rehabPromptIntro =>
+      '你是运动康复方向的助理。请根据下面的个人情况、当前计划和近期训练反馈，给出一份循序渐进、可以自己执行的康复训练建议；已有计划时，直接对当前计划做调整。';
+
+  @override
+  String get rehabPromptSecProfile => '【我的情况】';
+
+  @override
+  String rehabPromptProfileLine(String sex, String age, String height, String weight) {
+    return '- 性别/年龄/身高/体重：$sex、$age 岁、$height、$weight';
+  }
+
+  @override
+  String rehabPromptRecent(String n) {
+    return '- 近 30 天训练次数：$n 次';
+  }
+
+  @override
+  String rehabPromptDaysPerWeek(String n) {
+    return '- 每周可训练天数：$n 天';
+  }
+
+  @override
+  String rehabPromptGear(String gear) {
+    return '- 可用器材：$gear';
+  }
+
+  @override
+  String rehabPromptGoals(String goals) {
+    return '- 康复目标：$goals';
+  }
+
+  @override
+  String get rehabPromptSecIssue => '【本次困扰】';
+
+  @override
+  String rehabPromptArea(String area) {
+    return '- 部位：$area';
+  }
+
+  @override
+  String rehabPromptDuration(String duration) {
+    return '- 病程：$duration';
+  }
+
+  @override
+  String rehabPromptPain(String pain) {
+    return '- 当前不适程度：$pain/10';
+  }
+
+  @override
+  String rehabPromptFactors(String factors) {
+    return '- 加重 / 缓解因素：$factors';
+  }
+
+  @override
+  String get rehabPromptFlagNone => '- 安全筛查：未发现红旗征';
+
+  @override
+  String rehabPromptFlagHit(String flags) {
+    return '- 安全筛查命中：$flags';
+  }
+
+  @override
+  String get rehabPromptSecDoctor => '【医生诊断与医嘱】';
+
+  @override
+  String rehabPromptDx(String dx) {
+    return '- 诊断：$dx';
+  }
+
+  @override
+  String rehabPromptIcd(String code) {
+    return '（ICD: $code）';
+  }
+
+  @override
+  String rehabPromptVisit(String date) {
+    return '- 就诊日期：$date';
+  }
+
+  @override
+  String rehabPromptOrders(String text) {
+    return '- 医嘱原文：$text';
+  }
+
+  @override
+  String rehabPromptAdvisedCare(String text) {
+    return '- 医生建议的治疗/可做动作：$text';
+  }
+
+  @override
+  String rehabPromptRestrictions(String text) {
+    return '- 限制与禁忌（必须遵守）：$text';
+  }
+
+  @override
+  String rehabPromptImaging(String text) {
+    return '- 影像/检查结论：$text';
+  }
+
+  @override
+  String rehabPromptFollowUp(String date) {
+    return '- 复诊时间：$date';
+  }
+
+  @override
+  String get rehabPromptSecPlan => '【当前计划】';
+
+  @override
+  String get rehabPromptNoPlan => '暂无计划（请按输出要求用 routines 字段新建）';
+
+  @override
+  String get rehabPromptSecFeedback => '【近期训练反馈】';
+
+  @override
+  String get rehabPromptNoFeedback => '无训练反馈记录';
+
+  @override
+  String get rehabPromptSecOutput => '【输出要求】';
+
+  @override
+  String get rehabPromptRule1 => '1. 只输出一个 JSON 对象，不要额外解释文字。';
+
+  @override
+  String get rehabPromptRule2 => '2. 用 advice 字段写「注意事项 + 叫停规则」（字符串）。';
+
+  @override
+  String get rehabPromptRule3 => '3. 【当前计划】为空时，用 routines 字段给整套新计划，结构照抄下面模板：';
+
+  @override
+  String get rehabPromptRule4 => '4. 【当前计划】非空时，用 adjust 数组给「对当前计划的修改指令」（不需要修改就给空数组 []），结构照抄：';
+
+  @override
+  String get rehabPromptAdjustSet => '   - set：field 只允许 weight / sets / reps / rest 四种；value 是目标新值。';
+
+  @override
+  String get rehabPromptAdjustRemove => '   - remove：把该动作从计划里删掉。';
+
+  @override
+  String get rehabPromptAdjustAdd => '   - add：往计划里加动作，可带 sets / reps / weight。';
+
+  @override
+  String get rehabPromptAdjustRoutine => '   - routine 可省略（省略 = 应用到全部当前计划）。';
+
+  @override
+  String get rehabPromptRule5 => '5. 动作名尽量取自【动作库清单】里的英文名，这样能自动匹配到 App 的动作库。';
+
+  @override
+  String get rehabPromptRule6 => '6. 强度保守：以不加重症状为前提，训练中疼痛不超过 3/10；先活动度、再稳定性、最后力量。';
+
+  @override
+  String rehabPromptRule7(String stopRules) {
+    return '7. advice 里必须包含：$stopRules';
+  }
+
+  @override
+  String get rehabPromptRule8Doctor =>
+      '8. 【医生诊断与医嘱】存在时，即使安全门未通过也应给出计划：可输出 routines/adjust，但必须严格遵守【限制与禁忌】，不得安排被禁的动作；与医嘱冲突时以医嘱为准。';
+
+  @override
+  String get rehabPromptRule8Gate => '8. 未通过安全门时，只给 advice，routines 与 adjust 都不要输出。';
+
+  @override
+  String get rehabPromptSecLibrary => '【动作库清单】英文名 (中文名) | 肌群 | 器材 | 难度 | 模式';
+
+  @override
+  String get rehabListSep => '、';
+
+  @override
+  String get rehabSemiSep => '；';
+
+  @override
+  String get rehabFbDefaultArea => '不适';
+
+  @override
+  String rehabFbPainWithArea(String area, String n) {
+    return '$area $n/10 不适';
+  }
+
+  @override
+  String rehabFbNote(String text) {
+    return '备注：$text';
+  }
+
+  @override
+  String get rehabFbNoDetail => '（无具体记录）';
+
+  @override
+  String rehabFbLine(String date, String body) {
+    return '- $date：$body';
+  }
+
+  @override
+  String get rehabMissGateAdjust => '未通过安全门，已忽略全部计划调整';
+
+  @override
+  String get rehabMissNoLinkedPlan => '档案没有关联计划，无法套用调整';
+
+  @override
+  String rehabMissNoSuchPlan(String name) {
+    return '计划「$name」不存在';
+  }
+
+  @override
+  String get rehabMissGateReply => '未通过安全门，已忽略计划与调整';
+
+  @override
+  String get baselineUnitRep => '次';
+
+  @override
+  String get baselineUnitSec => '秒';
+
+  @override
+  String get defaultAthleteName => '运动员';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -7287,7 +8189,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get buildSession => '建立訓練';
 
   @override
-  String get tapMuscles => '點選你想訓練的肌群 — 正面與背面。';
+  String get tapMuscles => '點選你想訓練的肌群，正面與背面。';
 
   @override
   String get continueBtn => '繼續';
@@ -7300,7 +8202,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String pickedHint(int n) {
-    return '我們已為你安排訓練 — 點選即可新增或移除這 $n 個動作中的任一項。';
+    return '我們已為你安排訓練，點選即可新增或移除這 $n 個動作中的任一項。';
   }
 
   @override
@@ -7473,7 +8375,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get restOverTitle => '休息結束';
 
   @override
-  String get restOverBody => '繼續吧 — 下一組在等你。';
+  String get restOverBody => '繼續吧，下一組在等你。';
 
   @override
   String get allTimeSessions => '訓練';
@@ -7561,7 +8463,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get muscleSplit => '肌群分布';
+  String get muscleSplit => '肌群分佈';
 
   @override
   String get personalRecords => '個人紀錄';
@@ -7581,7 +8483,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get restDayShort => '休息日';
 
   @override
-  String get restDay => '休息日 — 沒有紀錄。';
+  String get restDay => '休息日，沒有紀錄。';
 
   @override
   String get delete => '刪除';
@@ -7740,7 +8642,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get placeDeleteTitle => '刪除地點';
 
   @override
-  String get placeDeleteBody => '只會刪除地點 — 你的動作與訓練會保留。';
+  String get placeDeleteBody => '只會刪除地點，你的動作與訓練會保留。';
 
   @override
   String get placeGym => '健身房';
@@ -7799,7 +8701,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get noteEmptyTitle => '尚無任何筆記';
 
   @override
-  String get noteEmptyBody => '記錄提示、下次計畫、訓練感受 — 想的話也可附上照片或影片。';
+  String get noteEmptyBody => '記錄提示、下次計畫、訓練感受，想的話也可附上照片或影片。';
 
   @override
   String get noteNoneForExercise => '此動作尚無筆記。';
@@ -7874,7 +8776,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get measures => '身體尺寸';
 
   @override
-  String get measuresHint => '從頸部到小腿 — 不只看槓鈴，也觀察身體的變化。';
+  String get measuresHint => '從頸部到小腿，不只看槓鈴，也觀察身體的變化。';
 
   @override
   String measureCount(int n) {
@@ -7966,7 +8868,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get photoDueNow => '該拍照片了 — 今天拍一張吧';
+  String get photoDueNow => '該拍照片了，今天拍一張吧';
 
   @override
   String get addTodayPhotos => '新增今天的照片';
@@ -8012,14 +8914,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get timelineBody => '肌肉地圖';
 
   @override
-  String get timelineBodyEmpty => '記錄訓練後，肌肉地圖會開始填滿 — 不需要照片。';
+  String get timelineBodyEmpty => '記錄訓練後，肌肉地圖會開始填滿，不需要照片。';
 
   @override
-  String get timelineBodyHint => '由你自己的組數資料建立 — 不會上傳任何內容。';
+  String get timelineBodyHint => '由你自己的組數資料建立，不會上傳任何內容。';
 
   @override
   String timelineWindow(String from, String to) {
-    return '$from – $to';
+    return '$from 至 $to';
   }
 
   @override
@@ -8202,7 +9104,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get resetTitle => '全部刪除？';
 
   @override
-  String get resetBody => '訓練、紀錄、課表、筆記與個人檔案都會刪除。此操作無法復原 — 如有需要請先匯出備份。';
+  String get resetBody => '訓練、紀錄、課表、筆記與個人檔案都會刪除。此操作無法復原，如有需要請先匯出備份。';
 
   @override
   String get resetConfirm => '全部刪除';
@@ -8280,7 +9182,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get alarmDefaultName => '預設';
 
   @override
-  String get alarmSoundHint => '使用自己的聲音 — 最長 15 秒';
+  String get alarmSoundHint => '使用自己的聲音，最長 15 秒';
 
   @override
   String get alarmChoose => '選擇聲音…';
@@ -8441,7 +9343,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get backupFailed => '無法讀取此備份';
 
   @override
-  String get nothingToExport => '尚無可匯出的內容 — 請先記錄一次訓練';
+  String get nothingToExport => '尚無可匯出的內容，請先記錄一次訓練';
 
   @override
   String calculatorsCount(int n) {
@@ -8490,10 +9392,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get toolNameRm => '1RM';
+  String get toolNameRm => '極限重量 (1RM)';
 
   @override
-  String get toolNameBmi => 'BMI';
+  String get toolNameBmi => 'BMI 指數';
 
   @override
   String get toolNameCal => '卡路里';
@@ -8699,11 +9601,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get freeForeverWhy => '無訂閱、無廣告、沒有付費鎖定功能。';
 
   @override
-  String get fullyOffline => 'Offline first';
+  String get fullyOffline => '離線優先';
 
   @override
-  String get fullyOfflineWhy =>
-      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
+  String get fullyOfflineWhy => '無賬號、無服務器。唯一聯網的是「檢查更新」，只讀版本資訊、不發送你的任何數據。';
 
   @override
   String get yoursToTake => '資料屬於你';
@@ -8726,7 +9627,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get calculatorsInside => '10 個計算器';
 
   @override
-  String get calculatorsInsideWhy => '1RM、槓片、BMI、卡路里、體脂、FFMI、暖身、RPE 重量與 DOTS、Wilks 力量評分 — 全都基於公開公式。';
+  String get calculatorsInsideWhy => '1RM、槓片、BMI、卡路里、體脂、FFMI、暖身、RPE 重量與 DOTS、Wilks 力量評分，全都基於公開公式。';
 
   @override
   String get mathInside => '透明計算';
@@ -8750,8 +9651,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get welcomeKicker => '歡迎使用';
 
   @override
-  String get welcomeBlurb =>
-      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
+  String get welcomeBlurb => '所有數據均儲存在你的手機上。無賬號、無任何費用；只有「檢查更新」會用到網絡。';
 
   @override
   String get welcomeStart => '開始';
@@ -8820,6 +9720,33 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get sourceCode => '原始碼';
+
+  @override
+  String get appName => '康途';
+
+  @override
+  String shareSubjectWorkouts(String app) {
+    return '$app 訓練記錄';
+  }
+
+  @override
+  String shareSubjectBackup(String app) {
+    return '$app 備份';
+  }
+
+  @override
+  String shareSubjectExercises(String app) {
+    return '$app 動作列表';
+  }
+
+  @override
+  String get aboutRepdbNote => '動作數據來自 RepDB (repdb.co)';
+
+  @override
+  String get aboutOssTitle => '開源署名';
+
+  @override
+  String get aboutOssBody => '基於 InlitX 的 GymMane';
 
   @override
   String get suggested => '建議';
@@ -8907,9 +9834,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get autoProgress => '下次增加重量';
 
   @override
-  String autoProgressHint(String w) {
-    return '完成所有次數後，下次訓練會從多 $w 的重量開始。';
-  }
+  String get autoProgressHint =>
+      '開始訓練時，康途會為每個動作填好下一步。選「加次數」時每組多 1 次、最多到 12 次，然後加重量、回到 8 次重新開始。你也可以在動作頁單獨微調。已排入「計劃週期」的動作由週期接管，這裡的設定用於其餘動作。';
 
   @override
   String get placePlates => '槓片與槓鈴桿';
@@ -9110,7 +10036,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get supersetLink => '與下一個連接';
 
   @override
-  String get supersetHint => '連接的動作之間不休息 — 直接進入下一個動作。';
+  String get supersetHint => '連接的動作之間不休息，直接進入下一個動作。';
 
   @override
   String get aiRoutine => 'AI 課表';
@@ -9459,7 +10385,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get momentsEmptyHint => '拍下健身房、白板、上好槓片的槓鈴 — 任何你想記住的東西。照片留在手機上，只有你看得到。';
+  String get momentsEmptyHint => '拍下健身房、白板、上好槓片的槓鈴，任何你想記住的東西。照片留在手機上，只有你看得到。';
 
   @override
   String get awardStreak100Line => '連續一百天。這已不只是動力，而是習慣。';
@@ -9477,7 +10403,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get logTitle => '記錄訓練';
 
   @override
-  String get logHint => '不使用計時器 — 只要填入你做了什麼。';
+  String get logHint => '不使用計時器，只要填入你做了什麼。';
 
   @override
   String get orStartFrom => '或從這裡開始';
@@ -9724,7 +10650,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String shareMessage(String name) {
-    return '$name — 用 康途 開啟檔案即可加入。';
+    return '$name，用 康途 開啟檔案即可加入。';
   }
 
   @override
@@ -10042,10 +10968,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get stepsGrant => '點按以在 Health Connect 中允許';
 
   @override
-  String get stepsInfoRead => '只讀取步數。不讀取其他任何內容，也不會寫入 Health Connect。';
+  String get stepsInfoRead => '這一項只讀取步數。應用對 Health Connect 的其他讀取與寫入，見「健康資料」裡的說明。';
 
   @override
-  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
+  String get stepsInfoLocal => '步數只儲存在手機上。康途僅在檢查更新時聯網。';
 
   @override
   String get stepsInfoOff => '可隨時在設定或 Health Connect 中關閉。';
@@ -10640,7 +11566,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get suppVitaminD => '維生素 D';
 
   @override
-  String get suppOmega3 => 'Omega-3';
+  String get suppOmega3 => '歐米伽-3';
 
   @override
   String get suppMagnesium => '鎂';
@@ -11287,6 +12213,91 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
+  String get readyDishes => '現成菜品';
+
+  @override
+  String weightLastLine(String weight) {
+    return '上次稱重 $weight';
+  }
+
+  @override
+  String get proteinAnimalShort => '動物';
+
+  @override
+  String get proteinPlantShort => '植物';
+
+  @override
+  String kcalFromMacros(String value) {
+    return '這些營養素約合 $value';
+  }
+
+  @override
+  String get useValue => '使用';
+
+  @override
+  String get suppRowHint => '點按標記 · 長按詳情';
+
+  @override
+  String get suppPhoto => '照片';
+
+  @override
+  String get suppDose => '劑量';
+
+  @override
+  String get suppDoseHint => '5 克、2 粒…';
+
+  @override
+  String get suppRemind => '提醒我';
+
+  @override
+  String mealPlanDefault(int n) {
+    return '計劃 $n';
+  }
+
+  @override
+  String get mealPlansTitle => '備餐計劃';
+
+  @override
+  String get mealPlanNew => '新建計劃';
+
+  @override
+  String fromPlan(String name) {
+    return '來自 $name';
+  }
+
+  @override
+  String get logPlan => '記錄';
+
+  @override
+  String get planFromDay => '複製這一天';
+
+  @override
+  String get planNewHint => '像安排訓練一樣排好每天，一整餐一鍵記錄。';
+
+  @override
+  String get planLogDay => '記錄空着的餐';
+
+  @override
+  String planLogged(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已記錄 $n 種食物', one: '已記錄 1 種食物');
+    return '$_temp0';
+  }
+
+  @override
+  String get planNoPlan => '暫無計劃';
+
+  @override
+  String get planWeekHint => '點某天給它安排計劃。';
+
+  @override
+  String get planDuplicate => '複製';
+
+  @override
+  String planDeleteTitle(String name) {
+    return '刪除 $name？';
+  }
+
+  @override
   String get planDeleteBody => '你的訓練安排都會保留，只刪除這份儲存的週計畫。';
 
   @override
@@ -11309,7 +12320,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get nutritionAboutWhat =>
-      '一種在訓練旁邊記錄飲食、飲水、蛋白質和補充品的簡單方式。Kangtu 首先是一款健身房 App：飲食功能是為了讓你把一切放在同一個地方，而不是取代專門的飲食 App。';
+      '一種在訓練旁邊記錄飲食、飲水、蛋白質和補充品的簡單方式。康途 首先是一款健身房 App：飲食功能是為了讓你把一切放在同一個地方，而不是取代專門的飲食 App。';
 
   @override
   String get nutritionAboutScanTitle => '沒有掃描，永遠不會有';
@@ -11338,7 +12349,282 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get nutritionAboutOk => '知道了';
 
   @override
+  String get planShare => '分享';
+
+  @override
+  String get planImport => '導入計劃';
+
+  @override
+  String planImported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '已導入 $n 個計劃', one: '已導入 1 個計劃');
+    return '$_temp0';
+  }
+
+  @override
+  String get planImportNone => '該檔案裡沒有備餐計劃。';
+
+  @override
+  String get planMoveUp => '上移';
+
+  @override
+  String get planMoveDown => '下移';
+
+  @override
+  String get cutoutEdit => '精修摳圖';
+
+  @override
+  String get cutoutEditHint => '拖動擦除或恢復。點按某塊可整體去除或復原。雙指縮放。';
+
+  @override
+  String get cutoutErase => '擦除';
+
+  @override
+  String get cutoutRestore => '恢復';
+
+  @override
+  String get cutoutReset => '恢復自動摳圖';
+
+  @override
+  String get cutoutByHand => '手動摳圖';
+
+  @override
+  String notifSuppTitleFor(String names) {
+    return '該服用了：$names';
+  }
+
+  @override
+  String get notifSuppTap => '服用後在康途裡打個勾。';
+
+  @override
+  String get suppNoneToday => '今天沒有要服用的。';
+
+  @override
+  String get suppOtherDays => '其他日期';
+
+  @override
+  String suppEveryN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '每 $n 天', one: '每天');
+    return '$_temp0';
+  }
+
+  @override
+  String get suppDaily => '每天';
+
+  @override
+  String suppFromDate(String date) {
+    return '從 $date';
+  }
+
+  @override
+  String suppUntilDate(String date) {
+    return '至 $date';
+  }
+
+  @override
+  String get suppSomeDays => '部分日期';
+
+  @override
+  String get suppEveryShort => '每 X 天';
+
+  @override
+  String get suppWhen => '時間';
+
+  @override
+  String get suppEveryLead => '每';
+
+  @override
+  String suppEveryTail(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '天', one: '天');
+    return '$_temp0';
+  }
+
+  @override
+  String get suppStarts => '開始';
+
+  @override
+  String get suppEnds => '結束';
+
+  @override
+  String get suppTomorrow => '明天';
+
+  @override
+  String get suppPickDate => '選擇日期';
+
+  @override
+  String get suppNever => '從不';
+
+  @override
+  String get suppOneWeek => '1 周後';
+
+  @override
+  String get suppOneMonth => '1 個月後';
+
+  @override
+  String get planPickHint => '為這天選一個計劃，或新建一個。';
+
+  @override
+  String planSetForDay(String day) {
+    return '已為$day設置計劃';
+  }
+
+  @override
+  String get planSaved => '計劃已儲存';
+
+  @override
+  String get planDiscardTitle => '放棄更改？';
+
+  @override
+  String get planDiscardBody => '你的改動不會被儲存。';
+
+  @override
+  String get planDiscard => '放棄';
+
+  @override
+  String get planEdit => '編輯計劃';
+
+  @override
   String get planNameHint => '夏天、旅行…';
+
+  @override
+  String get planDaysQuestion => '哪幾天？';
+
+  @override
+  String get planDaysHint => '這些天它會出現在營養模塊裡，方便一鍵記錄。';
+
+  @override
+  String get planDaysNone => '至少選一天，否則它不會出現在任何地方。';
+
+  @override
+  String get planNothingToLog => '這些餐已經記錄過了';
+
+  @override
+  String get planSave => '儲存計劃';
+
+  @override
+  String get planToday => '今日計劃';
+
+  @override
+  String get planLogRest => '記錄其餘';
+
+  @override
+  String get dishNew => '創建我的菜品';
+
+  @override
+  String get dishNewHint => '選食材和用量，儲存後可一鍵記錄。';
+
+  @override
+  String get dishEdit => '編輯菜品';
+
+  @override
+  String get dishNameHint => '例如：媽媽的扁豆';
+
+  @override
+  String get dishIngredients => '食材';
+
+  @override
+  String get dishEmptyHint => '把常吃的食材和用量加進來。';
+
+  @override
+  String get dishSave => '儲存菜品';
+
+  @override
+  String get dishNeedsName => '給它起個名字';
+
+  @override
+  String get dishNeedsItems => '至少加一種食材';
+
+  @override
+  String get suppHistory => '最近 14 天';
+
+  @override
+  String suppTakenOf(int n, int total) {
+    return '已服用 $n/$total';
+  }
+
+  @override
+  String get suppNoReminder => '不提醒';
+
+  @override
+  String get suppMarkTaken => '標記為已服用';
+
+  @override
+  String get suppUnmark => '取消標記';
+
+  @override
+  String get suppEdit => '編輯';
+
+  @override
+  String get mealMoveTo => '移到';
+
+  @override
+  String get mealClear => '清空這一餐';
+
+  @override
+  String get mealCleared => '已清空這一餐';
+
+  @override
+  String movedMealToast(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '已移動 $count 種食物',
+      one: '已移動 1 種食物',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get repeatWholeDay => '重複整天';
+
+  @override
+  String createFoodNamed(String name) {
+    return '創建“$name”';
+  }
+
+  @override
+  String get entryDay => '日期';
+
+  @override
+  String get movedToDay => '已移到';
+
+  @override
+  String get favFoodsHint => '點按食物上的 ☆';
+
+  @override
+  String get favFoodsEmpty => '點任意食物上的星標把它留在這裡，一鍵可取。';
+
+  @override
+  String savedMealsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count 餐', one: '1 餐');
+    return '$_temp0';
+  }
+
+  @override
+  String get savedMealsEmpty => '從餐食的 ••• 菜單儲存，或自建菜品。';
+
+  @override
+  String get sugarLimitLabel => '糖上限';
+
+  @override
+  String get sodiumLimitLabel => '鈉上限';
+
+  @override
+  String get waterOptions => '飲水設置';
+
+  @override
+  String get waterNone => '還沒有飲水記錄。';
+
+  @override
+  String get waterDailyGoal => '每日飲水';
+
+  @override
+  String get trackersScreen => '螢幕';
+
+  @override
+  String get vesselMotion => '水面晃動與搖動';
+
+  @override
+  String get vesselMotionHint => '界面卡頓就關掉：杯子照常裝滿，只是不再晃動。';
 
   @override
   String get tplNameFullbody => '全身訓練';
@@ -11488,92 +12774,92 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get fbRehabHint => '同部位不適，建議到康復檔案記一筆';
 
   @override
-  String get rehabTitle => '康复';
+  String get rehabTitle => '康復';
 
   @override
-  String get rehabModuleSubtitle => '康复档案 · 安全门 · 智能建议 · 离线';
+  String get rehabModuleSubtitle => '康復檔案 · 安全門 · 智能建議 · 離線';
 
   @override
-  String get rehabArchiveTitle => '康复档案';
+  String get rehabArchiveTitle => '康復檔案';
 
   @override
-  String get rehabArchiveBlurb => '问诊 · 安全门 · 智能建议';
+  String get rehabArchiveBlurb => '問診 · 安全門 · 智能建議';
 
   @override
-  String get rehabBookTitle => '康复手册';
+  String get rehabBookTitle => '康復手冊';
 
   @override
-  String get rehabBookBlurb => '12 周腰痛康复 · 离线可看的参考内容';
+  String get rehabBookBlurb => '當前收錄：12 周腰痛康復 · 離線可看的參考內容';
 
   @override
-  String get rehabBookBlurbShort => '12 周腰痛康复 · 离线可用';
+  String get rehabBookBlurbShort => '當前收錄：12 周腰痛康復 · 離線可用';
 
   @override
-  String get rehabEnter => '进入';
+  String get rehabEnter => '進入';
 
   @override
-  String get rehabCardBlurb => '康复档案 · 安全门 · 智能建议';
+  String get rehabCardBlurb => '康復檔案 · 安全門 · 智能建議';
 
   @override
-  String get rehabKeepLocal => '本地保存 · 不上传';
+  String get rehabKeepLocal => '本地儲存 · 不上傳';
 
   @override
   String get rehabIntro =>
-      '一个困扰 = 一个档案。填一次问诊信息，先过「安全门」筛查，再让通用智能助手给出康复建议（复制提示词 → 贴给它 → 粘回套用），计划、注意事项和备注都会留在这个档案里。';
+      '一個困擾 = 一個檔案。填一次問診資訊，先過「安全門」篩查，再讓通用智能助手給出康復建議（複製提示詞 → 貼給它 → 粘回套用），計劃、注意事項和備註都會留在這個檔案裡。';
 
   @override
-  String get rehabNew => '新建康复档案';
+  String get rehabNew => '新建康復檔案';
 
   @override
-  String get rehabEmpty => '还没有档案。比如「腰疼」「肩痛」都可以开一个。';
+  String get rehabEmpty => '還沒有檔案。比如「腰疼」「肩痛」都可以開一個。';
 
   @override
-  String get rehabSafePass => '已通过安全门';
+  String get rehabSafePass => '已通過安全門';
 
   @override
-  String get rehabSeeDoctor => '建议先就医';
+  String get rehabSeeDoctor => '建議先就醫';
 
   @override
-  String get rehabLabelArea => '哪里不舒服';
+  String get rehabLabelArea => '哪裡不舒服';
 
   @override
   String get rehabLabelDuration => '多久了';
 
   @override
-  String get rehabLabelRedFlags => '有没有下列情况（有就勾上，我们只做筛查不做诊断）';
+  String get rehabLabelRedFlags => '有沒有下列情況（有就勾上，我們只做篩查不做診斷）';
 
   @override
-  String get rehabLabelFactors => '什么情况会加重 / 缓解';
+  String get rehabLabelFactors => '什麼情況會加重 / 緩解';
 
   @override
-  String get rehabFactorsHint => '例如：久坐后加重，躺下缓解；弯腰取物时疼';
+  String get rehabFactorsHint => '例如：久坐後加重，躺下緩解；彎腰取物時疼';
 
   @override
-  String get rehabLabelGoals => '康复目标';
+  String get rehabLabelGoals => '康復目標';
 
   @override
-  String get rehabLabelGear => '有什么器材';
+  String get rehabLabelGear => '有什麼器材';
 
   @override
-  String get rehabSaveGate => '保存并检查安全门';
+  String get rehabSaveGate => '儲存並檢查安全門';
 
   @override
-  String get rehabGateFailTitle => '安全门未通过';
+  String get rehabGateFailTitle => '安全門未通過';
 
   @override
-  String get rehabGateFailBody => '勾选的这些情况建议先找医生或康复治疗师当面评估。\n\n档案已保存，可以做记录、存医生建议，但本 App 不再提供训练建议。';
+  String get rehabGateFailBody => '勾選的這些情況建議先找醫生或康復治療師當面評估。\n\n檔案已儲存，可以做記錄、存醫生建議，但本 App 不再提供訓練建議。';
 
   @override
   String get rehabOk => '知道了';
 
   @override
-  String get rehabDeleteFile => '删除这个档案';
+  String get rehabDeleteFile => '刪除這個檔案';
 
   @override
-  String get rehabGatePassedNote => '问诊里没有发现需要先就医的信号。下面的建议仅供自我管理参考，症状加重随时停。';
+  String get rehabGatePassedNote => '問診裡沒有發現需要先就醫的信號。下面的建議僅供自我管理參考，症狀加重隨時停。';
 
   @override
-  String get rehabGateFailedNote => '勾选了需要当面评估的情况，本档案只保留记录，不再提供训练建议。';
+  String get rehabGateFailedNote => '勾選了需要當面評估的情況，本檔案只保留記錄，不再提供訓練建議。';
 
   @override
   String get rehabFieldArea => '部位';
@@ -11582,178 +12868,178 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get rehabFieldDuration => '病程';
 
   @override
-  String get rehabFieldPain => '不适程度';
+  String get rehabFieldPain => '不適程度';
 
   @override
-  String get rehabFieldFactors => '加重 / 缓解';
+  String get rehabFieldFactors => '加重 / 緩解';
 
   @override
-  String get rehabFieldGoals => '目标';
+  String get rehabFieldGoals => '目標';
 
   @override
   String get rehabFieldGear => '器材';
 
   @override
-  String get rehabFieldDays => '每周天数';
+  String get rehabFieldDays => '每週天數';
 
   @override
-  String get rehabGearBodyweight => '徒手为主';
+  String get rehabGearBodyweight => '徒手為主';
 
   @override
-  String get rehabMySituation => '我的情况';
+  String get rehabMySituation => '我的情況';
 
   @override
-  String get rehabAiTitle => '智能康复建议（本地手动来回）';
+  String get rehabAiTitle => '智能康復建議（本地手動來回）';
 
   @override
-  String get rehabAiBlurb => 'App 不联网、不上传任何信息，全部由手动复制完成。';
+  String get rehabAiBlurb => 'App 不聯網、不上傳任何資訊，全部由手動複製完成。';
 
   @override
-  String get rehabCopyPrompt => '复制提示词给智能助手';
+  String get rehabCopyPrompt => '複製提示詞給智能助手';
 
   @override
-  String get rehabExportPrompt => '导出提示词为文件';
+  String get rehabExportPrompt => '導出提示詞為檔案';
 
   @override
-  String get rehabPasteHint => '把智能助手的回复整段贴到这里（含计划数据）';
+  String get rehabPasteHint => '把智能助手的回覆整段貼到這裡（含計劃數據）';
 
   @override
-  String get rehabPaste => '粘贴';
+  String get rehabPaste => '粘貼';
 
   @override
-  String get rehabSeeFormat => '看输出格式';
+  String get rehabSeeFormat => '看輸出格式';
 
   @override
-  String get rehabImportAdvice => '导入智能建议';
+  String get rehabImportAdvice => '導入智能建議';
 
   @override
-  String get rehabCautions => '注意事项';
+  String get rehabCautions => '注意事項';
 
   @override
-  String get rehabUnreadable => '没读懂这段内容，确认贴的是智能助手的回复（要含计划数据）';
+  String get rehabUnreadable => '沒讀懂這段內容，確認貼的是智能助手的回覆（要含計劃數據）';
 
   @override
-  String get rehabNoPlan => '没找到可用的训练计划';
+  String get rehabNoPlan => '沒找到可用的訓練計劃';
 
   @override
-  String get rehabRehabPlans => '康复计划';
+  String get rehabRehabPlans => '康復計劃';
 
   @override
-  String get rehabNoAdviceYet => '还没导入建议。上面走一遍智能助手流程就有了。';
+  String get rehabNoAdviceYet => '還沒導入建議。上面走一遍智能助手流程就有了。';
 
   @override
-  String get rehabGateBlocksPlan => '未通过安全门，暂不生成训练建议。';
+  String get rehabGateBlocksPlan => '未通過安全門，暫不生成訓練建議。';
 
   @override
-  String get rehabNotes => '备注 / 医生建议';
+  String get rehabNotes => '備註 / 醫生建議';
 
   @override
-  String get rehabNotesHint => '记点东西：医生的说法、哪几天更疼、什么动作有效…';
+  String get rehabNotesHint => '記點東西：醫生的說法、哪幾天更疼、什麼動作有效…';
 
   @override
-  String get rehabSaveNotes => '保存备注';
+  String get rehabSaveNotes => '儲存備註';
 
   @override
-  String get rehabNotesSaved => '备注已保存';
+  String get rehabNotesSaved => '備註已儲存';
 
   @override
-  String get rehabPromptCopied => '提示词已复制';
+  String get rehabPromptCopied => '提示詞已複製';
 
   @override
-  String get rehabPromptCopiedHint => '贴给任意智能助手，再把回复贴回来';
+  String get rehabPromptCopiedHint => '貼給任意智能助手，再把回覆貼回來';
 
   @override
-  String get rehabDeleteTitle => '删除档案？';
+  String get rehabDeleteTitle => '刪除檔案？';
 
   @override
-  String get rehabDeleteBody => '只删档案本身，已经生成的训练计划会保留。';
+  String get rehabDeleteBody => '只刪檔案本身，已經生成的訓練計劃會保留。';
 
   @override
-  String get rehabDelete => '删除';
+  String get rehabDelete => '刪除';
 
   @override
   String get rehabTabToday => '今天';
 
   @override
-  String get rehabTabPlan => '课表';
+  String get rehabTabPlan => '課表';
 
   @override
-  String get rehabTabLog => '日志';
+  String get rehabTabLog => '日誌';
 
   @override
-  String get rehabTabBook => '手册';
+  String get rehabTabBook => '手冊';
 
   @override
-  String get rehabHandTitle => '康复手册';
+  String get rehabHandTitle => '康復手冊';
 
   @override
-  String get rehabHandTarget => '训练对象';
+  String get rehabHandTarget => '訓練對象';
 
   @override
-  String get rehabHandGoal => '训练目标';
+  String get rehabHandGoal => '訓練目標';
 
   @override
-  String get rehabHandPrinciple => '总原则';
+  String get rehabHandPrinciple => '總原則';
 
   @override
-  String get rehabHandTimeline => '病程时间线';
+  String get rehabHandTimeline => '病程時間線';
 
   @override
-  String get rehabHandTimelineSub => '从受伤到现在的完整脉络';
+  String get rehabHandTimelineSub => '從受傷到現在的完整脈絡';
 
   @override
-  String get rehabHandSchedule => '12 周训练课表';
+  String get rehabHandSchedule => '12 周訓練課表';
 
   @override
-  String get rehabHandScheduleSub => '4+1 阶段 · 28 次训练';
+  String get rehabHandScheduleSub => '4+1 階段 · 28 次訓練';
 
   @override
-  String get rehabHandPhaseDetail => '每阶段课表明细';
+  String get rehabHandPhaseDetail => '每階段課表明細';
 
   @override
-  String get rehabHandExpand => '点开展开';
+  String get rehabHandExpand => '點開展開';
 
   @override
-  String get rehabHandTraffic => '红绿灯速记';
+  String get rehabHandTraffic => '紅綠燈速記';
 
   @override
-  String get rehabHandTrafficSub => '练完记一行 · 存本地';
+  String get rehabHandTrafficSub => '練完記一行 · 存本地';
 
   @override
-  String get rehabHandMaintain => '维持期';
+  String get rehabHandMaintain => '維持期';
 
   @override
-  String get rehabHandFeel => '感受 / 疼痛分数（可空）';
+  String get rehabHandFeel => '感受 / 疼痛分數（可空）';
 
   @override
-  String get rehabHandSaveLog => '保存记录';
+  String get rehabHandSaveLog => '儲存記錄';
 
   @override
-  String get rehabHandHistory => '历史记录';
+  String get rehabHandHistory => '歷史記錄';
 
   @override
-  String get rehabHandNoLog => '还没有记录';
+  String get rehabHandNoLog => '還沒有記錄';
 
   @override
-  String get rehabHandTrafficGreen => '绿灯';
+  String get rehabHandTrafficGreen => '綠燈';
 
   @override
-  String get rehabHandTrafficYellow => '黄灯';
+  String get rehabHandTrafficYellow => '黃燈';
 
   @override
-  String get rehabHandTrafficRed => '红灯';
+  String get rehabHandTrafficRed => '紅燈';
 
   @override
-  String get rehabHandFaq => 'FAQ · 常见疑问';
+  String get rehabHandFaq => 'FAQ · 常見疑問';
 
   @override
-  String get rehabHandDelete => '删';
+  String get rehabHandDelete => '刪';
 
   @override
   String get rehabAreaLowback => '腰 / 下背';
 
   @override
-  String get rehabAreaNeck => '颈 / 上背';
+  String get rehabAreaNeck => '頸 / 上背';
 
   @override
   String get rehabAreaShoulder => '肩';
@@ -11762,7 +13048,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get rehabAreaElbow => '肘 / 腕';
 
   @override
-  String get rehabAreaHip => '髋';
+  String get rehabAreaHip => '髖';
 
   @override
   String get rehabAreaKnee => '膝';
@@ -11771,100 +13057,100 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get rehabAreaAnkle => '踝 / 足';
 
   @override
-  String get rehabAreaOther => '其他 / 说不清';
+  String get rehabAreaOther => '其他 / 說不清';
 
   @override
-  String get rehabDurAcute => '1 周以内';
+  String get rehabDurAcute => '1 周以內';
 
   @override
   String get rehabDurSub => '1~4 周';
 
   @override
-  String get rehabDurChronic => '1~3 个月';
+  String get rehabDurChronic => '1~3 個月';
 
   @override
-  String get rehabDurLong => '3 个月以上';
+  String get rehabDurLong => '3 個月以上';
 
   @override
-  String get rehabGoalPain => '缓解疼痛';
+  String get rehabGoalPain => '緩解疼痛';
 
   @override
-  String get rehabGoalMobility => '恢复活动度';
+  String get rehabGoalMobility => '恢復活動度';
 
   @override
-  String get rehabGoalStrength => '增强力量';
+  String get rehabGoalStrength => '增強力量';
 
   @override
-  String get rehabGoalReturn => '回归运动 / 训练';
+  String get rehabGoalReturn => '迴歸運動 / 訓練';
 
   @override
-  String get rehabGoalDaily => '改善日常功能（久坐、弯腰、上下楼）';
+  String get rehabGoalDaily => '改善日常功能（久坐、彎腰、上下樓）';
 
   @override
-  String get rehabFlagBladder => '大小便控制异常、会阴部（鞍区）麻木';
+  String get rehabFlagBladder => '大小便控制異常、會陰部（鞍區）麻木';
 
   @override
-  String get rehabFlagWeakness => '下肢进行性无力、走路发飘或拖步';
+  String get rehabFlagWeakness => '下肢進行性無力、走路發飄或拖步';
 
   @override
-  String get rehabFlagTrauma => '近期有摔倒、撞击等外伤';
+  String get rehabFlagTrauma => '近期有摔倒、撞擊等外傷';
 
   @override
-  String get rehabFlagFever => '发热、寒战或局部红肿发热';
+  String get rehabFlagFever => '發熱、寒戰或局部紅腫發熱';
 
   @override
-  String get rehabFlagNight => '夜间静息痛、不明原因消瘦';
+  String get rehabFlagNight => '夜間靜息痛、不明原因消瘦';
 
   @override
-  String get rehabFlagCancer => '肿瘤、结核或严重骨质疏松病史';
+  String get rehabFlagCancer => '腫瘤、結核或嚴重骨質疏鬆病史';
 
   @override
-  String get rehabFlagPregnant => '已怀孕或产后早期';
+  String get rehabFlagPregnant => '已懷孕或產後早期';
 
   @override
-  String get rehabFlagSurgery => '近 3 个月内做过手术';
+  String get rehabFlagSurgery => '近 3 個月內做過手術';
 
   @override
-  String get rehabStopRules => '出现以下情况立即停止并就医：疼痛在训练中持续加重；出现下肢麻木、无力或大小便异常；头晕、胸闷、心慌；疼痛第二天仍明显加重。';
+  String get rehabStopRules => '出現以下情況立即停止並就醫：疼痛在訓練中持續加重；出現下肢麻木、無力或大小便異常；頭暈、胸悶、心慌；疼痛第二天仍明顯加重。';
 
   @override
   String rehabPlanCount(int n) {
-    return '计划 $n 个';
+    return '計劃 $n 個';
   }
 
   @override
   String rehabPainNow(int pain) {
-    return '现在的不适程度：$pain / 10';
+    return '現在的不適程度：$pain / 10';
   }
 
   @override
   String rehabLabelDays(int days) {
-    return '每周能练几天：$days';
+    return '每週能練幾天：$days';
   }
 
   @override
   String rehabEpisodeMeta(String area, String duration, int pain, int plans) {
-    return '$area · $duration · 不适 $pain/10 · 计划 $plans 个';
+    return '$area · $duration · 不適 $pain/10 · 計劃 $plans 個';
   }
 
   @override
   String rehabAutoTitle(String area) {
-    return '$area康复';
+    return '$area康復';
   }
 
   @override
   String rehabRoutinesMade(int routines, int added, int adjusted) {
-    return '已生成 $routines 个计划 · 动作 $added 个 · 调整 $adjusted 处';
+    return '已生成 $routines 個計劃 · 動作 $added 個 · 調整 $adjusted 處';
   }
 
   @override
   String rehabMissedActions(String list) {
-    return '没匹配上的动作：$list';
+    return '沒匹配上的動作：$list';
   }
 
   @override
   String rehabExerciseCount(int n) {
-    return '$n 个动作';
+    return '$n 個動作';
   }
 
   @override
@@ -11874,197 +13160,194 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String rehabLogStage(String n) {
-    return '阶段$n';
+    return '階段$n';
   }
 
   @override
   String rehabLogCount(int n) {
-    return '共 $n 条';
+    return '共 $n 條';
   }
 
   @override
   String rehabPhaseN(String n) {
-    return '阶段$n';
+    return '階段$n';
   }
 
   @override
-  String get rehabAiSteps => '1 复制提示词 → 2 贴给任意智能助手 → 3 把回复整段贴回来导入。';
+  String get rehabAiSteps => '1 複製提示詞 → 2 貼給任意智能助手 → 3 把回覆整段貼回來導入。';
 
   @override
-  String get rehabGateFailedShort => '未通过安全门 · 建议先就医';
+  String get rehabGateFailedShort => '未通過安全門 · 建議先就醫';
 
   @override
-  String get logSubtitle => 'Training and rehab, logged in one place';
+  String get logSubtitle => '訓練與康復記錄，都在這裡';
 
   @override
-  String get logAddRehab => 'Log rehab';
+  String get logAddRehab => '記錄康復';
 
   @override
-  String get logTrends => 'Trends';
+  String get logTrends => '趨勢報表';
 
   @override
-  String get logRehabTrend => 'Rehab trend';
+  String get logRehabTrend => '康復趨勢';
 
   @override
-  String get logTrainTrend => 'Training volume';
+  String get logTrainTrend => '訓練量趨勢';
 
   @override
-  String get logTagTrain => 'Training';
+  String get logTagTrain => '訓練';
 
   @override
-  String get logTagRehab => 'Rehab';
+  String get logTagRehab => '康復';
 
   @override
-  String get baselineTitle => 'Baseline test';
+  String get baselineTitle => '康復自評';
 
   @override
-  String get baselineSubtitle => 'Measure your baseline, then set your starting level';
+  String get baselineSubtitle => '測基礎值、定訓練起始強度；填不上的可留空';
 
   @override
-  String get baselineGateTitle => 'Before you start';
+  String get baselineGateTitle => '運動前安全自查';
 
   @override
-  String get baselineGateQ1 => 'Has a doctor said you should only do medically approved exercise?';
+  String get baselineGateQ1 => '醫生是否說過你只能做被許可的運動？';
 
   @override
-  String get baselineGateQ2 => 'Do you get chest pain or tightness when exercising?';
+  String get baselineGateQ2 => '運動時是否出現胸痛或胸悶？';
 
   @override
-  String get baselineGateQ3 => 'Have you had chest pain at rest in the last month?';
+  String get baselineGateQ3 => '近一個月不運動時是否胸痛？';
 
   @override
-  String get baselineGateQ4 => 'Do you get dizziness, or a joint problem that worsens with exercise?';
+  String get baselineGateQ4 => '運動時是否頭暈，或骨關節問題加重？';
 
   @override
-  String get baselineGateFail => 'You ticked one: please consult a doctor first and skip the test for now.';
+  String get baselineGateFail => '有一項打勾：請先諮詢醫生，暫不進行自測。';
 
   @override
-  String get baselineSave => 'Save baseline';
+  String get baselineSave => '儲存自評';
 
   @override
-  String get baselineSaved => 'Baseline saved';
+  String get baselineSaved => '自評已儲存';
 
   @override
-  String get baselineDisclaimer => 'For reference only, not a medical diagnosis.';
+  String get baselineDisclaimer => '自測結果僅供參考，非醫療診斷。';
 
   @override
-  String get baselineResultTitle => 'Baseline result';
+  String get baselineResultTitle => '自評結果';
 
   @override
-  String get baselineLast => 'Last';
+  String get baselineLast => '上次';
 
   @override
-  String get baselineInputHint => 'Enter a value';
+  String get baselineInputHint => '數值（可留空）';
 
   @override
-  String get baselineNmRestingHr => 'Resting heart rate';
+  String get baselineNmRestingHr => '靜息心率';
 
   @override
-  String get baselineHowRestingHr => 'Sit quietly 5 min, count your pulse for 1 min';
+  String get baselineHowRestingHr => '安靜坐 5 分鐘後，測 1 分鐘脈搏';
 
   @override
-  String get baselineNmStep2 => '2-minute step';
+  String get baselineNmStep2 => '2 分鐘原地踏步';
 
   @override
-  String get baselineHowStep2 => 'March in place, count knee raises in 2 min';
+  String get baselineHowStep2 => '2 分鐘內儘量抬高膝蓋原地踏步，記抬膝次數';
 
   @override
-  String get baselineNmChairStand => '30s chair stand';
+  String get baselineNmChairStand => '30 秒坐站';
 
   @override
-  String get baselineHowChairStand => 'Stand-ups in 30s from a chair, arms crossed';
+  String get baselineHowChairStand => '無扶手椅上，雙手抱胸，30 秒內起坐次數';
 
   @override
-  String get baselineNmSingleLeg => 'Single-leg stand';
+  String get baselineNmSingleLeg => '單腳站立（睜眼）';
 
   @override
-  String get baselineHowSingleLeg => 'Time standing on one leg, up to 60s';
+  String get baselineHowSingleLeg => '單腳站立計時，最多 60 秒';
 
   @override
-  String get baselineNmSitReach => 'Sit-and-reach';
+  String get baselineNmSitReach => '坐位體前屈';
 
   @override
-  String get baselineHowSitReach => 'Seated straight-leg reach, cm past your toes';
+  String get baselineHowSitReach => '坐姿直腿前伸，記錄指尖超過腳尖（cm）';
 
   @override
-  String get baselineNmWaist => 'Waist';
+  String get baselineNmWaist => '腰圍';
 
   @override
-  String get baselineHowWaist => 'Measure around the waist, navel level';
+  String get baselineHowWaist => '繞臍水平或肋骨下緣至髂嵴中點一圈';
 
   @override
-  String get fbRehabSection => 'Rehab log';
+  String get fbRehabSection => '康復記錄';
 
   @override
-  String get rehabStPhaseDesc1 =>
-      'Activation start: the gentlest load; focus on doing each move correctly first';
+  String get rehabStPhaseDesc1 => '核心喚醒起步，強度最輕，先把動作質量做對';
 
   @override
-  String get rehabStPhaseDesc2 =>
-      'Once control is steady, progress: difficulty and session length rise gradually';
+  String get rehabStPhaseDesc2 => '控制穩了再進階，難度和訓練時長逐步加';
 
   @override
-  String get rehabStPhaseDesc3 => 'Turn stability into a habit; strength and endurance improve together';
+  String get rehabStPhaseDesc3 => '把穩定性練成習慣，力量與耐力同步提升';
 
   @override
-  String get rehabStPhaseDescMaintain =>
-      'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold the volume';
+  String get rehabStPhaseDescMaintain => '目標從「變強」轉為「不退步」，每週 2~3 次、量維持';
 
   @override
-  String get rehabStLightDescGreen =>
-      'All three weekly checks improved (less back pain, less leg numbness, less stiffness after sitting) → keep progressing per the plan';
+  String get rehabStLightDescGreen => '本週三問都好轉（腰痛更輕、腿麻更少、久坐起身不僵）→ 按課表正常推進';
 
   @override
-  String get rehabStLightDescAmber =>
-      'No progress this week (plateau), or only mild soreness ≤3/10 during training that eases when you stop → repeat the current phase, don\'t add load';
+  String get rehabStLightDescAmber => '本週狀態沒進展（平臺期），或訓練中只有 ≤3 分輕微不適、停下即緩解 → 當前階段再練一週，別加量';
 
   @override
-  String get rehabStLightDescRed =>
-      'Worse than last week, or pain >3/10, worse leg numbness, radiating pain or weakness → stop at once and step back a phase; if it doesn\'t ease in 2–3 days, see a doctor';
+  String get rehabStLightDescRed => '本週狀態比上週更差，或疼痛 >3 分／腿麻加重／放射痛／無力 → 立即停練、退回上一階段；2~3 天不緩解就複診';
 
   @override
-  String get cycleTitle => 'Cycle';
+  String get cycleTitle => '排期週期';
 
   @override
-  String get cycleEnable => 'Use a cycle';
+  String get cycleEnable => '啓用週期';
 
   @override
-  String get cycleHint => 'Set a full cycle; training days are spaced automatically (no fixed weekdays)';
+  String get cycleHint => '設一段完整週期，訓練日自動均攤（不再固定周幾）';
 
   @override
-  String get cycleStart => 'Start';
+  String get cycleStart => '起始日';
 
   @override
-  String get cycleWeeks => 'Weeks';
+  String get cycleWeeks => '週期（周）';
 
   @override
-  String get cyclePerWeek => 'Per week';
+  String get cyclePerWeek => '每週次數';
 
   @override
-  String get cyclePinHint => 'Pin weekdays (optional)';
+  String get cyclePinHint => '釘死某幾天（可選）';
 
   @override
   String cycleWeekXY(Object x, Object y) {
-    return 'Week $x of $y';
+    return '第 $x/$y 周';
   }
 
   @override
   String cycleDone(Object d, Object e) {
-    return '$d of $e done';
+    return '已完成 $d/$e';
   }
 
   @override
-  String get cycleComplete => 'Cycle complete';
+  String get cycleComplete => '週期已完成';
 
   @override
-  String get cycleRenew => 'Next round';
+  String get cycleRenew => '續一輪';
 
   @override
-  String get cycleOff => 'End cycle';
+  String get cycleOff => '結束週期';
+
+  @override
+  String get cycleRotationOff => '輪換開啟時由輪換決定順序，這裡的週期暫不生效。';
 
   @override
   String cycleRound(Object n) {
-    return 'Round $n';
+    return '第 $n 輪';
   }
 
   @override
@@ -12223,52 +13506,55 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get moveDown => '下移';
 
   @override
-  String get rehabDoctorTitle => 'Diagnosis & Doctor\'s Orders';
+  String get widgetNutritionOff => '先在 設置 › Beta 裡打開「營養」，才能用這個小部件。';
 
   @override
-  String get rehabDoctorDisclaimer =>
-      'The app only records — it does not interpret your doctor\'s orders. Always follow your doctor.';
+  String get widgetPickShake => '選一個奶昔';
 
   @override
-  String get rehabDoctorGuide =>
-      'Seen a doctor? Record the diagnosis and orders → you can generate a plan even if the safety gate failed';
+  String get rehabDoctorTitle => '診斷與醫囑';
 
   @override
-  String get rehabDoctorDx => 'Diagnosis / findings (e.g. L5-S1 disc herniation)';
+  String get rehabDoctorDisclaimer => 'App 只做記錄、不解釋醫囑；一切以醫生為準';
 
   @override
-  String get rehabDoctorIcd => 'ICD code (optional)';
+  String get rehabDoctorGuide => '已就醫？把醫生的診斷和醫囑記下來 → 就算安全門沒過，也能生成訓練計劃';
 
   @override
-  String get rehabDoctorVisit => 'Visit date';
+  String get rehabDoctorDx => '診斷 / 結論（如 L5-S1 椎間盤突出）';
 
   @override
-  String get rehabDoctorFollowUp => 'Follow-up / reassessment';
+  String get rehabDoctorIcd => 'ICD 碼（選填）';
 
   @override
-  String get rehabDoctorOrders => 'Doctor\'s orders (copy or paste your doctor\'s words)';
+  String get rehabDoctorVisit => '就診日期';
 
   @override
-  String get rehabDoctorAdvice => 'Treatment / activities your doctor advised';
+  String get rehabDoctorFollowUp => '複診 / 再評估時間';
 
   @override
-  String get rehabDoctorRestrictions =>
-      'Restrictions & contraindications (e.g. no bending or lifting for now)';
+  String get rehabDoctorOrders => '醫囑原文（照抄或粘貼醫生的話）';
 
   @override
-  String get rehabDoctorImaging => 'Imaging / test findings (optional)';
+  String get rehabDoctorAdvice => '醫生建議的治療 / 可做動作';
 
   @override
-  String get rehabDoctorFacility => 'Hospital / department / doctor (optional, not sent to the AI)';
+  String get rehabDoctorRestrictions => '限制與禁忌（禁做 / 慎做，如暫不彎腰搬重物）';
 
   @override
-  String get rehabDoctorMeds => 'Medications / other notes (optional, not sent to the AI)';
+  String get rehabDoctorImaging => '影像 / 檢查結論（選填）';
 
   @override
-  String get rehabDoctorSave => 'Save diagnosis & orders';
+  String get rehabDoctorFacility => '醫院 / 科室 / 醫生（選填，不會發給 AI）';
 
   @override
-  String get rehabDoctorSaved => 'Saved — you can generate a plan now';
+  String get rehabDoctorMeds => '用藥 / 其他備註（選填，不會發給 AI）';
+
+  @override
+  String get rehabDoctorSave => '儲存診斷與醫囑';
+
+  @override
+  String get rehabDoctorSaved => '已儲存，可以生成計劃了';
 
   @override
   String get heatRangeSetting => '活動日曆';
@@ -12293,6 +13579,24 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get pdfFooter => '免費、開源、離線可用';
+
+  @override
+  String get shakeTag => '標記為奶昔';
+
+  @override
+  String get shakeTagHint => '會顯示在「我的奶昔」裡';
+
+  @override
+  String get shakeNone => '標記你的奶昔，只有標記過的才會出現在這裡。';
+
+  @override
+  String get shakeMarkLabel => '標記為奶昔';
+
+  @override
+  String get shakeNew => '新建奶昔';
+
+  @override
+  String get shakeUntag => '不是奶昔';
 
   @override
   String get pdfKicker => '訓練計畫';
@@ -12386,48 +13690,53 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get updateTitle => 'Check for updates';
+  String get updateTitle => '檢查更新';
 
   @override
-  String get updateChecking => 'Checking for updates…';
+  String get updateChecking => '正在檢查更新…';
 
   @override
   String updateLatest(String v) {
-    return 'You\'re on the latest version ($v)';
+    return '已是最新版本（當前 $v）';
   }
 
   @override
   String updateAvailable(String v) {
-    return 'Version $v is available';
+    return '發現新版本 $v';
   }
 
   @override
-  String get updateNow => 'Download & install';
+  String get updateNow => '下載並安裝';
 
   @override
-  String get updateLater => 'Later';
+  String get updateLater => '稍後';
 
   @override
-  String get updateFailed => 'Update check failed. Please try again later.';
+  String get updateFailed => '檢查更新失敗，請稍後再試。';
 
   @override
-  String get updateOpenPage => 'Open releases page';
+  String get updateOpenPage => '打開發布頁';
 
   @override
-  String get updateDownloading => 'Downloading update…';
+  String get updateDownloading => '正在下載更新包…';
 
   @override
-  String get updateDownloadFailed => 'Download failed. Please try again later.';
+  String get updateDownloadFailed => '下載失敗，請稍後再試。';
 
   @override
-  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
+  String get updateInstallHint => '下載完成；若系統提示，請允許「安裝未知應用」以完成更新。';
 
   @override
-  String get updateNetNote =>
-      'Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.';
+  String get updateNetNote => '檢查更新會聯網；除此之外，康途全程離線，數據只留在本機。';
 
   @override
   String get stopwatch => '碼錶';
+
+  @override
+  String get proteinSource => '蛋白來源';
+
+  @override
+  String get proteinMixedShort => '混合';
 
   @override
   String get kcalActive => '活動';
@@ -12574,6 +13883,31 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get nextAmrap => '最後一組：能做多少做多少';
+
+  @override
+  String fillDay(String amount) {
+    return '把今天填滿 · $amount';
+  }
+
+  @override
+  String leftAfterKcal(String kcal) {
+    return '還能再吃 $kcal';
+  }
+
+  @override
+  String leftAfterBoth(String kcal, String grams) {
+    return '還能再吃 $kcal、$grams 克蛋白';
+  }
+
+  @override
+  String leftAfterOver(String kcal) {
+    return '超出目標 $kcal';
+  }
+
+  @override
+  String perDayUnit(String unit) {
+    return '每天 $unit';
+  }
 
   @override
   String get byZone => '按部位';
@@ -12779,7 +14113,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gymPassMember => '會員';
 
   @override
-  String get widgetHintActivity => '你的訓練日分布圖';
+  String get widgetHintActivity => '你的訓練日分佈圖';
 
   @override
   String get widgetHintStats => '本週連續天數、訓練量與次數';
@@ -12832,7 +14166,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get healthPickTitle => '健康資料';
 
   @override
-  String get healthPickHint => '選擇要從 Health Connect 讀取的項目。Android 會為每一項詢問一次。資料只會讀取，永遠不會離開手機。';
+  String get healthPickHint =>
+      '選擇要從 Health Connect 讀取的項目。Android 會為每一項詢問一次。資料不會離開手機。開啟「健康資料」後，你的訓練也會作為運動記錄寫回 Health Connect。';
 
   @override
   String get healthGroupHeart => '心臟';
@@ -12925,13 +14260,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get sessionPhotosAdd => '新增照片';
 
   @override
-  String get sessionPhotosHint => '也會保存在「你的照片」中。';
+  String get sessionPhotosHint => '也會儲存在「你的照片」中。';
 
   @override
   String get ladderTitle => '進階';
 
   @override
-  String get ladderHint => '依由易到難排列步驟。連續兩次訓練完成 3 組 8 次（慢速動作 5 次）後，GymMane 會建議下一步。';
+  String get ladderHint => '依由易到難排列步驟。連續兩次訓練完成 3 組 8 次（慢速動作 5 次）後，康途 會建議下一步。';
 
   @override
   String get ladderBuiltIn => '以應用程式內建的進階為基礎。新增、刪除或重新排序步驟後，就屬於此課表。';
@@ -13026,6 +14361,9 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get awardsPickHint => '點選你想在個人檔案展示的';
 
   @override
+  String get quickAddAmount => '你吃了多少';
+
+  @override
   String get homeCardsTitle => '首頁卡片';
 
   @override
@@ -13068,6 +14406,15 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get calmMotionHint => '頁面出現時不再滑入';
 
   @override
+  String get dishArchive => '歸檔';
+
+  @override
+  String get dishUnarchive => '恢復';
+
+  @override
+  String get dishArchivedToast => '菜品已歸檔';
+
+  @override
   String get filterShowLabel => '顯示';
 
   @override
@@ -13101,6 +14448,15 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get cardioNoSets => '有氧不計入每週各肌群組數';
 
   @override
+  String get countsAsWater => '計入飲水';
+
+  @override
+  String get countsAsWaterHint => '用水衝的奶昔：記錄後也會計入飲水量';
+
+  @override
+  String get waterPerServing => '每份含水';
+
+  @override
   String get estOneRm => '估算 1RM';
 
   @override
@@ -13121,10 +14477,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get allTimeLifted => '總舉重量';
 
   @override
-  String get pctBodyweight => '體重占比';
+  String get pctBodyweight => '體重佔比';
 
   @override
-  String get ofBodyweight => '占你體重';
+  String get ofBodyweight => '佔你體重';
 
   @override
   String get recoveryStateMid => '恢復中';
@@ -13275,7 +14631,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get weightStack => '配重片';
 
   @override
-  String get weightStackHint => '這台器材真實的重量。+ 和 −、進階和減量只會落在這些值上。';
+  String get weightStackHint => '這臺器材真實的重量。+ 和 −、進階和減量只會落在這些值上。';
 
   @override
   String get weightStackOff => '關閉:一般重量級距';
@@ -13533,6 +14889,32 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get circuitUpNext => '接下來';
 
   @override
+  String get foodGroupNew => '新建分類';
+
+  @override
+  String get foodGroupHint => '即食餐、冷凍食品…';
+
+  @override
+  String foodGroupCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 種食物',
+      one: '1 種食物',
+      zero: '還沒有食物',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String foodGroupDeleteTitle(String name) {
+    return '刪除 $name？';
+  }
+
+  @override
+  String get foodGroupDeleteBody => '食物會保留，只是不再屬於這個分類。';
+
+  @override
   String onbHello(String name) {
     return '你好,$name';
   }
@@ -13746,6 +15128,135 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get reportShareCsvBoth => '匯出 CSV（訓練與營養）';
 
   @override
+  String fastMinutes(int n) {
+    return '$n 分鐘';
+  }
+
+  @override
+  String fastHours(int n) {
+    return '$n 小時';
+  }
+
+  @override
+  String fastHoursMinutes(int h, int m) {
+    return '$h 小時 $m 分';
+  }
+
+  @override
+  String get fastTracker => '間歇性禁食';
+
+  @override
+  String fastTitle(int fast, int eat) {
+    return '禁食 $fast:$eat';
+  }
+
+  @override
+  String get fastOptions => '禁食設置';
+
+  @override
+  String get fastWindowOpen => '進食窗口已開啓';
+
+  @override
+  String get fastLeft => '剩餘';
+
+  @override
+  String get fastDoneLabel => '已達目標';
+
+  @override
+  String get fastIdle => '吃完最後一餐後開始';
+
+  @override
+  String fastLast(String time) {
+    return '上次禁食：$time';
+  }
+
+  @override
+  String fastStreak(int n) {
+    return '連續 $n 次';
+  }
+
+  @override
+  String fastReached(String time) {
+    return '超過目標 $time';
+  }
+
+  @override
+  String fastEndsAt(String time) {
+    return '$time 結束';
+  }
+
+  @override
+  String fastSince(String time) {
+    return '自 $time 起';
+  }
+
+  @override
+  String get fastStartedAt => '什麼時候開始禁食的？';
+
+  @override
+  String get fastStart => '開始禁食';
+
+  @override
+  String fastFromMeal(String time) {
+    return '從 $time';
+  }
+
+  @override
+  String get fastEnd => '結束禁食';
+
+  @override
+  String get fastCancel => '取消本次禁食';
+
+  @override
+  String get fastPlan => '禁食計劃';
+
+  @override
+  String get fastPlanHint => '禁食小時數 : 進食小時數';
+
+  @override
+  String get fastThisWeek => '最近 7 天';
+
+  @override
+  String get fastCount => '禁食次數';
+
+  @override
+  String get fastReachedCount => '達標';
+
+  @override
+  String get fastAverage => '平均';
+
+  @override
+  String get fastHistory => '最近禁食';
+
+  @override
+  String get notifFastLiveChannel => '禁食進行中';
+
+  @override
+  String get notifFastLiveChannelWhy => '禁食時的靜默倒計時。';
+
+  @override
+  String get notifFastChannel => '禁食';
+
+  @override
+  String get notifFastChannelWhy => '禁食結束時提醒你。';
+
+  @override
+  String get notifFastLiveTitle => '禁食中';
+
+  @override
+  String notifFastLiveBody(String time) {
+    return '進食窗口將於 $time 開啓';
+  }
+
+  @override
+  String get notifFastDoneTitle => '禁食完成';
+
+  @override
+  String notifFastDoneBody(int n) {
+    return '$n 小時。進食窗口已開啓。';
+  }
+
+  @override
   String get newExerciseHint => '只需填寫名稱。其他資訊有幫助，也可以之後再加。';
 
   @override
@@ -13753,5 +15264,877 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get supportThanksBody =>
-      'GymMane 永遠免費，沒有廣告，也沒有任何隱藏收費。\n\n如果它對你的訓練有幫助，請我喝杯咖啡會讓我開心一整天 ☕\n如果不方便也沒關係：在 GitHub 上點一顆星也一樣 ⭐';
+      '康途 永遠免費，沒有廣告，也沒有任何隱藏收費。\n\n如果它對你的訓練有幫助，請我喝杯咖啡會讓我開心一整天 ☕\n如果不方便也沒關係：在 GitHub 上點一顆星也一樣 ⭐';
+
+  @override
+  String get perfSetting => '性能';
+
+  @override
+  String get perfSheetHint => '康途佔用手機資源的程度。下面可逐項調整。';
+
+  @override
+  String get perfLite => '省電';
+
+  @override
+  String get perfLiteHint => '無毛玻璃、動效更剋制。適合較吃力的手機。';
+
+  @override
+  String get perfBalanced => '均衡';
+
+  @override
+  String get perfBalancedHint => '保留毛玻璃和動畫，又不怎麼耗電。';
+
+  @override
+  String get perfMax => '最高';
+
+  @override
+  String perfMaxHint(int hz) {
+    return '更精細的毛玻璃、螢幕 $hz Hz。適合高端手機。';
+  }
+
+  @override
+  String get perfMaxHintNoHz => '全局更精細的毛玻璃。適合高端手機。';
+
+  @override
+  String get perfCustom => '自定義';
+
+  @override
+  String get perfTweak => '微調';
+
+  @override
+  String get perfFine => '精細毛玻璃';
+
+  @override
+  String get perfFineHint => '邊緣更柔和，面板後面的背景更清晰';
+
+  @override
+  String perfHz(int hz) {
+    return '螢幕 $hz Hz';
+  }
+
+  @override
+  String get perfHzHint => '滾動更順滑，略費一點電';
+
+  @override
+  String get lowEndLiteBody => '省電模式（無毛玻璃、動效更剋制）在這臺手機上會更流暢。可在 設置 → 通用 → 性能 中更改。';
+
+  @override
+  String get lowEndLiteOn => '開啓省電';
+
+  @override
+  String get dayOffHint => '連續記錄和提醒都會跳過這一天';
+
+  @override
+  String get dayOffTrained => '練了，只是沒記';
+
+  @override
+  String get dayOffSick => '生病';
+
+  @override
+  String get dayOffTravel => '出行';
+
+  @override
+  String get dayOffInjury => '受傷';
+
+  @override
+  String get dayOffRest => '休息';
+
+  @override
+  String get altsTitle => '備選動作';
+
+  @override
+  String get altsHint => '器械被佔用時備用';
+
+  @override
+  String altsPickHint(int count) {
+    return '最多選 $count 個。器械被佔用時一鍵替換。';
+  }
+
+  @override
+  String get placeDumbbells => '啞鈴';
+
+  @override
+  String get dumbbellsHint => '單隻啞鈴的重量。漸進計算和 +/− 按鈕在此只會落在這些重量上。';
+
+  @override
+  String get dumbbellOther => '其他重量';
+
+  @override
+  String get tuneTitle => '今日訓練量';
+
+  @override
+  String get tuneHint => '告訴我各部位的感覺，我會調整下次的組數。';
+
+  @override
+  String get tuneLess => '太少';
+
+  @override
+  String get tuneRight => '剛好';
+
+  @override
+  String get tuneMore => '太多';
+
+  @override
+  String tuneNext(String sets, String name) {
+    return '下次：$name $sets 組';
+  }
+
+  @override
+  String get tuneSame => '下次保持不變';
+
+  @override
+  String get tuneSetting => '按部位調整組數';
+
+  @override
+  String get tuneSettingHint => '練完例程後給各部位打分，組數會自動調整';
+
+  @override
+  String insightLoad(int pct) {
+    return '比平時一週多 $pct% 的組數。注意恢復。';
+  }
+
+  @override
+  String insightMuscle(String muscle, int days) {
+    return '$muscle：$days 天沒練了。';
+  }
+
+  @override
+  String insightPushHeavy(int a, int b) {
+    return '推力多於拉力：四周內 $a 組對 $b 組。';
+  }
+
+  @override
+  String insightPullHeavy(int a, int b) {
+    return '拉力多於推力：四周內 $a 組對 $b 組。';
+  }
+
+  @override
+  String insightStronger(String name, int pct) {
+    return '$name：比上月強 $pct%。';
+  }
+
+  @override
+  String recapPull(String month) {
+    return '繼續下拉查看你的$month';
+  }
+
+  @override
+  String get recapRelease => '放開';
+
+  @override
+  String recapHi(String name) {
+    return '你好，$name';
+  }
+
+  @override
+  String recapReady(String month) {
+    return '看看你在$month都練了什麼？';
+  }
+
+  @override
+  String get recapGo => '開始';
+
+  @override
+  String recapEmpty(String month) {
+    return '$month還沒有訓練。完成第一次就能解鎖。';
+  }
+
+  @override
+  String get recapClose => '關閉';
+
+  @override
+  String get recapShare => '分享';
+
+  @override
+  String get recapWorkoutsKicker => '這個月你訓練了';
+
+  @override
+  String recapWorkouts(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '次');
+    return '$_temp0';
+  }
+
+  @override
+  String recapDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '分佈在$n天', one: '只在1天');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapTimeKicker => '槓鈴下的時間';
+
+  @override
+  String recapLongest(String time, String date) {
+    return '最長訓練：$time，$date';
+  }
+
+  @override
+  String get recapVolumeKicker => '你舉起了';
+
+  @override
+  String recapCars(int n, String count) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '相當於舉起$count輛車', one: '相當於舉起一輛車');
+    return '$_temp0';
+  }
+
+  @override
+  String recapTop(String name, String volume) {
+    return '最多：$name，$volume';
+  }
+
+  @override
+  String get recapMuscleKicker => '本月肌肉';
+
+  @override
+  String get recapRecordsKicker => '新紀錄';
+
+  @override
+  String recapNoRecords(int n) {
+    return '這次沒有新紀錄，但你完成了$n組。';
+  }
+
+  @override
+  String get recapHabitKicker => '你的時段';
+
+  @override
+  String recapHabitStart(String time) {
+    return '你通常在$time開始';
+  }
+
+  @override
+  String get recapShareKicker => '你的月度回顧，可以分享了';
+
+  @override
+  String get recapTickWorkouts => '訓練';
+
+  @override
+  String get recapTickTime => '時間';
+
+  @override
+  String get recapTickVolume => '負重';
+
+  @override
+  String get recapTickRecords => '紀錄';
+
+  @override
+  String recapAvg(int n) {
+    return '平均每次$n分鐘';
+  }
+
+  @override
+  String get recapLiftKicker => '本月動作';
+
+  @override
+  String get recapBest => '最佳';
+
+  @override
+  String get recapTimes => '天數';
+
+  @override
+  String get recapDaysLabel => '天數';
+
+  @override
+  String get recapAvgLabel => '平均';
+
+  @override
+  String recapCalendarLine(int workouts, int days) {
+    return '$days天訓練$workouts次';
+  }
+
+  @override
+  String get recapFavLabel => '你的日子';
+
+  @override
+  String get recapWatermark => '免費健身日誌';
+
+  @override
+  String get recapTickSteps => '步數';
+
+  @override
+  String get recapTickFood => '飲食';
+
+  @override
+  String get recapCardioKicker => '有氧';
+
+  @override
+  String recapCardioTime(int minutes, int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n次訓練', one: '1次訓練');
+    return '$_temp0共$minutes分鐘';
+  }
+
+  @override
+  String recapCardioCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n次有氧訓練');
+    return '$_temp0';
+  }
+
+  @override
+  String recapCardioTop(String name) {
+    return '最常做：$name';
+  }
+
+  @override
+  String get recapStepsKicker => '你走了';
+
+  @override
+  String get recapStepsWord => '步';
+
+  @override
+  String recapStepsAvg(String value) {
+    return '日均$value';
+  }
+
+  @override
+  String recapStepsBest(String value, String date) {
+    return '最佳一天：$value，$date';
+  }
+
+  @override
+  String get recapFoodKicker => '你的餐盤';
+
+  @override
+  String get recapLiftRest => '緊隨其後';
+
+  @override
+  String recapSameAs(String month) {
+    return '與$month持平';
+  }
+
+  @override
+  String recapMoreThan(String value, String month) {
+    return '比$month多$value';
+  }
+
+  @override
+  String recapLessThan(String value, String month) {
+    return '比$month少$value';
+  }
+
+  @override
+  String get recapTickMedals => '獎牌';
+
+  @override
+  String get recapTickSleep => '睡眠';
+
+  @override
+  String get recapMedalsKicker => '獲得的獎牌';
+
+  @override
+  String recapMedalsMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '還有$n枚');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapSleepKicker => '你睡了';
+
+  @override
+  String get recapSleepAvg => '平均每晚';
+
+  @override
+  String recapSleepBest(String value, String date) {
+    return '最佳一晚：$value，$date';
+  }
+
+  @override
+  String get recapCardSummary => '總結';
+
+  @override
+  String get recapCardCalendar => '日曆';
+
+  @override
+  String get recapCardLift => '動作';
+
+  @override
+  String get recapPeakKicker => '最艱苦的一次訓練';
+
+  @override
+  String get recapTickPeak => '訓練';
+
+  @override
+  String get recapFreshKicker => '本月首次嘗試';
+
+  @override
+  String recapFresh(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '個新動作');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapTickFresh => '新';
+
+  @override
+  String recapStreak(int n) {
+    return '連續$n天，你的最長連續紀錄';
+  }
+
+  @override
+  String recapYearAgo(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n次訓練');
+    return '一年前：$_temp0';
+  }
+
+  @override
+  String recapForgot(String muscle) {
+    return '本月遺漏：$muscle';
+  }
+
+  @override
+  String recapFoodProtein(int goal) {
+    return '每日蛋白質 · 目標 $goal g';
+  }
+
+  @override
+  String recapFoodStarDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '出現在餐盤$n天');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapFoodProteinLabel => '蛋白質 · g/天';
+
+  @override
+  String get recapFoodGoalDays => '達標';
+
+  @override
+  String get recapFoodWaterLabel => '飲水/天';
+
+  @override
+  String recapFoodTimes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n天');
+    return '$_temp0';
+  }
+
+  @override
+  String get recapFoodStarKicker => '本月食物';
+
+  @override
+  String get onbSpeedTitle => '讓它跑得更順';
+
+  @override
+  String get onbSpeedWhy => '這臺手機似乎有點吃力。關掉這些會更流暢：試試看，注意預覽效果。';
+
+  @override
+  String get onbSpeedMotion => '動畫';
+
+  @override
+  String get onbSpeedBlurHint => '面板和欄後面的毛玻璃';
+
+  @override
+  String get onbSpeedMotionHint => '滑入的頁面和麪板';
+
+  @override
+  String get onbSpeedLater => '隨時可在 設置 › 通用 › 性能 中更改。';
+
+  @override
+  String get notifSoundSetting => '通知鈴聲';
+
+  @override
+  String get notifSoundRowHint => '各類提醒的鈴聲';
+
+  @override
+  String get notifSoundHint => '為每類提醒挑選鈴聲。「從手機」會打開手機鈴聲，多數手機可在那裡添加自己的歌曲。';
+
+  @override
+  String get notifSoundTrain => '訓練';
+
+  @override
+  String get notifSoundFood => '飲食、補劑和禁食';
+
+  @override
+  String get notifSoundOther => '照片和測量';
+
+  @override
+  String get notifSoundNormal => '默認';
+
+  @override
+  String get notifSoundPhone => '從手機';
+
+  @override
+  String get notifSoundSilent => '靜音';
+
+  @override
+  String get notifSoundPhoneHint => '點一下試聽，會立即儲存。';
+
+  @override
+  String get notifSoundMore => '其他檔案…';
+
+  @override
+  String get notifSoundChange => '更改';
+
+  @override
+  String get workoutNoteAdd => '固定筆記：座位、握法、器械…';
+
+  @override
+  String get autoProgressSetting => '自動漸進';
+
+  @override
+  String get autoProgressRowHint => '下次的建議';
+
+  @override
+  String get autoProgressOff => '關閉';
+
+  @override
+  String get autoProgressWeight => '加重量';
+
+  @override
+  String get autoProgressReps => '加次數';
+
+  @override
+  String get noteFolders => '資料夾';
+
+  @override
+  String get noteFolderNew => '新建資料夾';
+
+  @override
+  String get noteFolderEdit => '編輯資料夾';
+
+  @override
+  String get noteFolderName => '資料夾名稱';
+
+  @override
+  String get noteFolderLabel => '資料夾';
+
+  @override
+  String get noteFolderNone => '無資料夾';
+
+  @override
+  String get noteFolderDelete => '刪除資料夾？';
+
+  @override
+  String get noteFolderDeleteBody => '筆記會保留，只是移出資料夾。';
+
+  @override
+  String get foodArchivedToast => '食物已歸檔';
+
+  @override
+  String get planArchivedToast => '計劃已歸檔';
+
+  @override
+  String get suppArchivedToast => '補劑已歸檔';
+
+  @override
+  String get voiceSetting => '訓練語音';
+
+  @override
+  String get voiceSettingHint => '用手機語音報出下一組，並在休息結束前倒計時';
+
+  @override
+  String get voiceHello => '語音已開啓';
+
+  @override
+  String voiceRest(String time) {
+    return '休息 $time。';
+  }
+
+  @override
+  String voiceNext(String name, String load) {
+    return '下一個：$name，$load。';
+  }
+
+  @override
+  String voiceLoad(int reps, String weight) {
+    return '$weight 做 $reps 次';
+  }
+
+  @override
+  String voiceReps(int reps) {
+    return '$reps 次';
+  }
+
+  @override
+  String get voiceGo => '開始吧！';
+
+  @override
+  String get deloadSetting => '減載周';
+
+  @override
+  String get deloadOff => '從不';
+
+  @override
+  String deloadEvery(int weeks) {
+    return '每 $weeks 周';
+  }
+
+  @override
+  String get deloadHint => '每隔幾周來一個輕鬆周用於恢復：組數減半、重量減 10%。這一週不計入漸進。';
+
+  @override
+  String get deloadRowHint => '每隔幾周的輕鬆周';
+
+  @override
+  String get deloadNow => '減載周';
+
+  @override
+  String get deloadNowHint => '今天組數減半、重量減 10%';
+
+  @override
+  String deloadIn(int weeks) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks 周後',
+      one: '下週',
+      zero: '本週',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deloadSkip => '照常訓練';
+
+  @override
+  String get voiceSheetTitle => '語音如何工作';
+
+  @override
+  String get voicePointRest => '勾選一組後，它會報出休息時間和下一項。';
+
+  @override
+  String get voicePointCount => '休息結束時倒數 3、2、1，提醒你回來。';
+
+  @override
+  String get voicePointPhone => '使用手機的語音，蓋過音樂播放。';
+
+  @override
+  String get voiceTry => '試聽語音';
+
+  @override
+  String get voiceNoEngine => '你的手機沒有開啓語音引擎。';
+
+  @override
+  String get voiceNoLang => '缺少你語言的語音包。請在手機的語音設置中下載。';
+
+  @override
+  String get voiceOpenSettings => '語音設置';
+
+  @override
+  String voiceMinutes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count 分鐘', one: '1 分鐘');
+    return '$_temp0';
+  }
+
+  @override
+  String voiceSeconds(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count 秒', one: '1 秒');
+    return '$_temp0';
+  }
+
+  @override
+  String get voiceAnd => '和';
+
+  @override
+  String get rehabPromptIntro =>
+      '你是運動康復方向的助理。請根據下面的個人情況、當前計劃和近期訓練反饋，給出一份循序漸進、可以自己執行的康復訓練建議；已有計劃時，直接對當前計劃做調整。';
+
+  @override
+  String get rehabPromptSecProfile => '【我的情況】';
+
+  @override
+  String rehabPromptProfileLine(String sex, String age, String height, String weight) {
+    return '- 性別/年齡/身高/體重：$sex、$age 歲、$height、$weight';
+  }
+
+  @override
+  String rehabPromptRecent(String n) {
+    return '- 近 30 天訓練次數：$n 次';
+  }
+
+  @override
+  String rehabPromptDaysPerWeek(String n) {
+    return '- 每週可訓練天數：$n 天';
+  }
+
+  @override
+  String rehabPromptGear(String gear) {
+    return '- 可用器材：$gear';
+  }
+
+  @override
+  String rehabPromptGoals(String goals) {
+    return '- 康復目標：$goals';
+  }
+
+  @override
+  String get rehabPromptSecIssue => '【本次困擾】';
+
+  @override
+  String rehabPromptArea(String area) {
+    return '- 部位：$area';
+  }
+
+  @override
+  String rehabPromptDuration(String duration) {
+    return '- 病程：$duration';
+  }
+
+  @override
+  String rehabPromptPain(String pain) {
+    return '- 當前不適程度：$pain/10';
+  }
+
+  @override
+  String rehabPromptFactors(String factors) {
+    return '- 加重 / 緩解因素：$factors';
+  }
+
+  @override
+  String get rehabPromptFlagNone => '- 安全篩查：未發現紅旗徵';
+
+  @override
+  String rehabPromptFlagHit(String flags) {
+    return '- 安全篩查命中：$flags';
+  }
+
+  @override
+  String get rehabPromptSecDoctor => '【醫生診斷與醫囑】';
+
+  @override
+  String rehabPromptDx(String dx) {
+    return '- 診斷：$dx';
+  }
+
+  @override
+  String rehabPromptIcd(String code) {
+    return '（ICD: $code）';
+  }
+
+  @override
+  String rehabPromptVisit(String date) {
+    return '- 就診日期：$date';
+  }
+
+  @override
+  String rehabPromptOrders(String text) {
+    return '- 醫囑原文：$text';
+  }
+
+  @override
+  String rehabPromptAdvisedCare(String text) {
+    return '- 醫生建議的治療/可做動作：$text';
+  }
+
+  @override
+  String rehabPromptRestrictions(String text) {
+    return '- 限制與禁忌（必須遵守）：$text';
+  }
+
+  @override
+  String rehabPromptImaging(String text) {
+    return '- 影像/檢查結論：$text';
+  }
+
+  @override
+  String rehabPromptFollowUp(String date) {
+    return '- 複診時間：$date';
+  }
+
+  @override
+  String get rehabPromptSecPlan => '【當前計劃】';
+
+  @override
+  String get rehabPromptNoPlan => '暫無計劃（請按輸出要求用 routines 字段新建）';
+
+  @override
+  String get rehabPromptSecFeedback => '【近期訓練反饋】';
+
+  @override
+  String get rehabPromptNoFeedback => '無訓練反饋記錄';
+
+  @override
+  String get rehabPromptSecOutput => '【輸出要求】';
+
+  @override
+  String get rehabPromptRule1 => '1. 只輸出一個 JSON 對象，不要額外解釋文字。';
+
+  @override
+  String get rehabPromptRule2 => '2. 用 advice 字段寫「注意事項 + 叫停規則」（字符串）。';
+
+  @override
+  String get rehabPromptRule3 => '3. 【當前計劃】為空時，用 routines 字段給整套新計劃，結構照抄下面模板：';
+
+  @override
+  String get rehabPromptRule4 => '4. 【當前計劃】非空時，用 adjust 數組給「對當前計劃的修改指令」（不需要修改就給空數組 []），結構照抄：';
+
+  @override
+  String get rehabPromptAdjustSet => '   - set：field 只允許 weight / sets / reps / rest 四種；value 是目標新值。';
+
+  @override
+  String get rehabPromptAdjustRemove => '   - remove：把該動作從計劃裡刪掉。';
+
+  @override
+  String get rehabPromptAdjustAdd => '   - add：往計劃里加動作，可帶 sets / reps / weight。';
+
+  @override
+  String get rehabPromptAdjustRoutine => '   - routine 可省略（省略 = 應用到全部當前計劃）。';
+
+  @override
+  String get rehabPromptRule5 => '5. 動作名儘量取自【動作庫清單】裡的英文名，這樣能自動匹配到 App 的動作庫。';
+
+  @override
+  String get rehabPromptRule6 => '6. 強度保守：以不加重症狀為前提，訓練中疼痛不超過 3/10；先活動度、再穩定性、最後力量。';
+
+  @override
+  String rehabPromptRule7(String stopRules) {
+    return '7. advice 裡必須包含：$stopRules';
+  }
+
+  @override
+  String get rehabPromptRule8Doctor =>
+      '8. 【醫生診斷與醫囑】存在時，即使安全門未通過也應給出計劃：可輸出 routines/adjust，但必須嚴格遵守【限制與禁忌】，不得安排被禁的動作；與醫囑衝突時以醫囑為準。';
+
+  @override
+  String get rehabPromptRule8Gate => '8. 未通過安全門時，只給 advice，routines 與 adjust 都不要輸出。';
+
+  @override
+  String get rehabPromptSecLibrary => '【動作庫清單】英文名 (中文名) | 肌群 | 器材 | 難度 | 模式';
+
+  @override
+  String get rehabListSep => '、';
+
+  @override
+  String get rehabSemiSep => '；';
+
+  @override
+  String get rehabFbDefaultArea => '不適';
+
+  @override
+  String rehabFbPainWithArea(String area, String n) {
+    return '$area $n/10 不適';
+  }
+
+  @override
+  String rehabFbNote(String text) {
+    return '備註：$text';
+  }
+
+  @override
+  String get rehabFbNoDetail => '（無具體記錄）';
+
+  @override
+  String rehabFbLine(String date, String body) {
+    return '- $date：$body';
+  }
+
+  @override
+  String get rehabMissGateAdjust => '未通過安全門，已忽略全部計劃調整';
+
+  @override
+  String get rehabMissNoLinkedPlan => '檔案沒有關聯計劃，無法套用調整';
+
+  @override
+  String rehabMissNoSuchPlan(String name) {
+    return '計劃「$name」不存在';
+  }
+
+  @override
+  String get rehabMissGateReply => '未通過安全門，已忽略計劃與調整';
+
+  @override
+  String get baselineUnitRep => '次';
+
+  @override
+  String get baselineUnitSec => '秒';
+
+  @override
+  String get defaultAthleteName => '運動員';
 }

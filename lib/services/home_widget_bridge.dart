@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
@@ -13,8 +14,15 @@ import 'nutrition_widgets.dart';
 class HomeWidgetBridge {
   HomeWidgetBridge._();
 
-  static const _pkg = 'com.gymmane.app';
-  static const appGroup = 'group.com.gymmane.app';
+  /// 包名一律**动态取**（ISS-216）：写死会让「改包名」静默打断桌面小组件刷新 ——
+  /// `updateWidget(qualifiedAndroidName:)` 指向不存在的类，而 `_paint()` 外层
+  /// try/catch 只 debugPrint，用户只会看到小组件永远停在旧数据上。
+  /// 故本文件不出现任何包名字面量（group id 也由包名拼出）。
+  static String? _pkgCache;
+  static Future<String> _pkg() async => _pkgCache ??= (await PackageInfo.fromPlatform()).packageName;
+
+  /// iOS 的 App Group id。当前仓库没有 ios/ 目录，Android 走不到这条分支；保留以备将来。
+  static Future<String> _appGroup() async => 'group.${await _pkg()}';
   static const heatmapKey = 'heatmap_img';
   static const statsKey = 'stats_img';
   static const bodyKey = 'body_img';
@@ -73,7 +81,7 @@ class HomeWidgetBridge {
       if (installed != null && installed.isEmpty) return;
       bool wants(String provider) => installed == null || installed.contains(provider);
       if (_ios && !_groupReady) {
-        await HomeWidget.setAppGroupId(appGroup);
+        await HomeWidget.setAppGroupId(await _appGroup());
         _groupReady = true;
       }
       final pref = fit.themePref;
@@ -239,8 +247,10 @@ class HomeWidgetBridge {
   static Future<void> _render(Widget view, String key, Size size) =>
       HomeWidget.renderFlutterWidget(view, key: key, logicalSize: size, pixelRatio: 3);
 
-  static Future<void> _reload(String android, String ios) => HomeWidget.updateWidget(
-        qualifiedAndroidName: '$_pkg.$android',
+  // `async` 不可省：箭头函数体里用了 await（解析包名）。少了它 analyze 直接报
+  // unexpected_token，而这类错误只有静态分析/真构建抓得到。
+  static Future<void> _reload(String android, String ios) async => HomeWidget.updateWidget(
+        qualifiedAndroidName: '${await _pkg()}.$android',
         iOSName: ios,
       );
 }

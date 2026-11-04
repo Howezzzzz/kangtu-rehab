@@ -1,4 +1,4 @@
-// 自测基线页 widget 测试：渲染 / 安全闸 / 保存 / 超范围输入不崩（Infinity 回归）。
+// 康复自评页 widget 测试：渲染 / 安全闸 / 保存 / 超范围输入不崩（Infinity 回归）。
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/app/gymmane_app.dart';
@@ -28,7 +28,7 @@ void main() {
     expect(find.text('静息心率'), findsOneWidget);
     expect(find.text('30 秒坐站'), findsOneWidget);
     expect(find.text('腰围'), findsOneWidget);
-    expect(find.text('保存基线'), findsOneWidget);
+    expect(find.text('保存自评'), findsOneWidget);
   });
 
   testWidgets('安全闸打勾 → 提示先咨询医生（不出自测）', (tester) async {
@@ -40,7 +40,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('请先咨询医生'), findsOneWidget);
-    expect(find.text('保存基线'), findsNothing);
+    expect(find.text('保存自评'), findsNothing);
   });
 
   testWidgets('填一项保存 → 生成基线', (tester) async {
@@ -50,9 +50,9 @@ void main() {
 
     await tester.enterText(find.byType(TextField).first, '62');
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('保存基线'));
+    await tester.ensureVisible(find.text('保存自评'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('保存基线'));
+    await tester.tap(find.text('保存自评'));
     await tester.pumpAndSettle();
 
     expect(fit.baselines.length, 1);
@@ -66,9 +66,9 @@ void main() {
 
     await tester.enterText(find.byType(TextField).first, '1e999');
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('保存基线'));
+    await tester.ensureVisible(find.text('保存自评'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('保存基线'));
+    await tester.tap(find.text('保存自评'));
     await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);

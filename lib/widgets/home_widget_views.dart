@@ -78,7 +78,7 @@ class HeatmapWidgetView extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text('康途',
+                  child: Text(t.appName,
                       maxLines: 1,
                       overflow: TextOverflow.clip,
                       softWrap: false,

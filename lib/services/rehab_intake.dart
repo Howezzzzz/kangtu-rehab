@@ -73,6 +73,8 @@ Map<String, dynamic>? extractJsonObject(String raw) {
 String extractRehabAdvice(String raw) {
   final obj = extractJsonObject(raw);
   if (obj != null) {
+    // 这里的 '注意事项' 是 **AI 回帖里可能出现的字段名**（机器匹配用），不是界面文案，
+    // 故意保留：多一种写法能多接住一类回复。故不计入「硬编码中文」债。
     for (final k in const ['advice', 'notes', 'cautions', 'warnings', '注意事项']) {
       final v = obj[k];
       if (v is String && v.trim().isNotEmpty) return v.trim();

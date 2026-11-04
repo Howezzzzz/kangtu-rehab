@@ -142,7 +142,7 @@ void main() {
       expect(text, contains('/Author ${hex('InlitX')}'));
       expect(text, contains('/Lang (es)'));
       expect(text, contains('<dc:creator><rdf:Seq><rdf:li>InlitX</rdf:li></rdf:Seq></dc:creator>'));
-      expect(text, contains('<xmp:CreatorTool>GymMane</xmp:CreatorTool>'));
+      expect(text, contains('<xmp:CreatorTool>Kangtu</xmp:CreatorTool>'));
       final xref = int.parse(RegExp(r'startxref\n(\d+)').firstMatch(text)!.group(1)!);
       expect(text.substring(xref, xref + 4), 'xref');
       for (final m in RegExp(r'(\d{10}) 00000 n ').allMatches(text)) {

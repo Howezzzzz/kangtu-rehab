@@ -1,3 +1,6 @@
+> ⚠️ **Este README pertenece al proyecto original GymMane (upstream) y se conserva solo como referencia.**
+> La documentación oficial de **康途 / Kangtu** (este fork) está en el [README principal](../../README.md). Los enlaces de descarga de esta página apuntan a **GymMane** (`com.gymmane.app`), no a Kangtu.
+
 <div align="center">
 
 <img src="../screenshots/banner-es.png" alt="GymMane — Levanta. Anota. Mejora." width="860" />

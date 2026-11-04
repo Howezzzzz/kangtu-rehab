@@ -151,7 +151,7 @@ class _BaselineScreenState extends State<BaselineScreen> {
                       style: AppTheme.f(14, weight: FontWeight.w700, color: gc.text)),
                 ),
                 if (lastV != null)
-                  Text('${t.baselineLast}: ${_fmt(lastV)} ${d.unit}',
+                  Text('${t.baselineLast}: ${_fmt(lastV)} ${_unitOf(d)}',
                       style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textTertiary)),
               ],
             ),
@@ -166,7 +166,7 @@ class _BaselineScreenState extends State<BaselineScreen> {
               decoration: InputDecoration(
                 hintText: t.baselineInputHint,
                 hintStyle: AppTheme.f(13, weight: FontWeight.w500, color: gc.textTertiary),
-                suffixText: d.unit,
+                suffixText: _unitOf(d),
                 filled: true,
                 fillColor: gc.mutedFill,
                 border: OutlineInputBorder(
@@ -209,7 +209,7 @@ class _BaselineScreenState extends State<BaselineScreen> {
                           child: Text(_name(d.code),
                               style: AppTheme.f(13, weight: FontWeight.w700, color: gc.text)),
                         ),
-                        Text('${_fmt(now)} ${d.unit}',
+                        Text('${_fmt(now)} ${_unitOf(d)}',
                             style: AppTheme.f(14, weight: FontWeight.w800, color: gc.ember)),
                         if (delta != null && delta != 0) ...[
                           const SizedBox(width: 8),
@@ -252,6 +252,13 @@ class _BaselineScreenState extends State<BaselineScreen> {
         'single_leg_stand' => t.baselineHowSingleLeg,
         'sit_reach' => t.baselineHowSitReach,
         _ => t.baselineHowWaist,
+      };
+
+  /// 单位本地化：模型里存语言中立码（rep/sec），显示时按当前语言取文案。
+  String _unitOf(BaselineDef d) => switch (d.unit) {
+        'rep' => t.baselineUnitRep,
+        'sec' => t.baselineUnitSec,
+        _ => d.unit,
       };
 
   String _fmt(double v) => !v.isFinite

@@ -14,9 +14,9 @@ class BaselineDef {
 /// v1 普通档 6 项（覆盖 ACSM 四要素：心肺/力量/柔韧/平衡/体成分）。
 const List<BaselineDef> kBaselineFitness = [
   BaselineDef('resting_hr', 'bpm', higherIsBetter: false, min: 25, max: 250), // 心肺
-  BaselineDef('step_2min', '次', min: 1, max: 400), // 心肺（Rikli & Jones 2 分钟原地踏步）
-  BaselineDef('chair_stand_30', '次', min: 1, max: 120), // 下肢力量（30 秒坐站）
-  BaselineDef('single_leg_stand', '秒', min: 1, max: 600), // 平衡（单脚站立·睁眼）
+  BaselineDef('step_2min', 'rep', min: 1, max: 400), // 心肺（Rikli & Jones 2 分钟原地踏步）
+  BaselineDef('chair_stand_30', 'rep', min: 1, max: 120), // 下肢力量（30 秒坐站）
+  BaselineDef('single_leg_stand', 'sec', min: 1, max: 600), // 平衡（单脚站立·睁眼）
   BaselineDef('sit_reach', 'cm', min: -60, max: 60), // 柔韧（坐位体前屈，未触脚尖为负）
   BaselineDef('waist', 'cm', higherIsBetter: false, min: 30, max: 300), // 体成分
 ];

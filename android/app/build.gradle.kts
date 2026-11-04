@@ -29,7 +29,7 @@ val signingKeystoreFile = if (useEnvKeystore) {
 }
 
 android {
-    namespace = "com.gymmane.app"
+    namespace = "com.kangtu.app"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.gymmane.app"
+        applicationId = "com.kangtu.app"
         minSdk = 24
         targetSdk = 36
         versionCode = flutter.versionCode

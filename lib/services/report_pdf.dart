@@ -5,7 +5,11 @@ String reportRangeLabel(RangeReport r) => r.from.year == r.to.year
     : '${t.shortDateYear(r.from)} – ${t.shortDateYear(r.to)}';
 
 Future<Uint8List> buildReportPdf(RangeReport r, {DateTime? now}) async {
-  final runner = await _loadImage('assets/img/runner.png');
+  // 主图跟计划 PDF 用同一张：上游这里是 assets/img/runner.png，而我方早年已把该图
+  // 换成自有品牌图（runner.png 在本仓库不存在）。整份取上游的新文件容易漏改这种引用 ——
+  // _loadImage 不兜错、外层 shareReport 又是 catch (_) {}，漏改的结果是「导出报告点了没反应」
+  // 且不报错（ISS-205）。test/asset_references_test.dart 负责守住这类悬空引用。
+  final runner = await _loadImage('assets/img/brand_full.png');
   final doc = _ReportDoc(runner, rtl: const {'ar', 'fa'}.contains(appLanguage));
   doc.layReport(r, now ?? DateTime.now());
   final pages = await _rasterize(doc);
@@ -50,7 +54,7 @@ class _ReportDoc extends _PlanDoc {
     _newPage();
     final logo = Rect.fromLTWH(_x(_margin, 26), _y, 26, 26);
     _add((c) => _logo(c, logo));
-    _text('GymMane', _st(14, weight: FontWeight.w900), _margin + 34, _y + 4, 140);
+    _text('Kangtu', _st(14, weight: FontWeight.w900), _margin + 34, _y + 4, 140);
     final who = [if (fit.profile.name.trim().isNotEmpty) fit.profile.name.trim(), t.shortDateYear(now)].join(' · ');
     _text(who, _st(9, color: _faint), _pageW - _margin - 220, _y + 8, 220, align: TextAlign.end);
     _y += 50;

@@ -130,6 +130,7 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
       final open = await NutritionWidgets.takeOpen();
       if (open != null) _openFromWidget(open);
       if (await HealthSteps.takeUsage()) _showStepsInfo();
+      await fit.readDisplay();
       await _offerLiteMode();
     });
   }
@@ -193,11 +194,11 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
     final off = await askConfirm(
       context,
       title: t.lowEndTitle,
-      body: t.lowEndBody,
+      body: t.lowEndLiteBody,
       cancelLabel: t.lowEndKeep,
-      confirmLabel: t.lowEndOff,
+      confirmLabel: t.lowEndLiteOn,
     );
-    if (off) fit.setBlur(false);
+    if (off) fit.setPerfLevel('lite');
   }
 
   bool _onScroll(ScrollNotification n) {
@@ -216,18 +217,35 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
     _syncSnap();
     if (_blurred != null) {
       _blurAgain?.cancel();
-      _blurAgain = Timer(const Duration(milliseconds: 350), _queueBlur);
+      _blurAgain = Timer(Duration(milliseconds: fineEffects ? 160 : 350), _queueBlur);
     }
   }
 
   Timer? _blurAgain;
 
+  Timer? _snapLater;
+
   void _syncSnap() => scheduleMicrotask(() {
         if (!mounted) return;
         final on = fit.route == 'nutrition' && (glassOpen.value > 0 || (glassShown.value > 0 && !_changedUnder));
-        if (on == _snap.allowSnapshotting) return;
+        if (on == _snap.allowSnapshotting) {
+          if (!on) _snapLater?.cancel();
+          return;
+        }
+        if (on) {
+          if (_snapLater?.isActive ?? false) return;
+          _snapLater = Timer(const Duration(milliseconds: 420), () {
+            if (!mounted) return;
+            final still = fit.route == 'nutrition' && glassOpen.value > 0;
+            if (!still || _snap.allowSnapshotting) return;
+            _changedUnder = false;
+            _snap.allowSnapshotting = true;
+          });
+          return;
+        }
+        _snapLater?.cancel();
         _changedUnder = false;
-        _snap.allowSnapshotting = on;
+        _snap.allowSnapshotting = false;
       });
 
   void _syncBlurSnap() {
@@ -251,7 +269,7 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
       if (!mounted || sheetRecede.value <= 0.001 || !blurEffects) return;
       final box = _appKey.currentContext?.findRenderObject();
       if (box is! RenderRepaintBoundary || !box.hasSize) return;
-      const scale = 0.3;
+      final scale = fineEffects ? 0.5 : 0.3;
       final ratio = MediaQuery.devicePixelRatioOf(context) * scale;
       try {
         final small = box.toImageSync(pixelRatio: ratio);
@@ -272,6 +290,7 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
   void dispose() {
     sheetRecede.removeListener(_syncBlurSnap);
     _blurAgain?.cancel();
+    _snapLater?.cancel();
     _blurred?.dispose();
     glassOpen.removeListener(_syncSnap);
     glassShown.removeListener(_syncSnap);

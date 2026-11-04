@@ -13,10 +13,39 @@ permissions:
   contents: write
 
 jobs:
+  # ⓪ 门禁：静态分析 + 全量测试。放在 prepare **之前** → 红了连构建号都不加，
+  #    零副作用（不出包、不建 Release、不回写 app_version.json）。
+  #    为什么要拦在这里：我们平时直接 push main，GitHub 不支持「另一个 workflow 来挡」，
+  #    单开 check.yml 只能自己红、发布照发，等于没门禁（ISS-219）。
+  #    分析强度（2026-11-04 已收紧）：**warning 也挡**（只放行 info）。首轮曾只让 error 挡，
+  #    确认无 CI/本地版本差异噪音后收紧；若将来 CI 因版本差异冒出 warning，先修代码再考虑放宽。
+  check:
+    runs-on: ubuntu-latest
+    # 防 runner 卡死：GitHub 默认上限 360 分钟，卡住会白等一整天（本地实测过 flutter test 卡死）
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.6
+          channel: stable
+          cache: true
+
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Test
+        run: flutter test --no-pub
+
   # ① 构建号 +1（versionName = 康途独立版本线，发布前在 pubspec 手动定名；
   #    versionCode 严格递增，否则 Android 不允许覆盖安装、更新器也认不出新版本）
   prepare:
-    if: github.event_name == 'push'
+    needs: check
+    if: github.event_name == 'push' && needs.check.result == 'success'
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.bump.outputs.version }}
@@ -45,7 +74,7 @@ jobs:
 
   # ② 构建分 ABI release APK（显式传入新版本号，与 prepare 的输出一致）
   build:
-    needs: prepare
+    needs: [check, prepare]
     if: always() && (needs.prepare.result == 'success' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
@@ -159,6 +188,22 @@ jobs:
           } > raw.md || true
           grep -vE 'chore\((version|update)\)|\[skip ci\]' raw.md > notes.md || true
           if [ ! -s notes.md ]; then echo "- 维护更新（${{ steps.v.outputs.tag }}）" > notes.md; fi
+          # 人工正文优先：docs/RELEASE_NOTES.md 存在则**替代**上面自动生成的提交列表
+          # （用户视角的正文由人写更可读；原始提交列表在 GitHub 的 compare 视图里仍可查）。
+          # 每次发版前更新该文件；不需要人工正文时删掉它，即回退到自动提交列表（ISS-220）。
+          if [ -f docs/RELEASE_NOTES.md ] && [ -s docs/RELEASE_NOTES.md ]; then
+            cp docs/RELEASE_NOTES.md notes.md
+          fi
+          # 置顶块：docs/RELEASE_HEAD.md 存在就放在发行说明最前面。
+          # 用途：把「必须先导出备份」这类**用户在更新弹窗里就得看见**的话顶上去 ——
+          # 因为下面 Write back 那步的 desc 直接取 notes.md，弹窗展示的就是它。
+          # 一次性提示用完请把该文件删掉（ISS-215 / RISK-102）。
+          if [ -f docs/RELEASE_HEAD.md ]; then
+            cat docs/RELEASE_HEAD.md > head.md
+            printf '\n\n' >> head.md
+            cat notes.md >> head.md
+            mv head.md notes.md
+          fi
           echo '--- notes ---'; cat notes.md
 
       # 一律发「预发行版」（Howe 2026-10-25 定），并把发行说明写进去

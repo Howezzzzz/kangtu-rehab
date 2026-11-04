@@ -111,7 +111,7 @@ class _StickerEditorState extends State<StickerEditor> {
         final dir = await getTemporaryDirectory();
         final file = File('${dir.path}/gymmane-sticker.png');
         await file.writeAsBytes(png, flush: true);
-        await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], subject: '康途'));
+        await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], subject: t.appName));
       });
 
   Future<void> _save() => _run((png) async {
@@ -409,7 +409,7 @@ class _Sticker extends StatelessWidget {
           color: color.withValues(alpha: 0.9),
         ),
         const SizedBox(width: 5),
-        Text('康途', style: _s(size, FontWeight.w900, alpha: 0.9, spacing: 0.2)),
+        Text(t.appName, style: _s(size, FontWeight.w900, alpha: 0.9, spacing: 0.2)),
       ]);
 
   Widget _kicker(String text) =>

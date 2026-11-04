@@ -1,5 +1,13 @@
 name: Build & Release
 
+# ⚠ 这不是康途的发布流水线。
+# 权威流水线是 .github/workflows/build.yml（push main 触发：自动加构建号 →
+# 构建 → 重命名 kangtu-<abi>.apk → 发 Release → 回写 assets/app_version.json）。
+# 本文件沿用上游的 F-Droid 可复现构建配方，只在 pull_request / 手动 dispatch 时跑，
+# 且**不会**回写 app_version.json。资产命名已与 build.yml 对齐（kangtu-<abi>.apk），
+# 免得手动 dispatch 出一版中文名资产、跟应用内更新通道对不上（ISS-215）。
+# 一律发预发行版：Howe 2026-10-25 定，两个 workflow 都保持 prerelease。
+
 on:
   pull_request:
     branches: [main]
@@ -64,18 +72,21 @@ jobs:
           # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
           echo "filever=${V//+/\.}" >> "$GITHUB_OUTPUT"
 
-      - name: Rename APKs to 康途-<版本号>-<abi>.apk
+      - name: Rename APKs to kangtu-<abi>.apk
         run: |
+          set -e
           cd build/app/outputs/flutter-apk
-          mv app-arm64-v8a-release.apk     "康途-${{ steps.pkg.outputs.filever }}-arm64-v8a.apk"
-          mv app-armeabi-v7a-release.apk   "康途-${{ steps.pkg.outputs.filever }}-armeabi-v7a.apk"
-          mv app-x86_64-release.apk        "康途-${{ steps.pkg.outputs.filever }}-x86_64.apk"
+          # 与 build.yml 的命名逐字一致：assets/app_version.json 的 download_urls
+          # 就是按这三个名字生成的，改一处必须同步改另一处（有 test/release_pipeline_test.dart 守门）
+          mv app-arm64-v8a-release.apk     kangtu-arm64-v8a.apk
+          mv app-armeabi-v7a-release.apk   kangtu-armeabi-v7a.apk
+          mv app-x86_64-release.apk        kangtu-x86_64.apk
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: 康途-${{ steps.pkg.outputs.filever }}-apks
-          path: build/app/outputs/flutter-apk/康途-*.apk
+          name: kangtu-${{ steps.pkg.outputs.filever }}-apks
+          path: build/app/outputs/flutter-apk/kangtu-*.apk
           if-no-files-found: error
 
   release:
@@ -130,12 +141,12 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > android/app/gymmane-release.jks
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/kangtu-release.jks
           cat > android/key.properties <<EOF
           storePassword=$KEYSTORE_PASSWORD
           keyPassword=$KEY_PASSWORD
           keyAlias=$KEY_ALIAS
-          storeFile=gymmane-release.jks
+          storeFile=kangtu-release.jks
           EOF
 
       # Reproducible build: version name AND code come entirely from pubspec.yaml
@@ -154,12 +165,15 @@ jobs:
           # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
           echo "filever=${V//+/\.}" >> "$GITHUB_OUTPUT"
 
-      - name: Rename APKs to 康途-<版本号>-<abi>.apk
+      - name: Rename APKs to kangtu-<abi>.apk
         run: |
+          set -e
           cd build/app/outputs/flutter-apk
-          mv app-arm64-v8a-release.apk     "康途-${{ steps.pkg.outputs.filever }}-arm64-v8a.apk"
-          mv app-armeabi-v7a-release.apk   "康途-${{ steps.pkg.outputs.filever }}-armeabi-v7a.apk"
-          mv app-x86_64-release.apk        "康途-${{ steps.pkg.outputs.filever }}-x86_64.apk"
+          # 与 build.yml 的命名逐字一致：assets/app_version.json 的 download_urls
+          # 就是按这三个名字生成的，改一处必须同步改另一处（有 test/release_pipeline_test.dart 守门）
+          mv app-arm64-v8a-release.apk     kangtu-arm64-v8a.apk
+          mv app-armeabi-v7a-release.apk   kangtu-armeabi-v7a.apk
+          mv app-x86_64-release.apk        kangtu-x86_64.apk
 
       - name: Build release notes
         run: |
@@ -180,4 +194,4 @@ jobs:
           body_path: notes.md
           prerelease: true
           files: |
-            build/app/outputs/flutter-apk/康途-*.apk
+            build/app/outputs/flutter-apk/kangtu-*.apk

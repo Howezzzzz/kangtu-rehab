@@ -12,7 +12,6 @@ import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
 
-const _kAuthor = '康途';
 const _kAuthorUrl = 'https://github.com/Howezzzzz';
 const _kRepoUrl = 'https://github.com/Howezzzzz/kangtu-rehab';
 const _kUpstreamUrl = 'https://github.com/InlitX/GymMane';
@@ -117,7 +116,7 @@ class AboutScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('康途',
+                Text(t.appName,
                     style: AppTheme.f(33, weight: FontWeight.w800, color: gc.text, letterSpacing: -0.5)),
                 const SizedBox(height: 10),
                 Container(
@@ -197,10 +196,10 @@ class AboutScreen extends StatelessWidget {
 
   Widget _credits(GymColors gc) {
     final rows = <(IconData, String, String, String, Color?)>[
-      (PhosphorIconsFill.heart, t.madeWithLoveBy, _kAuthor, _kAuthorUrl, gc.accent),
+      (PhosphorIconsFill.heart, t.madeWithLoveBy, t.appName, _kAuthorUrl, gc.accent),
       (PhosphorIconsRegular.githubLogo, t.sourceCode, 'Howezzzzz/kangtu-rehab', _kRepoUrl, null),
-      (PhosphorIconsRegular.database, 'REPDB', '动作数据来自 RepDB (repdb.co)', _kRepdbUrl, null),
-      (PhosphorIconsRegular.shieldCheck, '开源署名', '基于 InlitX 的 GymMane', _kUpstreamUrl, null),
+      (PhosphorIconsRegular.database, 'REPDB', t.aboutRepdbNote, _kRepdbUrl, null),
+      (PhosphorIconsRegular.shieldCheck, t.aboutOssTitle, t.aboutOssBody, _kUpstreamUrl, null),
     ];
     return Container(
       clipBehavior: Clip.antiAlias,
@@ -227,7 +226,7 @@ class AboutScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 14),
+                        padding: const EdgeInsetsDirectional.only(end: 14),
                         child: SizedBox(
                           width: 22,
                           child: Icon(rows[i].$1, size: 19, color: rows[i].$5 ?? gc.textSecondary),

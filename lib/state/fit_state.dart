@@ -34,6 +34,7 @@ import '../models/rehab_episode.dart';
 import '../models/workout.dart';
 import '../services/alarm_store.dart';
 import '../services/beeper.dart';
+import '../services/device_kind.dart';
 import '../services/exercise_match.dart';
 import '../services/food_library.dart';
 import '../services/health_metrics.dart';
@@ -41,12 +42,14 @@ import '../services/health_steps.dart';
 import '../services/local_store.dart';
 import '../services/media_store.dart';
 import '../services/merged_ids.dart';
+import '../services/notif_sound.dart';
 import '../services/progress_reminder.dart';
 import '../services/rehab_intake.dart';
 import '../services/plan_share.dart';
 import '../services/rest_alarm.dart';
 import '../services/supplement_reminder.dart';
 import '../services/train_reminder.dart';
+import '../services/voice_coach.dart';
 import '../services/workout_import.dart';
 
 part 'awards_state.dart';
@@ -76,7 +79,51 @@ part 'workout_state.dart';
 
 class FitState extends FitCore
     with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, GymPassState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, HealthState, CircuitState, NutritionState, ReportState, AwardsState, RoutinesState, WorkoutState, RehabState, BaselineState {
+  final Map<SoundGroup, String> notifSoundNames = {};
 
+  void _loadNotifSounds(Object? raw) {
+    NotifSound.uris.clear();
+    notifSoundNames.clear();
+    if (raw is! Map) return;
+    for (final g in SoundGroup.values) {
+      final v = raw[g.name];
+      if (v is! List || v.isEmpty || v.first is! String || (v.first as String).isEmpty) continue;
+      NotifSound.uris[g] = v.first as String;
+      notifSoundNames[g] = v.length > 1 && v[1] is String ? v[1] as String : '';
+    }
+  }
+
+  static const _soundChannels = ['train_reminder', 'supplement_reminder', 'fasting', 'progress_photo', 'measures'];
+
+  Future<void> setNotifSound(SoundGroup g, String uri, {String name = ''}) async {
+    if (uri.isEmpty) {
+      NotifSound.uris.remove(g);
+      notifSoundNames.remove(g);
+    } else {
+      NotifSound.uris[g] = uri;
+      notifSoundNames[g] = name;
+    }
+    _persist();
+    notifyListeners();
+    await NotifSound.dropOld(_soundChannels, {
+      NotifSound.channelOf('train_reminder', SoundGroup.train),
+      NotifSound.channelOf('supplement_reminder', SoundGroup.food),
+      NotifSound.channelOf('fasting', SoundGroup.food),
+      NotifSound.channelOf('progress_photo', SoundGroup.other),
+      NotifSound.channelOf('measures', SoundGroup.other),
+      'fasting_live',
+    });
+    switch (g) {
+      case SoundGroup.train:
+        syncTrainReminder();
+      case SoundGroup.food:
+        syncSupplementReminder();
+        _syncFast();
+      case SoundGroup.other:
+        syncPhotoReminder();
+        syncMeasureReminder();
+    }
+  }
 
   void loadFromStore() {
     final data = withMergedExercises(Store.instance.load());
@@ -125,6 +172,7 @@ class FitState extends FitCore
       alarmSound = data['alarmSound'] as String?;
       alarmSoundName = data['alarmSoundName'] as String?;
       RestAlarm.instance.customSoundPath = alarmSoundPath;
+      _loadNotifSounds(data['notifSounds']);
 
       if (alarmSoundPath == null) {
         alarmSound = null;
@@ -144,6 +192,9 @@ class FitState extends FitCore
       checkins
         ..clear()
         ..addAll(((data['checkins'] as List?) ?? []).cast<String>());
+      daysOff
+        ..clear()
+        ..addAll(((data['daysOff'] as Map?) ?? const {}).map((k, v) => MapEntry(k as String, v as String)));
       routines
         ..clear()
         ..addAll(((data['routines'] as List?) ?? [])
@@ -289,6 +340,8 @@ class FitState extends FitCore
     showRoutineRow = data['showRoutineRow'] as bool? ?? true;
     levelHints = data['levelHints'] as bool? ?? true;
     toastSound = data['toastSound'] as bool? ?? true;
+    final auto = data['autoProgress'] as String? ?? 'off';
+    autoProgress = SettingsState.autoProgressModes.contains(auto) ? auto : 'off';
     Beeper.instance.chimeOn = toastSound;
     heatmapLabels = data['heatLabels'] as bool? ?? true;
     hideShots = data['hideShots'] as bool? ?? false;
@@ -307,8 +360,17 @@ class FitState extends FitCore
     final size = data['textSize'];
     textSize = SettingsState.textSizes.contains(size) ? size as String : 'normal';
     calmMotion = data['calm'] as bool? ?? false;
+    fineOn = data['fine'] as bool? ?? false;
+    fineEffects = fineOn;
+    highRefresh = data['hz'] as bool? ?? false;
+    if (highRefresh) DeviceKind.setHighRefresh(true);
     showMiniBody = data['miniBody'] as bool? ?? true;
     askCheckIn = data['checkIn'] as bool? ?? true;
+    muscleTune = data['mTune'] as bool? ?? true;
+    voiceCoach = data['voice'] as bool? ?? false;
+    final every = (data['deload'] as num?)?.toInt() ?? 0;
+    deloadEvery = SettingsState.deloadChoices.contains(every) ? every : 0;
+    deloadFrom = deloadEvery > 0 ? DateTime.tryParse((data['deloadFrom'] as String?) ?? '') ?? DateTime.now() : null;
     blurEffects = blurOn;
     lowEndAsked = data['lowEndAsked'] as bool? ?? false;
     startCountdown = data['countdown'] as bool? ?? true;
@@ -500,6 +562,12 @@ class FitState extends FitCore
 
   void _loadNotes(Map<String, dynamic> data) {
     notes.clear();
+    noteFolders
+      ..clear()
+      ..addAll([
+        for (final f in (data['noteFolders'] as List?) ?? const [])
+          if (f is Map) NoteFolder.fromJson(f.cast<String, dynamic>()),
+      ]);
     final raw = data['notes'];
     if (raw is List) {
       notes.addAll(raw.map((e) => GymNote.fromJson((e as Map).cast<String, dynamic>())));
@@ -544,6 +612,10 @@ class FitState extends FitCore
         'miniRest': miniRestSeconds,
         'alarmSound': alarmSound,
         'alarmSoundName': alarmSoundName,
+        if (NotifSound.uris.isNotEmpty)
+          'notifSounds': {
+            for (final g in NotifSound.uris.keys) g.name: [NotifSound.uris[g], notifSoundNames[g] ?? ''],
+          },
         'bg': bgPattern,
         'heatTone': heatTone,
         'bgDim': bgDim,
@@ -553,6 +625,7 @@ class FitState extends FitCore
         'showRoutineRow': showRoutineRow,
         'levelHints': levelHints,
         'toastSound': toastSound,
+        if (autoProgress != 'off') 'autoProgress': autoProgress,
         'heatLabels': heatmapLabels,
         if (hideShots) 'hideShots': true,
         'weekStart': weekStartDay,
@@ -561,8 +634,14 @@ class FitState extends FitCore
         if (!blurOn) 'blur': false,
         if (textSize != 'normal') 'textSize': textSize,
         if (calmMotion) 'calm': true,
+        if (fineOn) 'fine': true,
+        if (highRefresh) 'hz': true,
         if (!showMiniBody) 'miniBody': false,
         if (!askCheckIn) 'checkIn': false,
+        if (!muscleTune) 'mTune': false,
+        if (voiceCoach) 'voice': true,
+        if (deloadEvery > 0) 'deload': deloadEvery,
+        if (deloadFrom != null) 'deloadFrom': deloadFrom!.toIso8601String(),
         if (lowEndAsked) 'lowEndAsked': true,
         'countdown': startCountdown,
         'gamify': gamification,
@@ -600,11 +679,13 @@ class FitState extends FitCore
         'rehabLogMerged': rehabLogMerged,
         'baselines': baselines.map((b) => b.toJson()).toList(),
         'planCycles': planCycles.map((k, v) => MapEntry(k, v.toJson())),
+        if (noteFolders.isNotEmpty) 'noteFolders': noteFolders.map((f) => f.toJson()).toList(),
         'places': places.map((p) => p.toJson()).toList(),
         'place': activePlaceId,
         if (gymPasses.isNotEmpty) 'passes': gymPasses.map((p) => p.toJson()).toList(),
         if (lastPassId.isNotEmpty) 'lastPass': lastPassId,
         'checkins': checkins.toList(),
+        if (daysOff.isNotEmpty) 'daysOff': daysOff,
         'routines': routines.map((r) => r.toJson()).toList(),
         'weeklyPlan': weeklyPlan.map((k, v) => MapEntry(k.toString(), v)),
         'planExtras': planExtras.map((k, v) => MapEntry(k.toString(), v)),
@@ -702,6 +783,7 @@ if (holdStep.isNotEmpty) 'holdStep': holdStep,
     compareFromId = null;
     compareToId = null;
     notes.clear();
+    noteFolders.clear();
     moments.clear();
     loadNutrition(null);
     loadSteps(null);
@@ -716,6 +798,7 @@ if (holdStep.isNotEmpty) 'holdStep': holdStep,
     gymPasses.clear();
     lastPassId = '';
     checkins.clear();
+    daysOff.clear();
     routines.clear();
     weeklyPlan.clear();
     planExtras.clear();
@@ -776,10 +859,15 @@ holdStep.clear();
     showRecommended = true;
     textSize = 'normal';
     calmMotion = false;
+    fineOn = false;
+    fineEffects = false;
+    if (highRefresh) DeviceKind.setHighRefresh(false);
+    highRefresh = false;
     showWeekStats = true;
     showRoutineRow = true;
     levelHints = true;
     toastSound = true;
+    autoProgress = 'off';
     Beeper.instance.chimeOn = true;
     heatmapLabels = true;
     hideShots = false;
@@ -874,6 +962,9 @@ holdStep.clear();
     checkins
       ..clear()
       ..addAll(((map['checkins'] as List?) ?? []).cast<String>());
+    daysOff
+      ..clear()
+      ..addAll(((map['daysOff'] as Map?) ?? const {}).map((k, v) => MapEntry(k as String, v as String)));
     routines
       ..clear()
       ..addAll(((map['routines'] as List?) ?? [])
@@ -995,7 +1086,7 @@ holdStep.clear();
       weekdays: reminderWeekdays,
       skipToday: trainedToday,
       againMinutes: trainAgainMin,
-      restOn: rotating ? rotationRestOn : null,
+      restOn: (day) => daysOff.containsKey(dayIdOf(day)) || (rotating && rotationRestOn(day)),
     );
   }
 
@@ -1115,7 +1206,7 @@ holdStep.clear();
     final recent = sessions.where((s) => s.date.isAfter(month)).length;
     final records = personalRecords.take(5).toList();
     final lines = <String>[
-      'GymMane · ${activePlace?.name ?? t.placeAll}',
+      '${t.appName} · ${activePlace?.name ?? t.placeAll}',
       t.planAboutMe,
       '- ${t.planBody(profile.sex == 'female' ? t.female : t.male, profile.age, heightLabel(profile.heightCm), weightLabel(profile.weightKg))}',
       '- ${t.planDays(weeklyTarget)}',
@@ -1283,71 +1374,73 @@ holdStep.clear();
   String rehabPromptText(RehabEpisode ep) {
     final month = DateTime.now().subtract(const Duration(days: 30));
     final recent = sessions.where((s) => s.date.isAfter(month)).length;
-    final goals = ep.goals.map(rehabGoalLabel).join('、');
-    final gear = ep.equipment.isEmpty ? t.rehabGearBodyweight : ep.equipment.join('、');
-    final flags = ep.redFlags.map((k) => t.rehabRedFlag(k)).join('；');
+    final goals = ep.goals.map(rehabGoalLabel).join(t.rehabListSep);
+    final gear = ep.equipment.isEmpty ? t.rehabGearBodyweight : ep.equipment.join(t.rehabListSep);
+    final flags = ep.redFlags.map((k) => t.rehabRedFlag(k)).join(t.rehabSemiSep);
     final linked = routines.where((r) => ep.routineIds.contains(r.id)).toList();
     final feedback = rehabFeedbackSessions();
     final lines = <String>[
-      '你是运动康复方向的助理。请根据下面的个人情况、当前计划和近期训练反馈，给出一份循序渐进、可以自己执行的康复训练建议；已有计划时，直接对当前计划做调整。',
+      t.rehabPromptIntro,
       '',
-      '【我的情况】',
-      '- 性别/年龄/身高/体重：${profile.sex == 'female' ? '女' : '男'}、${profile.age} 岁、${heightLabel(profile.heightCm)}、${weightLabel(profile.weightKg)}',
-      '- 近 30 天训练次数：$recent 次',
-      '- 每周可训练天数：${ep.daysPerWeek} 天',
-      '- 可用器材：$gear',
-      if (goals.isNotEmpty) '- 康复目标：$goals',
+      t.rehabPromptSecProfile,
+      t.rehabPromptProfileLine(profile.sex == 'female' ? t.female : t.male, '${profile.age}', heightLabel(profile.heightCm), weightLabel(profile.weightKg)),
+      t.rehabPromptRecent('$recent'),
+      t.rehabPromptDaysPerWeek('${ep.daysPerWeek}'),
+      t.rehabPromptGear(gear),
+      if (goals.isNotEmpty) t.rehabPromptGoals(goals),
       '',
-      '【本次困扰】',
-      '- 部位：${rehabAreaLabel(ep.area)}',
-      '- 病程：${rehabDurationLabel(ep.duration)}',
-      '- 当前不适程度：${ep.pain}/10',
-      if (ep.factors.trim().isNotEmpty) '- 加重 / 缓解因素：${ep.factors.trim()}',
-      if (flags.isEmpty) '- 安全筛查：未发现红旗征' else '- 安全筛查命中：$flags',
+      t.rehabPromptSecIssue,
+      t.rehabPromptArea(rehabAreaLabel(ep.area)),
+      t.rehabPromptDuration(rehabDurationLabel(ep.duration)),
+      t.rehabPromptPain('${ep.pain}'),
+      if (ep.factors.trim().isNotEmpty) t.rehabPromptFactors(ep.factors.trim()),
+      if (flags.isEmpty) t.rehabPromptFlagNone else t.rehabPromptFlagHit(flags),
       if (ep.hasDoctorOrders) ...[
         '',
-        '【医生诊断与医嘱】',
+        t.rehabPromptSecDoctor,
         if (ep.doctorDx.trim().isNotEmpty)
-          '- 诊断：${ep.doctorDx.trim()}${ep.icdCode.trim().isEmpty ? '' : '（ICD: ${ep.icdCode.trim()}）'}',
-        if (ep.visitDate != null) '- 就诊日期：${ep.visitDate!.toIso8601String().split('T').first}',
-        if (ep.ordersText.trim().isNotEmpty) '- 医嘱原文：${ep.ordersText.trim()}',
-        if (ep.advisedCare.trim().isNotEmpty) '- 医生建议的治疗/可做动作：${ep.advisedCare.trim()}',
-        if (ep.restrictions.trim().isNotEmpty) '- 限制与禁忌（必须遵守）：${ep.restrictions.trim()}',
-        if (ep.imaging.trim().isNotEmpty) '- 影像/检查结论：${ep.imaging.trim()}',
-        if (ep.followUpAt != null) '- 复诊时间：${ep.followUpAt!.toIso8601String().split('T').first}',
+          t.rehabPromptDx(ep.icdCode.trim().isEmpty
+              ? ep.doctorDx.trim()
+              : '${ep.doctorDx.trim()}${t.rehabPromptIcd(ep.icdCode.trim())}'),
+        if (ep.visitDate != null) t.rehabPromptVisit(ep.visitDate!.toIso8601String().split('T').first),
+        if (ep.ordersText.trim().isNotEmpty) t.rehabPromptOrders(ep.ordersText.trim()),
+        if (ep.advisedCare.trim().isNotEmpty) t.rehabPromptAdvisedCare(ep.advisedCare.trim()),
+        if (ep.restrictions.trim().isNotEmpty) t.rehabPromptRestrictions(ep.restrictions.trim()),
+        if (ep.imaging.trim().isNotEmpty) t.rehabPromptImaging(ep.imaging.trim()),
+        if (ep.followUpAt != null) t.rehabPromptFollowUp(ep.followUpAt!.toIso8601String().split('T').first),
       ],
       '',
-      '【当前计划】',
-      if (linked.isEmpty) '暂无计划（请按输出要求用 routines 字段新建）' else exportPlanJson(linked, withSchedule: false),
+      t.rehabPromptSecPlan,
+      if (linked.isEmpty) t.rehabPromptNoPlan else exportPlanJson(linked, withSchedule: false),
       '',
-      '【近期训练反馈】',
+      t.rehabPromptSecFeedback,
       if (feedback.isEmpty)
-        '无训练反馈记录'
+        t.rehabPromptNoFeedback
       else
         for (final s in feedback) rehabFeedbackLine(s),
       '',
-      '【输出要求】',
-      '1. 只输出一个 JSON 对象，不要额外解释文字。',
-      '2. 用 advice 字段写「注意事项 + 叫停规则」（字符串）。',
-      '3. 【当前计划】为空时，用 routines 字段给整套新计划，结构照抄下面模板：',
+      t.rehabPromptSecOutput,
+      t.rehabPromptRule1,
+      t.rehabPromptRule2,
+      t.rehabPromptRule3,
       FitState.planTemplate,
-      '4. 【当前计划】非空时，用 adjust 数组给「对当前计划的修改指令」（不需要修改就给空数组 []），结构照抄：',
-      '[{"action":"set","routine":"康复 A","exercise":"动作英文名","field":"weight","value":45},',
-      ' {"action":"set","exercise":"动作英文名","field":"sets","value":3},',
-      ' {"action":"remove","exercise":"动作英文名"},',
-      ' {"action":"add","routine":"康复 A","exercise":"动作英文名","sets":3,"reps":12}]',
-      '   - set：field 只允许 weight / sets / reps / rest 四种；value 是目标新值。',
-      '   - remove：把该动作从计划里删掉。',
-      '   - add：往计划里加动作，可带 sets / reps / weight。',
-      '   - routine 可省略（省略 = 应用到全部当前计划）。',
-      '5. 动作名尽量取自【动作库清单】里的英文名，这样能自动匹配到 App 的动作库。',
-      '6. 强度保守：以不加重症状为前提，训练中疼痛不超过 3/10；先活动度、再稳定性、最后力量。',
-      '7. advice 里必须包含：${t.rehabStopRules}',
+      t.rehabPromptRule4,
+      '[{"action":"set","routine":"Rehab A","exercise":"ExerciseName","field":"weight","value":45},',
+      ' {"action":"set","exercise":"ExerciseName","field":"sets","value":3},',
+      ' {"action":"remove","exercise":"ExerciseName"},',
+      ' {"action":"add","routine":"Rehab A","exercise":"ExerciseName","sets":3,"reps":12}]',
+      t.rehabPromptAdjustSet,
+      t.rehabPromptAdjustRemove,
+      t.rehabPromptAdjustAdd,
+      t.rehabPromptAdjustRoutine,
+      t.rehabPromptRule5,
+      t.rehabPromptRule6,
+      t.rehabPromptRule7(t.rehabStopRules),
       ep.hasDoctorOrders
-          ? '8. 【医生诊断与医嘱】存在时，即使安全门未通过也应给出计划：可输出 routines/adjust，但必须严格遵守【限制与禁忌】，不得安排被禁的动作；与医嘱冲突时以医嘱为准。'
-          : '8. 未通过安全门时，只给 advice，routines 与 adjust 都不要输出。',
+          ? t.rehabPromptRule8Doctor
+          : t.rehabPromptRule8Gate,
       '',
-      '【动作库清单】英文名 (中文名) | 肌群 | 器材 | 难度 | 模式',
+      t.rehabPromptSecLibrary,
     ];
     final pool = allExercises.where((e) => fitsHere(e) && !isArchived(e.id)).toList();
     for (final ex in pool) {
@@ -1377,13 +1470,13 @@ holdStep.clear();
     final parts = <String>[];
     if (s.feel != null) parts.add(_feelText(s.feel!));
     if (s.painArea.isNotEmpty || s.painLevel > 0) {
-      final area = s.painArea.isEmpty ? '不适' : muscleLabel(s.painArea);
-      parts.add(s.painLevel > 0 ? '$area ${s.painLevel}/10 不适' : area);
+      final area = s.painArea.isEmpty ? t.rehabFbDefaultArea : muscleLabel(s.painArea);
+      parts.add(s.painLevel > 0 ? t.rehabFbPainWithArea(area, '${s.painLevel}') : area);
     }
-    if (s.note.trim().isNotEmpty) parts.add('备注：${s.note.trim()}');
+    if (s.note.trim().isNotEmpty) parts.add(t.rehabFbNote(s.note.trim()));
     final mm = s.date.month.toString().padLeft(2, '0');
     final dd = s.date.day.toString().padLeft(2, '0');
-    return '- $mm/$dd：${parts.isEmpty ? '（无具体记录）' : parts.join('；')}';
+    return t.rehabFbLine('$mm/$dd', parts.isEmpty ? t.rehabFbNoDetail : parts.join(t.rehabSemiSep));
   }
 
   String _feelText(int i) => switch (i) {
@@ -1401,16 +1494,16 @@ holdStep.clear();
     if (ep == null || adjusts.isEmpty) return (adjusted: 0, missed: const <String>[]);
     // 安全门未过但已记录医嘱（医生已看过）→ 放行，与提示词规则 8 一致
     if (!ep.safe && !ep.hasDoctorOrders) {
-      return (adjusted: 0, missed: const ['未通过安全门，已忽略全部计划调整']);
+      return (adjusted: 0, missed: [t.rehabMissGateAdjust]);
     }
     final rs = routines.where((r) => ep.routineIds.contains(r.id)).toList();
-    if (rs.isEmpty) return (adjusted: 0, missed: const ['档案没有关联计划，无法套用调整']);
+    if (rs.isEmpty) return (adjusted: 0, missed: [t.rehabMissNoLinkedPlan]);
     var n = 0;
     final missed = <String>[];
     for (final a in adjusts) {
       final targets = a.target.isEmpty ? rs : rs.where((r) => r.name == a.target).toList();
       if (targets.isEmpty) {
-        missed.add('计划「${a.target}」不存在');
+        missed.add(t.rehabMissNoSuchPlan(a.target));
         continue;
       }
       for (final r in targets) {
@@ -1565,7 +1658,7 @@ holdStep.clear();
       final advice = extractRehabAdvice(raw);
       if (advice.isNotEmpty) ep.advice = advice;
       updateEpisode(ep);
-      return (routines: 0, added: 0, adjusted: 0, missed: const ['未通过安全门，已忽略计划与调整']);
+      return (routines: 0, added: 0, adjusted: 0, missed: [t.rehabMissGateReply]);
     }
     final plans = parsePlan(raw);
     final before = routines.map((r) => r.id).toSet();

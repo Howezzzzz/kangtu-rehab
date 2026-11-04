@@ -71,6 +71,33 @@ void main() {
       expect(legacy.painArea, '');
       expect(legacy.painLevel, 0);
       expect(legacy.note, '');
+      // 上游 2.0.0 新增的字段：1.3.0.35 的旧存档里没有 'dl'，必须默认 false
+      // （否则升级后旧训练会被当成「减载周」，直接影响进阶与统计）
+      expect(legacy.deload, isFalse);
+    });
+
+    test('旧版例程存档（无 alt / pr / lad 等键）仍可安全读回', () {
+      // 1.3.0.35 写下的 Routine JSON 只有 id/n/ex/s/c/p/r 这几个旧键；
+      // 2.0.0 新增的备选动作（alt）、阶梯（lad）等必须全部给默认值，
+      // 否则老用户升级后例程页会直接报错。
+      final r = Routine.fromJson({
+        'id': 'r1',
+        'n': '旧例程',
+        'ex': <String>['bench press'],
+      });
+      expect(r.id, 'r1');
+      expect(r.exerciseIds, ['bench press']);
+      expect(r.alts, isEmpty);
+      expect(r.prog, isEmpty);
+      expect(r.ladders, isEmpty);
+      expect(r.plan, isEmpty);
+      expect(r.chained, isEmpty);
+      expect(r.group, '');
+      expect(r.color, -1);
+      expect(r.archived, isFalse);
+      // 写完再读回也不能凭空多出键（否则备份文件会涨）
+      expect(r.toJson().containsKey('alt'), isFalse);
+      expect(r.toJson().containsKey('lad'), isFalse);
     });
 
     test('durationSec 可写；非法值被忽略', () {
@@ -768,6 +795,108 @@ void main() {
       expect(fit.pickedMeal, Meal.lunch);
       fit.loadNutrition(null);
       expect(fit.pickedMeal, isNull, reason: '切数据源后应清掉选中餐');
+    });
+  });
+
+  // RISK-079 回归（上游 2.0.0 / #309）：自动渐进与减载周不得套用到 prog 驱动动作，
+  //   避免与康途自研渐进引擎重复套用（口径：两套并存、上游功能保持、我方插入）
+  group('RISK-079 上游自动渐进/减载不与 prog 驱动重复', () {
+    test('prog 驱动动作在停滞历史 + 开启上游自动渐进时，仍走计划、不触发上游减载/加重', () {
+      final id = fit.createRoutine('prog-ris079');
+      final exId = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5, stepKg: 2.5);
+      fit.setPlannedSets(
+          id, exId, [for (var i = 0; i < 3; i++) const PlannedSet(reps: 5, weightKg: 100)]);
+      // 开启上游自动渐进 + 规则（若无 prog 例外，会触发上游减载/加重）
+      fit.setAutoProgress('weight');
+      fit.setProgressRule(exId, const ProgressRule(kind: ProgressKind.double, low: 8, high: 12));
+      // 造 3 次停滞历史（命中上游 needsDeload 条件）
+      final now = DateTime.now();
+      for (final d in [12, 9, 6, 3]) {
+        final day = DateTime(now.year, now.month, now.day - d, 18);
+        fit.sessions.add(LoggedSession(day, 1200,
+            [LoggedExercise(exId, exId, 'chest', [LoggedSet(8, 90), LoggedSet(6, 90)])]));
+      }
+      expect(fit.stallStreak(exId), 3);
+      expect(fit.hasProgress(exId), isTrue);
+      final nt = fit.nextTarget(exId)!;
+      expect(nt.deload, isFalse, reason: 'prog 驱动动作不应被上游减载接管');
+      expect(nt.up, isFalse, reason: 'prog 驱动动作应沿用计划（保持），而非上游加重');
+      fit.saveAndExit();
+    });
+
+    test('RISK-079b 减载周不推进 prog（linear 不 +step、计划不变）', () {
+      final id = fit.createRoutine('deload-prog');
+      final exId = fit.matchExerciseByName('Barbell Bench Press')!.id;
+      fit.toggleRoutineExercise(id, exId);
+      final r = fit.routines.firstWhere((x) => x.id == id);
+      r.prog[exId] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5, stepKg: 2.5);
+      r.progInst = 'piDeload';
+      fit.programStates['piDeload'] = ProgState(tpl: 't')..w[exId] = 100;
+      fit.setPlannedSets(
+          id, exId, [for (var i = 0; i < 3; i++) const PlannedSet(reps: 5, weightKg: 100)]);
+      // 强制本轮为减载周
+      fit.deloadEvery = 1;
+      fit.deloadFrom = DateTime.now().subtract(const Duration(days: 14));
+      expect(fit.deloadWeek, isTrue);
+      // 开练（非手动）→ 应处于减载状态
+      fit.startRoutine(r);
+      expect(fit.session!.deload, isTrue, reason: '减载周开练应进入减载状态');
+      // 全部达标完成
+      for (final e in fit.session!.exercises) {
+        for (final st in e.sets) {
+          st.done = true;
+        }
+      }
+      fit.finishSession();
+      // 断言：减载周不进渐进
+      expect(fit.programStates['piDeload']!.w[exId], 100,
+          reason: '减载周不得 +step（w 应保持 100）');
+      expect(fit.progFeedback, isEmpty, reason: '减载周不应产出渐进反馈');
+      fit.saveAndExit();
+    });
+  });
+
+  group('M2 排期二选一（融合 2.3）', () {
+    // 2026-11-02 是周一；pinnedDays 用 DateTime.weekday 语义（周一=1）。
+    PlanCycle cyc(int weeks, List<int> pins) => PlanCycle(
+        start: PlanCycle.dayOnly(DateTime(2026, 11, 2)),
+        weeks: weeks,
+        perWeek: 1,
+        pinnedDays: pins);
+
+    test('开启周期会清掉该例程的周计划残留（不再出现幽灵训练日）', () {
+      final id = fit.createRoutine('周期A');
+      fit.assignRoutineToDay(1, id); // 周一走旧周计划
+      expect(fit.planIdsOn(1), [id]);
+      fit.setCycle(id, cyc(4, const [5])); // 钉在周五
+      expect(fit.planIdsOn(1), isEmpty, reason: '周计划残留应被 setCycle 清掉');
+      expect(fit.routinesOn(DateTime(2026, 11, 2)).map((r) => r.id), isEmpty,
+          reason: '周期没钉周一，就不该在周一出现');
+      expect(fit.routinesOn(DateTime(2026, 11, 6)).map((r) => r.id), [id],
+          reason: '周期钉的周五要正常出现');
+    });
+
+    test('老存档里周期与周计划并存时只按周期命中（读侧双保险）', () {
+      final id = fit.createRoutine('周期B');
+      fit.assignRoutineToDay(2, id); // 周二（升级前留下的残留）
+      // 直接写 planCycles、绕过 setCycle 的清理，模拟老存档两套并存
+      fit.planCycles[id] = cyc(2, const [6]); // 钉在周六
+      expect(fit.routinesOn(DateTime(2026, 11, 3)).map((r) => r.id), isEmpty,
+          reason: '周二来自周计划残留，不得命中');
+      expect(fit.routinesOn(DateTime(2026, 11, 7)).map((r) => r.id), [id],
+          reason: '周六按周期命中');
+    });
+
+    test('结束周期不会把旧周计划残留放回来', () {
+      final id = fit.createRoutine('周期C');
+      fit.assignRoutineToDay(3, id);
+      fit.setCycle(id, cyc(2, const [4]));
+      fit.clearCycle(id);
+      expect(fit.planIdsOn(3), isEmpty, reason: '残留已清，结束周期 ≠ 恢复旧排期');
+      expect(fit.routinesOn(DateTime(2026, 11, 4)), isEmpty);
     });
   });
 }

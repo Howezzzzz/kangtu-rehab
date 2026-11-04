@@ -191,8 +191,35 @@ mixin RoutinesState on FitCore, LibraryState {
   // ---- 排期周期（Plan Cycle）----
   PlanCycle? cycleOf(String routineId) => planCycles[routineId];
 
+  /// 只清「周计划」体系里对该例程的引用（weeklyPlan / planExtras / planMoves）。
+  /// 与 [_unplanRoutine] 的区别：不动轮转（rotationIds）、不动 activeRoutineId。
+  void _unplanWeekly(String id) {
+    for (final day in [...weeklyPlan.keys]) {
+      if (weeklyPlan[day] != id) continue;
+      final extras = planExtras[day];
+      if (extras != null && extras.isNotEmpty) {
+        weeklyPlan[day] = extras.removeAt(0); // 顺位顶上，该日仍有主计划
+        if (extras.isEmpty) planExtras.remove(day);
+      } else {
+        weeklyPlan.remove(day);
+      }
+    }
+    for (final extras in planExtras.values) {
+      extras.remove(id);
+    }
+    planExtras.removeWhere((_, v) => v.isEmpty);
+    // 与 _unplanRoutine 一致：只摘掉该例程，保留空列表（表示这一天已被挪空）
+    for (final ids in planMoves.values) {
+      ids.remove(id);
+    }
+  }
+
   void setCycle(String routineId, PlanCycle c) {
     planCycles[routineId] = c;
+    // 融合 2.3 / M2：开启周期＝这个例程的排期改由周期接管，顺手清掉它在旧
+    // 「周计划」里的残留。否则 routinesOn 把两套命中取并集，之后改周期仍会
+    // 按旧日子出现＝幽灵训练日。轮转是另一套系统（优先级更高），这里不动。
+    _unplanWeekly(routineId);
     persistNow();
     notifyListeners();
   }
@@ -235,6 +262,7 @@ mixin RoutinesState on FitCore, LibraryState {
 
   Routine? routineById(String id) => _routine(id);
 
+  @override
   bool get rotating => rotation && rotationRoutines.isNotEmpty;
 
   List<Routine> get rotationRoutines => [for (final id in rotationIds) ?_routine(id)];
@@ -331,7 +359,12 @@ mixin RoutinesState on FitCore, LibraryState {
   /// 当日计划：轮转开启时按轮转返回；否则用（含改期覆盖的）周日计划 + 周期（Plan Cycle）补入。
   List<Routine> routinesOn(DateTime day) {
     if (rotating) return _rotationOn(day);
-    final ids = [...planIdsFor(day)];
+    // 融合 2.3 / M2：带计划周期的例程只按周期命中——即便老存档里它还残留在
+    // 周计划里（写侧 setCycle 已清，这里是读侧双保险），也不再按周计划出现。
+    final ids = <String>[
+      for (final id in planIdsFor(day))
+        if (!planCycles.containsKey(id)) id,
+    ];
     for (final e in planCycles.entries) {
       if (e.value.isTrainingDay(day) && !ids.contains(e.key)) ids.add(e.key);
     }
@@ -592,6 +625,7 @@ mixin RoutinesState on FitCore, LibraryState {
     made.ladders.addAll([for (final l in source.ladders) [...l]]);
     made.plan.addAll({for (final e in source.plan.entries) e.key: [...e.value]});
     made.rest.addAll(source.rest);
+    made.alts.addAll({for (final e in source.alts.entries) e.key: [...e.value]});
     made.group = source.group;
     made.color = source.color;
     // RISK-045/049：连计划配置一起复制，并为其建独立进度实例（克隆源当前值，不归零）
@@ -692,6 +726,7 @@ mixin RoutinesState on FitCore, LibraryState {
       // RISK-055：若该动作已从本实例的所有例程移除，清掉实例里的残留状态
       // （否则换走再换回会带着过期 TM/重量/失败数复活，且 tmSet 会压掉校准提示）
       if (r.progInst != null) _pruneInstState(r.progInst!, exId);
+      r.alts.remove(exId);
     } else {
       r.exerciseIds.add(exId);
     }
@@ -770,6 +805,32 @@ mixin RoutinesState on FitCore, LibraryState {
     }
     // RISK-055：换走的旧动作若已不再被本实例任何例程引用，清掉它的残留状态
     if (r.progInst != null) _pruneInstState(r.progInst!, from);
+    final alts = r.alts.remove(from);
+    if (alts != null) {
+      final kept = [for (final a in alts) if (a != to) a];
+      if (kept.isNotEmpty) r.alts[to] = kept;
+    }
+    _persist();
+    notifyListeners();
+  }
+
+  static const maxAlts = 3;
+
+  List<String> routineAlts(String routineId, String exId) => _routine(routineId)?.alts[exId] ?? const [];
+
+  void toggleRoutineAlt(String routineId, String exId, String altId) {
+    final r = _routine(routineId);
+    if (r == null || altId == exId) return;
+    final list = [...?r.alts[exId]];
+    if (!list.remove(altId)) {
+      if (list.length >= maxAlts) list.removeAt(0);
+      list.add(altId);
+    }
+    if (list.isEmpty) {
+      r.alts.remove(exId);
+    } else {
+      r.alts[exId] = list;
+    }
     _persist();
     notifyListeners();
   }
@@ -873,6 +934,7 @@ mixin RoutinesState on FitCore, LibraryState {
     final snapFails = instBefore?.fails[exId];
     final snapReps = instBefore?.reps[exId];
     final snapTmSet = instBefore?.tmSet.contains(exId) ?? false;
+    final alts = r.alts[exId];
     toggleRoutineExercise(routineId, exId);
     return () {
       final back = _routine(routineId);
@@ -892,6 +954,7 @@ mixin RoutinesState on FitCore, LibraryState {
         if (snapReps != null) inst.reps[exId] = snapReps;
         if (snapTmSet) inst.tmSet.add(exId);
       }
+      if (alts != null) back.alts[exId] = alts;
       _persist();
       notifyListeners();
     };

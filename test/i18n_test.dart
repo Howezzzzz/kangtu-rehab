@@ -321,6 +321,59 @@ void main() {
     expect(offenders, isEmpty, reason: 'literales sin pasar por T');
   });
 
+  // 康途补充（融合 2.5 顺手挖出来的 bug 类）：上游那个硬编码扫描只抓「大写开头/含空格的英文字面量」，
+  // 且 `if (text.contains(r'$')) continue;` 会跳过所有插值串 → 中文硬编码全程漏网。
+  // 实例：首页康复卡曾写死 '${ep.title} · 计划 ${ep.routineIds.length} 个'，
+  // 非中文用户看到中文（已改用 t.rehabPlanCount）。下面这条把口子堵上，并做成棘轮：
+  // allowlist 里是现存历史债（品牌名 + 关于页中文 + 字体样例），只许减不许增。
+  test('no new CJK strings hard-coded in the widgets', () {
+    final cjk = RegExp(r'[\u4e00-\u9fff]');
+    // 只剩两处「故意是中文」的：多语言问候预览里的 '你好'、语言切换图标的 'A文'。
+    // 品牌名与关于页文案已在 RISK-087 收进 arb（t.appName / t.aboutOssTitle…），清单从 24 → 2。
+    const allowed = {'你好', 'A文'};
+    final offenders = <String>[];
+    final ui = [Directory('lib/screens'), Directory('lib/widgets'), Directory('lib/app')];
+    for (final f in ui.expand((d) => d.listSync(recursive: true)).whereType<File>()) {
+      if (!f.path.endsWith('.dart')) continue;
+      for (final raw in f.readAsLinesSync()) {
+        final s = raw.trim();
+        if (s.startsWith('//') || s.startsWith('*')) continue; // 注释里的中文不算
+        if (!cjk.hasMatch(s)) continue;
+        for (final m in RegExp(r"'([^'\n]*)'").allMatches(s)) {
+          final lit = m.group(1)!;
+          if (!cjk.hasMatch(lit)) continue;
+          if (allowed.contains(lit)) continue;
+          offenders.add('${f.uri.pathSegments.last}: "$lit"');
+        }
+      }
+    }
+    expect(offenders, isEmpty, reason: '新增中文一律走 t.xxx（arb），否则另外 16 种语言会看到中文');
+  });
+
+  // RISK-087：品牌名按语言出（中文「康途」/ 其余拉丁「Kangtu」）。
+  // 此前代码里 24 处硬编码「康途」→ 非中文用户在 app 标题、分享标题、导出文件名、
+  // 卡片水印、贴纸、通行证上都会看到中文字符。现已全部收进 t.appName。
+  test('brand name follows the language', () {
+    setAppLanguage('en');
+    expect(t.appName, 'Kangtu');
+    expect(t.shareSubjectWorkouts(t.appName), 'Kangtu workouts');
+    expect(t.aboutOssTitle, 'OPEN-SOURCE CREDIT');
+
+    setAppLanguage('zh');
+    expect(t.appName, '康途');
+    expect(t.shareSubjectExercises(t.appName), '康途 动作列表');
+    expect(t.shareSubjectBackup(t.appName), '康途 备份');
+    expect(t.aboutRepdbNote, contains('RepDB'));
+
+    setAppLanguage('zh_Hant');
+    expect(t.appName, '康途');
+    expect(t.aboutOssTitle, '開源署名', reason: 'zh_Hant 不能留简体');
+    expect(t.shareSubjectWorkouts(t.appName), '康途 訓練記錄');
+
+    setAppLanguage('es');
+    expect(t.appName, 'Kangtu', reason: '未译语言回落英文模板 = 拉丁品牌名，不会出现中文字符');
+  });
+
   test('no screen keeps its own English calendar', () {
     final offenders = <String>[];
     final ui = [Directory('lib/screens'), Directory('lib/widgets'), Directory('lib/app')];

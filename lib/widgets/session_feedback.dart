@@ -28,7 +28,8 @@ String feelLabel(int i) => switch (i) {
 /// 四档感觉的本地化文案（0 很轻松 … 3 拼到底）
 List<String> feelLabels() => [for (var i = 0; i < 4; i++) feelLabel(i)];
 
-const _feelIcons = [  PhosphorIconsRegular.smiley,
+/// 四档感觉的图标（完成页合并卡 session_recap.dart 复用）
+const kFeelIcons = [  PhosphorIconsRegular.smiley,
   PhosphorIconsRegular.thumbsUp,
   PhosphorIconsRegular.fire,
   PhosphorIconsRegular.skull,
@@ -65,7 +66,8 @@ bool rehabAreaMatches(String painArea) {
 bool rehabFeedbackHint(String painArea, int painLevel) =>
     painArea.isNotEmpty && painLevel >= 5 && rehabAreaMatches(painArea);
 
-bool _rehabWorthMentioning(LoggedSession s) => rehabFeedbackHint(s.painArea, s.painLevel);
+/// 该次记录是否值得提示「去康复档案补一笔」（卡片与合并卡共用）
+bool rehabWorthMentioning(LoggedSession s) => rehabFeedbackHint(s.painArea, s.painLevel);
 
 bool _sameDay(DateTime a, DateTime b) =>
     a.year == b.year && a.month == b.month && a.day == b.day;
@@ -112,10 +114,10 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
                       runSpacing: 8,
                       children: [
                         for (var i = 0; i < 4; i++)
-                          _chip(
+                          fbChip(
                             gc,
                             feelLabel(i),
-                            icon: _feelIcons[i],
+                            icon: kFeelIcons[i],
                             on: feel == i,
                             tap: () => setSheet(() => feel = feel == i ? null : i),
                           ),
@@ -129,7 +131,7 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
                       runSpacing: 8,
                       children: [
                         for (final m in kMuscles)
-                          _chip(
+                          fbChip(
                             gc,
                             muscleLabel(m.id),
                             on: painArea == m.id,
@@ -223,7 +225,8 @@ Future<void> showSessionFeedbackSheet(BuildContext context, LoggedSession s) asy
   );
 }
 
-Widget _chip(GymColors gc, String label, {IconData? icon, required bool on, required VoidCallback tap}) {
+/// 反馈用的胶囊选择器（弹层与完成页合并卡共用同一视觉）
+Widget fbChip(GymColors gc, String label, {IconData? icon, required bool on, required VoidCallback tap}) {
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
     onTap: tap,
@@ -292,7 +295,7 @@ class SessionFeedbackCard extends StatelessWidget {
                 Text(s.note.trim(),
                     style: AppTheme.s(12.5, color: gc.textSecondary, height: 1.45)),
               ],
-              if (_rehabWorthMentioning(s)) ...[
+              if (rehabWorthMentioning(s)) ...[
                 const SizedBox(height: 8),
                 Text(t.fbRehabHint, style: AppTheme.s(11.5, color: gc.danger, height: 1.35)),
               ],

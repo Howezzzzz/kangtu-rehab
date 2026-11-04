@@ -1,4 +1,4 @@
-// 自测基线回归：模型往返 / 增删 / latest-previous / 持久化字段。
+// 康复自评（原「自测基线」）回归：模型往返 / 增删 / latest-previous / 持久化字段。
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/models/baseline.dart';
 import 'package:gymmane/services/local_store.dart';
@@ -32,7 +32,7 @@ void main() {
     expect(kBaselineFitness.length, 6);
     expect(baselineDef('resting_hr')!.higherIsBetter, isFalse);
     expect(baselineDef('waist')!.higherIsBetter, isFalse);
-    expect(baselineDef('chair_stand_30')!.unit, '次');
+    expect(baselineDef('chair_stand_30')!.unit, 'rep'); // 模型存语言中立码，显示层本地化
     expect(baselineDef('nope'), isNull);
   });
 
