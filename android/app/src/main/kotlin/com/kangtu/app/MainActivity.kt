@@ -61,7 +61,7 @@ class MainActivity : FlutterActivity() {
                 return@setMethodCallHandler
             }
             val bytes = call.argument<ByteArray>("bytes")
-            val name = call.argument<String>("name") ?: "gymmane.png"
+            val name = call.argument<String>("name") ?: "kangtu.png"
             if (bytes == null) {
                 result.error("no-bytes", "missing image", null)
                 return@setMethodCallHandler

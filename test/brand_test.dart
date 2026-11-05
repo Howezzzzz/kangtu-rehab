@@ -81,7 +81,7 @@ void main() {
     for (final f in [
       'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png',
       'android/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png',
-      'android/app/src/main/res/drawable-xxxhdpi/ic_stat_gymmane.png',
+      'android/app/src/main/res/drawable-xxxhdpi/ic_stat_kangtu.png',
       'android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml',
     ]) {
       expect(File(f).existsSync(), isTrue, reason: '缺图标资源：$f');

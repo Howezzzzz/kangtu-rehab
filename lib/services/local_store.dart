@@ -9,6 +9,7 @@ class Store {
   Store._();
   static final Store instance = Store._();
 
+  // ⚠ 存储键**不可改名**：改了等于丢弃所有本地数据（备份 ZIP 里的键也是它）。
   static const _key = 'gymmane_v1';
   SharedPreferences? _prefs;
 
