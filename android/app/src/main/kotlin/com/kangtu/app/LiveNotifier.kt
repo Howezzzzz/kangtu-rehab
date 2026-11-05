@@ -27,7 +27,7 @@ import java.io.ByteArrayOutputStream
 object LiveNotifier {
     private const val ID = 1003
     private const val CHANNEL = "live_workout_v2"
-    private const val ACTION = "com.kangtu.app.LIVE_ACTION"
+    private val ACTION = BuildConfig.APPLICATION_ID + ".LIVE_ACTION"
     private const val FLASH_MS = 1600L
 
     var dart: MethodChannel? = null

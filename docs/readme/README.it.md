@@ -1,5 +1,4 @@
-> ⚠️ **Questo README appartiene al progetto originale GymMane (upstream) ed è conservato solo come riferimento.**
-> La documentazione ufficiale di **康途 / Kangtu** (questo fork) è nel [README principale](../../README.md). I link di download di questa pagina puntano a **GymMane** (`com.gymmane.app`), non a Kangtu.
+> ⚠️ 本文件是**上游 GymMane 的多语言 README**，仅作参考保留。康途（本 fork）的权威说明在[根目录 README](../../README.md)，其下载链接指向上游，**不是康途**。
 
 <div align="center">
 

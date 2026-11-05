@@ -151,7 +151,7 @@ class _ExerciseArtState extends State<ExerciseArt> with SingleTickerProviderStat
   }
 
   Future<void> _fetch() async {
-    if (widget.slug.isEmpty || widget.slug.startsWith('ext:') || widget.slug.startsWith('rep:')) return;
+    if (widget.slug.isEmpty) return;
     final slug = widget.slug;
     try {
       final data = await loadExerciseArt(slug, still: !widget.live);
@@ -185,16 +185,7 @@ class _ExerciseArtState extends State<ExerciseArt> with SingleTickerProviderStat
     final gc = context.gc;
     final art = _art;
     Widget child;
-    if (widget.slug.startsWith('ext:') || widget.slug.startsWith('rep:')) {
-      child = Image.asset(
-        'assets/${widget.slug.substring(4)}',
-        fit: BoxFit.contain,
-        width: double.infinity,
-        height: widget.height,
-        gaplessPlayback: true,
-        errorBuilder: (_, _, _) => _fallback(gc, widget.height),
-      );
-    } else if (widget.slug.isEmpty || _failed) {
+    if (widget.slug.isEmpty || _failed) {
       child = _fallback(gc, widget.height);
     } else if (art == null) {
       child = Shimmer(radius: widget.radius);

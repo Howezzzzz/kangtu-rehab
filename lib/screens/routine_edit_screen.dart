@@ -5,7 +5,6 @@ import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import '../catalog/exercise_catalog.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';
-import '../models/plan_cycle.dart';
 import '../models/workout.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
@@ -266,46 +265,8 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
         const SizedBox(height: 18),
         _colors(gc, routine),
         const SizedBox(height: 22),
-        Row(
-          children: [
-            Expanded(child: _label(gc, t.schedule)),
-            GestureDetector(
-              onTap: () => _toggleCycle(routine),
-              child: Row(children: [
-                Text(t.cycleEnable,
-                    style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary)),
-                const SizedBox(width: 8),
-                TinySwitch(on: fit.cycleOf(routine.id) != null),
-              ]),
-            ),
-          ],
-        ),
+        _label(gc, t.schedule),
         const SizedBox(height: 12),
-        if (fit.cycleOf(routine.id) != null) _cycleCard(gc, routine),
-        // 融合 2.3 / M2：轮转开启时排期由轮转决定、周期不参与当日命中，
-        // 这一点必须写清楚，否则用户照常编辑周期却发现日历不按它走。
-        if (fit.cycleOf(routine.id) != null && fit.rotating) ...[
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: gc.brass.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Icon(PhosphorIconsRegular.warning, size: 16, color: gc.brass),
-              const SizedBox(width: 9),
-              Expanded(
-                child: Text(t.cycleRotationOff,
-                    style: AppTheme.f(11.5,
-                        weight: FontWeight.w600, color: gc.textSecondary, height: 1.35)),
-              ),
-            ]),
-          ),
-        ],
-        Text(fit.cycleOf(routine.id) != null ? t.cyclePinHint : t.schedule,
-            style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textTertiary)),
-        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [for (int i = 0; i < 7; i++) _dayToggle(gc, i)],
@@ -455,28 +416,12 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
 
   Widget _dayToggle(GymColors gc, int i) {
     final weekday = fit.weekdayAt(i);
-    final c = fit.cycleOf(_id);
-    final on = c != null ? c.pinnedDays.contains(weekday) : fit.plannedOn(weekday, _id);
+    final on = fit.plannedOn(weekday, _id);
     return Pressable(
       scale: 0.86,
       onTap: () {
         HapticFeedback.selectionClick();
-        if (c == null) {
-          fit.togglePlanDay(weekday, _id);
-        } else {
-          final days = [...c.pinnedDays];
-          days.contains(weekday) ? days.remove(weekday) : days.add(weekday);
-          days.sort();
-          fit.setCycle(
-              _id,
-              PlanCycle(
-                  start: c.start,
-                  weeks: c.weeks,
-                  perWeek: c.perWeek,
-                  pinnedDays: days,
-                  round: c.round));
-        }
-        setState(() {});
+        fit.togglePlanDay(weekday, _id);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
@@ -496,151 +441,6 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
       ),
     );
   }
-
-  // ---- 排期周期 ----
-  void _toggleCycle(Routine routine) {
-    final c = fit.cycleOf(routine.id);
-    if (c != null) {
-      fit.clearCycle(routine.id);
-    } else {
-      // 用当前旧的周几作为默认「钉日」，平滑过渡
-      final pinned = <int>[
-        for (int i = 0; i < 7; i++)
-          if (fit.plannedOn(fit.weekdayAt(i), routine.id)) fit.weekdayAt(i),
-      ];
-      fit.setCycle(
-          routine.id,
-          PlanCycle(
-              start: PlanCycle.dayOnly(DateTime.now()),
-              weeks: 8,
-              perWeek: pinned.isNotEmpty ? pinned.length : 3,
-              pinnedDays: pinned));
-    }
-    setState(() {});
-  }
-
-  Widget _cycleCard(GymColors gc, Routine routine) {
-    final c = fit.cycleOf(routine.id)!;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: SoftCard(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _cycleRow(gc, t.cycleStart, _shortDate(c.start), () async {
-              final d = await showDatePicker(
-                context: context,
-                initialDate: c.start,
-                firstDate: DateTime(2020),
-                lastDate: DateTime(2100),
-              );
-              if (d == null) return;
-              fit.setCycle(
-                  routine.id,
-                  PlanCycle(
-                      start: PlanCycle.dayOnly(d),
-                      weeks: c.weeks,
-                      perWeek: c.perWeek,
-                      pinnedDays: c.pinnedDays,
-                      round: c.round));
-              setState(() {});
-            }),
-            _cycleStep(gc, t.cycleWeeks, '${c.weeks}', routine, c, weeks: true),
-            _cycleStep(gc, t.cyclePerWeek, '${c.perWeek}', routine, c, weeks: false),
-            const SizedBox(height: 6),
-            Text(t.cycleHint,
-                style: AppTheme.f(11, weight: FontWeight.w500, color: gc.textTertiary)),
-            if (c.expired) ...[
-              const SizedBox(height: 12),
-              Text('${t.cycleComplete} · ${t.cycleRound(c.round)}',
-                  style: AppTheme.f(13, weight: FontWeight.w700, color: gc.sage)),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(
-                  child: PrimaryButton(
-                      label: t.cycleRenew,
-                      height: 42,
-                      onTap: () {
-                        fit.advanceCycle(routine.id);
-                        setState(() {});
-                      }),
-                ),
-                const SizedBox(width: 10),
-                GhostButton(
-                    label: t.cycleOff,
-                    icon: PhosphorIconsRegular.checkCircle,
-                    onTap: () {
-                      fit.clearCycle(routine.id);
-                      setState(() {});
-                    }),
-              ]),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _cycleRow(GymColors gc, String label, String value, VoidCallback onTap) =>
-      GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 7),
-          child: Row(children: [
-            Expanded(
-                child: Text(label,
-                    style: AppTheme.f(13, weight: FontWeight.w600, color: gc.text))),
-            Text(value, style: AppTheme.f(13.5, weight: FontWeight.w800, color: gc.ember)),
-            const SizedBox(width: 6),
-            Icon(PhosphorIconsRegular.caretRight, size: 14, color: gc.textTertiary),
-          ]),
-        ),
-      );
-
-  Widget _cycleStep(GymColors gc, String label, String value, Routine routine, PlanCycle c,
-      {required bool weeks}) {
-    void set(int v) {
-      fit.setCycle(
-          routine.id,
-          PlanCycle(
-              start: c.start,
-              weeks: weeks ? v.clamp(1, 104) : c.weeks,
-              perWeek: weeks ? c.perWeek : v.clamp(1, 7),
-              pinnedDays: c.pinnedDays,
-              round: c.round));
-      setState(() {});
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(children: [
-        Expanded(
-            child: Text(label, style: AppTheme.f(13, weight: FontWeight.w600, color: gc.text))),
-        _stepBtn(gc, '-', () => set((weeks ? c.weeks : c.perWeek) - 1)),
-        Container(
-          width: 42,
-          alignment: Alignment.center,
-          child: Text(value, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
-        ),
-        _stepBtn(gc, '+', () => set((weeks ? c.weeks : c.perWeek) + 1)),
-      ]),
-    );
-  }
-
-  Widget _stepBtn(GymColors gc, String s, VoidCallback onTap) => GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: 30,
-          height: 30,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(color: gc.bgRaised2, borderRadius: BorderRadius.circular(9)),
-          child: Text(s, style: AppTheme.f(16, weight: FontWeight.w800, color: gc.ember)),
-        ),
-      );
-
-  String _shortDate(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   Widget _rail(GymColors gc, {required bool top, required bool bottom}) => Center(
         child: Container(
@@ -861,20 +661,16 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: AlignmentDirectional.centerStart,
-                child: routine.prog[ex.id]?.isCycle == true
-                    // 周期动作组数由周表决定，不提供编辑（避免“改了不生效”）
-                    ? Text(t.setCount(fit.routineSets(routine, ex.id)),
-                        style: AppTheme.f(12, weight: FontWeight.w600, color: gc.textSecondary))
-                    : StepperControl(
-                        value: t.setCount(fit.routineSets(routine, ex.id)),
-                        minWidth: 62,
-                        btnSize: 24,
-                        gap: 8,
-                        fontSize: 12,
-                        btnRadius: 7,
-                        onDec: () => fit.bumpRoutineSets(_id, ex.id, -1),
-                        onInc: () => fit.bumpRoutineSets(_id, ex.id, 1),
-                      ),
+                child: StepperControl(
+                  value: t.setCount(fit.routineSets(routine, ex.id)),
+                  minWidth: 62,
+                  btnSize: 24,
+                  gap: 8,
+                  fontSize: 12,
+                  btnRadius: 7,
+                  onDec: () => fit.bumpRoutineSets(_id, ex.id, -1),
+                  onInc: () => fit.bumpRoutineSets(_id, ex.id, 1),
+                ),
               ),
               if (plan.isNotEmpty) ...[
                 const SizedBox(height: 3),
@@ -1045,93 +841,46 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
                       },
                       style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.4)),
                   const SizedBox(height: 16),
-                  if (routine.prog.containsKey(ex.id)) ...[
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: gc.border),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Row(children: [
-                        Icon(PhosphorIconsRegular.info, size: 18, color: gc.accent),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(t.progPlanAuto,
-                              style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.3)),
-                        ),
-                      ]),
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                  if (routine.prog[ex.id]?.isCycle == true) ...[
-                    Row(children: [
-                      Expanded(
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(t.progTm, style: AppTheme.f(13.5, weight: FontWeight.w500, color: gc.text)),
-                          if (fit.progTmUnconfirmed(ex.id)) ...[
-                            const SizedBox(height: 2),
-                            Text(t.progTmHint,
-                                style: AppTheme.f(11, weight: FontWeight.w400, color: gc.textSecondary, height: 1.3)),
-                          ],
-                        ]),
-                      ),
-                      const SizedBox(width: 10),
-                      StepperControl(
-                        value: fit.weightLabel(fit.progTmOf(ex.id) ?? 0),
-                        minWidth: 62,
-                        btnSize: 24,
-                        gap: 8,
-                        fontSize: 12,
-                        btnRadius: 7,
-                        onDec: () => fit.bumpProgTm(ex.id, -1),
-                        onInc: () => fit.bumpProgTm(ex.id, 1),
-                      ),
-                    ]),
-                    const SizedBox(height: 12),
-                  ],
                   _planHeader(gc, mode, repsOnly),
                   const SizedBox(height: 8),
                   for (var i = 0; i < plan.length; i++)
                     _planRow(sheet, gc, plan, i, plan[i].kind == SetKind.warmup ? 0 : ++working, mode,
                         repsOnly, edit, save),
                   const SizedBox(height: 8),
-                  // ISS-160：周期动作的组次/组数由周表决定，不提供增删/清除（避免与引擎口径冲突）
-                  if (routine.prog[ex.id]?.isCycle != true) ...[
-                    Row(children: [
+                  Row(children: [
+                    Expanded(
+                      child: GhostButton(
+                        label: t.addSet.replaceFirst(RegExp(r'^\+\s*'), ''),
+                        icon: PhosphorIconsRegular.plus,
+                        onTap: () => save([
+                          ...plan,
+                          plan.lastWhere((p) => p.kind != SetKind.warmup, orElse: () => const PlannedSet())
+                              .copyWith(kind: SetKind.normal),
+                        ]),
+                      ),
+                    ),
+                    if (mode.isEmpty) ...[
+                      const SizedBox(width: 8),
                       Expanded(
                         child: GhostButton(
-                          label: t.addSet.replaceFirst(RegExp(r'^\+\s*'), ''),
-                          icon: PhosphorIconsRegular.plus,
-                          onTap: () => save([
-                            ...plan,
-                            plan.lastWhere((p) => p.kind != SetKind.warmup, orElse: () => const PlannedSet())
-                                .copyWith(kind: SetKind.normal),
-                          ]),
+                          label: t.addWarmup,
+                          icon: PhosphorIconsRegular.fire,
+                          onTap: () => save([const PlannedSet(reps: 10, kind: SetKind.warmup), ...plan]),
                         ),
                       ),
-                      if (mode.isEmpty) ...[
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: GhostButton(
-                            label: t.addWarmup,
-                            icon: PhosphorIconsRegular.fire,
-                            onTap: () => save([const PlannedSet(reps: 10, kind: SetKind.warmup), ...plan]),
-                          ),
-                        ),
-                      ],
-                    ]),
-                    if (fit.hasPlan(routine, ex.id))
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => save(const []),
-                        child: Container(
-                          height: 44,
-                          alignment: Alignment.center,
-                          child: Text(t.clearPlan,
-                              style: AppTheme.f(13, weight: FontWeight.w600, color: gc.accent)),
-                        ),
+                    ],
+                  ]),
+                  if (fit.hasPlan(routine, ex.id))
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => save(const []),
+                      child: Container(
+                        height: 44,
+                        alignment: Alignment.center,
+                        child: Text(t.clearPlan,
+                            style: AppTheme.f(13, weight: FontWeight.w600, color: gc.accent)),
                       ),
-                  ],
+                    ),
                   const SizedBox(height: 10),
                   _restRow(sheet, gc, routine, ex),
                   const SizedBox(height: 8),

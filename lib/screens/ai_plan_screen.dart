@@ -29,7 +29,6 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
   int _routines = 0;
   bool _unreadable = false;
   bool _format = false;
-  String? _cycleNote;
 
   @override
   void dispose() {
@@ -204,11 +203,6 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
           ],
           if (good) ...[
             const SizedBox(height: 10),
-            if (_cycleNote != null) ...[
-              Text(_cycleNote!,
-                  style: AppTheme.f(12, weight: FontWeight.w600, color: gc.accent)),
-              const SizedBox(height: 6),
-            ],
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: fit.backFromAiPlan,
@@ -230,11 +224,11 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
   Future<void> _export() async {
     try {
       final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/kangtu-exercises.txt');
+      final file = File('${dir.path}/gymmane-exercises.txt');
       await file.writeAsString(fit.planRequestText());
       if (!mounted) return;
       await SharePlus.instance.share(
-        ShareParams(files: [XFile(file.path)], subject: t.shareSubjectExercises(t.appName)),
+        ShareParams(files: [XFile(file.path)], subject: '${t.appName} exercises'),
       );
     } catch (_) {}
   }
@@ -266,16 +260,12 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
       });
       return;
     }
-    final outcome = fit.applyPlan(plans, schedule: fit.weeklyPlan.isEmpty, cycle: parseCycle(raw));
-    final cycle = parseCycle(raw);
+    final outcome = fit.applyPlan(plans, schedule: fit.weeklyPlan.isEmpty);
     setState(() {
       _unreadable = false;
       _added = outcome.added;
       _routines = outcome.routines;
       _missed = outcome.missed;
-      _cycleNote = cycle == null
-          ? null
-          : t.planCycleApplied(cycle.weeks, cycle.perWeek);
     });
   }
 }

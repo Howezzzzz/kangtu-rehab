@@ -404,6 +404,7 @@ class HomeExtrasShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gc = context.gc;
+    // 品牌走 t.appName（按语言出康途/Kangtu）→ 不是编译期常量，故不能用 const
     final pass = GymPass(id: 'demo', name: '${t.appName} Fit', code: 'KANGTU-2026-0042', hue: 0);
     final steps = _Tile(
       w: 150,
@@ -448,7 +449,6 @@ class HomeExtrasShowcase extends StatelessWidget {
     );
     final medal = _Tile(w: 150, h: 150, child: Center(child: Medal(id: AwardId.values[1], size: 96)));
     final medalLocked = _Tile(w: 150, h: 150, child: Center(child: Medal(id: AwardId.values[6], size: 96, locked: true)));
-    // pass 的名字走 t.appName（品牌按语言出康途/Kangtu）→ 不是编译期常量，故这里不能 const
     final passCard = SizedBox(width: 330, child: _lift(GymPassCard(pass: pass, hero: false), radius: 22));
     final heart = _Tile(
       w: 330,

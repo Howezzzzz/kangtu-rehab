@@ -1,8 +1,14 @@
 name: build-apk
 
-# push main → 自动：构建号+1 → 构建分 ABI APK → 建/更新 Release → 回写 assets/app_version.json
-# 应用侧「检查更新」读 app_version.json 比对构建号（versionCode）。
-# 版本名 = 康途独立版本线（发布前手动定名，不再跟随上游），构建号严格递增。
+# push main → check 门禁（analyze + 全量测试）→ 构建号 +1 → 分 ABI 构建 → 发 Release → 回写 app_version.json
+#
+# 为什么要有这条流水线（康途，2026-11 定）：
+#   ① 应用内「检查更新」的数据源是仓库里的 assets/app_version.json —— **只有这条流水线会写它**，
+#      没有它更新器永远看不到新版本；
+#   ② 这是本环境**唯一**能拿到真实 Android 构建的地方（本地沙箱无 Android SDK）；
+#   ③ check 门禁卡在「加构建号」之前：测试红了连版本号都不加（零副作用）。
+#
+# 上游自带的 .github/workflows/build-apk.yml（F-Droid 可复现构建配方）保持不动，本文件另加。
 
 on:
   push:
@@ -12,23 +18,22 @@ on:
 permissions:
   contents: write
 
+env:
+  # 与出包用同一个版本（门禁验的必须就是要发的那个构建）
+  FLUTTER_VERSION: '3.47.6'
+
 jobs:
-  # ⓪ 门禁：静态分析 + 全量测试。放在 prepare **之前** → 红了连构建号都不加，
-  #    零副作用（不出包、不建 Release、不回写 app_version.json）。
-  #    为什么要拦在这里：我们平时直接 push main，GitHub 不支持「另一个 workflow 来挡」，
-  #    单开 check.yml 只能自己红、发布照发，等于没门禁（ISS-219）。
-  #    分析强度（2026-11-04 已收紧）：**warning 也挡**（只放行 info）。首轮曾只让 error 挡，
-  #    确认无 CI/本地版本差异噪音后收紧；若将来 CI 因版本差异冒出 warning，先修代码再考虑放宽。
+  # ⓪ 门禁：静态分析 + 全量测试。红了 → prepare 不跑 → 不加构建号、不出包、不发版（零副作用）
   check:
     runs-on: ubuntu-latest
-    # 防 runner 卡死：GitHub 默认上限 360 分钟，卡住会白等一整天（本地实测过 flutter test 卡死）
+    # 防 runner 卡死：GitHub 默认 360 分钟，卡住会白等一整天（本地实测过 flutter test 卡死）
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.47.6
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
@@ -36,13 +41,13 @@ jobs:
         run: flutter pub get
 
       - name: Analyze
+        # 只放行 info；warning/error 一律挡
         run: flutter analyze --no-fatal-infos
 
       - name: Test
-        run: flutter test --no-pub
+        run: flutter test
 
-  # ① 构建号 +1（versionName = 康途独立版本线，发布前在 pubspec 手动定名；
-  #    versionCode 严格递增，否则 Android 不允许覆盖安装、更新器也认不出新版本）
+  # ① 构建号 +1（versionName 手动定名；versionCode 严格递增，否则 Android 不允许覆盖安装）
   prepare:
     needs: check
     if: github.event_name == 'push' && needs.check.result == 'success'
@@ -72,10 +77,11 @@ jobs:
           git commit -m "chore(version): ${NAME}+${NEW} [skip ci]"
           git push origin HEAD:main
 
-  # ② 构建分 ABI release APK（显式传入新版本号，与 prepare 的输出一致）
+  # ② 构建分 ABI release APK
   build:
     needs: [check, prepare]
-    if: always() && (needs.prepare.result == 'success' || github.event_name == 'workflow_dispatch')
+    # check 必须成功（dispatch 也不放过）；prepare 在 dispatch 下是 skipped，故单独放行
+    if: needs.check.result == 'success' && (needs.prepare.result == 'success' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -89,12 +95,32 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.47.6
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
 
       - name: Pub get
         run: flutter pub get
+
+      # 签名：把 secrets 里的 keystore 落盘 + 生成 key.properties。
+      # ⚠ 没有这一步，Gradle 会**静默回落 debug 签名**（构建照样绿，产物却不能用）——
+      # 而 debug keystore 是公开的 = 等于没有签名防护。守门测试锁住本步骤。
+      - name: Set up signing
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          set -e
+          test -n "$KEYSTORE_BASE64" || { echo "::error::missing secret KEYSTORE_BASE64"; exit 1; }
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/kangtu-release.jks
+          cat > android/key.properties <<EOF
+          storePassword=$KEYSTORE_PASSWORD
+          keyPassword=$KEY_PASSWORD
+          keyAlias=$KEY_ALIAS
+          storeFile=kangtu-release.jks
+          EOF
 
       - name: Build split APKs
         env:
@@ -106,20 +132,8 @@ jobs:
           set -e
           ARGS=""
           if [ -n "${{ needs.prepare.outputs.build }}" ]; then
-            NAME="${{ needs.prepare.outputs.version }}"
-            BUILD="${{ needs.prepare.outputs.build }}"
-          else
-            # 兜底（手动 dispatch 无 prepare 输出）：与 prepare 步同一套解析，
-            # 用 [[:space:]]* 吃掉“version: ”后的空格，避免 name 带前导空格（ISS-156）
-            RAW=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
-            NAME=${RAW%%+*}
-            BUILD=${RAW##*+}
+            ARGS="--build-name=${{ needs.prepare.outputs.version }} --build-number=${{ needs.prepare.outputs.build }}"
           fi
-          # fail-loud：版本名不得为空或含空白（B7，防再出 ISS-156 类静默滑过）
-          case "$NAME" in
-            ""|*[[:space:]]*) echo "::error::bad version name '$NAME'"; exit 1 ;;
-          esac
-          ARGS="--build-name=${NAME} --build-number=${BUILD}"
           flutter build apk --release --split-per-abi $ARGS
           ls -l build/app/outputs/flutter-apk/
 
@@ -131,6 +145,7 @@ jobs:
           mv $D/app-armeabi-v7a-release.apk "$D/kangtu-armeabi-v7a.apk"
           mv $D/app-x86_64-release.apk      "$D/kangtu-x86_64.apk"
           ls -l $D
+          # 资产名必须与 assets/app_version.json 的 download_urls 逐字一致（有守门测试锁）
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
@@ -140,17 +155,18 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-  # ③ 建/更新 Release + 回写 app_version.json（应用端的版本清单）
+  # ③ 建/更新 Release + 回写 assets/app_version.json（含每个 ABI 的 sha256）
   publish:
     needs: [prepare, build]
-    if: needs.build.result == 'success'
+    # build 成功即可发版（dispatch 下 prepare 恒 skipped，不能用 needs 全成功判定）
+    if: always() && needs.build.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0  # 生成发行说明需要完整历史与 tags
+          fetch-depth: 0
 
       - uses: actions/download-artifact@v4
         with:
@@ -161,16 +177,9 @@ jobs:
         id: v
         run: |
           set -e
-          if [ -n "${{ needs.prepare.outputs.version }}" ]; then
-            V="${{ needs.prepare.outputs.version }}"
-            B="${{ needs.prepare.outputs.build }}"
-          else
-            # 兜底：同 build 步，吃掉“version: ”后的空格（ISS-156）
-            RAW=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
-            V=${RAW%%+*}
-            B=${RAW##*+}
-          fi
-          # fail-loud：空/含空白版本名直接失败（避免生成非法 tag，如 “v 1.1.0.31”）
+          RAW=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
+          V=${RAW%%+*}
+          B=${RAW##*+}
           case "$V" in
             ""|*[[:space:]]*) echo "::error::bad version name '$V'"; exit 1 ;;
           esac
@@ -178,7 +187,6 @@ jobs:
           echo "build=${B}" >> "$GITHUB_OUTPUT"
           echo "tag=v${V}.${B}" >> "$GITHUB_OUTPUT"
 
-      # 发行说明：取「上个 tag 之后」的提交（滤掉机器人 chore 提交），无则兜底一行
       - name: Build release notes
         run: |
           set -e
@@ -188,16 +196,11 @@ jobs:
           } > raw.md || true
           grep -vE 'chore\((version|update)\)|\[skip ci\]' raw.md > notes.md || true
           if [ ! -s notes.md ]; then echo "- 维护更新（${{ steps.v.outputs.tag }}）" > notes.md; fi
-          # 人工正文优先：docs/RELEASE_NOTES.md 存在则**替代**上面自动生成的提交列表
-          # （用户视角的正文由人写更可读；原始提交列表在 GitHub 的 compare 视图里仍可查）。
-          # 每次发版前更新该文件；不需要人工正文时删掉它，即回退到自动提交列表（ISS-220）。
+          # 人工正文优先：docs/RELEASE_NOTES.md 存在则替代自动提交列表
           if [ -f docs/RELEASE_NOTES.md ] && [ -s docs/RELEASE_NOTES.md ]; then
             cp docs/RELEASE_NOTES.md notes.md
           fi
-          # 置顶块：docs/RELEASE_HEAD.md 存在就放在发行说明最前面。
-          # 用途：把「必须先导出备份」这类**用户在更新弹窗里就得看见**的话顶上去 ——
-          # 因为下面 Write back 那步的 desc 直接取 notes.md，弹窗展示的就是它。
-          # 一次性提示用完请把该文件删掉（ISS-215 / RISK-102）。
+          # 置顶块：docs/RELEASE_HEAD.md 存在则放最前（迁移警示这类必须被用户看到的话）
           if [ -f docs/RELEASE_HEAD.md ]; then
             cat docs/RELEASE_HEAD.md > head.md
             printf '\n\n' >> head.md
@@ -206,7 +209,6 @@ jobs:
           fi
           echo '--- notes ---'; cat notes.md
 
-      # 一律发「预发行版」（Howe 2026-10-25 定），并把发行说明写进去
       - name: Publish release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -229,8 +231,11 @@ jobs:
           MIRROR="https://gh-proxy.com/${BASE}"
           MIRROR2="https://ghproxy.net/${BASE}"
           MIRROR3="https://ghproxy.cc/${BASE}"
-          # 更新内容写进清单 desc（App 更新弹窗会展示）；page_url 指向该 tag
-          # （不再用 /releases/latest —— 那个会跳过预发行版）
+          # 每个 ABI 的 SHA-256：应用内更新会据此校验下载包（防镜像篡改/截断）——
+          # **必须有**，否则更新模块的完整性校验形同虚设（有守门测试锁）
+          S1=$(sha256sum apks/kangtu-arm64-v8a.apk   | cut -d' ' -f1)
+          S2=$(sha256sum apks/kangtu-armeabi-v7a.apk | cut -d' ' -f1)
+          S3=$(sha256sum apks/kangtu-x86_64.apk      | cut -d' ' -f1)
           DESC=$(python3 -c "import json;print(json.dumps(open('notes.md',encoding='utf-8').read().strip(), ensure_ascii=False))")
           cat > assets/app_version.json <<EOF
           {
@@ -242,6 +247,11 @@ jobs:
               "arm64-v8a": "${BASE}/kangtu-arm64-v8a.apk",
               "armeabi-v7a": "${BASE}/kangtu-armeabi-v7a.apk",
               "x86_64": "${BASE}/kangtu-x86_64.apk"
+            },
+            "sha256": {
+              "arm64-v8a": "${S1}",
+              "armeabi-v7a": "${S2}",
+              "x86_64": "${S3}"
             },
             "mirror_urls": {
               "arm64-v8a": "${MIRROR}/kangtu-arm64-v8a.apk",

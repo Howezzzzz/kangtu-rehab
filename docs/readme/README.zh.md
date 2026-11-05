@@ -1,5 +1,4 @@
-> ⚠️ **本文件是上游项目 GymMane 的中文 README，仅作参考保留。**
-> 康途（本 fork）的权威说明在[根目录 README](../../README.md)；本页的下载徽章指向的是**上游 GymMane**（包名 `com.gymmane.app`），不是康途。
+> ⚠️ 本文件是**上游 GymMane 的多语言 README**，仅作参考保留。康途（本 fork）的权威说明在[根目录 README](../../README.md)，其下载链接指向上游，**不是康途**。
 
 <div align="center">
 

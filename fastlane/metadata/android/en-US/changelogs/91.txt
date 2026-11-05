@@ -1,4 +1,4 @@
-GymMane 1.8.0
+Kangtu 1.8.0
 
 • Health section with your Health Connect data
 • Record trophies while you train

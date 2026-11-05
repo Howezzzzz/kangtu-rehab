@@ -16,7 +16,6 @@ import '../services/gallery.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import '../widgets/brand_mark.dart';
 import '../widgets/liquid_notch.dart';
 import '../widgets/ui_kit.dart';
 
@@ -404,9 +403,11 @@ class _Sticker extends StatelessWidget {
   }
 
   Widget _mark({double size = 12}) => Row(mainAxisSize: MainAxisSize.min, children: [
-        BrandMark(
+        Image.asset(
+          'assets/img/runner.png',
           height: size + 5,
           color: color.withValues(alpha: 0.9),
+          colorBlendMode: BlendMode.srcIn,
         ),
         const SizedBox(width: 5),
         Text(t.appName, style: _s(size, FontWeight.w900, alpha: 0.9, spacing: 0.2)),

@@ -1,5 +1,3 @@
-import 'progression.dart';
-
 enum SetKind { normal, warmup, drop, failure, restPause, cluster }
 
 SetKind setKindFrom(Object? raw) {
@@ -114,8 +112,7 @@ class LoggedExercise {
 }
 
 class LoggedSession {
-LoggedSession(this.date, this.durationSec, this.exercises,
-      {this.routineId, this.name, this.hrAvg, this.hrMax, this.sleep, this.energy, this.feel, this.painArea = '', this.painLevel = 0, this.note = '', this.deload = false});
+  LoggedSession(this.date, this.durationSec, this.exercises, {this.routineId, this.name, this.hrAvg, this.hrMax, this.sleep, this.energy, this.deload = false});
   final DateTime date;
   int durationSec;
   final List<LoggedExercise> exercises;
@@ -127,20 +124,6 @@ LoggedSession(this.date, this.durationSec, this.exercises,
   int? energy;
   final bool deload;
 
-  /// 训练后主观反馈：整体感觉 0=很轻松 1=刚好 2=吃力 3=拼到底（null 未记录）
-  int? feel;
-
-  /// 不适部位（kMuscles 的 id，空 = 没有不适）
-  String painArea;
-
-  /// 不适程度 0-10
-  int painLevel;
-
-  /// 一句话记录
-  String note;
-
-  bool get hasFeedback => feel != null || painArea.isNotEmpty || note.trim().isNotEmpty;
-
   DateTime get day => date.subtract(Duration(seconds: durationSec));
   double get volume => exercises.fold(0.0, (s, e) => s + e.volume);
   int get setCount => exercises.fold(0, (s, e) => s + e.workingSets.length);
@@ -151,15 +134,10 @@ LoggedSession(this.date, this.durationSec, this.exercises,
         'ex': exercises.map((e) => e.toJson()).toList(),
         if (routineId != null) 'r': routineId,
         if (name != null) 'n': name,
-
         if (hrAvg != null) 'hra': hrAvg,
         if (hrMax != null) 'hrm': hrMax,
         if (sleep != null) 'sl': sleep,
         if (energy != null) 'en': energy,
-        if (feel != null) 'feel': feel,
-        if (painArea.isNotEmpty) 'pa': painArea,
-        if (painLevel > 0) 'pl': painLevel,
-        if (note.trim().isNotEmpty) 'note': note,
         if (deload) 'dl': true,
       };
   factory LoggedSession.fromJson(Map<String, dynamic> j) => LoggedSession(
@@ -168,15 +146,10 @@ LoggedSession(this.date, this.durationSec, this.exercises,
         (j['ex'] as List).map((e) => LoggedExercise.fromJson(e as Map<String, dynamic>)).toList(),
         routineId: j['r'] as String?,
         name: j['n'] as String?,
-
         hrAvg: (j['hra'] as num?)?.toInt(),
         hrMax: (j['hrm'] as num?)?.toInt(),
         sleep: (j['sl'] as num?)?.toInt().clamp(1, 5),
         energy: (j['en'] as num?)?.toInt().clamp(1, 5),
-        feel: (j['feel'] as num?)?.toInt(),
-        painArea: (j['pa'] ?? '') as String,
-        painLevel: ((j['pl'] ?? 0) as num).toInt(),
-        note: (j['note'] ?? '') as String,
         deload: j['dl'] == true,
       );
 }
@@ -278,8 +251,6 @@ class Routine {
       Set<String>? chained,
       Map<String, List<PlannedSet>>? plan,
       Map<String, int>? rest,
-      Map<String, ProgSpec>? prog,
-      this.progInst,
       List<List<String>>? ladders,
       Map<String, List<String>>? alts,
       this.group = '',
@@ -289,7 +260,6 @@ class Routine {
         chained = chained ?? {},
         plan = plan ?? {},
         rest = rest ?? {},
-        prog = prog ?? {},
         ladders = ladders ?? [],
         alts = alts ?? {};
   final String id;
@@ -305,14 +275,6 @@ class Routine {
   final List<List<String>> ladders;
   final Map<String, List<String>> alts;
 
-  /// 每个动作的自动渐进规则(空 = 无自动渐进,行为与旧版一致)
-  final Map<String, ProgSpec> prog;
-
-  /// 所属计划实例 id(FitState.programStates 的 key;同模板生成的多个训练日共享)
-  String? progInst;
-
-  bool get hasProg => prog.isNotEmpty;
-
   Map<String, dynamic> toJson() => {
         'id': id,
         'n': name,
@@ -327,8 +289,6 @@ class Routine {
         if (archived) 'a': true,
         if (plan.isNotEmpty)
           'p': plan.map((k, v) => MapEntry(k, v.map((s) => s.toJson()).toList())),
-        if (prog.isNotEmpty) 'pr': prog.map((k, v) => MapEntry(k, v.toJson())),
-        if (progInst != null) 'pi': progInst,
       };
   factory Routine.fromJson(Map<String, dynamic> j) => Routine(
         j['id'] as String,
@@ -343,9 +303,6 @@ class Routine {
             )),
         rest: ((j['r'] as Map?) ?? const {})
             .map((k, v) => MapEntry(k as String, ((v as num).toInt()).clamp(0, 600))),
-        prog: ((j['pr'] as Map?) ?? const {})
-            .map((k, v) => MapEntry(k as String, ProgSpec.fromJson((v as Map).cast<String, dynamic>()))),
-        progInst: j['pi'] as String?,
         ladders: [
           for (final l in (j['lad'] as List?) ?? const [])
             if (l is List && l.length > 1) l.cast<String>().toList(),

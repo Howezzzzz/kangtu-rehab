@@ -1,4 +1,4 @@
-GymMane 1.7.0
+Kangtu 1.7.0
 
 • Automatic backups to a folder you choose
 • Progression rules for each exercise

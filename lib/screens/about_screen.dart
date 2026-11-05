@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,14 +7,15 @@ import '../l10n/l10n.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
+import '../widgets/update_flow.dart';
 
-const _kAuthorUrl = 'https://github.com/Howezzzzz';
-const _kRepoUrl = 'https://github.com/Howezzzzz/kangtu-rehab';
-const _kUpstreamUrl = 'https://github.com/InlitX/GymMane';
-const _kRepdbUrl = 'https://repdb.co';
+const kAppVersion = '2.0.0';
+const _kAuthor = 'InlitX';
+const _kAuthorUrl = 'https://github.com/InlitX';
+const _kRepoUrl = 'https://github.com/InlitX/GymMane';
+const _kKofiUrl = 'https://ko-fi.com/inlitx';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -41,7 +41,7 @@ class AboutScreen extends StatelessWidget {
               titleSpacing: 1,
             ),
             const SizedBox(height: 18),
-            _hero(gc),
+            _hero(context, gc),
             const SizedBox(height: 20),
             _group(gc, [
               (PhosphorIconsRegular.gift, t.freeForever, t.freeForeverWhy),
@@ -73,7 +73,7 @@ class AboutScreen extends StatelessWidget {
   Widget _sectionLabel(GymColors gc, String label) => Text(label.toUpperCase(),
       style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4));
 
-  Widget _hero(GymColors gc) {
+  Widget _hero(BuildContext context, GymColors gc) {
     return Container(
       height: 178,
       clipBehavior: Clip.antiAlias,
@@ -107,7 +107,7 @@ class AboutScreen extends StatelessWidget {
             bottom: 14,
             child: Opacity(
               opacity: 0.6,
-              child: BrandMark(fit: BoxFit.fitHeight),
+              child: Image.asset('assets/img/runner.png', fit: BoxFit.fitHeight),
             ),
           ),
           Padding(
@@ -119,24 +119,34 @@ class AboutScreen extends StatelessWidget {
                 Text(t.appName,
                     style: AppTheme.f(33, weight: FontWeight.w800, color: gc.text, letterSpacing: -0.5)),
                 const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: gc.bgRaised2,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: FutureBuilder<PackageInfo>(
-                    future: PackageInfo.fromPlatform(),
-                    builder: (context, snap) {
-                      final p = snap.data;
-                      // 运行时读系统真实版本（versionName + versionCode），
-                      // 避免源码硬编码与 pubspec/清单三处失同步（2026-10-26 重构）。
-                      final label =
-                          p == null ? '' : '${p.version} (${p.buildNumber})';
-                      return Text(t.version(label),
-                          style: AppTheme.f(11.5,
-                              weight: FontWeight.w600, color: gc.textSecondary));
-                    },
+                // 版本徽标 = 检查更新入口（版本号旁边最自然）；有新版时带一个小圆点
+                InkWell(
+                  onTap: () => checkForUpdates(context),
+                  borderRadius: BorderRadius.circular(100),
+                  child: ValueListenableBuilder<int?>(
+                    valueListenable: updateFoundBuild,
+                    builder: (_, build, _) => Row(mainAxisSize: MainAxisSize.min, children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: gc.bgRaised2,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Text(t.version(kAppVersion),
+                            style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textSecondary)),
+                      ),
+                      if (build != null) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(color: gc.ember, shape: BoxShape.circle),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(t.updateAvailableShort,
+                            style: AppTheme.f(11.5, weight: FontWeight.w700, color: gc.ember)),
+                      ],
+                    ]),
                   ),
                 ),
               ],
@@ -196,10 +206,9 @@ class AboutScreen extends StatelessWidget {
 
   Widget _credits(GymColors gc) {
     final rows = <(IconData, String, String, String, Color?)>[
-      (PhosphorIconsFill.heart, t.madeWithLoveBy, t.appName, _kAuthorUrl, gc.accent),
-      (PhosphorIconsRegular.githubLogo, t.sourceCode, 'Howezzzzz/kangtu-rehab', _kRepoUrl, null),
-      (PhosphorIconsRegular.database, 'REPDB', t.aboutRepdbNote, _kRepdbUrl, null),
-      (PhosphorIconsRegular.shieldCheck, t.aboutOssTitle, t.aboutOssBody, _kUpstreamUrl, null),
+      (PhosphorIconsFill.heart, t.madeWithLoveBy, _kAuthor, _kAuthorUrl, gc.accent),
+      (PhosphorIconsRegular.githubLogo, t.sourceCode, 'InlitX/GymMane', _kRepoUrl, null),
+      (PhosphorIconsRegular.coffee, t.buyCoffee, 'ko-fi.com/inlitx', _kKofiUrl, null),
     ];
     return Container(
       clipBehavior: Clip.antiAlias,

@@ -323,9 +323,9 @@ void main() {
       test('cada ejercicio de cada plantilla existe en el catálogo', () {
         for (final template in kProgramTemplates) {
           for (final day in template.days) {
-            for (final e in day.exercises) {
-              expect(fit.matchExerciseByName(e.name), isNotNull,
-                  reason: '${template.name} · ${e.name}');
+            for (final (name, _) in day.exercises) {
+              expect(fit.matchExerciseByName(name), isNotNull,
+                  reason: '${template.name} · $name');
             }
           }
         }
@@ -349,8 +349,7 @@ void main() {
 
       test('coloca los días solo si el plan semanal estaba vacío', () {
         fit.applyTemplate(kProgramTemplates.firstWhere((x) => x.id == 'stronglifts'));
-        // 康途定制：StrongLifts 模板为 3 个训练日（周一/三/五），非上游的 2 日
-        expect(fit.weeklyPlan.length, 3);
+        expect(fit.weeklyPlan.length, 2);
 
         final before = Map.of(fit.weeklyPlan);
         fit.applyTemplate(kProgramTemplates.firstWhere((x) => x.id == 'ppl'));

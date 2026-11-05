@@ -223,7 +223,7 @@ Future<void> shareWorkoutFit(LoggedSession s) async {
     final dir = await getTemporaryDirectory();
     final d = s.date;
     final stamp = '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-    final file = File('${dir.path}/${t.appName} $stamp.fit');
+    final file = File('${dir.path}/Kangtu $stamp.fit');
     await file.writeAsBytes(workoutFit(s, pounds: fit.isLb));
     await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: t.exportForStravaHint));
   } catch (_) {}

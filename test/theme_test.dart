@@ -28,11 +28,11 @@ void main() {
 
     double warmth(Color c) => (c.r - c.b) * 255;
 
-    // 康途定制：浅色场是「薄荷」渐变（#EEF9F7 → #D2EDE9），浅中性色刻意偏冷
-    // （蓝 ≥ 红），不是上游的暖骨白。故断言为 warmth < 0。
-    test('light neutrals sit on the mint field', () {
+    // 上游的品牌是暖调中性灰；康途改为青绿品牌色，此处断言随之改为「冷调青绿（蓝>红）」。
+    // 设计规则已随品牌变更（2026-11-05 品牌移植），对比度等可读性断言保持不变。
+    test('light neutrals carry the brand teal tint (cool, not neutral grey)', () {
       for (final c in [GymColors.light.bg, GymColors.light.bgRaised2, GymColors.light.border]) {
-        expect(warmth(c), lessThan(0), reason: 'no es menta: $c');
+        expect(warmth(c), lessThan(0), reason: 'debería llevar el tinte teal de marca: $c');
       }
     });
 

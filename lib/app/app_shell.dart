@@ -10,7 +10,6 @@ import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 import '../l10n/l10n.dart';
 import '../screens/about_screen.dart';
 import '../screens/ai_plan_screen.dart';
-import '../screens/baseline_screen.dart';
 import '../screens/compare_screen.dart';
 import '../screens/exercise_detail_screen.dart';
 import '../screens/exercises_screen.dart';
@@ -25,11 +24,6 @@ import '../screens/onboarding_screen.dart';
 import '../screens/places_screen.dart';
 import '../screens/plan_import_sheet.dart';
 import '../screens/progress_screen.dart';
-import '../screens/log_screen.dart';
-import '../screens/rehab_episode_screen.dart';
-import '../screens/rehab_episodes_screen.dart';
-import '../screens/rehab_home_screen.dart';
-import '../screens/rehab_screen.dart';
 import '../screens/routine_edit_screen.dart';
 import '../screens/routines_screen.dart';
 import '../screens/session_screen.dart';
@@ -601,20 +595,6 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
     switch (fit.route) {
       case 'progress':
         return ProgressScreen();
-      case 'rehab':
-        return const RehabHomeScreen();
-      case 'rehab-book':
-        return const RehabScreen();
-      case 'rehab-episodes':
-        return const RehabHomeScreen();
-      case 'rehab-episode-new':
-        return const RehabNewEpisodeScreen();
-      case 'rehab-episode':
-        return const RehabEpisodeScreen();
-      case 'log':
-        return const LogScreen();
-      case 'baseline':
-        return const BaselineScreen();
       case 'train':
         return TrainScreen();
       case 'session':
@@ -835,15 +815,7 @@ class _NavBarState extends State<_NavBar> {
   int get _selectedIndex {
     if (_hover != null) return _hover!;
     final i = _routes.indexOf(fit.route);
-    if (i >= 0) return i;
-    // 「康复」是「我的」页里的子页面，气泡应该停在“我的”上，而不是弹回首页
-    if (fit.route == 'rehab' ||
-        fit.route == 'rehab-episodes' ||
-        fit.route == 'rehab-episode-new' ||
-        fit.route == 'rehab-episode') {
-      return 3;
-    }
-    return 0;
+    return i < 0 ? 0 : i;
   }
 
   double _slotX(int i) => switch (i) {
@@ -892,11 +864,7 @@ class _NavBarState extends State<_NavBar> {
     return LayoutBuilder(
         builder: (context, c) {
           _slotW = c.maxWidth - 28;
-          // 间隙必须与 Row 里实际用的间距**完全一致**：不做上限截断（截断后
-          // spaceBetween 仍会均分更大的剩余空间 → 气泡与真实标签错位，宽屏尤甚）。
-          // 2026-10-31 用户报告「标签与阴影又对不上」＝上游 1.8.0 把此处改回 clamp(0,40)；
-          // 回归测试见 test/tab_bar_alignment_test.dart，请勿再截断。
-          _gap = ((_slotW - 4 * _iw - _fabW) / 4).clamp(0.0, double.infinity);
+          _gap = ((_slotW - 4 * _iw - _fabW) / 4).clamp(0.0, 40.0);
           final drag = _dragX;
 
           return Stack(
@@ -953,20 +921,14 @@ class _NavBarState extends State<_NavBar> {
                     if (_dragX != null) _dragEnd();
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    // 用显式间隙而非 spaceBetween：气泡(_slotX)与真图标共用同一个 _gap，
-                    // 从构造上保证对齐（不依赖 Flutter 的 spaceBetween 分配）。
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _item(context, 0, PhosphorIconsRegular.house, PhosphorIconsFill.house, t.home, fit.goHome),
-                      SizedBox(width: _gap),
                       _item(context, 1, PhosphorIconsRegular.chartLineUp, PhosphorIconsFill.chartLineUp, t.progress,
                           fit.goProgress),
-                      SizedBox(width: _gap),
                       _fab(context),
-                      SizedBox(width: _gap),
                       _item(context, 2, PhosphorIconsRegular.barbell, PhosphorIconsFill.barbell, t.exercises,
                           fit.goExercises),
-                      SizedBox(width: _gap),
                       _item(context, 3, PhosphorIconsRegular.userCircle, PhosphorIconsFill.userCircle, t.profile.toUpperCase(),
                           fit.goSettings),
                     ],

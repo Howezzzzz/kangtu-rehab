@@ -58,7 +58,7 @@ String _slug(String s) =>
     s.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '-').replaceAll(RegExp(r'^-+|-+$'), '');
 
 Future<Uint8List> buildPlanPdf(List<Routine> routines, {bool week = false, DateTime? now}) async {
-  final runner = await _loadImage('assets/img/brand_full.png');
+  final runner = await _loadImage('assets/img/runner.png');
   final arts = <String, ExerciseArtData>{};
   for (final r in routines) {
     for (final id in r.exerciseIds) {
@@ -617,7 +617,7 @@ class _PlanDoc {
 
 const _author = 'InlitX';
 const _app = 'Kangtu';
-const _site = 'https://github.com/Howezzzzz/kangtu-rehab';
+const _site = 'https://github.com/InlitX/GymMane';
 
 String _two(int n) => n.toString().padLeft(2, '0');
 

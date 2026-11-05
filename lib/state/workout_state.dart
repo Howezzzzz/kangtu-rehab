@@ -286,16 +286,11 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final last = lastSetsFor(id).where((l) => l.counts).toList();
     final mode = modeOf(id);
     final List<SessionSet> base;
-    // RISK-043/040：prog 驱动时开场组走计划——**有无历史都适用**（_nextPlan 对
-    // mode 非空会自行返回 null）。无历史若不走计划，会落到硬编码默认（20kg），
-    // 使「计划只标首组重量、其余留空」的组继承到错值（RISK-040）。
-    final plan = (hasProgress(id) || _progDriven(id)) ? _nextPlan(id) : null;
     if (mode.isNotEmpty) {
       base = _modeOpeners(mode, last, id);
-    } else if (plan != null) {
-      base = plan.sets;
     } else if (last.isNotEmpty) {
-      base = last.map((l) => SessionSet(l.reps, l.weight, false)).toList();
+      final plan = hasProgress(id) ? _nextPlan(id) : null;
+      base = plan?.sets ?? last.map((l) => SessionSet(l.reps, l.weight, false)).toList();
     } else {
       final w = isRepsOnly(id) ? 0.0 : 20.0;
       base = [for (var i = 0; i < kDefaultRoutineSets; i++) SessionSet(10, w, false)];
@@ -309,31 +304,13 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     ];
   }
 
-  bool _drivesSets(String id) =>
-      hasProgress(id) && progressRule(id).kind == ProgressKind.volume && !_progDriven(id);
+  bool _drivesSets(String id) => hasProgress(id) && progressRule(id).kind == ProgressKind.volume;
 
   bool _drivesReps(String id) {
-    if (_progDriven(id)) return false; // prog 计划驱动时，上游规则不得改写目标组次
     if (!hasProgress(id)) return false;
     final kind = progressRule(id).kind;
     return kind == ProgressKind.double || kind == ProgressKind.volume || kind == ProgressKind.amrap;
   }
-
-  /// 计划周期(prog)引擎的驱动例程：会话内以 sessionRoutine 为准；
-  /// 会话外（如动作详情页）取唯一个带该动作 prog 的非归档例程（多个则不臆断→null）。
-  Routine? _progRoutineFor(String id) {
-    final sr = sessionRoutine;
-    if (sr != null) return sr.prog.containsKey(id) ? sr : null;
-    // 会话外：可能有多个例程带该动作的计划（如复制例程后）→ 取第一个（确定性），
-    // 避免 null 导致详情页回落到上游引擎（与 progStepOf/progTmOf 口径一致）。
-    for (final r in routines) {
-      if (r.archived || !r.prog.containsKey(id)) continue;
-      return r;
-    }
-    return null;
-  }
-
-  bool _progDriven(String id) => _progRoutineFor(id) != null;
 
   static const deloadAfter = 3;
 
@@ -383,30 +360,6 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
 
   ({List<SessionSet> sets, double weightKg, int reps, NextMove move})? _nextPlan(String id) {
     if (modeOf(id).isNotEmpty) return null;
-    // 计划动作:渐进引擎已把下次目标写进 plan,直接读
-    final pr = _progRoutineFor(id);
-    if (pr != null) {
-      final planned = (pr.plan[id] ?? const [])
-          .where((p) => p.kind != SetKind.warmup && (p.reps ?? 0) > 0)
-          .toList();
-      if (planned.isNotEmpty && planned.first.reps != null) {
-        final w = planned.first.weightKg ?? 0;
-        if (w > 0 || isRepsOnly(id)) {
-          return (
-            sets: [
-              for (final p in planned)
-                // 重量缺省沿用首组重量（而非 0）；保留 kind/sec/km（ISS-155）
-                SessionSet(p.reps ?? planned.first.reps!, p.weightKg ?? w, false,
-                    kind: p.kind, sec: p.sec, km: p.km),
-            ],
-            weightKg: w,
-            reps: planned.first.reps!,
-            move: NextMove.hold,
-          );
-        }
-      }
-      return null; // RISK-043：prog 驱动但计划暂无可用目标 → 不回落到上游规则
-    }
     final rule = progressRule(id);
     if (rule.kind == ProgressKind.manual) return null;
     final last = lastSetsFor(id).where((l) => l.counts).toList();
@@ -506,8 +459,6 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
   }
 
   String? nextWhy(String id) {
-    // 计划周期(prog)驱动的动作：目标来自计划，不能落进「保持」文案（否则与显示的重量×次数矛盾）
-    if (_progDriven(id)) return t.nextByPlan;
     final target = nextTarget(id);
     if (target == null) return null;
     final amrap = progressRule(id).kind == ProgressKind.amrap && !isRepsOnly(id);
@@ -526,9 +477,9 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final target = nextTarget(id);
     if (target == null) return null;
     if (isRepsOnly(id)) return '${target.reps} ${t.repsCol.toLowerCase()}';
-    // 组间目标不一致时逐组展示（如 531 波浪周；prog 计划恒 hold）（ISS-155）
-    final reps =
-        target.perSet.toSet().length > 1 ? target.perSet.join('/') : '${target.reps}';
+    final reps = target.move == NextMove.reps && target.perSet.toSet().length > 1
+        ? target.perSet.join('/')
+        : '${target.reps}';
     final main = '${weightLabel(target.weightKg)} × $reps';
     return target.move == NextMove.addSet ? '${target.sets} × $main' : main;
   }
@@ -539,15 +490,12 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       Set<String> chained = const {},
       String? routineId,
       DateTime? on}) {
-    progFeedback = [];
     final s = WorkoutSession()..routineId = routineId;
     if (on != null) {
       s.loggedAt = DateTime(on.year, on.month, on.day, 12);
       s.manual = true;
     }
     logDay = null;
-    // 先挂上 session，使 routine 上下文在构建开场组时可用（否则 prog 计划优先级不生效）
-    session = s;
     s.exercises = exs
         .map((ex) => SessionExercise(
               ex.id,
@@ -564,6 +512,7 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     sessionLocked = false;
     countdownUntil = startCountdown && !s.manual ? DateTime.now().add(countdownLength) : null;
     _startTicking(from: countdownUntil);
+    session = s;
     route = 'session';
     persistNow();
     notifyListeners();
@@ -1737,16 +1686,6 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
         }
       }
       final entry = LoggedSession(s.loggedAt ?? DateTime.now(), s.summaryDuration ?? 0, logged, routineId: s.routineId, name: s.name, deload: s.deload);
-
-      final carried = _carriedFeedback;
-      if (carried != null && !entry.hasFeedback) {
-        entry
-          ..feel = carried.feel
-          ..painArea = carried.painArea
-          ..painLevel = carried.painLevel
-          ..note = carried.note;
-      }
-      _carriedFeedback = null;
       sessions.add(entry);
       sessions.sort((a, b) => a.date.compareTo(b.date));
       _rotationBefore = (rotationNextId, rotationRestDay);
@@ -1757,13 +1696,9 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
       _photosFrom = null;
       _computeSummaryHighlights(entry);
       _offerLevelUp(entry);
-      final progRoutine = sessionRoutine;
-      if (progRoutine != null) runProgression(this, progRoutine, entry);
       healthSave(entry);
-
     } else {
       _filed = null;
-      progFeedback = [];
       summaryPrs = 0;
       summaryVsLast = null;
       summaryFirstTime = false;
@@ -1808,8 +1743,6 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
 
   void _planFromSession(String routineId, SessionExercise ex) {
     if (ex.sets.isEmpty) return;
-    // RISK-050：prog 驱动的动作其 plan 由引擎独占，不被本次训练写回覆盖
-    if (_progDriven(ex.id)) return;
     setPlannedSets(routineId, ex.id, [
       for (final st in ex.sets)
         PlannedSet(
@@ -2090,39 +2023,10 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
   }
 
   LoggedSession? _filed;
-  /// FB-06：续训时暂存用户已填的反馈，等本次训练真正完成再写回新归档条目
-  LoggedSession? _carriedFeedback;
   DateTime? _photosFrom;
   (String, DateTime?)? _rotationBefore;
 
-  /// 刚结束的那次训练（完成页用来写反馈）
   LoggedSession? get filedSession => _filed;
-
-  /// 写入训练后反馈（完成页 / 历史详情共用）
-  /// FB-02：无部位时不留下孤立的 painLevel（避免存了却不显示的状态）
-  /// FB-04：clearFeel 用于「取消选中感觉档」——null 表示“不改”，不再被静默忽略
-  void setSessionFeedback(LoggedSession s,
-      {int? feel, bool clearFeel = false, String? painArea, int? painLevel, String? note}) {
-    if (clearFeel) {
-      s.feel = null;
-    } else if (feel != null) {
-      s.feel = feel;
-    }
-    if (painArea != null) s.painArea = painArea;
-    if (painLevel != null) s.painLevel = s.painArea.isEmpty ? 0 : painLevel;
-    if (note != null) s.note = note;
-    persistNow();
-    notifyListeners();
-  }
-
-  void clearSessionFeedback(LoggedSession s) {
-    s.feel = null;
-    s.painArea = '';
-    s.painLevel = 0;
-    s.note = '';
-    persistNow();
-    notifyListeners();
-  }
 
   void renameSession(LoggedSession s, String name) {
     final clean = name.trim().isEmpty ? null : name.trim();
@@ -2202,8 +2106,6 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     final filed = _filed;
     if (filed != null) {
       sessions.remove(filed);
-      // FB-06：续训不等于放弃，用户已填的反馈先存着
-      if (filed.hasFeedback) _carriedFeedback = filed;
       _photosFrom = filed.date;
       final back = _rotationBefore;
       if (back != null) {
@@ -2277,7 +2179,6 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
     sessionLocked = false;
     session = null;
     _filed = null;
-    _carriedFeedback = null;
     _votes.clear();
     selectedMuscles.clear();
     sessionPicks.clear();

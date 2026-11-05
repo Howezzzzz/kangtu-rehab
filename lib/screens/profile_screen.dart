@@ -14,7 +14,6 @@ import '../services/media_store.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import '../widgets/entry_row.dart';
 import '../widgets/entrance.dart';
 import '../widgets/file_thumb.dart';
 import '../widgets/glass.dart';
@@ -220,37 +219,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           count: fit.sessions.isEmpty ? null : '${fit.sessions.length}',
                           onMore: fit.sessions.isEmpty ? null : fit.goHistory,
                           child: _year(gc)),
-                    ),
-                    const SizedBox(height: 30),
-                    // 康途定制：康复模块入口
-                    // 融合 2.5：改用上游同款分区标题（_heading，与「快照」区一致），不再把三张
-                    // 卡裸挂在页面尾部；卡片规格统一由 EntryRow 定义（与首页康复/日志入口同一套）。
-                    Rise(
-                      index: 5,
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                        _heading(gc, t.rehabTitle),
-                        const SizedBox(height: 16),
-                        EntryRow(
-                          icon: EntryIcons.episodes,
-                          title: t.rehabArchiveTitle,
-                          detail: t.rehabArchiveBlurb,
-                          onTap: fit.goRehab,
-                        ),
-                        const SizedBox(height: 10),
-                        EntryRow(
-                          icon: EntryIcons.book,
-                          title: t.rehabBookTitle,
-                          detail: t.rehabBookBlurbShort,
-                          onTap: fit.goRehabBook,
-                        ),
-                        const SizedBox(height: 10),
-                        EntryRow(
-                          icon: EntryIcons.baseline,
-                          title: t.baselineTitle,
-                          detail: t.baselineSubtitle,
-                          onTap: fit.goBaseline,
-                        ),
-                      ]),
                     ),
                   ],
                 ),
@@ -917,7 +885,7 @@ class _ProfileHeader extends SliverPersistentHeaderDelegate {
         Row(
           children: [
             Flexible(
-              child: Text(p.name.isEmpty ? t.defaultAthleteName : p.name,
+              child: Text(p.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTheme.f(24, weight: FontWeight.w800, color: gc.text, letterSpacing: -0.3)),

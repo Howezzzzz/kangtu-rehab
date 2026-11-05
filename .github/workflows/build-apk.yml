@@ -1,20 +1,12 @@
 name: Build & Release
 
-# ⚠ 这不是康途的发布流水线。
-# 权威流水线是 .github/workflows/build.yml（push main 触发：自动加构建号 →
-# 构建 → 重命名 kangtu-<abi>.apk → 发 Release → 回写 assets/app_version.json）。
-# 本文件沿用上游的 F-Droid 可复现构建配方，只在 pull_request / 手动 dispatch 时跑，
-# 且**不会**回写 app_version.json。资产命名已与 build.yml 对齐（kangtu-<abi>.apk），
-# 免得手动 dispatch 出一版中文名资产、跟应用内更新通道对不上（ISS-215）。
-# 一律发预发行版：Howe 2026-10-25 定，两个 workflow 都保持 prerelease。
-
 on:
   pull_request:
     branches: [main]
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag / version, e.g. v1.0.0.29'
+        description: 'Release tag / version, e.g. v1.0.0'
         required: true
         type: string
 
@@ -64,29 +56,18 @@ jobs:
       - name: Build split APKs
         run: flutter build apk --release --split-per-abi
 
-      - name: Read version from pubspec
-        id: pkg
+      - name: Rename APKs
         run: |
-          V=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
-          echo "version=${V}" >> "$GITHUB_OUTPUT"
-          # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
-          echo "filever=${V//+/\.}" >> "$GITHUB_OUTPUT"
-
-      - name: Rename APKs to kangtu-<abi>.apk
-        run: |
-          set -e
           cd build/app/outputs/flutter-apk
-          # 与 build.yml 的命名逐字一致：assets/app_version.json 的 download_urls
-          # 就是按这三个名字生成的，改一处必须同步改另一处（有 test/release_pipeline_test.dart 守门）
-          mv app-arm64-v8a-release.apk     kangtu-arm64-v8a.apk
-          mv app-armeabi-v7a-release.apk   kangtu-armeabi-v7a.apk
-          mv app-x86_64-release.apk        kangtu-x86_64.apk
+          mv app-arm64-v8a-release.apk     GymMane-arm64-v8a.apk
+          mv app-armeabi-v7a-release.apk   GymMane-armeabi-v7a.apk
+          mv app-x86_64-release.apk        GymMane-x86_64.apk
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: kangtu-${{ steps.pkg.outputs.filever }}-apks
-          path: build/app/outputs/flutter-apk/kangtu-*.apk
+          name: gymmane-apks
+          path: build/app/outputs/flutter-apk/GymMane-*.apk
           if-no-files-found: error
 
   release:
@@ -107,8 +88,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 生成发行说明需要完整历史与 tags
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -141,12 +120,12 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > android/app/kangtu-release.jks
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/gymmane-release.jks
           cat > android/key.properties <<EOF
           storePassword=$KEYSTORE_PASSWORD
           keyPassword=$KEY_PASSWORD
           keyAlias=$KEY_ALIAS
-          storeFile=kangtu-release.jks
+          storeFile=gymmane-release.jks
           EOF
 
       # Reproducible build: version name AND code come entirely from pubspec.yaml
@@ -157,41 +136,19 @@ jobs:
       - name: Build split APKs
         run: flutter build apk --release --split-per-abi --split-debug-info=build/symbols
 
-      - name: Read version from pubspec
-        id: pkg
+      - name: Rename APKs
         run: |
-          V=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -1)
-          echo "version=${V}" >> "$GITHUB_OUTPUT"
-          # 文件名/产物名用点分（1.0.0.29），避免 + 在 URL/shell 里的歧义
-          echo "filever=${V//+/\.}" >> "$GITHUB_OUTPUT"
-
-      - name: Rename APKs to kangtu-<abi>.apk
-        run: |
-          set -e
           cd build/app/outputs/flutter-apk
-          # 与 build.yml 的命名逐字一致：assets/app_version.json 的 download_urls
-          # 就是按这三个名字生成的，改一处必须同步改另一处（有 test/release_pipeline_test.dart 守门）
-          mv app-arm64-v8a-release.apk     kangtu-arm64-v8a.apk
-          mv app-armeabi-v7a-release.apk   kangtu-armeabi-v7a.apk
-          mv app-x86_64-release.apk        kangtu-x86_64.apk
-
-      - name: Build release notes
-        run: |
-          set -e
-          PREV=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || true)
-          {
-            if [ -n "$PREV" ]; then git log --no-merges --pretty=format:'- %s' "${PREV}..HEAD"; fi
-          } > raw.md || true
-          grep -vE 'chore\((version|update)\)|\[skip ci\]' raw.md > notes.md || true
-          if [ ! -s notes.md ]; then echo "- 维护更新（${{ inputs.tag }}）" > notes.md; fi
-          cat notes.md
+          mv app-arm64-v8a-release.apk     GymMane-arm64-v8a.apk
+          mv app-armeabi-v7a-release.apk   GymMane-armeabi-v7a.apk
+          mv app-x86_64-release.apk        GymMane-x86_64.apk
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ inputs.tag }}
-          name: 康途 ${{ inputs.tag }}
-          body_path: notes.md
-          prerelease: true
+          name: GymMane ${{ inputs.tag }}
           files: |
-            build/app/outputs/flutter-apk/kangtu-*.apk
+            build/app/outputs/flutter-apk/GymMane-arm64-v8a.apk
+            build/app/outputs/flutter-apk/GymMane-armeabi-v7a.apk
+            build/app/outputs/flutter-apk/GymMane-x86_64.apk

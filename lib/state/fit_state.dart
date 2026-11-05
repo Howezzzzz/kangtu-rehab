@@ -7,22 +7,15 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/foundation.dart' show listEquals, setEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/glass.dart';
 import '../catalog/exercise_catalog.dart';
-import '../catalog/exercises_ext.dart';
-import '../catalog/exercises_rep.dart';
 import '../catalog/program_templates.dart';
 import '../l10n/l10n.dart';
 import '../models/exercise.dart';
-import '../models/baseline.dart';
 import '../models/gym_pass.dart';
 import '../models/live_session.dart';
-import '../models/plan_cycle.dart';
-import '../models/rehab_log.dart';
 import '../models/circuit.dart';
-
 import '../models/measure.dart';
 import '../models/note.dart';
 import '../models/nutrition.dart';
@@ -30,7 +23,6 @@ import '../models/place.dart';
 import '../models/profile.dart';
 import '../models/progression.dart';
 import '../models/progress_shot.dart';
-import '../models/rehab_episode.dart';
 import '../models/workout.dart';
 import '../services/alarm_store.dart';
 import '../services/beeper.dart';
@@ -44,7 +36,6 @@ import '../services/media_store.dart';
 import '../services/merged_ids.dart';
 import '../services/notif_sound.dart';
 import '../services/progress_reminder.dart';
-import '../services/rehab_intake.dart';
 import '../services/plan_share.dart';
 import '../services/rest_alarm.dart';
 import '../services/supplement_reminder.dart';
@@ -53,9 +44,7 @@ import '../services/voice_coach.dart';
 import '../services/workout_import.dart';
 
 part 'awards_state.dart';
-part 'baseline_state.dart';
 part 'circuit_state.dart';
-
 part 'fit_core.dart';
 part 'gym_pass_state.dart';
 part 'health_state.dart';
@@ -65,10 +54,7 @@ part 'moments_state.dart';
 part 'notes_state.dart';
 part 'nutrition_state.dart';
 part 'places_state.dart';
-part 'progression_state.dart';
-part 'rehab_state.dart';
 part 'report_state.dart';
-
 part 'routines_state.dart';
 part 'settings_state.dart';
 part 'stats_state.dart';
@@ -78,7 +64,7 @@ part 'tools_state.dart';
 part 'workout_state.dart';
 
 class FitState extends FitCore
-    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, GymPassState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, HealthState, CircuitState, NutritionState, ReportState, AwardsState, RoutinesState, WorkoutState, RehabState, BaselineState {
+    with ToolsState, LibraryState, SettingsState, NotesState, PlacesState, GymPassState, MeasuresState, MomentsState, TimelineState, StatsState, StepsState, HealthState, CircuitState, NutritionState, ReportState, AwardsState, RoutinesState, WorkoutState {
   final Map<SoundGroup, String> notifSoundNames = {};
 
   void _loadNotifSounds(Object? raw) {
@@ -128,34 +114,6 @@ class FitState extends FitCore
   void loadFromStore() {
     final data = withMergedExercises(Store.instance.load());
     _loading = true;
-    if (data['rehabEp'] is List) {
-      rehabEpisodes
-        ..clear()
-        ..addAll((data['rehabEp'] as List)
-            .whereType<Map>()
-            .map((m) => RehabEpisode.fromJson(m.cast<String, dynamic>())));
-    }
-    if (data['rehabLog'] is List) {
-      rehabLog
-        ..clear()
-        ..addAll((data['rehabLog'] as List)
-            .whereType<Map>()
-            .map((m) => RehabLogEntry.fromJson(m.cast<String, dynamic>())));
-    }
-    rehabLogMerged = data['rehabLogMerged'] == true;
-    if (data['baselines'] is List) {
-      baselines
-        ..clear()
-        ..addAll((data['baselines'] as List)
-            .whereType<Map>()
-            .map((m) => BaselineSession.fromJson(m.cast<String, dynamic>())));
-    }
-    if (data['planCycles'] is Map) {
-      planCycles
-        ..clear()
-        ..addAll((data['planCycles'] as Map).map((k, v) =>
-            MapEntry(k as String, PlanCycle.fromJson((v as Map).cast<String, dynamic>()))));
-    }
     if (data['language'] == null) _adoptDeviceLanguage();
     if (data.isNotEmpty) {
       profile = Profile.fromJson((data['profile'] as Map?)?.cast<String, dynamic>() ?? {});
@@ -244,7 +202,6 @@ class FitState extends FitCore
     _stampMemberSince();
     _seedCalculatorsFromProfile();
     _loading = false;
-    _freezeProgSteps(); // ISS-155：routine 就绪且退出 loading 后再冻结（否则 _persist 被吞）
     refreshAwards(silent: true);
     pendingAwards.clear();
     if (gamification) pendingAwards.addAll(unseenAwards);
@@ -272,9 +229,6 @@ class FitState extends FitCore
     final v = (raw as num?)?.toDouble();
     return v != null && allowed.contains(v) ? v : fallback;
   }
-
-  /// ISS-155：冻结迁移是否已执行（持久化，保证只跑一次）。
-  bool progStepFrozen = false;
 
   void _loadToggles(Map<String, dynamic> data) {
     demoSize = data['demo'] as String? ?? 'large';
@@ -399,35 +353,6 @@ class FitState extends FitCore
     autoWarmup
       ..clear()
       ..addAll(((data['warmup'] as List?) ?? const []).cast<String>());
-    programStates
-      ..clear()
-      ..addAll(((data['progStates'] as Map?) ?? const {}).map((k, v) =>
-          MapEntry(k as String, ProgState.fromJson((v as Map).cast<String, dynamic>()))));
-    progStepFrozen = data['progStepFrozen'] as bool? ?? false;
-  }
-
-  /// ISS-155 一次性迁移：解耦前 prog 引擎读全局 progressStep（与上游共享），
-  /// 解耦后只读 spec.stepKg。这里把“当时实际生效的步进”固化进 spec.stepKg，
-  /// 保证用户调过的值零丢失；靠 progStepFrozen 持久标记保证只跑一次。
-  void _freezeProgSteps() {
-    if (progStepFrozen) return;
-    var changed = false;
-    for (final r in routines) {
-      if (r.prog.isEmpty) continue;
-      for (final id in r.prog.keys.toList()) {
-        final shared = progressStep[id];
-        if (shared == null || shared <= 0) continue;
-        final spec = r.prog[id]!;
-        if (spec.stepKg == shared) continue;
-        r.prog[id] = spec.copyWith(stepKg: shared);
-        changed = true;
-      }
-    }
-    // 只在真的改了值时才置标记并落盘：否则会给存档平白多一个键，
-    // 破坏“备份往返完全一致”类测试（backup_roundtrip_test）。
-    if (!changed) return;
-    progStepFrozen = true;
-    _persist(); // 此时已在 _loading 之外，能真正落盘
   }
 
   void _loadPlanExtras(Map<String, dynamic> data) {
@@ -674,11 +599,6 @@ class FitState extends FitCore
         'onboarded': onboarded,
         'favorites': favorites,
         'notes': notes.map((n) => n.toJson()).toList(),
-        'rehabEp': rehabEpisodes.map((e) => e.toJson()).toList(),
-        'rehabLog': rehabLog.map((e) => e.toJson()).toList(),
-        'rehabLogMerged': rehabLogMerged,
-        'baselines': baselines.map((b) => b.toJson()).toList(),
-        'planCycles': planCycles.map((k, v) => MapEntry(k, v.toJson())),
         if (noteFolders.isNotEmpty) 'noteFolders': noteFolders.map((f) => f.toJson()).toList(),
         'places': places.map((p) => p.toJson()).toList(),
         'place': activePlaceId,
@@ -702,10 +622,7 @@ class FitState extends FitCore
         'exRest': exerciseRest,
         if (exerciseUnits.isNotEmpty) 'exUnits': exerciseUnits,
         'progress': progressStep,
-        if (progStepFrozen) 'progStepFrozen': true,
-        'progStates': programStates.map((k, v) => MapEntry(k, v.toJson())),
-if (holdStep.isNotEmpty) 'holdStep': holdStep,
-
+        if (holdStep.isNotEmpty) 'holdStep': holdStep,
         if (progressRules.isNotEmpty)
           'progressRules': progressRules.map((k, v) => MapEntry(k, v.toJson())),
         'warmup': autoWarmup.toList(),
@@ -803,11 +720,6 @@ if (holdStep.isNotEmpty) 'holdStep': holdStep,
     weeklyPlan.clear();
     planExtras.clear();
     multiPlan = false;
-    rehabLog.clear();
-    rehabLogMerged = true;
-    rehabEpisodes.clear();
-    baselines.clear();
-    planCycles.clear();
     savedPlans.clear();
     currentPlanId = '';
     rotation = false;
@@ -826,11 +738,7 @@ if (holdStep.isNotEmpty) 'holdStep': holdStep,
     exerciseRest.clear();
     exerciseUnits.clear();
     progressStep.clear();
-    programStates.clear();
-    progStepFrozen = false; // ISS-155：重置后允许重新冻结
-    progFeedback = [];
-holdStep.clear();
-
+    holdStep.clear();
     progressRules.clear();
     autoWarmup.clear();
     noSuggest.clear();
@@ -998,34 +906,6 @@ holdStep.clear();
     bodyTimeline = map['bodyTl'] as bool? ?? bodyTimeline;
     loadNutrition((map['nutrition'] as Map?)?.cast<String, dynamic>(), restored: restoredFoods);
     loadSteps((map['steps'] as Map?)?.cast<String, dynamic>());
-    if (map['rehabEp'] is List) {
-      rehabEpisodes
-        ..clear()
-        ..addAll((map['rehabEp'] as List)
-            .whereType<Map>()
-            .map((m) => RehabEpisode.fromJson(m.cast<String, dynamic>())));
-    }
-    if (map['rehabLog'] is List) {
-      rehabLog
-        ..clear()
-        ..addAll((map['rehabLog'] as List)
-            .whereType<Map>()
-            .map((m) => RehabLogEntry.fromJson(m.cast<String, dynamic>())));
-    }
-    rehabLogMerged = map['rehabLogMerged'] == true;
-    if (map['baselines'] is List) {
-      baselines
-        ..clear()
-        ..addAll((map['baselines'] as List)
-            .whereType<Map>()
-            .map((m) => BaselineSession.fromJson(m.cast<String, dynamic>())));
-    }
-    if (map['planCycles'] is Map) {
-      planCycles
-        ..clear()
-        ..addAll((map['planCycles'] as Map).map((k, v) =>
-            MapEntry(k as String, PlanCycle.fromJson((v as Map).cast<String, dynamic>()))));
-    }
     loadHealth((map['health'] as Map?)?.cast<String, dynamic>());
     loadCircuits(map['circuits'] as List?);
     _seedCalculatorsFromProfile();
@@ -1104,21 +984,19 @@ holdStep.clear();
 
   Exercise? matchExerciseByName(String name) => matchExercise(name, allExercises);
 
-  int applyTemplate(ProgramTemplate template, {Map<String, double>? tm}) {
+  int applyTemplate(ProgramTemplate template) {
     final planWasEmpty = weeklyPlan.isEmpty;
     var made = 0;
-    final instId = 'pi${DateTime.now().millisecondsSinceEpoch}';
-    final inst = ProgState(tpl: template.id);
     final sameDay = <String, String>{};
     for (final day in template.days) {
-      final matched = <String, ProgramExercise>{};
-      for (final pe in day.exercises) {
-        final ex = matchExerciseByName(pe.name);
-        if (ex == null || matched.containsKey(ex.id)) continue;
-        matched[ex.id] = pe;
+      final ids = <String, int>{};
+      for (final (name, sets) in day.exercises) {
+        final ex = matchExerciseByName(name);
+        if (ex == null || ids.containsKey(ex.id)) continue;
+        ids[ex.id] = sets;
       }
-      if (matched.isEmpty) continue;
-      final key = '${day.name}|${matched.entries.map((e) => '${e.key}:${e.value.sets}').join(',')}';
+      if (ids.isEmpty) continue;
+      final key = '${day.name}|${ids.entries.map((e) => '${e.key}:${e.value}').join(',')}';
       final twin = sameDay[key];
       if (twin != null) {
         if (planWasEmpty && day.weekday != null) weeklyPlan[day.weekday!] = twin;
@@ -1127,32 +1005,14 @@ holdStep.clear();
       final id = createRoutine(day.name);
       sameDay[key] = id;
       setRoutineGroup(id, template.name);
-      final r = _routine(id)!;
-      r.progInst = instId; // RISK-044/⑥：无论是否 pro 都注册实例，避免“有 prog 无 inst”导致进度静默冻结
-      for (final entry in matched.entries) {
-        final exId = entry.key;
-        final pe = entry.value;
-        toggleRoutineExercise(id, exId);
-        final spec = pe.spec;
-        if (spec == null) {
-          bumpRoutineSets(id, exId, pe.sets - kDefaultRoutineSets);
-          continue;
-        }
-        r.prog[exId] = spec;
-        // RISK-047：不覆盖用户显式关闭过的“只练次数”偏好
-        if (spec.kind == ProgKind.reps && !repsOnlyOff.contains(exId)) repsOnly.add(exId);
-        if (spec.isCycle) {
-          final entered = tm?[pe.name] ?? tm?[exId];
-          inst.tm[exId] = entered ?? estimateTrainingMax(this, exId) ?? 40;
-          if (entered != null) inst.tmSet.add(exId); // 用户导入时明确填过 → 视为已确认（ISS-160）
-        }
-        buildInitialPlan(r, exId, spec, inst);
+      for (final entry in ids.entries) {
+        toggleRoutineExercise(id, entry.key);
+        bumpRoutineSets(id, entry.key, entry.value - kDefaultRoutineSets);
       }
       if (planWasEmpty && day.weekday != null) weeklyPlan[day.weekday!] = id;
       made++;
     }
     if (made == 0) return 0;
-    programStates[instId] = inst; // RISK-044/⑥：与 progInst 一并注册（不再仅 pro 模板）
     persistNow();
     syncTrainReminder();
     notifyListeners();
@@ -1181,25 +1041,6 @@ holdStep.clear();
       '  {"name": "Week 2", "routines": [{"name": "Day A", "exercises": [{"name": "Barbell Full Squat", "sets": 4, "reps": 8}]}]}\n'
       ']}';
 
-  /// 带「训练时间周期」的完整导出模板（教 AI 输出周期：起始日+总周数+每周次数）。
-  static const planCycleTemplate = '{\n'
-      '  "program": "Upper Lower",\n'
-      '  "unit": "kg",\n'
-      '  "cycle": {"start": "2026-10-19", "weeks": 12, "perWeek": 3},\n'
-      '  "routines": [\n'
-      '    {\n'
-      '      "name": "Upper A",\n'
-      '      "days": ["Monday", "Thursday"],\n'
-      '      "exercises": [\n'
-      '        {"name": "Barbell Bench Press", "sets": 4, "reps": 8, "weight": 60, "rest": 120,\n'
-      '         "plan": [{"type": "warmup", "reps": 10, "weight": 30}]},\n'
-      '        {"name": "Barbell Bent Over Row", "sets": 4, "reps": 8, "superset": true},\n'
-      '        {"name": "Dumbbell Biceps Curl", "sets": 3, "reps": 12}\n'
-      '      ]\n'
-      '    }\n'
-      '  ]\n'
-      '}';
-
   String planRequestText() {
     final here = allExercises.where((e) => fitsHere(e) && !isArchived(e.id)).toList();
     final month = DateTime.now().subtract(const Duration(days: 30));
@@ -1216,8 +1057,7 @@ holdStep.clear();
       '',
       t.planIntro,
       t.planFormat,
-      t.planCycleAsk,
-      FitState.planCycleTemplate,
+      planTemplate,
       t.planFormatNotes,
       planWeeksTemplate,
       '',
@@ -1234,7 +1074,7 @@ holdStep.clear();
   ({int added, List<String> missed, bool readable}) importPlan(String raw, {bool schedule = false}) {
     final plans = parsePlan(raw);
     if (plans.isEmpty) return (added: 0, missed: const [], readable: false);
-    final result = applyPlan(plans, schedule: schedule, cycle: parseCycle(raw));
+    final result = applyPlan(plans, schedule: schedule);
     return (added: result.added, missed: result.missed, readable: true);
   }
 
@@ -1302,7 +1142,7 @@ holdStep.clear();
       [for (var i = 0; i < ids.length; i++) r.exerciseIds[i] == ids[i]].every((x) => x);
 
   ({int routines, int added, List<String> missed}) applyPlan(List<PlanRoutine> plans,
-      {bool schedule = false, PlanCycle? cycle, bool copies = false}) {
+      {bool schedule = false, bool copies = false}) {
     var made = 0, added = 0;
     final missed = <String>[];
     for (final plan in plans) {
@@ -1348,17 +1188,6 @@ holdStep.clear();
           weeklyPlan[d] = id;
         }
       }
-      if (cycle != null) {
-        final c = plan.days.isNotEmpty && cycle.pinnedDays.isEmpty
-            ? PlanCycle(
-                start: cycle.start,
-                weeks: cycle.weeks,
-                perWeek: plan.days.length,
-                pinnedDays: plan.days,
-                round: cycle.round)
-            : cycle;
-        setCycle(id, c);
-      }
     }
     if (added > 0 || schedule) {
       persistNow();
@@ -1366,324 +1195,6 @@ holdStep.clear();
       notifyListeners();
     }
     return (routines: made, added: added, missed: missed);
-  }
-
-  // ---- 康复档案：提示词 + 回复套用（放在 FitState 里，用得到目录/计划引擎）----
-
-  /// 生成给通用 AI 的康复提示词（手动复制/导出，App 不联网）。
-  String rehabPromptText(RehabEpisode ep) {
-    final month = DateTime.now().subtract(const Duration(days: 30));
-    final recent = sessions.where((s) => s.date.isAfter(month)).length;
-    final goals = ep.goals.map(rehabGoalLabel).join(t.rehabListSep);
-    final gear = ep.equipment.isEmpty ? t.rehabGearBodyweight : ep.equipment.join(t.rehabListSep);
-    final flags = ep.redFlags.map((k) => t.rehabRedFlag(k)).join(t.rehabSemiSep);
-    final linked = routines.where((r) => ep.routineIds.contains(r.id)).toList();
-    final feedback = rehabFeedbackSessions();
-    final lines = <String>[
-      t.rehabPromptIntro,
-      '',
-      t.rehabPromptSecProfile,
-      t.rehabPromptProfileLine(profile.sex == 'female' ? t.female : t.male, '${profile.age}', heightLabel(profile.heightCm), weightLabel(profile.weightKg)),
-      t.rehabPromptRecent('$recent'),
-      t.rehabPromptDaysPerWeek('${ep.daysPerWeek}'),
-      t.rehabPromptGear(gear),
-      if (goals.isNotEmpty) t.rehabPromptGoals(goals),
-      '',
-      t.rehabPromptSecIssue,
-      t.rehabPromptArea(rehabAreaLabel(ep.area)),
-      t.rehabPromptDuration(rehabDurationLabel(ep.duration)),
-      t.rehabPromptPain('${ep.pain}'),
-      if (ep.factors.trim().isNotEmpty) t.rehabPromptFactors(ep.factors.trim()),
-      if (flags.isEmpty) t.rehabPromptFlagNone else t.rehabPromptFlagHit(flags),
-      if (ep.hasDoctorOrders) ...[
-        '',
-        t.rehabPromptSecDoctor,
-        if (ep.doctorDx.trim().isNotEmpty)
-          t.rehabPromptDx(ep.icdCode.trim().isEmpty
-              ? ep.doctorDx.trim()
-              : '${ep.doctorDx.trim()}${t.rehabPromptIcd(ep.icdCode.trim())}'),
-        if (ep.visitDate != null) t.rehabPromptVisit(ep.visitDate!.toIso8601String().split('T').first),
-        if (ep.ordersText.trim().isNotEmpty) t.rehabPromptOrders(ep.ordersText.trim()),
-        if (ep.advisedCare.trim().isNotEmpty) t.rehabPromptAdvisedCare(ep.advisedCare.trim()),
-        if (ep.restrictions.trim().isNotEmpty) t.rehabPromptRestrictions(ep.restrictions.trim()),
-        if (ep.imaging.trim().isNotEmpty) t.rehabPromptImaging(ep.imaging.trim()),
-        if (ep.followUpAt != null) t.rehabPromptFollowUp(ep.followUpAt!.toIso8601String().split('T').first),
-      ],
-      '',
-      t.rehabPromptSecPlan,
-      if (linked.isEmpty) t.rehabPromptNoPlan else exportPlanJson(linked, withSchedule: false),
-      '',
-      t.rehabPromptSecFeedback,
-      if (feedback.isEmpty)
-        t.rehabPromptNoFeedback
-      else
-        for (final s in feedback) rehabFeedbackLine(s),
-      '',
-      t.rehabPromptSecOutput,
-      t.rehabPromptRule1,
-      t.rehabPromptRule2,
-      t.rehabPromptRule3,
-      FitState.planTemplate,
-      t.rehabPromptRule4,
-      '[{"action":"set","routine":"Rehab A","exercise":"ExerciseName","field":"weight","value":45},',
-      ' {"action":"set","exercise":"ExerciseName","field":"sets","value":3},',
-      ' {"action":"remove","exercise":"ExerciseName"},',
-      ' {"action":"add","routine":"Rehab A","exercise":"ExerciseName","sets":3,"reps":12}]',
-      t.rehabPromptAdjustSet,
-      t.rehabPromptAdjustRemove,
-      t.rehabPromptAdjustAdd,
-      t.rehabPromptAdjustRoutine,
-      t.rehabPromptRule5,
-      t.rehabPromptRule6,
-      t.rehabPromptRule7(t.rehabStopRules),
-      ep.hasDoctorOrders
-          ? t.rehabPromptRule8Doctor
-          : t.rehabPromptRule8Gate,
-      '',
-      t.rehabPromptSecLibrary,
-    ];
-    final pool = allExercises.where((e) => fitsHere(e) && !isArchived(e.id)).toList();
-    for (final ex in pool) {
-      final local = exerciseName(ex);
-      final label = local == ex.name ? ex.name : '${ex.name} ($local)';
-      final mode = modeOf(ex.id);
-      lines.add('$label | ${ex.primary} | ${ex.equipment} | ${ex.difficulty}${mode.isEmpty ? '' : ' | $mode'}');
-    }
-    return lines.join('\n');
-  }
-
-  /// 近期训练反馈：近 [days] 天内带反馈的记录（按时间新→旧）；
-  /// 若一条都没有，回退到最近 [fallback] 次有反馈的。
-  /// N=7 的依据：临床疼痛回顾（BPI「过去一周」）与运动科学急性负荷窗口（ACWR 7 天）取公约数。
-  List<LoggedSession> rehabFeedbackSessions({int days = 7, int fallback = 3}) {
-    final since = DateTime.now().subtract(Duration(days: days));
-    final recent = sessions.where((s) => s.hasFeedback && s.date.isAfter(since)).toList()
-      ..sort((a, b) => b.date.compareTo(a.date));
-    if (recent.isNotEmpty) return recent;
-    final older = sessions.where((s) => s.hasFeedback).toList()
-      ..sort((a, b) => b.date.compareTo(a.date));
-    return older.take(fallback).toList();
-  }
-
-  /// 把一条训练反馈写成提示词里的一行。
-  String rehabFeedbackLine(LoggedSession s) {
-    final parts = <String>[];
-    if (s.feel != null) parts.add(_feelText(s.feel!));
-    if (s.painArea.isNotEmpty || s.painLevel > 0) {
-      final area = s.painArea.isEmpty ? t.rehabFbDefaultArea : muscleLabel(s.painArea);
-      parts.add(s.painLevel > 0 ? t.rehabFbPainWithArea(area, '${s.painLevel}') : area);
-    }
-    if (s.note.trim().isNotEmpty) parts.add(t.rehabFbNote(s.note.trim()));
-    final mm = s.date.month.toString().padLeft(2, '0');
-    final dd = s.date.day.toString().padLeft(2, '0');
-    return t.rehabFbLine('$mm/$dd', parts.isEmpty ? t.rehabFbNoDetail : parts.join(t.rehabSemiSep));
-  }
-
-  String _feelText(int i) => switch (i) {
-        0 => t.fbFeelEasy,
-        1 => t.fbFeelOk,
-        2 => t.fbFeelHard,
-        _ => t.fbFeelMax,
-      };
-
-  /// 把 AI 回复里的 adjust 指令套到档案关联的计划上。
-  /// 安全门未通过且未记录医嘱 / 无关联计划时不动。返回实际应用的条数 + 未处理项说明。
-  ({int adjusted, List<String> missed}) applyRehabAdjust(
-      String episodeId, List<RehabAdjust> adjusts) {
-    final ep = episodeById(episodeId);
-    if (ep == null || adjusts.isEmpty) return (adjusted: 0, missed: const <String>[]);
-    // 安全门未过但已记录医嘱（医生已看过）→ 放行，与提示词规则 8 一致
-    if (!ep.safe && !ep.hasDoctorOrders) {
-      return (adjusted: 0, missed: [t.rehabMissGateAdjust]);
-    }
-    final rs = routines.where((r) => ep.routineIds.contains(r.id)).toList();
-    if (rs.isEmpty) return (adjusted: 0, missed: [t.rehabMissNoLinkedPlan]);
-    var n = 0;
-    final missed = <String>[];
-    for (final a in adjusts) {
-      final targets = a.target.isEmpty ? rs : rs.where((r) => r.name == a.target).toList();
-      if (targets.isEmpty) {
-        missed.add(t.rehabMissNoSuchPlan(a.target));
-        continue;
-      }
-      for (final r in targets) {
-        final ok = switch (a.action) {
-          'set' => _rehabSet(r, a, missed),
-          'remove' => _rehabRemove(r, a, missed),
-          _ => _rehabAdd(r, a, missed),
-        };
-        if (ok) n++;
-      }
-    }
-    if (n > 0) {
-      persistNow();
-      notifyListeners();
-    }
-    return (adjusted: n, missed: missed.toSet().toList());
-  }
-
-  bool _rehabSet(Routine r, RehabAdjust a, List<String> missed) {
-    final ex = matchExerciseByName(a.exercise);
-    if (ex == null) {
-      missed.add(a.exercise);
-      return false;
-    }
-    if (!r.exerciseIds.contains(ex.id)) return false; // 该计划里本来没这个动作，静默跳过
-    final value = a.value!;
-    switch (a.field) {
-      case 'rest':
-        setRoutineRest(r.id, ex.id, value.toInt());
-      case 'sets':
-        _rehabSetCount(r, ex.id, value.toInt());
-      case 'weight':
-        _rehabSetField(r, ex.id, 'weight', value);
-      case 'reps':
-        _rehabSetField(r, ex.id, 'reps', value);
-    }
-    return true;
-  }
-
-  /// 改组数：无 plan 时走简单模式；有 plan 时补 / 删工作组（warmup 不动）。
-  void _rehabSetCount(Routine r, String exId, int n) {
-    final count = n.clamp(1, 20);
-    // ISS-158：计划驱动动作必须写回 spec.sets 并重建，否则下次 rebuild 把康复调整抹掉
-    if (r.prog[exId] != null) {
-      setRoutineSetCount(r.id, exId, count);
-      return;
-    }
-    final planned = r.plan[exId];
-    if (planned == null || planned.isEmpty) {
-      setRoutineSetCount(r.id, exId, count);
-      return;
-    }
-    final next = [...planned];
-    final working = [for (var i = 0; i < next.length; i++) if (next[i].kind != SetKind.warmup) i];
-    final delta = count - working.length;
-    if (delta > 0) {
-      final base = working.isEmpty ? const PlannedSet() : next[working.first];
-      for (var i = 0; i < delta && next.length < 20; i++) {
-        next.add(PlannedSet(reps: base.reps, weightKg: base.weightKg));
-      }
-    } else {
-      for (var i = 0; i < -delta; i++) {
-        final idx = next.lastIndexWhere((p) => p.kind != SetKind.warmup);
-        if (idx < 0) break;
-        next.removeAt(idx);
-      }
-    }
-    setPlannedSets(r.id, exId, next);
-  }
-
-  /// 改重量 / 次数：只改工作组（warmup 不动）；无 plan 时先建出工作组。
-  void _rehabSetField(Routine r, String exId, String field, num value) {
-    // ISS-158：计划驱动动作要写进引擎状态（inst）并重建，否则被引擎回滚到原目标
-    final spec = r.prog[exId];
-    if (spec != null) {
-      final inst = r.progInst == null ? null : programStates[r.progInst!];
-      if (inst != null) {
-        if (field == 'weight') {
-          if (spec.isCycle) {
-            inst.tm[exId] = value.toDouble();
-            rebuildCyclePlan(r, exId, spec, inst);
-          } else {
-            inst.w[exId] = value.toDouble();
-            rebuildSimplePlan(r, exId, spec, weight: value.toDouble());
-          }
-        } else if (field == 'reps') {
-          r.prog[exId] = spec.copyWith(reps: value.toInt());
-          rebuildSimplePlan(r, exId, r.prog[exId]!);
-        }
-      }
-      _persist();
-      notifyListeners();
-      return;
-    }
-    final planned = r.plan[exId];
-    var next = planned == null ? <PlannedSet>[] : [...planned];
-    if (next.isEmpty) {
-      final count = routineSets(r, exId).clamp(1, 20);
-      next = [for (var i = 0; i < count; i++) const PlannedSet()];
-    }
-    for (var i = 0; i < next.length; i++) {
-      if (next[i].kind == SetKind.warmup) continue;
-      next[i] = field == 'weight'
-          ? next[i].copyWith(weightKg: value.toDouble())
-          : next[i].copyWith(reps: value.toInt());
-    }
-    setPlannedSets(r.id, exId, next);
-  }
-
-  bool _rehabRemove(Routine r, RehabAdjust a, List<String> missed) {
-    final ex = matchExerciseByName(a.exercise);
-    if (ex == null) {
-      missed.add(a.exercise);
-      return false;
-    }
-    if (!r.exerciseIds.remove(ex.id)) return false;
-    r.sets.remove(ex.id);
-    r.plan.remove(ex.id);
-    r.rest.remove(ex.id);
-    r.chained.remove(ex.id);
-    r.prog.remove(ex.id); // ISS-155：同步清 ProgSpec，避免孤儿继续写 plan
-    return true;
-  }
-
-  bool _rehabAdd(Routine r, RehabAdjust a, List<String> missed) {
-    final ex = matchExerciseByName(a.exercise);
-    if (ex == null) {
-      missed.add(a.exercise);
-      return false;
-    }
-    if (!r.exerciseIds.contains(ex.id)) r.exerciseIds.add(ex.id);
-    final sets = a.addSets?.clamp(1, 20);
-    if (sets != null) r.sets[ex.id] = sets;
-    if (a.addReps != null || a.addWeight != null) {
-      final count = (sets ?? r.sets[ex.id] ?? kDefaultRoutineSets).clamp(1, 20);
-      setPlannedSets(r.id, ex.id, [
-        for (var i = 0; i < count; i++)
-          PlannedSet(reps: a.addReps, weightKg: a.addWeight?.toDouble()),
-      ]);
-    }
-    return true;
-  }
-
-  /// 把 AI 回复套到档案上：建训练计划 + 修改现有计划 + 存 advice。
-  ({int routines, int added, int adjusted, List<String> missed}) applyRehabReply(
-      String episodeId, String raw) {
-    final ep = episodeById(episodeId);
-    if (ep == null) return (routines: 0, added: 0, adjusted: 0, missed: const <String>[]);
-    // 安全门未通过且未记录医嘱：只保留 advice，不建计划、不套调整（与提示词规则 8 一致）；
-    // 已记录医嘱（医生已看过）→ 放行，允许建计划/套调整。
-    if (!ep.safe && !ep.hasDoctorOrders) {
-      final advice = extractRehabAdvice(raw);
-      if (advice.isNotEmpty) ep.advice = advice;
-      updateEpisode(ep);
-      return (routines: 0, added: 0, adjusted: 0, missed: [t.rehabMissGateReply]);
-    }
-    final plans = parsePlan(raw);
-    final before = routines.map((r) => r.id).toSet();
-    var made = 0;
-    var added = 0;
-    final missed = <String>[];
-    if (plans.isNotEmpty) {
-      final res = applyPlan(plans);
-      final fresh = routines.where((r) => !before.contains(r.id)).map((r) => r.id).toList();
-      made = res.routines;
-      added = res.added;
-      missed.addAll(res.missed);
-      if (fresh.isNotEmpty) ep.routineIds = [...ep.routineIds, ...fresh];
-    }
-    final adjusts = extractRehabAdjust(raw);
-    var adjusted = 0;
-    if (adjusts.isNotEmpty) {
-      final adj = applyRehabAdjust(episodeId, adjusts);
-      adjusted = adj.adjusted;
-      missed.addAll(adj.missed);
-    }
-    final advice = extractRehabAdvice(raw);
-    if (advice.isNotEmpty) ep.advice = advice;
-    updateEpisode(ep);
-    return (routines: made, added: added, adjusted: adjusted, missed: missed.toSet().toList());
   }
 
   List<PlannedSet> _plannedFrom(PlanItem item) {
@@ -1875,12 +1386,6 @@ holdStep.clear();
         backFromAwards();
       case 'ai-plan':
         backFromAiPlan();
-      case 'rehab-episodes':
-        backFromRehabEpisodes();
-      case 'rehab-episode-new':
-        backFromRehabNew();
-      case 'rehab-episode':
-        backFromRehabEpisode();
       case 'progress':
       case 'exercises':
       case 'settings':

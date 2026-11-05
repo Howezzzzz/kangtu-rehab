@@ -13,13 +13,11 @@ mixin LibraryState on FitCore {
 
   List<Exercise> get allExercises => [
         ...(_builtInExercises ??= [
-          for (final e in _builtInAll)
+          for (final e in kExercises)
             if (secondaryOverride[e.id] case final s?) e.copyWith(secondary: _cleanSecondary(e.primary, s)) else e,
         ]),
         ...customExercises,
       ];
-
-  List<Exercise> get _builtInAll => [...kExercises, ...kExercisesExt, ...kExercisesRep];
 
   bool hasSecondaryOverride(String id) => secondaryOverride.containsKey(id);
 
@@ -31,8 +29,8 @@ mixin LibraryState on FitCore {
     if (i >= 0) {
       customExercises[i] = customExercises[i].copyWith(secondary: clean);
     } else {
-      final base = _builtInAll.where((e) => e.id == id).firstOrNull;
-      if (base != null && _sameMuscles(clean, _cleanSecondary(base.primary, base.secondary))) {
+      final base = kExercises.firstWhere((e) => e.id == id);
+      if (_sameMuscles(clean, _cleanSecondary(base.primary, base.secondary))) {
         secondaryOverride.remove(id);
       } else {
         secondaryOverride[id] = clean;
@@ -70,18 +68,9 @@ mixin LibraryState on FitCore {
     notifyListeners();
   }
 
-  /// 按 id 取动作。**被合并掉的历史 id 会重定向到保留项**（RISK-086）：
-  /// 存档在加载时已用 `withMergedExercises` 整体重映射，这里再兜一层，
-  /// 避免任何遗漏路径（旧备份片段、代码里残留的常量 id）解析不到动作。
   Exercise? exerciseById(String id) {
     for (final e in allExercises) {
       if (e.id == id) return e;
-    }
-    final alias = canonicalExerciseId(id);
-    if (alias != id) {
-      for (final e in allExercises) {
-        if (e.id == alias) return e;
-      }
     }
     return null;
   }
@@ -320,7 +309,7 @@ mixin LibraryState on FitCore {
     for (final e in customExercises) {
       if (e.id == id) return e.mode;
     }
-    return kExerciseModes[id] ?? kExerciseModesExt[id] ?? kExerciseModesRep[id] ?? '';
+    return kExerciseModes[id] ?? '';
   }
 
   bool isCardio(String id) => modeOf(id) == 'cardio';
@@ -332,8 +321,6 @@ mixin LibraryState on FitCore {
   void setExerciseMode(String id, String mode) {
     final base = customExercises.where((e) => e.id == id).map((e) => e.mode).firstOrNull ??
         kExerciseModes[id] ??
-        kExerciseModesExt[id] ??
-        kExerciseModesRep[id] ??
         '';
     final wanted = mode == 'weight' ? '' : mode;
     if (wanted == base) {

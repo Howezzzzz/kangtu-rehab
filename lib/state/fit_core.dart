@@ -60,7 +60,6 @@ abstract class FitCore extends ChangeNotifier {
   final Map<int, String> weeklyPlan = {};
   final Map<int, List<String>> planExtras = {};
   bool multiPlan = false;
-  final Map<String, PlanCycle> planCycles = {};
   bool rotation = false;
   final List<String> rotationIds = [];
   String rotationNextId = '';
@@ -77,14 +76,8 @@ abstract class FitCore extends ChangeNotifier {
   final Map<String, double> progressStep = {};
   final Map<String, int> holdStep = {};
 
-  /// 计划实例状态(自动渐进引擎): instId -> ProgState
-  final Map<String, ProgState> programStates = {};
-
-  /// 本次训练结束后的渐进反馈(完成页展示,开练时清空)
-  List<String> progFeedback = [];
-
-  /// 每个动作的渐进规则(上游引擎): exerciseId -> ProgressRule
   final Map<String, ProgressRule> progressRules = {};
+
   final Set<String> autoWarmup = {};
 
   final Set<String> repsOnly = {};
@@ -281,22 +274,6 @@ abstract class FitCore extends ChangeNotifier {
   void goExercises() => _setRoute('exercises', reset: true);
 
   void goSettings() => _setRoute('settings', reset: true);
-
-  // 康复模块（离线）：模块首页 = 康复档案，手册为次级入口
-  void goRehab() => _setRoute('rehab', reset: true);
-
-  void backFromRehabHome() => _setRoute('settings', reset: true);
-
-  void goRehabBook() => pushRoute('rehab-book');
-
-  // 统一「日志」模块（训练 + 康复）
-  void goLog() => pushRoute('log');
-
-  void backFromLog() => popRoute(fallback: 'home');
-
-  void backFromRehabBook() => popRoute(fallback: 'rehab');
-
-  void backFromRehab() => _setRoute('settings', reset: true);
 
   void goPreferences() => pushRoute('preferences');
 

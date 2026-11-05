@@ -50,6 +50,11 @@ class MainActivity : FlutterActivity() {
         }
         incomingChannel = incoming
 
+        // 应用内更新：安装前比对下载包与已装应用的签名（见 UpdateBridge）
+        MethodChannel(messenger, UpdateBridge.CHANNEL).setMethodCallHandler(
+            UpdateBridge(this)::handle,
+        )
+
         MethodChannel(messenger, "gymmane/gallery").setMethodCallHandler { call, result ->
             if (call.method != "savePng") {
                 result.notImplemented()

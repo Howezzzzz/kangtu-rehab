@@ -10,7 +10,7 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:visibility="visible"
-        android:contentDescription="GymMane" />
+        android:contentDescription="康途" />
 
     <ImageView
         android:id="@+id/widget_image_night"
@@ -19,5 +19,5 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:visibility="gone"
-        android:contentDescription="GymMane" />
+        android:contentDescription="康途" />
 </FrameLayout>

@@ -1707,9 +1707,6 @@ mixin NutritionState on FitCore, ToolsState, StatsState {
 
   void loadNutrition(Map<String, dynamic>? j, {Map<String, String>? restored}) {
     _dropCaches();
-    // RISK-060 审出的小卫生问题：切数据源（清除数据/恢复备份）时重置「选中的餐」，
-    // 否则营养页会停留在上一份数据的餐签。
-    pickedMeal = null;
     List<Map<String, dynamic>> list(String k) => [
           for (final e in (j?[k] as List?) ?? const [])
             if (e is Map) e.cast<String, dynamic>(),

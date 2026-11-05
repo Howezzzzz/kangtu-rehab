@@ -1,7 +1,8 @@
 name: gymmane
-description: "康途 (Kangtu) — an offline, ad-free rehab \u0026 gym log for Android and iOS."
+description: "康途 (Kangtu) — an offline, ad-free rehab & gym log for Android and iOS."
 publish_to: 'none'
-version: 1.4.0+36
+version: 2.0.0+36
+
 environment:
   sdk: ^3.11.5
 
@@ -12,11 +13,14 @@ dependencies:
     sdk: flutter
 
   audioplayers: ^6.1.0
+  crypto: ^3.0.6
   file_picker: ^8.1.7
   flutter_local_notifications: ^22.0.1
   home_widget: ^0.7.0
   image_picker: ^1.2.3
   intl: ^0.20.2
+  open_filex: ^5.0.0
+  package_info_plus: ^9.0.1
   path_drawing: ^1.0.1
   path_provider: ^2.1.6
   phosphoricons_flutter: ^1.0.0
@@ -29,8 +33,6 @@ dependencies:
   barcode: ^2.2.9
   zxing2: ^0.2.4
   app_settings: ^8.0.3
-  package_info_plus: ^9.0.1
-  open_filex: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -54,12 +56,8 @@ flutter:
   assets:
     - assets/img/
     - assets/art/
-    - assets/ext/
-    - assets/rep/
     - assets/audio/
     - assets/badges/
-    - assets/rehab/
-    - assets/rehab/img/
     - assets/data/
     - assets/food/
 

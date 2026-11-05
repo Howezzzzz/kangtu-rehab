@@ -1,9 +1,10 @@
 /*
- * 检查更新 —— 唯一联网功能（Howe 2026-10-19 定）。
+ * 检查更新 —— 本应用唯一的联网功能。
+ * 发布仓库：见下方 _manifestUrls（当前指向 Howezzzzz/kangtu-rehab，换仓库时同步改这里）。
  * 版本清单**两源并行拉取、谁先成功用谁**（raw.githubusercontent / jsdelivr）；
  * 有新版本则应用内下载 APK（直链优先、失败自动换镜像）并调起系统安装器。
  *
- * 隐私：除本文件外，康途不发起任何网络请求；其余数据全程留在本机。
+ * 隐私：除本文件外，本应用不发起任何网络请求；其余数据全程留在本机。
  * 镜像仅代取公开的 APK 文件，不携带任何用户数据。
  */
 import 'dart:async';
@@ -11,6 +12,9 @@ import 'dart:convert';
 import 'dart:ffi' show Abi;
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,6 +28,7 @@ class UpdateInfo {
     required this.downloadUrls,
     this.mirrorUrls = const {},
     this.mirrorChains = const {},
+    this.checksums = const {},
     required this.pageUrl,
   });
 
@@ -40,6 +45,10 @@ class UpdateInfo {
   final Map<String, List<String>> mirrorChains;
   final String pageUrl;
 
+  /// 各 ABI 的 SHA-256（十六进制，可带 `sha256:` 前缀）。
+  /// **下载后据此校验**：防镜像篡改 / 传输截断（ISS-2xx）。旧清单无此字段 → 空。
+  final Map<String, String> checksums;
+
   static UpdateInfo? parse(String raw) {
     try {
       final j = jsonDecode(raw);
@@ -53,6 +62,17 @@ class UpdateInfo {
           });
         }
         return out;
+      }
+
+      // sha256: {"abi": "hex"} —— 下载校验用；消毒空串、去掉可能的 "sha256:" 前缀
+      final sums = <String, String>{};
+      final sumRaw = j['sha256'];
+      if (sumRaw is Map) {
+        sumRaw.forEach((k, v) {
+          if (v is String && v.trim().isNotEmpty) {
+            sums['$k'] = v.trim().toLowerCase().replaceFirst('sha256:', '');
+          }
+        });
       }
 
       // mirrors: {"abi": [url, url, ...]} —— 多镜像链，逐项消毒空串
@@ -82,6 +102,7 @@ class UpdateInfo {
         mirrorUrls: urls('mirror_urls'),
         mirrorChains: chains('mirrors'),
         pageUrl: '${j['page_url'] ?? UpdateService.releasesPage}',
+        checksums: sums,
       );
     } catch (_) {
       return null;
@@ -107,6 +128,21 @@ class UpdateCheckResult {
 
   bool get hasUpdate =>
       ok && info != null && currentBuild > 0 && info!.build > currentBuild;
+}
+
+/// 安装结果（区分「签名不符」与「签名读不出来」，界面才能给出正确的下一步）
+enum InstallOutcome { ok, signatureMismatch, verifyUnavailable, failed }
+
+/// 签名校验三态
+enum SigCheck { ok, mismatch, unreadable }
+
+/// 下载后校验失败（哈希不符 / 文件缺失）——调用方据此给「文件校验失败」的提示
+class ChecksumException implements Exception {
+  const ChecksumException(this.expected, this.actual);
+  final String expected;
+  final String actual;
+  @override
+  String toString() => 'ChecksumException($expected != $actual)';
 }
 
 class UpdateService {
@@ -173,6 +209,9 @@ class UpdateService {
   /// 测试注入钩子（生产为 null）
   static Future<String> Function(String url)? debugFetch;
   static (String, int)? debugCurrent;
+  /// 测试注入：签名探测（默认走 MethodChannel 到原生）
+  static Future<SigCheck> Function(String path)? debugSignatureProbe;
+
   static Future<void> Function(String url, File file, void Function(double?)? onProgress)?
       debugDownloadOne;
 
@@ -321,15 +360,60 @@ class UpdateService {
   static Future<File> download(
     UpdateInfo info, {
     void Function(double? progress)? onProgress,
+    void Function(int total)? onTotal,
   }) async {
     final name = apkFileName(info);
     final dir = await getExternalStorageDirectory() ??
         await getApplicationSupportDirectory();
     final target = Directory('${dir.path}/update')..createSync(recursive: true);
+    // 清掉上一次留下的旧包，避免更新目录无限膨胀
+    try {
+      for (final f in target.listSync()) {
+        if (f is File && f.path.endsWith('.apk') && !f.path.endsWith('/$name')) {
+          try { f.deleteSync(); } catch (_) {}
+        }
+      }
+    } catch (_) {}
     final file = File('${target.path}/$name');
     final one = debugDownloadOne ?? _downloadOne;
     // ISS-168：按设备实际 ABI 选包，不再写死 arm64 优先
-    return downloadTo(file, pickUrls(info, abi: deviceAbiKey()), onProgress: onProgress, one: one);
+    final abi = deviceAbiKey();
+    return fetchVerified(file, pickUrls(info, abi: abi),
+        checksum: abi == null ? null : info.checksums[abi],
+        onProgress: onProgress, onTotal: onTotal, one: one);
+  }
+
+  /// 下载到 [file] 并**按声明哈希校验**（清单没给哈希时不阻断，向后兼容旧清单）。
+  /// 校验失败：删掉文件并抛 [ChecksumException] —— 不让用户装到可疑包。
+  static Future<File> fetchVerified(
+    File file,
+    List<String> urls, {
+    String? checksum,
+    void Function(double? progress)? onProgress,
+    void Function(int total)? onTotal,
+    Future<void> Function(String url, File file, void Function(double?)? onProgress)? one,
+  }) async {
+    final want = (checksum ?? '').trim();
+    if (want.isEmpty) {
+      // 旧清单没给该 ABI 的哈希 → 不阻断（兼容），但**必须留痕**，不静默放行
+      debugPrint('update: no sha256 for this ABI — integrity check skipped (legacy manifest?)');
+    }
+    Object? last;
+    for (final url in urls) {
+      try {
+        final done = await downloadTo(file, [url],
+            onProgress: onProgress, onTotal: onTotal, one: one);
+        if (await verifyChecksum(done, want)) return done;
+        // 哈希不符：删包，**换下一个镜像再试**（单源截断/污染不应终止整次更新）
+        final got = await sha256Of(done);
+        try { done.deleteSync(); } catch (_) {}
+        last = ChecksumException(want, got);
+        debugPrint('update: checksum mismatch on one source, trying next');
+      } catch (e) {
+        last = e;
+      }
+    }
+    throw last ?? HttpException('no download url');
   }
 
   /// 依次尝试 [urls]（直链→镜像）：成功返回文件；全失败/无候选抛异常。
@@ -337,12 +421,17 @@ class UpdateService {
     File file,
     List<String> urls, {
     void Function(double? progress)? onProgress,
+    void Function(int total)? onTotal,
     Future<void> Function(String url, File file, void Function(double?)? onProgress)? one,
   }) async {
     Object? last;
     for (final url in urls) {
       try {
-        await (one ?? _downloadOne)(url, file, onProgress);
+        if (one == null) {
+          await _downloadOne(url, file, onProgress, onTotal: onTotal);
+        } else {
+          await one(url, file, onProgress);
+        }
         return file;
       } catch (e) {
         last = e; // 换下一个候选（半成品已由 writeStreamToFile 清理）
@@ -354,13 +443,15 @@ class UpdateService {
   static Future<void> _downloadOne(
     String url,
     File file,
-    void Function(double?)? onProgress,
-  ) async {
+    void Function(double?)? onProgress, {
+    void Function(int total)? onTotal,
+  }) async {
     final client = HttpClient()..connectionTimeout = _timeout;
     try {
       final req = await client.getUrl(Uri.parse(url)).timeout(_timeout);
       final res = await req.close().timeout(_timeout);
       if (res.statusCode != 200) throw HttpException('HTTP ${res.statusCode}');
+      if (res.contentLength > 0) onTotal?.call(res.contentLength);
       await writeStreamToFile(
         file,
         res.timeout(_idleTimeout),
@@ -404,13 +495,60 @@ class UpdateService {
     }
   }
 
-  /// 调起系统安装器
-  static Future<bool> install(File apk) async {
+  /// 计算文件 SHA-256（十六进制小写）
+  static Future<String> sha256Of(File file) async {
+    final digest = await sha256.bind(file.openRead()).first;
+    return digest.bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+  }
+
+  /// 校验下载文件与清单声明的 SHA-256。
+  /// [expected] 为空（旧清单没给该 ABI 的哈希）→ 返回 true 并**不阻断**（向后兼容），
+  /// 但调用方应把这种情况记录为「未校验」。
+  static Future<bool> verifyChecksum(File file, String? expected) async {
+    final want = (expected ?? '').trim().toLowerCase().replaceFirst('sha256:', '');
+    if (want.isEmpty) return true;
+    if (!file.existsSync()) return false;
+    final got = await sha256Of(file);
+    return got == want;
+  }
+
+  /// 安装前校验：下载包的**签名证书**必须与已装应用一致（防镜像投毒 / 换包）。
+  /// 三态返回：读不出来（个别 ROM）与真正不符要分开 —— 前者应引导用户走发布页。
+  static Future<SigCheck> verifySignature(File apk) async {
+    final probe = debugSignatureProbe ?? _probeSignature;
+    try {
+      return await probe(apk.path);
+    } catch (_) {
+      return SigCheck.unreadable;
+    }
+  }
+
+  static Future<SigCheck> _probeSignature(String path) async {
+    final r = await _updateChannel.invokeMethod<String>('verifySignature', {'path': path});
+    return switch (r) {
+      'ok' => SigCheck.ok,
+      'mismatch' => SigCheck.mismatch,
+      _ => SigCheck.unreadable,
+    };
+  }
+
+  static const MethodChannel _updateChannel = MethodChannel('gymmane/update');
+
+  /// 安装：**先比对签名**（不一致直接拒绝），再调起系统安装器。
+  static Future<InstallOutcome> install(File apk) async {
+    switch (await verifySignature(apk)) {
+      case SigCheck.mismatch:
+        return InstallOutcome.signatureMismatch;
+      case SigCheck.unreadable:
+        return InstallOutcome.verifyUnavailable;
+      case SigCheck.ok:
+        break; // 通过，继续安装
+    }
     try {
       final r = await OpenFilex.open(apk.path, type: 'application/vnd.android.package-archive');
-      return r.type == ResultType.done;
+      return r.type == ResultType.done ? InstallOutcome.ok : InstallOutcome.failed;
     } catch (_) {
-      return false;
+      return InstallOutcome.failed;
     }
   }
 }

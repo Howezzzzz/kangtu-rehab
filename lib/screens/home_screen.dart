@@ -7,11 +7,9 @@ import '../models/exercise.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import '../widgets/brand_mark.dart';
 import '../widgets/charts.dart';
 import '../widgets/day_off_sheet.dart';
 import '../widgets/entrance.dart';
-import '../widgets/entry_row.dart';
 import '../widgets/exercise_media.dart';
 import '../widgets/glass.dart';
 import '../widgets/home_folder.dart';
@@ -148,10 +146,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ), dim: 0),
-            const SizedBox(height: 14),
-            _rehabCard(),
-            const SizedBox(height: 12),
-            _logCard(),
             if (fit.nutritionBeta) ...[
               const SizedBox(height: 12),
               HomeFolder(
@@ -169,29 +163,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  /// 康复入口（与训练计划/工具/日志并列）——康复档案为主，手册在模块内。
-  /// 融合 2.5：卡片规格改由 EntryRow 统一定义（与「我的」页三个康复入口同一套）。
-  Widget _rehabCard() {
-    final ep = fit.rehabEpisodes.isEmpty ? null : fit.rehabEpisodes.first;
-    return EntryRow(
-      icon: EntryIcons.rehab,
-      title: t.rehabTitle,
-      // 顺带修 i18n 漏：原来这里硬编码中文「计划 N 个」，非中文用户会看到中文
-      detail: rehabEntryDetail(t.rehabCardBlurb, ep?.title, ep?.routineIds.length ?? 0),
-      onTap: fit.goRehab,
-    );
-  }
-
-  /// 统一「日志」入口（训练 + 康复）。
-  Widget _logCard() {
-    return EntryRow(
-      icon: EntryIcons.log,
-      title: t.rehabTabLog,
-      detail: t.logSubtitle,
-      onTap: fit.goLog,
-    );
-  }
-
   Widget _away(Widget child, {double dim = 0.45}) => ScrollAway(radius: 22, dim: dim, child: child);
 
   Widget _section(GymColors gc, String title, VoidCallback? onMore, Widget child) => _away(
@@ -205,6 +176,7 @@ class HomeScreen extends StatelessWidget {
         ),
         dim: 0,
       );
+
   Widget _topBar(GymColors gc) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -360,7 +332,7 @@ class HomeScreen extends StatelessWidget {
               bottom: 76,
               child: Opacity(
                 opacity: 0.6,
-                child: BrandMark(fit: BoxFit.fitHeight),
+                child: Image.asset('assets/img/runner.png', fit: BoxFit.fitHeight),
               ),
             ),
             Padding(

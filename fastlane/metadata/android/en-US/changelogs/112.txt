@@ -1,4 +1,4 @@
-GymMane 2.0.0
+Kangtu 2.0.0
 
 • Your month, recapped and ready to share
 • Workout voice (beta)

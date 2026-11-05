@@ -10,8 +10,8 @@ import '../models/workout.dart';
 import '../state/fit_state.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
-import '../widgets/brand_mark.dart';
 import '../widgets/celebration.dart';
+import '../widgets/check_in.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/entrance.dart';
 import '../widgets/exercise_history_sheet.dart';
@@ -25,7 +25,6 @@ import '../widgets/rolling_text.dart';
 import '../widgets/ruler_picker.dart';
 import '../widgets/svg_icon.dart';
 import '../widgets/timer_panel.dart';
-import '../widgets/session_recap.dart';
 import '../widgets/ui_kit.dart';
 import '../widgets/workout_notes.dart';
 import 'exercises_screen.dart';
@@ -2045,57 +2044,6 @@ class SessionScreen extends StatelessWidget {
     );
   }
 
-  Widget _progFeedbackCard(GymColors gc) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: gc.bgRaised,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Icon(PhosphorIconsFill.lightning, size: 14, color: gc.sage),
-          const SizedBox(width: 6),
-          Text(t.progCardTitle,
-              style: AppTheme.f(13, weight: FontWeight.w700, color: gc.text, letterSpacing: 0.4)),
-        ]),
-        const SizedBox(height: 8),
-        for (final line in fit.progFeedback)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(line,
-                style: AppTheme.f(12.5,
-                    weight: FontWeight.w500, color: gc.textSecondary, height: 1.35)),
-          ),
-      ]),
-    );
-  }
-
-  /// 自由训练里包含了“属于某个计划例程”的动作 → 本次不计入计划进度，完成页给一句提示。
-  bool get _freePlanNotCounted {
-    final s = fit.session;
-    if (s == null || s.routineId != null) return false;
-    return s.exercises
-        .any((e) => fit.routines.any((r) => !r.archived && r.prog.containsKey(e.id)));
-  }
-
-  Widget _freePlanCard(GymColors gc) => Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: gc.bgRaised,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: gc.border),
-        ),
-        child: Row(children: [
-          Icon(PhosphorIconsRegular.info, size: 18, color: gc.accent),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(t.freePlanHint,
-                style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.3)),
-          ),
-        ]),
-      );
-
   Widget _complete(BuildContext context, GymColors gc) {
     final prs = fit.gamification ? fit.summaryPrs : 0;
     final streak = fit.currentStreak;
@@ -2131,19 +2079,6 @@ class SessionScreen extends StatelessWidget {
                 child: vsLast != null ? _vsLastCard(gc, vsLast) : _firstTimeCard(gc),
               ),
             ],
-            if (fit.progFeedback.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              Rise(index: 2, child: _progFeedbackCard(gc)),
-            ],
-            if (_freePlanNotCounted) ...[
-              const SizedBox(height: 10),
-              Rise(index: 2, child: _freePlanCard(gc)),
-            ],
-            // 融合 2.2：完成页只出一张合并卡（感觉 / 按肌群 / 不适备注 / 睡眠精力）
-            if (fit.filedSession != null) ...[
-              const SizedBox(height: 10),
-              Rise(index: 2, child: SessionRecapCard(fit.filedSession!)),
-            ],
             AnimatedSize(
               duration: const Duration(milliseconds: 280),
               curve: Curves.easeOutCubic,
@@ -2155,7 +2090,14 @@ class SessionScreen extends StatelessWidget {
                       child: Rise(index: 3, child: _levelUpCard(context, gc, fit.summaryLevelUp!)),
                     ),
             ),
-            // 上游 CheckInCard / _TuneCard 已并入 SessionRecapCard（融合 2.2）
+            if (fit.askCheckIn && fit.filedSession != null) ...[
+              const SizedBox(height: 10),
+              Rise(index: 3, child: CheckInCard(fit.filedSession!)),
+            ],
+            if (fit.tuneTargets.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              Rise(index: 3, child: _TuneCard(fit.tuneTargets)),
+            ],
             if (fit.sessionExtras.isNotEmpty || identical(_extrasFor, fit.session)) ...[
               const SizedBox(height: 10),
               const Rise(index: 3, child: _ExtrasCard()),
@@ -2368,7 +2310,7 @@ class SessionScreen extends StatelessWidget {
               bottom: -6,
               child: Opacity(
                 opacity: 0.45,
-                child: BrandMark(fit: BoxFit.fitHeight),
+                child: Image.asset('assets/img/runner.png', fit: BoxFit.fitHeight),
               ),
             ),
             Padding(
@@ -3270,6 +3212,79 @@ class _CelebrateState extends State<_Celebrate> {
 }
 
 Object? _extrasFor;
+
+class _TuneCard extends StatelessWidget {
+  const _TuneCard(this.targets);
+
+  final List<({String muscle, String exId})> targets;
+
+  @override
+  Widget build(BuildContext context) {
+    final gc = context.gc;
+    final routine = fit.sessionRoutine;
+    if (routine == null) return const SizedBox.shrink();
+    return SoftCard(
+      radius: 22,
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text(t.tuneTitle.toUpperCase(),
+            style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4)),
+        const SizedBox(height: 4),
+        Text(t.tuneHint,
+            style: AppTheme.f(12.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.35)),
+        const SizedBox(height: 6),
+        for (final m in targets) _row(gc, routine, m),
+      ]),
+    );
+  }
+
+  Widget _row(GymColors gc, Routine routine, ({String muscle, String exId}) m) {
+    final vote = fit.muscleVote(m.muscle);
+    final ex = fit.exerciseById(m.exId);
+    final sets = fit.routineSets(routine, m.exId);
+    void pick(int v) => fit.voteMuscle(m.muscle, vote == v ? null : v);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(children: [
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(muscleLabel(m.muscle),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTheme.f(14, weight: FontWeight.w700, color: gc.text)),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 220),
+              curve: Curves.easeOutCubic,
+              alignment: Alignment.topLeft,
+              child: vote == null || ex == null
+                  ? const SizedBox(width: double.infinity)
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(vote == 0 ? t.tuneSame : t.tuneNext(t.setCount(sets), exerciseName(ex)),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTheme.f(11.5,
+                              weight: FontWeight.w600, color: vote == 0 ? gc.textSecondary : gc.sage, height: 1.3)),
+                    ),
+            ),
+          ]),
+        ),
+        const SizedBox(width: 10),
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerEnd,
+            child: SegToggle([
+              SegOption(t.tuneLess, vote == 1, () => pick(1)),
+              SegOption(t.tuneRight, vote == 0, () => pick(0)),
+              SegOption(t.tuneMore, vote == -1, () => pick(-1)),
+            ], hPad: 10),
+          ),
+        ),
+      ]),
+    );
+  }
+}
 
 class _ExtrasCard extends StatefulWidget {
   const _ExtrasCard();

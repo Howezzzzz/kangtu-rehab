@@ -1,4 +1,4 @@
-GymMane 1.7.0
+Kangtu 1.7.0
 
 • Copias automáticas en la carpeta que elijas
 • Reglas de progresión para cada ejercicio

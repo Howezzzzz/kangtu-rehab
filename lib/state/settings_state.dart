@@ -297,7 +297,7 @@ mixin SettingsState on FitCore, ToolsState, LibraryState {
   }
 
   bool get hasOwnIdentity =>
-      profile.handle.isNotEmpty || profile.name.isNotEmpty; // 名字非空即视为已自定义（kDefaultName 现为空哨兵）
+      profile.handle.isNotEmpty || (profile.name.isNotEmpty && profile.name != kDefaultName);
 
   String get displayName => profile.name.isEmpty ? kDefaultName : profile.name;
 

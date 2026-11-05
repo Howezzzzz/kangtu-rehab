@@ -1,6 +1,5 @@
 import java.util.Properties
 import java.io.FileInputStream
-import java.util.Base64
 import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
@@ -13,19 +12,6 @@ val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-}
-
-// CI signing: secrets arrive as env (KEYSTORE_BASE64 / KEYSTORE_PASSWORD / KEY_PASSWORD / KEY_ALIAS),
-// falling back to a local key.properties (gitignored) for dev machines, then debug signing.
-val envKeystoreBase64 = System.getenv("KEYSTORE_BASE64")
-val useEnvKeystore = !envKeystoreBase64.isNullOrEmpty()
-val signingKeystoreFile = if (useEnvKeystore) {
-    val f = File(rootProject.projectDir, "build/keystore/upload-keystore.jks")
-    f.parentFile.mkdirs()
-    f.writeBytes(Base64.getDecoder().decode(envKeystoreBase64))
-    f
-} else {
-    null
 }
 
 android {
@@ -56,27 +42,20 @@ android {
         includeInBundle = false
     }
 
-    if (useEnvKeystore || keystorePropertiesFile.exists()) {
+    if (keystorePropertiesFile.exists()) {
         signingConfigs {
             create("release") {
-                if (useEnvKeystore) {
-                    storeFile = signingKeystoreFile
-                    storePassword = System.getenv("KEYSTORE_PASSWORD")!!
-                    keyAlias = System.getenv("KEY_ALIAS")!!
-                    keyPassword = System.getenv("KEY_PASSWORD")!!
-                } else {
-                    keyAlias = keystoreProperties["keyAlias"] as String
-                    keyPassword = keystoreProperties["keyPassword"] as String
-                    storeFile = keystoreProperties["storeFile"]?.let { file(it) }
-                    storePassword = keystoreProperties["storePassword"] as String
-                }
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+                storePassword = keystoreProperties["storePassword"] as String
             }
         }
     }
 
     buildTypes {
         release {
-            signingConfig = if (useEnvKeystore || keystorePropertiesFile.exists()) {
+            signingConfig = if (keystorePropertiesFile.exists()) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")

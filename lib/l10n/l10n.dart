@@ -6,8 +6,6 @@ import 'app_localizations.dart';
 import 'catalog_es.dart';
 import 'catalog_it.dart';
 import 'catalog_zh.dart';
-import 'catalog_zh_ext.dart';
-import 'catalog_zh_rep.dart';
 
 export 'app_localizations.dart';
 
@@ -22,8 +20,8 @@ final _grouped = <String, NumberFormat>{};
 
 String groupedInt(int n) => (_grouped[intlLocale] ??= NumberFormat.decimalPattern(intlLocale)).format(n);
 
-const Map<String, Map<String, String>> _catalogNames = {'es': kExerciseNameEs, 'it': kExerciseNameIt, 'zh': {...kExerciseNameZh, ...kExerciseNameZhExt, ...kExerciseNameZhRep}};
-const Map<String, Map<String, List<String>>> _catalogSteps = {'es': kExerciseStepsEs, 'it': kExerciseStepsIt, 'zh': {...kExerciseStepsZh, ...kExerciseStepsZhExt, ...kExerciseStepsZhRep}};
+const Map<String, Map<String, String>> _catalogNames = {'es': kExerciseNameEs, 'it': kExerciseNameIt, 'zh': kExerciseNameZh};
+const Map<String, Map<String, List<String>>> _catalogSteps = {'es': kExerciseStepsEs, 'it': kExerciseStepsIt, 'zh': kExerciseStepsZh};
 
 String appLanguage = 'en';
 AppLocalizations t = lookupAppLocalizations(const Locale('en'));
@@ -129,29 +127,8 @@ extension GymL10n on AppLocalizations {
         'abcde' => tplAbcde,
         'stronglifts' => tplStronglifts,
         'startingstrength' => tplStartingstrength,
-        'gzclp' => tplGzclp,
-        'bbb531' => tplBbb531,
-        'ppl6' => tplPpl6,
-        'phul' => tplPhul,
         'rr' => tplRr,
         _ => tplHome,
-      };
-
-  String templateName(String id, String fallback) => switch (id) {
-        'fullbody' => tplNameFullbody,
-        'ppl' => tplNamePpl,
-        'upperlower' => tplNameUpperlower,
-        'abcd' => tplNameAbcd,
-        'abcde' => tplNameAbcde,
-        'stronglifts' => tplNameStronglifts,
-        'startingstrength' => tplNameStartingstrength,
-        'gzclp' => tplNameGzclp,
-        'bbb531' => tplNameBbb531,
-        'ppl6' => tplNamePpl6,
-        'phul' => tplNamePhul,
-        'rr' => tplNameRr,
-        'home' => tplNameHome,
-        _ => fallback,
       };
 
   String toolDesc(String id) => switch (id) {
@@ -263,44 +240,6 @@ extension GymL10n on AppLocalizations {
         'Kettlebell' => equipKettlebell,
         'Rings' => equipRings,
         _ => equipOther,
-      };
-
-  // ---- 康复模块 ----
-  String rehabArea(String id) => switch (id) {
-        'lowback' => rehabAreaLowback,
-        'neck' => rehabAreaNeck,
-        'shoulder' => rehabAreaShoulder,
-        'elbow' => rehabAreaElbow,
-        'hip' => rehabAreaHip,
-        'knee' => rehabAreaKnee,
-        'ankle' => rehabAreaAnkle,
-        _ => rehabAreaOther,
-      };
-
-  String rehabDuration(String id) => switch (id) {
-        'acute' => rehabDurAcute,
-        'sub' => rehabDurSub,
-        'chronic' => rehabDurChronic,
-        _ => rehabDurLong,
-      };
-
-  String rehabGoal(String id) => switch (id) {
-        'pain' => rehabGoalPain,
-        'mobility' => rehabGoalMobility,
-        'strength' => rehabGoalStrength,
-        'return' => rehabGoalReturn,
-        _ => rehabGoalDaily,
-      };
-
-  String rehabRedFlag(String id) => switch (id) {
-        'bladder' => rehabFlagBladder,
-        'weakness' => rehabFlagWeakness,
-        'trauma' => rehabFlagTrauma,
-        'fever' => rehabFlagFever,
-        'night' => rehabFlagNight,
-        'cancer' => rehabFlagCancer,
-        'pregnant' => rehabFlagPregnant,
-        _ => rehabFlagSurgery,
       };
 
   String exerciseKind(String id) => switch (id) {

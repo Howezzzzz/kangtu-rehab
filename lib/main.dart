@@ -33,7 +33,6 @@ Future<void> main() async {
   await AlarmStore.init();
   await RestAlarm.instance.init();
   fit.loadFromStore();
-  await fit.migrateRehabLog();
   fit.syncPhotoReminder();
   fit.syncMeasureReminder();
   fit.syncTrainReminder();

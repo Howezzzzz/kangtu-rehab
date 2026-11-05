@@ -29,7 +29,7 @@ Future<void> sharePlan(List<Routine> routines, {String? title}) async {
         .toLowerCase()
         .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
         .replaceAll(RegExp(r'^-+|-+$'), '');
-    final file = File('${dir.path}/kangtu-${slug.isEmpty ? 'plan' : slug}.json');
+    final file = File('${dir.path}/gymmane-${slug.isEmpty ? 'plan' : slug}.json');
     await file.writeAsString(fit.exportPlanJson(routines));
     await SharePlus.instance.share(ShareParams(
       files: [XFile(file.path, mimeType: 'application/json')],
@@ -111,18 +111,12 @@ class _PlanImportSheetState extends State<_PlanImportSheet> {
   }
 
   void _apply({bool copies = false}) {
-    final cycle = _text.text.trim().isEmpty ? null : parseCycle(_text.text);
-    final result =
-        fit.applyPlan(_plans, schedule: _schedule, cycle: cycle, copies: copies);
+    final result = fit.applyPlan(_plans, schedule: _schedule, copies: copies);
     final gc = context.gc;
     showNotchToast(
       context,
       result.routines > 0 ? t.routinesAdded(result.routines) : t.nothingToImport,
-      subtitle: result.routines > 0
-          ? cycle == null
-              ? t.exerciseCount(result.added)
-              : t.planCycleApplied(cycle.weeks, cycle.perWeek)
-          : null,
+      subtitle: result.routines > 0 ? t.exerciseCount(result.added) : null,
       icon: result.routines > 0 ? PhosphorIconsFill.checkCircle : PhosphorIconsFill.warningCircle,
       accent: result.routines > 0 ? gc.sage : gc.warn,
     );

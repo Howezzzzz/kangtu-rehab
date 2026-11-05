@@ -85,7 +85,7 @@ abstract class DayWidgetProvider : HomeWidgetProvider() {
     )
 
     companion object {
-        private const val ACTION_NEW_DAY = "com.kangtu.app.NEW_DAY"
+        private val ACTION_NEW_DAY = BuildConfig.APPLICATION_ID + ".NEW_DAY"
         private val rollover = setOf(
             ACTION_NEW_DAY,
             Intent.ACTION_TIME_CHANGED,

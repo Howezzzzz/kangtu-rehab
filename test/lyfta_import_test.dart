@@ -52,15 +52,7 @@ void main() {
     test('no cambia de músculo por una palabra suelta', () {
       expect(match('Dumbbell Seated Curl'), isNot('Seated Leg Curl'));
       expect(match('Lever Seated Leg Extension'), isNot(contains('Calf')));
-      // 康途定制：上游此处断言 isNull（因为它库里根本没这条动作）；我方 RepDB 扩充库
-      // 有「dumbbell seated one arm rotate」条目，isNull 不再成立。不能只把断言删成注释
-      // （那等于丢一格覆盖），改为正向锁住原测试意图：
-      // ① 在我方库里确实能解析到；② 不会因为「Seated」这个松散的词跳到 Seated Leg Curl。
-      final rotate = match('Dumbbell Seated One Arm Rotate');
-      expect(rotate, isNotNull, reason: 'RepDB 扩充库应能解析这条动作');
-      expect(rotate, isNot('Seated Leg Curl'));
-      expect(rotate!.toLowerCase(), contains('rotate'),
-          reason: '应匹配到同名的旋转类动作，实际得到 $rotate');
+      expect(match('Dumbbell Seated One Arm Rotate'), isNull);
     });
 
     test('el nombre exacto gana', () {
@@ -69,12 +61,10 @@ void main() {
     });
 
     test('encuentra el ejercicio aunque el nombre traiga más cosas', () {
-      // 康途定制：RepDB 扩充库中「Cable Face Pull」匹配更好
-      expect(match('Cable Standing Face Pull (with rope)'), 'Cable Face Pull');
+      expect(match('Cable Standing Face Pull (with rope)'), 'Face Pull');
       expect(match('Barbell Feet Flat Bench Press (male)'), 'Barbell Bench Press');
       expect(match('Lever Pec Deck Fly'), 'Pec Deck');
-      // 康途定制：扩充库里有 EZ 杠窄握牧师凳弯举，比 「Barbell Preacher Curl」更贴
-      expect(match('Close Grip Preacher Curl'), 'ez barbell close grip preacher curl');
+      expect(match('Close Grip Preacher Curl'), 'Barbell Preacher Curl');
     });
 
     test('su columna RIR/RPE se entiende en las dos escalas', () {

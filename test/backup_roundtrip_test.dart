@@ -5,12 +5,8 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/catalog/exercise_catalog.dart';
-import 'package:gymmane/models/baseline.dart';
 import 'package:gymmane/models/note.dart';
 import 'package:gymmane/models/nutrition.dart';
-import 'package:gymmane/models/plan_cycle.dart';
-import 'package:gymmane/models/progression.dart';
-import 'package:gymmane/models/rehab_episode.dart';
 import 'package:gymmane/models/workout.dart';
 import 'package:gymmane/services/backup_zip.dart';
 import 'package:gymmane/services/local_store.dart';
@@ -135,72 +131,6 @@ void main() {
     final plan = fit.createMealPlan(name: 'Lunes', fromDay: true);
     fit.setPlanDay(1, plan.id);
     fit.setStepsGoal(10000);
-
-    // ---- 康途自有域（融合批次1 补种）----
-    // 此前 seedEverything 完全没覆盖这些域：备份/恢复一旦丢字段，
-    // 用户侧后果是「渐进进度 / 康复档案 / 自评基线静默清零」，而测试照样全绿。
-    // 会话级反馈（我方 feel/pain/note）+ 上游签到（sleep/energy）
-    final s0 = fit.sessions.first;
-    fit.setSessionFeedback(s0, feel: 2, painArea: 'back', painLevel: 6, note: '腰有点紧');
-    fit.rateSession(s0, sleep: true, value: 4);
-    fit.rateSession(s0, sleep: false, value: 2);
-    fit.toggleAskCheckIn(); // askCheckIn=false → 存档里出现 'checkIn' 键
-    fit.toggleMuscleTune(); // muscleTune=false → 存档里出现 'mTune' 键
-
-    // 计划周期（planCycles）
-    final pushR = fit.routines.firstWhere((x) => x.id == push);
-    fit.setCycle(
-        push,
-        PlanCycle(
-            start: PlanCycle.dayOnly(day),
-            weeks: 4,
-            perWeek: 3,
-            pinnedDays: const [1, 3, 5],
-            round: 2));
-
-    // 渐进实例（progStates）+ 步进冻结标记（progStepFrozen）
-    pushR.prog[bench.id] = const ProgSpec(kind: ProgKind.linear, sets: 3, reps: 5, stepKg: 2.5);
-    pushR.progInst = 'piRt';
-    fit.programStates['piRt'] = ProgState(tpl: 'tplRt', week: 2, lastAdv: 1767225600000)
-      ..w[bench.id] = 102.5
-      ..reps[bench.id] = 6
-      ..fails[bench.id] = 1
-      ..tm[squat.id] = 120
-      ..tmSet.add(squat.id);
-    fit.progStepFrozen = true;
-
-    // 康复档案（rehabEp）+ 康复日志（rehabLog）
-    fit.createEpisode(RehabEpisode(
-      id: 'epRt1',
-      title: '腰背',
-      createdAt: day,
-      area: 'lowback',
-      duration: '6 周',
-      pain: 4,
-      factors: '久坐',
-      goals: const ['无痛久坐 1 小时'],
-      daysPerWeek: 3,
-      advice: '先激活再加载',
-      notes: '早晚各一次',
-      status: 'active',
-      doctorDx: 'L5-S1 轻度突出',
-      icdCode: 'M51.2',
-      visitDate: day,
-      ordersText: '避免负重前屈',
-      restrictions: '暂不跑步',
-      imaging: 'CT',
-    ));
-    fit.upsertRehabLogForDay(day, 2, 'y', '今天轻松');
-
-    // 自评基线（baselines）
-    fit.saveBaseline(BaselineSession(
-      id: 'blRt1',
-      date: day,
-      items: [BaselineItem('sit30', 12), BaselineItem('plank', 45.5)],
-    ));
-
-    // 笔记文件夹（noteFolders）
-    fit.addNoteFolder('康复', 3);
 
     fit.refreshAwards(silent: true);
   }

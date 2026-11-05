@@ -142,6 +142,7 @@ void main() {
       expect(text, contains('/Author ${hex('InlitX')}'));
       expect(text, contains('/Lang (es)'));
       expect(text, contains('<dc:creator><rdf:Seq><rdf:li>InlitX</rdf:li></rdf:Seq></dc:creator>'));
+      // 品牌移植后 PDF 元数据用拉丁名（字体/编码安全）
       expect(text, contains('<xmp:CreatorTool>Kangtu</xmp:CreatorTool>'));
       final xref = int.parse(RegExp(r'startxref\n(\d+)').firstMatch(text)!.group(1)!);
       expect(text.substring(xref, xref + 4), 'xref');

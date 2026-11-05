@@ -1,8 +1,5 @@
 import '../catalog/merged_exercises.dart';
 
-/// 被合并掉的动作 id → 保留项 id。运行期兜底用；存档在加载时已整体重映射。
-String canonicalExerciseId(String id) => kMergedExercises[id] ?? id;
-
 Map<String, dynamic> withMergedExercises(Map<String, dynamic> data) =>
     kMergedExercises.isEmpty ? data : _remap(data) as Map<String, dynamic>;
 

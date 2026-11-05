@@ -1,219 +1,224 @@
 <div align="center">
 
-<img src="docs/screenshots/banner.png" alt="康途 — 康复与健身训练记录" width="860" />
+<img src="docs/screenshots/banner-en.png" alt="GymMane — Lift. Log it. Grow." width="860" />
 
 <br/>
 
-<img src="docs/screenshots/icon.png" width="94" alt="康途" />
+<img src="docs/screenshots/icon.png" width="94" alt="GymMane" />
 
-# 康途
+# GymMane
 
-一款免费、离线优先的 Android 康复与健身训练记录应用（唯一联网功能为「检查更新」）。<br/>
-点选想练的肌群，记录每一组，看着你的数据一路上涨。
+A free, offline gym log for Android.<br/>
+Tap the muscles you want to train, log your sets and watch your numbers go up.
+
+<br/>
+
+<p>
+  <img alt="Android 7.0+" src="https://img.shields.io/badge/Android-7.0%2B-3DDC84?style=flat&logo=android&logoColor=white" />
+  <img alt="License GPLv3" src="https://img.shields.io/badge/Code-GPLv3-C2410C?style=flat&logo=gnu&logoColor=white" />
+  <img alt="Art CC BY-SA 4.0" src="https://img.shields.io/badge/Art-CC%20BY--SA%204.0-8A6B41?style=flat&logo=creativecommons&logoColor=white" />
+  <a href="https://github.com/InlitX/GymMane/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/InlitX/GymMane?style=flat&color=D9A184&labelColor=181717&logo=github" /></a>
+  <a href="https://github.com/InlitX/GymMane/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/InlitX/GymMane/total?style=flat&color=D9A184&labelColor=181717&logo=github&label=downloads" /></a>
+</p>
+
+<p>
+  <a href="https://trendshift.io/repositories/107197?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-107197" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/107197" alt="InlitX%2FGymMane | Trendshift" width="250" height="55"/></a>
+</p>
+
+**下载**：从 [GitHub Releases](https://github.com/Howezzzzz/kangtu-rehab/releases) 获取 —— 本项目自行分发，未上架 F-Droid / IzzyOnDroid / OpenAPK 等商店。
+&nbsp;
+&nbsp;
+&nbsp;
+<a href="https://github.com/InlitX/GymMane/releases"><img alt="Get it on GitHub" src="docs/badges/get-it-on-github.png" height="60" /></a>
+&nbsp;
+
+<sub><b>English</b> · <a href="docs/readme/README.es.md">Español</a> · <a href="docs/readme/README.it.md">Italiano</a> · <a href="docs/readme/README.zh.md">简体中文</a></sub>
 
 <br/>
 <br/>
+
+<img src="docs/screenshots/store/en/01-hero.jpg" width="196" alt="Lift. Log it. Grow." />
+<img src="docs/screenshots/store/en/02-train.jpg" width="196" alt="Tap the muscle, get the session" />
+<img src="docs/screenshots/store/en/03-rest.jpg" width="196" alt="Tick the set, rest rings itself" />
+<img src="docs/screenshots/store/en/04-progress.jpg" width="196" alt="Progress from your own sets" />
+
+<img src="docs/screenshots/store/en/05-library.jpg" width="196" alt="500+ exercises with animations" />
+<img src="docs/screenshots/store/en/10-nutrition.jpg" width="196" alt="What you eat, at a glance" />
+<img src="docs/screenshots/store/en/06-privacy.jpg" width="196" alt="No account. No internet. No smoke." />
 
 <details>
-<summary><sub><b>界面截图</b>，全部来自真机</sub></summary>
+<summary><sub><b>Plain screenshots</b>, every screen straight off the phone</sub></summary>
 <br/>
 
-<img src="docs/screenshots/mock/01-home.png" width="215" alt="首页" />
-<img src="docs/screenshots/mock/03-train.png" width="215" alt="人体图谱" />
-<img src="docs/screenshots/mock/04-session.png" width="215" alt="训练进行中" />
-<img src="docs/screenshots/mock/02-progress.png" width="215" alt="进度统计" />
+<img src="docs/screenshots/mock/01-home.png" width="215" alt="Today" />
+<img src="docs/screenshots/mock/03-train.png" width="215" alt="Body map" />
+<img src="docs/screenshots/mock/04-session.png" width="215" alt="Live session" />
+<img src="docs/screenshots/mock/02-progress.png" width="215" alt="Progress" />
 
-<sub><b>首页</b> &nbsp;·&nbsp; <b>人体图谱</b> &nbsp;·&nbsp; <b>训练进行中</b> &nbsp;·&nbsp; <b>进度统计</b></sub>
+<sub><b>Today</b> &nbsp;·&nbsp; <b>Body map</b> &nbsp;·&nbsp; <b>Live session</b> &nbsp;·&nbsp; <b>Progress</b></sub>
 
 <br/>
 <br/>
 
-<img src="docs/screenshots/mock/05-history.png" width="215" alt="训练历史" />
-<img src="docs/screenshots/mock/06-library.png" width="215" alt="动作库" />
-<img src="docs/screenshots/mock/07-routines.png" width="215" alt="训练计划" />
-<img src="docs/screenshots/mock/08-settings.png" width="215" alt="设置" />
+<img src="docs/screenshots/mock/05-history.png" width="215" alt="History" />
+<img src="docs/screenshots/mock/06-library.png" width="215" alt="Library" />
+<img src="docs/screenshots/mock/07-routines.png" width="215" alt="Routines" />
+<img src="docs/screenshots/mock/08-settings.png" width="215" alt="Settings" />
 
-<img src="docs/screenshots/mock/09-notes.png" width="215" alt="备忘日志" />
-<img src="docs/screenshots/mock/10-places.png" width="215" alt="场地管理" />
-<img src="docs/screenshots/mock/11-body.png" width="215" alt="肌群热力图" />
-<img src="docs/screenshots/mock/12-profile.png" width="215" alt="个人资料" />
+<img src="docs/screenshots/mock/09-notes.png" width="215" alt="Journal" />
+<img src="docs/screenshots/mock/10-places.png" width="215" alt="Places" />
+<img src="docs/screenshots/mock/11-body.png" width="215" alt="Muscle timeline" />
+<img src="docs/screenshots/mock/12-profile.png" width="215" alt="Profile" />
 
-<sub><b>训练历史</b> &nbsp;·&nbsp; <b>动作库</b> &nbsp;·&nbsp; <b>训练计划</b> &nbsp;·&nbsp; <b>设置</b></sub>
+<sub><b>History</b> &nbsp;·&nbsp; <b>Library</b> &nbsp;·&nbsp; <b>Routines</b> &nbsp;·&nbsp; <b>Settings</b></sub>
 
 </details>
 
 </div>
 
-## 这是什么
-
-康途是一款面向**康复与健身训练**的本地记录应用：在人体图谱上点选想练的肌群，跟着计划完成每一组，
-数据全部留在自己的手机上。无账号、无广告、无统计、无追踪；唯一的联网行为是你手动点「检查更新」（详见[隐私](#隐私)）。
-
-本项目基于 [InlitX](https://github.com/InlitX/GymMane) 的 GymMane（GPL-3.0）二次开发，
-针对康复训练场景做了中文本地化和功能增强，详细署名见文末[许可证](#许可证)。
-
-## 功能
+## What it does
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 训练
+### Training
 
-- **人体图谱**，正面和背面：点一下想练的部位
-- 次数、重量，以及可用自定义铃声的**组间休息计时器**
-- **组类型**（热身组、正式组、递减组、力竭组），以及 RPE 或 RIR
-- **超级组**：把一个动作和下一个串起来，跳过中间的休息
-- **每侧配重片**，按你手头的器材自动计算
-- 可分组、复制和排期的**训练计划**，一天也可以安排多个，还有现成的方案
-- **下一步**：某个动作练得轻松了，就推荐更难的那个
-- **排期周期**与**减载周**：按周排计划，到点自动降负荷
-- **备选动作**：一个动作可以挂几个替补，器械被占了就换一个
-- **计时循环**训练，以及**训练语音**报下一组和休息倒计时
-- 带休息倒计时的**实时通知**，手机重启后训练也不会丢失
+- Tap the muscles on a **body map** and get a session
+- Reps, weight and a **rest timer** with your own sound
+- Warm-up, drop, failure, rest-pause and cluster sets, with RPE or RIR
+- **Supersets** and **plates per side**
+- **Routines** and weekly plans, or a rotation
+- **Progression** per exercise, so the app sets your next weights
 
 </td>
 <td width="50%" valign="top">
 
-### 康复
+### Progress
 
-- **康复档案**：记录不适部位、程度、病程、加重 / 缓解因素，以及你自己填的「限制与禁忌」
-- **安全门**：命中红旗征且没有记录医嘱时，**不接受任何训练计划**，只保留记录并提示就医
-- **训练后反馈**：整体感觉 + 不适部位 + 备注，联动康复档案
-- **AI 提示词**：导出你的情况交给通用 AI，再把回答导回应用；提示词里写死了保守规则
-  （训练中疼痛不超过 3/10、先活动度再稳定性最后力量、必须遵守你填的限制与禁忌、
-  与医嘱冲突时以医嘱为准、未过安全门时只给注意事项不给计划）
-- 近期反馈会一并放进提示词（近 7 天，没有就取最近 3 次），让 AI 看趋势而不是单次波动
-- 说清楚边界：**应用内没有动作禁忌过滤表**。「避开风险」靠三道共同完成 ——
-  安全门硬拦、提示词里的保守规则（由外部 AI 执行）、你自己填的限制与禁忌；
-  应用本身不会根据部位自动筛掉危险动作。
-- 内置**康复手册**目前只收录腰痛一套 12 周方案（离线可看）；其他部位走上面的提示词流程
+- Volume, streaks, weekly goal and **PRs**
+- **Strength curves** with estimated 1RM and strength per bodyweight
+- An **activity heatmap** and a muscle map of what you trained
+- **Progress photos** on a timeline
+- Bodyweight and **ten body measurements**
+- Levels, **medals** and a sticker to share your workout
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-### 进度
+### Exercises and tools
 
-- 训练量、连续打卡、每周目标和**个人纪录**，全部来自你自己的组数
-- **活动热力图**、每周节奏和累计总数
-- 带 1RM 估算的**力量曲线**，以及肌群分布
-- 时间线上的**进度照片**，也可以把同一条时间线画成肌群图
-- 体重和**十项身体围度**，每项都有自己的曲线
-- **月度回顾**：把一个月做成可以分享的故事页
-- **健康数据**（可选）：从 Health Connect 读取步数、心率、睡眠、血氧等
-- 带等级和 **21 枚奖牌**的**个人资料**
-- 把训练做成**贴纸**放到照片上分享
+- **500+ exercises** with animations and instructions
+- Browse by muscle, equipment or level, or add **your own**
+- Use **your own photo, GIF or video** for any exercise
+- **Places**: tell it your kit and it only suggests what fits
+- A **training journal** with photos and video
+- Six **calculators** and five **widgets**
 
 </td>
 <td width="50%" valign="top">
 
-### 动作与工具
+### Your data
 
-- **2500+ 个动作**，配有动画和分步说明（472 个来自上游，其余为扩充库条目；跨源重复已合并）
-- 按肌群、器材和难度筛选，也能**创建自己的动作**
-- 任何动作的插图都可以换成**你自己的照片、GIF 或视频**
-- **场地**：告诉它你有哪些器材，只推荐用得上的动作
-- 日历形式的**训练日志**，支持照片、视频和**文件夹**归类
-- **十个计算器**：1RM、杠铃片、BMI、卡路里、体脂率、FFMI、热身组、RPE 换算、力量水平（DOTS）、Wilks
-- **八个桌面小组件**：今天、本周、统计、卡路里、蛋白质、饮水、身体和活动热力图
-- **饮食记录（Beta，默认关闭）**：在「设置 → 饮食」里开启。记餐食、饮水、蛋白质与补剂，
-  内置 500+ 种带图食物（可自加、可改数值），还有**间歇性禁食**计时
-- **饮食模块不扫码、不联网**：扫码需要在线食物库，等于把「你吃什么、什么时候吃」送到别人的服务器；
-  这里的食物数据只存在你手机上，代价是要手动记
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 你的数据
-
-- 把训练导出为 **CSV** 或包含照片和视频的完整 **ZIP 备份**，也能再导入回来
-- 把一段时间的训练导出成**报告**（PDF 或 CSV），进度页和设置页都能进
-- 从 **Hevy**、**Strong**、**Lyfta**、**FitNotes**、**openGym** 或任意 CSV
-  导入历史记录
-- 把一次训练导出为 `.fit` 文件，上传到 **Strava**
-- **AI 训练计划**：导出动作列表，粘贴到任意 AI，再把回答导入
-- 无账号、无广告、无统计分析；联网只发生在你手动点「检查更新」时
-- 照片、视频和笔记都保存在应用自己的存储空间里
-- **17 种语言**，浅色和深色主题，kg 或 lb
-- 一键删除全部数据
+- **CSV** export and a full **ZIP backup**
+- Import from **Hevy**, **Strong**, **Lyfta**, **FitNotes** or **openGym**
+- Send workouts to **Strava** as a `.fit` file
+- No account, no ads, no analytics, no **internet permission**
+- **17 languages**, light and dark, kg or lb
+- Delete everything in one tap
 
 </td>
 </tr>
 </table>
 
-## 下载
+## Nutrition (beta)
 
-从 [GitHub Releases](https://github.com/Howezzzzz/kangtu-rehab/releases) 获取；
-如果暂时还没有正式 Release，可以在 [Actions](https://github.com/Howezzzzz/kangtu-rehab/actions)
-里下载最新一次构建产出的 APK。不确定选哪个的话，就下载 `arm64-v8a`。
+Calories and macros against your goal, 500+ foods with photos, your own foods
+and dishes, water, protein shakes, supplements, meal plans and meal prep. No
+scanner and no online database. Don't need it? Turn it off in
+**Settings › Beta**.
 
-| 平台 | 状态 |
+## Download
+
+Get it from F-Droid, IzzyOnDroid, OpenAPK, Obtainium or the
+[GitHub releases](https://github.com/InlitX/GymMane/releases/latest). Not sure
+which APK? Take `arm64-v8a`.
+
+| Platform | Status |
 |---|---|
-| Android 7.0+ | 已支持 |
-| Wear OS 3+ | 手表界面已随包内置，尚未做真机验证 |
-| iOS 15+ | 开发中 |
-| 桌面端 | 计划中 |
+| Android 7.0+ | Supported |
+| Wear OS 3+ | In progress |
+| iOS 15+ | In progress |
+| Desktop | Planned |
 
-### 从 1.3.0.35 及更早版本升级（包名变更，务必先备份）
+## Privacy
 
-自 **1.4.0** 起，康途的应用包名由 `com.gymmane.app` 改为 **`com.kangtu.app`**。
-换名后 Android 会把它当成**另一个应用**：装完桌面会多出一个图标、新版首次打开是空的，
-旧版数据也**无法自动迁移**（Android 沙箱禁止跨应用读取数据目录）。
+GymMane doesn't have the internet permission, so your training never leaves
+your phone. The permissions it asks for are for the rest timer, its
+notification and the widgets.
 
-升级步骤：
+## Contributing
 
-1. 打开**旧版**康途 →「设置 → 备份」→ 导出 ZIP（含照片/视频）
-2. 安装新版 APK（包名 `com.kangtu.app`）
-3. 在新版里「导入备份」，选刚导出的那个 ZIP
-4. 核对训练历史 / 康复档案 / 照片无误后，再卸载旧版
-
-**需要重新授权或重新添加**：Health Connect 权限、通知权限、桌面小组件、精确闹钟。
-
-为什么要换：旧包名与上游 [GymMane](https://github.com/InlitX/GymMane) 相同、但签名不同 ——
-装过上游的设备装不上康途，两个应用也无法共存；换名后可以共存，显示名「康途」与包名也一致了。
-
-## 隐私
-
-无账号、无广告、无统计分析、无追踪。训练记录、康复档案、照片和笔记都只存在手机上。
-
-康途确实申请了几项权限，逐项说明：
-
-| 权限 | 用途 |
-|---|---|
-| `INTERNET` | **只在你手动点「设置 → 检查更新」时**联网：读取仓库里的版本号文件（含国内镜像），并可选下载更新包。启动时不会自动联网 |
-| `REQUEST_INSTALL_PACKAGES` | 下载完更新包后调起系统安装界面 |
-| Health Connect（15 项读取 + 1 项写入） | 「健康数据」是**可选**功能：开启后由系统逐项弹窗授权，读取步数、心率、睡眠、血氧等；同时你的训练会作为**运动记录写回** Health Connect。不开启就完全不碰，读取与写入都只发生在本机 |
-| 通知 / 精确闹钟 / 开机自启 | 组间休息计时与训练提醒，手机重启后提醒不丢 |
-| 存储 | 导出备份、把图片保存到相册 |
-
-`ACCESS_NETWORK_STATE` 已在 Manifest 中显式移除（`tools:node="remove"`）。
-
-**康复档案里会有医疗相关信息**（不适部位与程度、疼痛评分、医生建议、复诊时间）。这些内容全部只存在本机，
-不上传、不给任何第三方；导出 ZIP 备份时会一并包含，请自行妥善保管备份文件。
-
-动作库中的一部分条目来自 [RepDB](https://repdb.co) free tier，署名保留在应用内的关于页。
-
-## 参与贡献
-
-欢迎提交问题反馈、想法和 Pull Request。较大的改动请先开一个 issue 讨论。
+Bug reports, ideas and pull requests are welcome. For anything big, open an
+issue first. Want to translate? Edit your language's file and send a pull
+request, [TRANSLATING.md](TRANSLATING.md) shows how.
 
 ```bash
-git clone https://github.com/Howezzzzz/kangtu-rehab.git
-cd kangtu-rehab
+git clone https://github.com/InlitX/GymMane.git
+cd GymMane
 flutter pub get
 flutter build apk --release
 ```
 
-## 许可证
+## Support
 
-代码采用 [GPL-3.0](LICENSE)，并附有其第 7(b) 条规定的一项[附加条款](ADDITIONAL_TERMS.md)：
-基于本项目的作品须注明 "Based on GymMane by InlitX"（原文照录，出自上游
-InlitX/GymMane）。动作插图来自 Bryl Lim 的
-[Workout Guide](https://github.com/bryllim/workout-guide)，以及它所基于的
-[Everkinetic](https://github.com/everkinetic/data)，采用
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 许可。字体使用 SIL Open
-Font License。详情见 [CREDITS.md](CREDITS.md)。
+GymMane is free and will stay that way. A star, a translation or a clear bug
+report helps a lot. If you want to buy me a coffee:
+
+<div align="center">
+
+<a href="https://ko-fi.com/inlitx"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support me on Ko-fi" height="38" /></a>
+
+<table align="center">
+  <tr>
+    <td align="center" width="130"><img src="docs/crypto/bitcoin.svg" width="22" alt="Bitcoin" /><br/><sub><b>Bitcoin</b></sub></td>
+    <td><code>bc1qm0r4pg8nknnjh3a7n2t63ckafhsz8jdd6qer29</code></td>
+  </tr>
+  <tr>
+    <td align="center" width="130"><img src="docs/crypto/ethereum.svg" width="22" alt="Ethereum" /><br/><sub><b>Ethereum</b></sub></td>
+    <td><code>0x34b7A5552132cBca150Ae29c1E632faA49430e1a</code></td>
+  </tr>
+  <tr>
+    <td align="center" width="130"><img src="docs/crypto/solana.svg" width="22" alt="Solana" /><br/><sub><b>Solana</b></sub></td>
+    <td><code>DC8dNEUNJhWdtBHBZAn4FTheVC3W4PtkGhbazvtk17Jo</code></td>
+  </tr>
+  <tr>
+    <td align="center" width="130"><img src="docs/crypto/monero.svg" width="22" alt="Monero" /><br/><sub><b>Monero</b></sub></td>
+    <td><code>44SECMEf3rfV228kpy3Gs48wLmLXnq231gAMG7ULYoCWBWLYLHdwYV7YFkhMk31DR5P7SRAyRPyhkYaehtgEoajASz7qubq</code></td>
+  </tr>
+</table>
+
+</div>
+
+## License
+
+The code is [GPL-3.0](LICENSE), with one [additional term](ADDITIONAL_TERMS.md)
+under its section 7(b): works based on GymMane must credit it as "Based on
+GymMane by InlitX". The exercise art comes from
+[Workout Guide](https://github.com/bryllim/workout-guide) by Bryl Lim and from
+[Everkinetic](https://github.com/everkinetic/data), the drawings Workout Guide
+builds on, and is
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The fonts use
+the SIL Open Font License. [CREDITS.md](CREDITS.md) has the details.
+
+## Star history
+
+<a href="https://www.star-history.com/?repos=inlitx%2Fgymmane&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=inlitx/gymmane&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=inlitx/gymmane&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=inlitx/gymmane&type=date&legend=top-left" />
+ </picture>
+</a>

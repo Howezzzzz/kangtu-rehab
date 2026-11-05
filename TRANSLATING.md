@@ -1,4 +1,4 @@
-# Translating Kangtu
+# Translating GymMane
 
 All the app's text lives in one file per language, inside
 [`lib/l10n`](lib/l10n). English is [`app_en.arb`](lib/l10n/app_en.arb) and the
@@ -40,7 +40,7 @@ If you're not sure about your code, open an issue and I'll help.
   words inside and use the forms your language needs (`one`, `few`, `many`,
   `other`…).
 - **Keep it short.** Most text sits on buttons and small cards on a phone.
-- **"康途" stays "康途" (Kangtu in English UI).**
+- **"GymMane" stays "GymMane".**
 - **Talk to the user informally**: "tú", not "usted"; "du", not "Sie".
 
 Dates, months and weekdays come from the phone, so there's nothing to

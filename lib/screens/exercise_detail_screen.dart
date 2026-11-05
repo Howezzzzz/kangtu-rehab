@@ -1354,14 +1354,9 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
         ProgressKind.amrap => t.progAmrapHint,
       };
 
-  /// 本动作被哪些（非归档）例程的计划周期(prog)驱动
-  List<Routine> _progRs(String exId) =>
-      [for (final r in fit.routines) if (!r.archived && r.prog.containsKey(exId)) r];
-
   Widget _progressRow(BuildContext context, GymColors gc, String id) {
     final kind = fit.progressRule(id).kind;
     final on = fit.hasProgress(id);
-    final progRs = _progRs(id);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => _pickProgression(context, id),
@@ -1377,17 +1372,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
               ),
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(t.progression, style: AppTheme.f(14.5, weight: FontWeight.w500, color: gc.text)),
-                  if (progRs.isNotEmpty) ...[
-                    const SizedBox(height: 3),
-                    Text(t.progDrivenIn(fit.routineTitle(progRs.first)),
-                        style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.3)),
-                  ],
-                ],
-              ),
+              child: Text(t.progression, style: AppTheme.f(14.5, weight: FontWeight.w500, color: gc.text)),
             ),
             const SizedBox(width: 12),
             Text(_kindName(kind), style: AppTheme.f(13, weight: FontWeight.w600, color: on ? gc.accent : gc.textSecondary)),
@@ -1410,7 +1395,6 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
           final gc = sheet.gc;
           final rule = fit.progressRule(id);
           final on = fit.hasProgress(id);
-          final progRs = _progRs(id);
           void set(ProgressRule r) => fit.setProgressRule(id, r);
           Widget stepper(String value, VoidCallback dec, VoidCallback inc, {bool tight = false}) => StepperControl(
                 value: value,
@@ -1464,14 +1448,9 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
               ),
             ),
             if (on)
-              line(progRs.isNotEmpty ? t.progStepFree : t.progStep, [
+              line(t.progStep, [
                 stepper(fit.weightLabel(fit.progressFor(id) ?? 0), () => fit.bumpProgressStep(id, -1),
                     () => fit.bumpProgressStep(id, 1)),
-              ]),
-            if (progRs.isNotEmpty)
-              line(t.progStepPlan, [
-                stepper(fit.weightLabel(fit.progStepOf(id) ?? 0), () => fit.bumpProgStep(id, -1),
-                    () => fit.bumpProgStep(id, 1)),
               ]),
             if (rule.usesRange)
               line(t.progRange, [
@@ -1512,75 +1491,34 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                     const SizedBox(height: 16),
                     SheetTitle(t.progression),
                     const SizedBox(height: 14),
-                    if (progRs.isNotEmpty) ...[
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: gc.border),
-                          borderRadius: BorderRadius.circular(14),
+                    OptionGroup([
+                      for (final k in ProgressKind.values)
+                        OptionItem(
+                          _kindName(k),
+                          detail: k == rule.kind ? _kindHint(k) : null,
+                          selected: k == rule.kind,
+                          onTap: () => set(rule.copyWith(kind: k)),
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(PhosphorIconsRegular.info, size: 18, color: gc.accent),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(t.progDrivenIn(fit.routineTitle(progRs.first)),
-                                      style: AppTheme.f(12.5, weight: FontWeight.w600, color: gc.text)),
-                                  const SizedBox(height: 3),
-                                  Text(t.progDrivenFree,
-                                      style: AppTheme.f(11.5, weight: FontWeight.w400, color: gc.textSecondary, height: 1.3)),
-                                ],
+                    ]),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 240),
+                      curve: Curves.easeOutCubic,
+                      alignment: Alignment.topCenter,
+                      child: rule.kind == ProgressKind.manual
+                          ? const SizedBox(width: double.infinity)
+                          : Container(
+                              margin: const EdgeInsets.only(top: 12),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: gc.border),
+                                borderRadius: BorderRadius.circular(20),
                               ),
+                              child: Column(children: [
+                                for (var i = 0; i < params.length; i++) ...[
+                                  if (i > 0) Divider(height: 1, thickness: 1, indent: 16, endIndent: 16, color: gc.border),
+                                  params[i],
+                                ],
+                              ]),
                             ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                    // 融合 2.1：被「计划周期」接管的动作，把上游规则控件收进「进阶选项」二级并
-                    // 默认折叠（要手动覆盖时再展开）；未被接管的动作保持原样直接展开、不显示
-                    // 折叠头 —— 一个动作在同一屏只暴露一个渐进来源。
-                    _RulesCollapse(
-                      open: progRs.isEmpty,
-                      showHeader: progRs.isNotEmpty,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                            OptionGroup([
-                              for (final k in ProgressKind.values)
-                                OptionItem(
-                                  _kindName(k),
-                                  detail: k == rule.kind ? _kindHint(k) : null,
-                                  selected: k == rule.kind,
-                                  onTap: () => set(rule.copyWith(kind: k)),
-                                ),
-                            ]),
-                            AnimatedSize(
-                              duration: const Duration(milliseconds: 240),
-                              curve: Curves.easeOutCubic,
-                              alignment: Alignment.topCenter,
-                              child: rule.kind == ProgressKind.manual
-                                  ? const SizedBox(width: double.infinity)
-                                  : Container(
-                                      margin: const EdgeInsets.only(top: 12),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: gc.border),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Column(children: [
-                                        for (var i = 0; i < params.length; i++) ...[
-                                          if (i > 0) Divider(height: 1, thickness: 1, indent: 16, endIndent: 16, color: gc.border),
-                                          params[i],
-                                        ],
-                                      ]),
-                                    ),
-                            ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -1783,66 +1721,6 @@ class _MergeTargetSheetState extends State<_MergeTargetSheet> {
           ],
         ),
       ),
-    );
-  }
-}
-
-/// 「进阶选项」折叠区（融合 2.1）。
-///
-/// 被计划周期接管的动作：上游渐进规则默认收起，需要手动覆盖时再展开，
-/// 避免同一屏出现「计划驱动」与「规则驱动」两种渐进语义互相打架。
-/// 未被接管的动作：[showHeader] 为 false、[open] 为 true —— 与改造前完全一致。
-class _RulesCollapse extends StatefulWidget {
-  const _RulesCollapse({required this.child, this.open = false, this.showHeader = true});
-
-  final Widget child;
-  final bool open;
-  final bool showHeader;
-
-  @override
-  State<_RulesCollapse> createState() => _RulesCollapseState();
-}
-
-class _RulesCollapseState extends State<_RulesCollapse> {
-  late bool _open = widget.open;
-
-  @override
-  Widget build(BuildContext context) {
-    if (!widget.showHeader) return widget.child;
-    final gc = context.gc;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Semantics(
-          button: true,
-          expanded: _open,
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => setState(() => _open = !_open),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Row(children: [
-                Expanded(
-                  child: Text(t.advanced.toUpperCase(),
-                      style: AppTheme.f(10.5,
-                          weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4)),
-                ),
-                AnimatedRotation(
-                  turns: _open ? 0.5 : 0,
-                  duration: const Duration(milliseconds: 220),
-                  child: Icon(PhosphorIconsRegular.caretDown, size: 15, color: gc.textTertiary),
-                ),
-              ]),
-            ),
-          ),
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 240),
-          curve: Curves.easeOutCubic,
-          alignment: Alignment.topCenter,
-          child: _open ? widget.child : const SizedBox(width: double.infinity),
-        ),
-      ],
     );
   }
 }

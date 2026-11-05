@@ -315,7 +315,7 @@ abstract class VesselWidgetProvider(private val prefix: String, private val prev
     }
 
     companion object {
-        private const val ACTION_ADD = "com.kangtu.app.NUTRI_ADD"
+        private val ACTION_ADD = BuildConfig.APPLICATION_ID + ".NUTRI_ADD"
         private const val PENDING = "nutri_pending"
         private const val DURATION = 720L
         private const val FRAME_MS = 40L

@@ -14,14 +14,12 @@ import 'nutrition_widgets.dart';
 class HomeWidgetBridge {
   HomeWidgetBridge._();
 
-  /// 包名一律**动态取**（ISS-216）：写死会让「改包名」静默打断桌面小组件刷新 ——
-  /// `updateWidget(qualifiedAndroidName:)` 指向不存在的类，而 `_paint()` 外层
-  /// try/catch 只 debugPrint，用户只会看到小组件永远停在旧数据上。
-  /// 故本文件不出现任何包名字面量（group id 也由包名拼出）。
+  /// 包名一律**动态取**：写死会让「改包名」静默打断桌面小组件刷新
+  /// （updateWidget 指向不存在的类，而 _paint() 外层 try/catch 只 debugPrint）。
   static String? _pkgCache;
   static Future<String> _pkg() async => _pkgCache ??= (await PackageInfo.fromPlatform()).packageName;
 
-  /// iOS 的 App Group id。当前仓库没有 ios/ 目录，Android 走不到这条分支；保留以备将来。
+  /// iOS 的 App Group（本仓库无 ios/ 目录，Android 走不到；保留以备将来）
   static Future<String> _appGroup() async => 'group.${await _pkg()}';
   static const heatmapKey = 'heatmap_img';
   static const statsKey = 'stats_img';
@@ -247,8 +245,6 @@ class HomeWidgetBridge {
   static Future<void> _render(Widget view, String key, Size size) =>
       HomeWidget.renderFlutterWidget(view, key: key, logicalSize: size, pixelRatio: 3);
 
-  // `async` 不可省：箭头函数体里用了 await（解析包名）。少了它 analyze 直接报
-  // unexpected_token，而这类错误只有静态分析/真构建抓得到。
   static Future<void> _reload(String android, String ios) async => HomeWidget.updateWidget(
         qualifiedAndroidName: '${await _pkg()}.$android',
         iOSName: ios,

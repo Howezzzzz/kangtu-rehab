@@ -139,15 +139,6 @@ class RoutinesScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            if (fit.planCycles.isNotEmpty) ...[
-              Padding(
-                padding: const EdgeInsets.only(left: 4),
-                child: Text(t.cycleTitle.toUpperCase(), style: _label(gc)),
-              ),
-              const SizedBox(height: 12),
-              for (final e in fit.planCycles.entries) _cycleStatus(context, gc, e.key),
-              const SizedBox(height: 30),
-            ],
             Padding(
               padding: const EdgeInsetsDirectional.only(start: 4),
               child: Text(t.yourRoutines.toUpperCase(), style: _label(gc)),
@@ -270,46 +261,6 @@ class RoutinesScreen extends StatelessWidget {
                 ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _cycleStatus(BuildContext context, GymColors gc, String routineId) {
-    final c = fit.cycleOf(routineId);
-    final r = fit.routines.where((x) => x.id == routineId).firstOrNull;
-    if (c == null || r == null) return const SizedBox.shrink();
-    final wk = c.weekIndex(DateTime.now());
-    final done = fit.cycleDoneSessions(routineId);
-    final whole = c.weeks * c.perWeek;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: SoftCard(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(r.name, style: AppTheme.f(14, weight: FontWeight.w800, color: gc.text)),
-                  const SizedBox(height: 2),
-                  Text(
-                    '${wk == null ? t.cycleComplete : t.cycleWeekXY('$wk', '${c.weeks}')}'
-                    ' · ${t.cycleDone('$done', '$whole')}'
-                    '${c.round > 1 ? ' · ${t.cycleRound(c.round)}' : ''}',
-                    style: AppTheme.f(11.5, weight: FontWeight.w500, color: gc.textSecondary),
-                  ),
-                ],
-              ),
-            ),
-            if (c.expired)
-              TextButton(
-                onPressed: () => fit.advanceCycle(routineId),
-                child: Text(t.cycleRenew,
-                    style: AppTheme.f(12.5, weight: FontWeight.w700, color: gc.ember)),
-              ),
-          ],
         ),
       ),
     );

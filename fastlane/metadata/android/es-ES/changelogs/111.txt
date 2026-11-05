@@ -1,4 +1,4 @@
-GymMane 2.0.0
+Kangtu 2.0.0
 
 • Tu mes, resumido y listo para compartir
 • Voz en el entreno (beta)

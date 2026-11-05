@@ -1,4 +1,4 @@
-GymMane 1.9.0
+Kangtu 1.9.0
 
 • Circuitos por tiempo
 • Notas en cada serie

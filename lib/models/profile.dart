@@ -1,5 +1,4 @@
-/// 名字未设置时的哨兵值（空串）。显示时由界面回落到 `t.defaultAthleteName`。
-const String kDefaultName = '';
+const String kDefaultName = 'InlitX';
 const String kDefaultHandle = 'inlitx';
 
 class Profile {

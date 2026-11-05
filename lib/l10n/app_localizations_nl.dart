@@ -198,6 +198,122 @@ class AppLocalizationsNl extends AppLocalizations {
   String get restOff => 'Uit';
 
   @override
+  String get miniRest => 'Rust bij rest-pause en cluster';
+
+  @override
+  String get miniRestHint => 'Voor rest-pause- of clustersets';
+
+  @override
+  String get gymPass => 'Sportschoolpas';
+
+  @override
+  String get gymPassEmpty => 'Bewaar hier de code van je sportschool en kom binnen zonder pasje';
+
+  @override
+  String get gymPassAdd => 'Pas toevoegen';
+
+  @override
+  String get gymPassScan => 'Maak een foto van de code';
+
+  @override
+  String get gymPassScanHint => 'Met de camera van je telefoon';
+
+  @override
+  String get gymPassPhoto => 'Uit een foto of screenshot';
+
+  @override
+  String get gymPassPhotoHint => 'Bijvoorbeeld een screenshot uit de app van je sportschool';
+
+  @override
+  String get gymPassType => 'Typ het nummer';
+
+  @override
+  String get gymPassTypeHint => 'Voor streepjescodes: het nummer eronder';
+
+  @override
+  String get gymPassNotFound => 'Geen QR-code op die afbeelding. Probeer een scherpere of typ het nummer.';
+
+  @override
+  String get gymPassName => 'Naam van de sportschool';
+
+  @override
+  String get gymPassDefaultName => 'Mijn sportschool';
+
+  @override
+  String get gymPassCode => 'Code';
+
+  @override
+  String get gymPassFormat => 'Soort code';
+
+  @override
+  String get gymPassInvalid => 'Dat nummer past niet bij dit soort code';
+
+  @override
+  String get gymPassShowHint => 'Houd het bij de scanner. De helderheid gaat vanzelf omhoog.';
+
+  @override
+  String get gymPassDeleted => 'Pas verwijderd';
+
+  @override
+  String get gymPassEdit => 'Pas bewerken';
+
+  @override
+  String get gymPassShow => 'Laten zien bij de ingang';
+
+  @override
+  String get gymPassPrivate => 'Blijft alleen op je telefoon. Er wordt niets geüpload.';
+
+  @override
+  String get gymPassColor => 'Kleur';
+
+  @override
+  String get gymPassRescan => 'Code opnieuw lezen';
+
+  @override
+  String get gymPassReading => 'Code lezen…';
+
+  @override
+  String get gymPassSettingHint => 'Je sportschoolpas in je profiel';
+
+  @override
+  String get gymPassMember => 'Lid';
+
+  @override
+  String get widgetHintActivity => 'Je kaart met trainingsdagen';
+
+  @override
+  String get widgetHintStats => 'Reeks, volume en sessies van deze week';
+
+  @override
+  String get widgetHintBody => 'De spieren die je hebt getraind';
+
+  @override
+  String get widgetHintToday => 'In één oogopslag: heb je vandaag getraind?';
+
+  @override
+  String get widgetHintWeek => 'Je weekplan, dag voor dag';
+
+  @override
+  String get supportHintBug => 'Vertel me op GitHub wat er misging';
+
+  @override
+  String get supportHintFeature => 'Stel een idee voor de app voor';
+
+  @override
+  String get supportHintStar => 'Helpt meer mensen hem te vinden';
+
+  @override
+  String get supportHintCoffee => 'Steunt de ontwikkeling. Gratis en zonder advertenties';
+
+  @override
+  String get bodyweightNoteHint => 'Voeg een notitie toe: hoe je je voelt, wat je probeert… (optioneel)';
+
+  @override
+  String exerciseUnitSwitch(String unit) {
+    return '$unit gebruiken voor deze oefening';
+  }
+
+  @override
   String get setCol => '#';
 
   @override
@@ -539,6 +655,63 @@ class AppLocalizationsNl extends AppLocalizations {
   String get clearFilters => 'Filters wissen';
 
   @override
+  String get quickAddAmount => 'How much you had';
+
+  @override
+  String get homeCardsTitle => 'Kaarten op Start';
+
+  @override
+  String get homeCardsHint => 'Wat je aanzet, verschijnt op Start';
+
+  @override
+  String get homeCardFocus => 'Vandaag';
+
+  @override
+  String get homeCardSteps => 'Stappen';
+
+  @override
+  String get homeCardWeek => 'Deze week';
+
+  @override
+  String get homeCardRoutines => 'Routines';
+
+  @override
+  String get homeCardRecommended => 'Aanbevolen';
+
+  @override
+  String get textSizeSetting => 'Tekstgrootte';
+
+  @override
+  String get textSizeSmall => 'Klein';
+
+  @override
+  String get textSizeNormal => 'Normaal';
+
+  @override
+  String get textSizeLarge => 'Groot';
+
+  @override
+  String get textSizeHint => 'Bovenop de tekstgrootte van je telefoon';
+
+  @override
+  String get calmMotionSetting => 'Minder animaties';
+
+  @override
+  String get calmMotionHint => 'Schermen verschijnen zonder in te schuiven';
+
+  @override
+  String get dishArchive => 'Archive';
+
+  @override
+  String get dishUnarchive => 'Restore';
+
+  @override
+  String get dishArchivedToast => 'Dish archived';
+
+  @override
+  String get filterShowLabel => 'Tonen';
+
+  @override
   String get noExercisesFound => 'Geen oefeningen gevonden';
 
   @override
@@ -800,6 +973,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get timeline => 'TIJDLIJN';
+
+  @override
+  String get hidePhotos => 'Foto\'s verbergen';
+
+  @override
+  String get showPhotos => 'Foto\'s tonen';
 
   @override
   String get timelineHint => 'Zelfde pose, zelfde plek, zelfde licht. Over een jaar geloof je je ogen niet.';
@@ -1298,6 +1477,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get autofills => 'Vult de calculators automatisch in';
 
   @override
+  String get onbUnitsWhy =>
+      'Voor gewichten, maten en afstanden. Je kunt het altijd wijzigen in Instellingen.';
+
+  @override
   String get nameLabel => 'NAAM';
 
   @override
@@ -1610,11 +1793,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get freeForeverWhy => 'Geen abonnement, geen advertenties, niets achter een betaalmuur.';
 
   @override
-  String get fullyOffline => 'Offline first';
+  String get fullyOffline => '100% offline';
 
   @override
-  String get fullyOfflineWhy =>
-      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
+  String get fullyOfflineWhy => 'Geen account, geen server. Je trainingen verlaten deze telefoon nooit.';
 
   @override
   String get yoursToTake => 'Je gegevens zijn van jou';
@@ -1663,8 +1845,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get welcomeKicker => 'WELKOM BIJ';
 
   @override
-  String get welcomeBlurb =>
-      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
+  String get welcomeBlurb => 'Alles blijft op je telefoon. Geen account, geen internet, niets te betalen.';
 
   @override
   String get welcomeStart => 'BEGINNEN';
@@ -1741,33 +1922,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get sourceCode => 'BRONCODE';
 
   @override
-  String get appName => 'Kangtu';
-
-  @override
-  String shareSubjectWorkouts(String app) {
-    return '$app workouts';
-  }
-
-  @override
-  String shareSubjectBackup(String app) {
-    return '$app backup';
-  }
-
-  @override
-  String shareSubjectExercises(String app) {
-    return '$app exercise list';
-  }
-
-  @override
-  String get aboutRepdbNote => 'Exercise data from RepDB (repdb.co)';
-
-  @override
-  String get aboutOssTitle => 'OPEN-SOURCE CREDIT';
-
-  @override
-  String get aboutOssBody => 'Based on GymMane by InlitX';
-
-  @override
   String get suggested => 'AANBEVOLEN';
 
   @override
@@ -1804,6 +1958,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get repsOnlyHint => 'Log deze oefening zonder gewicht.';
+
+  @override
+  String get eachSide => 'Elke kant';
+
+  @override
+  String get eachSideHint => 'De timer loopt één keer per kant en de rust begint na beide.';
 
   @override
   String get useDefaultArt => 'Standaardillustratie gebruiken';
@@ -1850,13 +2010,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get autoAdvanceHint => 'Gaat door na de laatste set';
-
-  @override
-  String get autoProgress => 'Volgende keer gewicht toevoegen';
-
-  @override
-  String get autoProgressHint =>
-      'When you start a workout, Kangtu fills in the next step for each exercise. With Add reps you add one rep per set up to 12, then the weight goes up and you start again at 8. You can still tune each exercise on its page. Exercises inside a plan cycle follow the cycle; this setting covers the rest.';
 
   @override
   String get placePlates => 'Schijven en stang';
@@ -1950,9 +2103,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get nextHold => 'houd hetzelfde gewicht totdat je alle herhalingen haalt';
 
   @override
-  String get nextByPlan => 'volgens je plan';
-
-  @override
   String get bgPhoto => 'Jouw foto';
 
   @override
@@ -2037,6 +2187,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tplPpl => 'Push, pull en benen. Drie of zes dagen per week.';
 
   @override
+  String get tplArnold => 'Borst en rug, schouders en armen, benen. De klassieke zesdaagse split.';
+
+  @override
   String get tplUpperlower => 'Boven- en onderlichaam, vier dagen per week.';
 
   @override
@@ -2065,6 +2218,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get supersetLink => 'Koppelen aan de volgende';
+
+  @override
+  String get supersetUnlink => 'Loskoppelen van de volgende';
 
   @override
   String get supersetHint => 'Geen rust tussen gekoppelde oefeningen, je gaat meteen door naar de volgende.';
@@ -2578,6 +2734,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get timeCol => 'TIJD';
 
   @override
+  String get timePerSideCol => 'TIJD / KANT';
+
+  @override
   String get timeMinutesTitle => 'Tijd (minuten)';
 
   @override
@@ -2813,7 +2972,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get elapsedCaps => 'VERSTREKEN';
 
   @override
-  String get tapToSkip => 'Tik om over te slaan';
+  String get tapToChange => 'Tik om te wijzigen';
+
+  @override
+  String get swipeToSkipHint => 'Veeg de timer opzij om de rust over te slaan.';
 
   @override
   String get screenLocked => 'Scherm vergrendeld';
@@ -2867,6 +3029,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get getReady => 'Maak je klaar';
+
+  @override
+  String sideOfTwo(String n) {
+    return 'Kant $n van 2';
+  }
+
+  @override
+  String get switchSides => 'Wissel van kant';
 
   @override
   String get stickerGallery => 'Galerij';
@@ -3026,10 +3196,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get stepsInfoRead =>
-      'This card only reads your step count. Other Health Connect reads and writes are described under Health data.';
+      'Leest alleen je aantal stappen. Leest niets anders en schrijft nooit naar Health Connect.';
 
   @override
-  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
+  String get stepsInfoLocal =>
+      'Je stappen blijven op je telefoon. Kangtu maakt nooit verbinding met internet.';
 
   @override
   String get stepsInfoOff => 'Altijd uit te zetten, in Instellingen of in Health Connect.';
@@ -3846,6 +4017,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get perServingShort => 'per portie';
+
+  @override
+  String get foodCategory => 'CATEGORY';
 
   @override
   String portionUnit(int count) {
@@ -4756,785 +4930,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Turn it off if the screen feels slow: the glasses still fill up, they just stop moving.';
 
   @override
-  String get tplNameFullbody => 'Full body';
-
-  @override
-  String get tplNamePpl => 'Push Pull Legs';
-
-  @override
-  String get tplNameUpperlower => 'Boven / Onder';
-
-  @override
-  String get tplNameAbcd => 'ABCD-split';
-
-  @override
-  String get tplNameAbcde => 'ABCDE-split';
-
-  @override
-  String get tplNameStronglifts => 'StrongLifts 5×5';
-
-  @override
-  String get tplNameStartingstrength => 'Starting Strength';
-
-  @override
-  String get tplNameGzclp => 'GZCLP';
-
-  @override
-  String get tplNameBbb531 => '5/3/1 Boring But Big';
-
-  @override
-  String get tplNamePpl6 => 'PPL 6 dagen';
-
-  @override
-  String get tplNamePhul => 'PHUL';
-
-  @override
-  String get tplNameRr => 'Aanbevolen routine';
-
-  @override
-  String get tplNameHome => 'Zonder materiaal';
-
-  @override
-  String get tplGzclp => 'Zware tier, volumetier, accessoiretier — de klassieke drietrapsprogressie.';
-
-  @override
-  String get tplBbb531 => 'Vierweekse golven in procenten van je trainingsmaximum, plus 5×10 back-offvolume.';
-
-  @override
-  String get tplPpl6 =>
-      'Zes dagen push/pull/legs: lineaire hoofdoefeningen, accessoires met dubbele progressie.';
-
-  @override
-  String get tplPhul => 'Kracht- en hypertrofiedagen afwisselend, vier dagen per week.';
-
-  @override
-  String get progBadge => 'Automatische progressie';
-
-  @override
-  String get progLinShort => 'Doel gehaald → meer gewicht; herhaald gemist → deload';
-
-  @override
-  String get progDblShort => 'Herhalingen stijgen binnen het bereik, daarna gaat het gewicht omhoog';
-
-  @override
-  String get progRepsShort => 'Lichaamsgewicht: één herhaling extra per sessie';
-
-  @override
-  String get progCycleShort => 'Wekelijkse golven in % van je trainingsmaximum';
-
-  @override
-  String progCycleWeeks(int n) {
-    return 'Golven van $n weken';
-  }
-
-  @override
-  String get tplStart => 'Dit programma starten';
-
-  @override
-  String get tmTitle => 'Trainingsmaximum (TM)';
-
-  @override
-  String tmHint(String unit) {
-    return '≈ 1RM × 0,9. Wekelijkse gewichten worden berekend als % van TM. Eenheid: $unit.';
-  }
-
-  @override
-  String get progCardTitle => 'Automatische progressie';
-
-  @override
-  String progNext(String ex, String label) {
-    return '$ex → volgende $label';
-  }
-
-  @override
-  String progDeloadFb(String ex, String label) {
-    return '$ex: herhaald gemist — deload naar $label';
-  }
-
-  @override
-  String progMiss(String ex, int n, int limit) {
-    return '$ex: doel gemist ($n/$limit voor deload)';
-  }
-
-  @override
-  String progRepsNext(String ex, int r) {
-    return '$ex → $r herhalingen volgende keer';
-  }
-
-  @override
-  String progVarHint(String ex, int r) {
-    return '$ex: $r herhalingen gehaald — probeer een zwaardere variant of voeg gewicht toe';
-  }
-
-  @override
-  String progWeekN(int w) {
-    return 'Cyclusweek $w';
-  }
-
-  @override
-  String progTmUp(String ex, String label) {
-    return '$ex: trainingsmaximum verhoogd naar $label';
-  }
-
-  @override
-  String get fbTitle => 'Trainingscheck';
-
-  @override
-  String get fbPrompt => 'Hoe voelde het?';
-
-  @override
-  String get fbFeelEasy => 'Makkelijk';
-
-  @override
-  String get fbFeelOk => 'Precies goed';
-
-  @override
-  String get fbFeelHard => 'Zwaar';
-
-  @override
-  String get fbFeelMax => 'Alles gegeven';
-
-  @override
-  String get fbPain => 'Ongemak';
-
-  @override
-  String get fbPainLevel => 'Mate van ongemak';
-
-  @override
-  String get fbRehabHint => 'Ongemak in dezelfde zone — noteer het in je revalidatiedossier';
-
-  @override
-  String get rehabTitle => 'Rehab';
-
-  @override
-  String get rehabModuleSubtitle => 'Case files · safety gate · AI advice · offline';
-
-  @override
-  String get rehabArchiveTitle => 'Rehab case files';
-
-  @override
-  String get rehabArchiveBlurb => 'Intake · safety gate · AI advice';
-
-  @override
-  String get rehabBookTitle => 'Rehab handbook';
-
-  @override
-  String get rehabBookBlurb => 'Currently covers: 12-week low-back programme · offline reference';
-
-  @override
-  String get rehabBookBlurbShort => 'Currently covers: 12-week low-back programme · offline';
-
-  @override
-  String get rehabEnter => 'Open';
-
-  @override
-  String get rehabCardBlurb => 'Case files · safety gate · AI advice';
-
-  @override
-  String get rehabKeepLocal => 'Saved on device · never uploaded';
-
-  @override
-  String get rehabIntro =>
-      'One problem, one case file. Fill the intake once, clear the safety gate, then let a general AI assistant suggest a rehab plan (copy the prompt → paste it there → paste the answer back). Plans, cautions and notes all stay in this file.';
-
-  @override
-  String get rehabNew => 'New case file';
-
-  @override
-  String get rehabEmpty => 'No case files yet. A sore back or a painful shoulder is enough to start one.';
-
-  @override
-  String get rehabSafePass => 'Safety gate passed';
-
-  @override
-  String get rehabSeeDoctor => 'See a doctor first';
-
-  @override
-  String get rehabLabelArea => 'Where does it hurt?';
-
-  @override
-  String get rehabLabelDuration => 'How long?';
-
-  @override
-  String get rehabLabelRedFlags => 'Any of these? (tick to flag — this is screening, not diagnosis)';
-
-  @override
-  String get rehabLabelFactors => 'What makes it worse or better';
-
-  @override
-  String get rehabFactorsHint =>
-      'e.g. worse after sitting, better lying down; hurts when bending to pick something up';
-
-  @override
-  String get rehabLabelGoals => 'Rehab goals';
-
-  @override
-  String get rehabLabelGear => 'What kit do you have?';
-
-  @override
-  String get rehabSaveGate => 'Save and run the safety gate';
-
-  @override
-  String get rehabGateFailTitle => 'Safety gate not passed';
-
-  @override
-  String get rehabGateFailBody =>
-      'The items you ticked are best assessed in person by a doctor or physiotherapist.\n\nYour case file is saved — keep notes, store your doctor\'s advice — but the app will not offer training advice for it.';
-
-  @override
-  String get rehabOk => 'Got it';
-
-  @override
-  String get rehabDeleteFile => 'Delete this case file';
-
-  @override
-  String get rehabGatePassedNote =>
-      'Nothing in your intake suggests you need to see a doctor first. The advice below is for self-management only — stop any time symptoms get worse.';
-
-  @override
-  String get rehabGateFailedNote =>
-      'You ticked items that need an in-person assessment. This file keeps records only; the app will not offer training advice.';
-
-  @override
-  String get rehabFieldArea => 'Area';
-
-  @override
-  String get rehabFieldDuration => 'Duration';
-
-  @override
-  String get rehabFieldPain => 'Pain';
-
-  @override
-  String get rehabFieldFactors => 'Worse / better';
-
-  @override
-  String get rehabFieldGoals => 'Goals';
-
-  @override
-  String get rehabFieldGear => 'Kit';
-
-  @override
-  String get rehabFieldDays => 'Days a week';
-
-  @override
-  String get rehabGearBodyweight => 'Mostly bodyweight';
-
-  @override
-  String get rehabMySituation => 'My situation';
-
-  @override
-  String get rehabAiTitle => 'AI rehab advice (manual, local)';
-
-  @override
-  String get rehabAiBlurb =>
-      'The app never goes online and never uploads anything — everything is copy and paste by hand.';
-
-  @override
-  String get rehabCopyPrompt => 'Copy the prompt to an AI assistant';
-
-  @override
-  String get rehabExportPrompt => 'Export the prompt as a file';
-
-  @override
-  String get rehabPasteHint => 'Paste the assistant\'s whole answer here (plan data included)';
-
-  @override
-  String get rehabPaste => 'Paste';
-
-  @override
-  String get rehabSeeFormat => 'See the output format';
-
-  @override
-  String get rehabImportAdvice => 'Import the advice';
-
-  @override
-  String get rehabCautions => 'Cautions';
-
-  @override
-  String get rehabUnreadable =>
-      'Could not read that — make sure it is the assistant\'s answer (with plan data in it)';
-
-  @override
-  String get rehabNoPlan => 'No usable training plan found';
-
-  @override
-  String get rehabRehabPlans => 'Rehab plans';
-
-  @override
-  String get rehabNoAdviceYet =>
-      'Nothing imported yet. Run the assistant flow above and it will appear here.';
-
-  @override
-  String get rehabGateBlocksPlan => 'Safety gate not passed — no training advice for now.';
-
-  @override
-  String get rehabNotes => 'Notes / doctor\'s advice';
-
-  @override
-  String get rehabNotesHint => 'Jot things down: what the doctor said, which days hurt more, what helps…';
-
-  @override
-  String get rehabSaveNotes => 'Save notes';
-
-  @override
-  String get rehabNotesSaved => 'Notes saved';
-
-  @override
-  String get rehabPromptCopied => 'Prompt copied';
-
-  @override
-  String get rehabPromptCopiedHint => 'Paste it into any AI assistant, then paste the answer back';
-
-  @override
-  String get rehabDeleteTitle => 'Delete the case file?';
-
-  @override
-  String get rehabDeleteBody => 'Only the file goes — training plans it created are kept.';
-
-  @override
-  String get rehabDelete => 'Delete';
-
-  @override
-  String get rehabTabToday => 'Today';
-
-  @override
-  String get rehabTabPlan => 'Schedule';
-
-  @override
-  String get rehabTabLog => 'Log';
-
-  @override
-  String get rehabTabBook => 'Handbook';
-
-  @override
-  String get rehabHandTitle => 'Rehab handbook';
-
-  @override
-  String get rehabHandTarget => 'Who it is for';
-
-  @override
-  String get rehabHandGoal => 'Training goal';
-
-  @override
-  String get rehabHandPrinciple => 'Principles';
-
-  @override
-  String get rehabHandTimeline => 'Timeline';
-
-  @override
-  String get rehabHandTimelineSub => 'The full arc from injury to now';
-
-  @override
-  String get rehabHandSchedule => '12-week schedule';
-
-  @override
-  String get rehabHandScheduleSub => '4+1 phases · 28 sessions';
-
-  @override
-  String get rehabHandPhaseDetail => 'Phase detail';
-
-  @override
-  String get rehabHandExpand => 'Tap to expand';
-
-  @override
-  String get rehabHandTraffic => 'Traffic-light cheat sheet';
-
-  @override
-  String get rehabHandTrafficSub => 'One line after each session · stored locally';
-
-  @override
-  String get rehabHandMaintain => 'Maintenance';
-
-  @override
-  String get rehabHandFeel => 'Feel / pain score (optional)';
-
-  @override
-  String get rehabHandSaveLog => 'Save entry';
-
-  @override
-  String get rehabHandHistory => 'History';
-
-  @override
-  String get rehabHandNoLog => 'No entries yet';
-
-  @override
-  String get rehabHandTrafficGreen => 'Green';
-
-  @override
-  String get rehabHandTrafficYellow => 'Amber';
-
-  @override
-  String get rehabHandTrafficRed => 'Red';
-
-  @override
-  String get rehabHandFaq => 'FAQ';
-
-  @override
-  String get rehabHandDelete => 'Del';
-
-  @override
-  String get rehabAreaLowback => 'Lower back';
-
-  @override
-  String get rehabAreaNeck => 'Neck / upper back';
-
-  @override
-  String get rehabAreaShoulder => 'Shoulder';
-
-  @override
-  String get rehabAreaElbow => 'Elbow / wrist';
-
-  @override
-  String get rehabAreaHip => 'Hip';
-
-  @override
-  String get rehabAreaKnee => 'Knee';
-
-  @override
-  String get rehabAreaAnkle => 'Ankle / foot';
-
-  @override
-  String get rehabAreaOther => 'Other / not sure';
-
-  @override
-  String get rehabDurAcute => 'Under a week';
-
-  @override
-  String get rehabDurSub => '1–4 weeks';
-
-  @override
-  String get rehabDurChronic => '1–3 months';
-
-  @override
-  String get rehabDurLong => 'Over 3 months';
-
-  @override
-  String get rehabGoalPain => 'Ease the pain';
-
-  @override
-  String get rehabGoalMobility => 'Restore mobility';
-
-  @override
-  String get rehabGoalStrength => 'Build strength';
-
-  @override
-  String get rehabGoalReturn => 'Get back to training';
-
-  @override
-  String get rehabGoalDaily => 'Day-to-day function (sitting, bending, stairs)';
-
-  @override
-  String get rehabFlagBladder => 'Bladder or bowel changes, saddle numbness';
-
-  @override
-  String get rehabFlagWeakness => 'Progressive leg weakness, unsteady or dragging walk';
-
-  @override
-  String get rehabFlagTrauma => 'A recent fall or impact';
-
-  @override
-  String get rehabFlagFever => 'Fever, chills, or local heat and swelling';
-
-  @override
-  String get rehabFlagNight => 'Night pain at rest, unexplained weight loss';
-
-  @override
-  String get rehabFlagCancer => 'Cancer, TB or severe osteoporosis';
-
-  @override
-  String get rehabFlagPregnant => 'Pregnant or early post-partum';
-
-  @override
-  String get rehabFlagSurgery => 'Surgery in the last 3 months';
-
-  @override
-  String get rehabStopRules =>
-      'Stop and see a doctor if: pain keeps getting worse during training; new numbness, weakness or bladder/bowel changes; dizziness, chest tightness or palpitations; pain clearly worse the next day.';
-
-  @override
-  String rehabPlanCount(int n) {
-    return '$n programmes';
-  }
-
-  @override
-  String rehabPainNow(int pain) {
-    return 'Pain right now: $pain / 10';
-  }
-
-  @override
-  String rehabLabelDays(int days) {
-    return 'Days per week: $days';
-  }
-
-  @override
-  String rehabEpisodeMeta(String area, String duration, int pain, int plans) {
-    return '$area · $duration · pain $pain/10 · $plans programmes';
-  }
-
-  @override
-  String rehabAutoTitle(String area) {
-    return '$area rehab';
-  }
-
-  @override
-  String rehabRoutinesMade(int routines, int added, int adjusted) {
-    return 'Made $routines programmes · $added exercises · $adjusted adjusted';
-  }
-
-  @override
-  String rehabMissedActions(String list) {
-    return 'Not matched: $list';
-  }
-
-  @override
-  String rehabExerciseCount(int n) {
-    return '$n exercises';
-  }
-
-  @override
-  String rehabDaysCount(int n) {
-    return '$n days';
-  }
-
-  @override
-  String rehabLogStage(String n) {
-    return 'Phase $n';
-  }
-
-  @override
-  String rehabLogCount(int n) {
-    return '$n entries';
-  }
-
-  @override
-  String rehabPhaseN(String n) {
-    return 'Phase $n';
-  }
-
-  @override
-  String get rehabAiSteps =>
-      '1 Copy the prompt → 2 paste it into any AI assistant → 3 paste the whole answer back to import it.';
-
-  @override
-  String get rehabGateFailedShort => 'Gate not passed · see a doctor first';
-
-  @override
-  String get logSubtitle => 'Training and rehab, logged in one place';
-
-  @override
-  String get logAddRehab => 'Log rehab';
-
-  @override
-  String get logTrends => 'Trends';
-
-  @override
-  String get logRehabTrend => 'Rehab trend';
-
-  @override
-  String get logTrainTrend => 'Training volume';
-
-  @override
-  String get logTagTrain => 'Training';
-
-  @override
-  String get logTagRehab => 'Rehab';
-
-  @override
-  String get baselineTitle => 'Baseline test';
-
-  @override
-  String get baselineSubtitle => 'Measure your baseline, then set your starting level';
-
-  @override
-  String get baselineGateTitle => 'Before you start';
-
-  @override
-  String get baselineGateQ1 => 'Has a doctor said you should only do medically approved exercise?';
-
-  @override
-  String get baselineGateQ2 => 'Do you get chest pain or tightness when exercising?';
-
-  @override
-  String get baselineGateQ3 => 'Have you had chest pain at rest in the last month?';
-
-  @override
-  String get baselineGateQ4 => 'Do you get dizziness, or a joint problem that worsens with exercise?';
-
-  @override
-  String get baselineGateFail => 'You ticked one: please consult a doctor first and skip the test for now.';
-
-  @override
-  String get baselineSave => 'Save baseline';
-
-  @override
-  String get baselineSaved => 'Baseline saved';
-
-  @override
-  String get baselineDisclaimer => 'For reference only, not a medical diagnosis.';
-
-  @override
-  String get baselineResultTitle => 'Baseline result';
-
-  @override
-  String get baselineLast => 'Last';
-
-  @override
-  String get baselineInputHint => 'Enter a value';
-
-  @override
-  String get baselineNmRestingHr => 'Resting heart rate';
-
-  @override
-  String get baselineHowRestingHr => 'Sit quietly 5 min, count your pulse for 1 min';
-
-  @override
-  String get baselineNmStep2 => '2-minute step';
-
-  @override
-  String get baselineHowStep2 => 'March in place, count knee raises in 2 min';
-
-  @override
-  String get baselineNmChairStand => '30s chair stand';
-
-  @override
-  String get baselineHowChairStand => 'Stand-ups in 30s from a chair, arms crossed';
-
-  @override
-  String get baselineNmSingleLeg => 'Single-leg stand';
-
-  @override
-  String get baselineHowSingleLeg => 'Time standing on one leg, up to 60s';
-
-  @override
-  String get baselineNmSitReach => 'Sit-and-reach';
-
-  @override
-  String get baselineHowSitReach => 'Seated straight-leg reach, cm past your toes';
-
-  @override
-  String get baselineNmWaist => 'Waist';
-
-  @override
-  String get baselineHowWaist => 'Measure around the waist, navel level';
-
-  @override
-  String get fbRehabSection => 'Rehab log';
-
-  @override
-  String get rehabStPhaseDesc1 =>
-      'Activation start: the gentlest load; focus on doing each move correctly first';
-
-  @override
-  String get rehabStPhaseDesc2 =>
-      'Once control is steady, progress: difficulty and session length rise gradually';
-
-  @override
-  String get rehabStPhaseDesc3 => 'Turn stability into a habit; strength and endurance improve together';
-
-  @override
-  String get rehabStPhaseDescMaintain =>
-      'Goal shifts from \"get stronger\" to \"don\'t regress\"; 2–3×/week, hold the volume';
-
-  @override
-  String get rehabStLightDescGreen =>
-      'All three weekly checks improved (less back pain, less leg numbness, less stiffness after sitting) → keep progressing per the plan';
-
-  @override
-  String get rehabStLightDescAmber =>
-      'No progress this week (plateau), or only mild soreness ≤3/10 during training that eases when you stop → repeat the current phase, don\'t add load';
-
-  @override
-  String get rehabStLightDescRed =>
-      'Worse than last week, or pain >3/10, worse leg numbness, radiating pain or weakness → stop at once and step back a phase; if it doesn\'t ease in 2–3 days, see a doctor';
-
-  @override
-  String get cycleTitle => 'Cycle';
-
-  @override
-  String get cycleEnable => 'Use a cycle';
-
-  @override
-  String get cycleHint => 'Set a full cycle; training days are spaced automatically (no fixed weekdays)';
-
-  @override
-  String get cycleStart => 'Start';
-
-  @override
-  String get cycleWeeks => 'Weeks';
-
-  @override
-  String get cyclePerWeek => 'Per week';
-
-  @override
-  String get cyclePinHint => 'Pin weekdays (optional)';
-
-  @override
-  String cycleWeekXY(Object x, Object y) {
-    return 'Week $x of $y';
-  }
-
-  @override
-  String cycleDone(Object d, Object e) {
-    return '$d of $e done';
-  }
-
-  @override
-  String get cycleComplete => 'Cycle complete';
-
-  @override
-  String get cycleRenew => 'Next round';
-
-  @override
-  String get cycleOff => 'End cycle';
-
-  @override
-  String get cycleRotationOff =>
-      'With rotation on, the rotation sets the order, and this cycle stays paused.';
-
-  @override
-  String cycleRound(Object n) {
-    return 'Round $n';
-  }
-
-  @override
-  String get planCycleAsk =>
-      'Plan the training period too: add a top-level \"cycle\" object with \"start\" (e.g. \"2026-10-19\"), \"weeks\" (total weeks) and \"perWeek\" (sessions per week). You may also set \"days\": [1..7] to pin exact weekdays. Follow this shape:';
-
-  @override
-  String planCycleApplied(Object n, Object weeks) {
-    return 'Training cycle applied ($weeks weeks, $n×/week)';
-  }
-
-  @override
-  String get hidePhotos => 'Foto\'s verbergen';
-
-  @override
-  String get showPhotos => 'Foto\'s tonen';
-
-  @override
-  String get eachSide => 'Elke kant';
-
-  @override
-  String get eachSideHint => 'De timer loopt één keer per kant en de rust begint na beide.';
-
-  @override
-  String get timePerSideCol => 'TIJD / KANT';
-
-  @override
-  String get tapToChange => 'Tik om te wijzigen';
-
-  @override
-  String get swipeToSkipHint => 'Veeg de timer opzij om de rust over te slaan.';
-
-  @override
-  String sideOfTwo(String n) {
-    return 'Kant $n van 2';
-  }
-
-  @override
-  String get switchSides => 'Wissel van kant';
-
-  @override
   String get planFixedWeek => 'Vaste week';
 
   @override
@@ -5663,54 +5058,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get widgetPickShake => 'Pick your shake';
-
-  @override
-  String get rehabDoctorTitle => 'Diagnosis & Doctor\'s Orders';
-
-  @override
-  String get rehabDoctorDisclaimer =>
-      'The app only records — it does not interpret your doctor\'s orders. Always follow your doctor.';
-
-  @override
-  String get rehabDoctorGuide =>
-      'Seen a doctor? Record the diagnosis and orders → you can generate a plan even if the safety gate failed';
-
-  @override
-  String get rehabDoctorDx => 'Diagnosis / findings (e.g. L5-S1 disc herniation)';
-
-  @override
-  String get rehabDoctorIcd => 'ICD code (optional)';
-
-  @override
-  String get rehabDoctorVisit => 'Visit date';
-
-  @override
-  String get rehabDoctorFollowUp => 'Follow-up / reassessment';
-
-  @override
-  String get rehabDoctorOrders => 'Doctor\'s orders (copy or paste your doctor\'s words)';
-
-  @override
-  String get rehabDoctorAdvice => 'Treatment / activities your doctor advised';
-
-  @override
-  String get rehabDoctorRestrictions =>
-      'Restrictions & contraindications (e.g. no bending or lifting for now)';
-
-  @override
-  String get rehabDoctorImaging => 'Imaging / test findings (optional)';
-
-  @override
-  String get rehabDoctorFacility => 'Hospital / department / doctor (optional, not sent to the AI)';
-
-  @override
-  String get rehabDoctorMeds => 'Medications / other notes (optional, not sent to the AI)';
-
-  @override
-  String get rehabDoctorSave => 'Save diagnosis & orders';
-
-  @override
-  String get rehabDoctorSaved => 'Saved — you can generate a plan now';
 
   @override
   String get heatRangeSetting => 'Activiteitskalender';
@@ -5849,47 +5196,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get updateTitle => 'Check for updates';
-
-  @override
-  String get updateChecking => 'Checking for updates…';
-
-  @override
-  String updateLatest(String v) {
-    return 'You\'re on the latest version ($v)';
-  }
-
-  @override
-  String updateAvailable(String v) {
-    return 'Version $v is available';
-  }
-
-  @override
-  String get updateNow => 'Download & install';
-
-  @override
-  String get updateLater => 'Later';
-
-  @override
-  String get updateFailed => 'Update check failed. Please try again later.';
-
-  @override
-  String get updateOpenPage => 'Open releases page';
-
-  @override
-  String get updateDownloading => 'Downloading update…';
-
-  @override
-  String get updateDownloadFailed => 'Download failed. Please try again later.';
-
-  @override
-  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
-
-  @override
-  String get updateNetNote =>
-      'Checking for updates uses the network; otherwise Kangtu stays fully offline and your data never leaves the phone.';
-
-  @override
   String get stopwatch => 'Stopwatch';
 
   @override
@@ -5998,21 +5304,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get progStep => 'Gewichtsstap';
 
   @override
-  String get progStepPlan => 'Planstap';
-
-  @override
-  String get progStepFree => 'Stap bij vrije training';
-
-  @override
-  String get freePlanHint => 'Vrije trainingen verschuiven je plan-doelen niet.';
-
-  @override
-  String get progTm => 'Trainingsmaximum';
-
-  @override
-  String get progTmHint => 'Automatisch geschat — verhoog als het te licht voelt.';
-
-  @override
   String get progRange => 'Herhalingsbereik';
 
   @override
@@ -6107,17 +5398,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get archivedRoutines => 'Gearchiveerd';
 
   @override
-  String progDrivenIn(String name) {
-    return 'In \"$name\" bepaalt de plancyclus dit';
-  }
-
-  @override
-  String get progDrivenFree => 'Deze instellingen gelden nog bij vrije trainingen.';
-
-  @override
-  String get progPlanAuto => 'Doelen worden door de plancyclus gemaakt en na elke training overschreven.';
-
-  @override
   String get autoBackup => 'Automatische back-up';
 
   @override
@@ -6169,12 +5449,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get prepPortions => 'Porties';
 
   @override
-  String get supersetUnlink => 'Loskoppelen van de volgende';
-
-  @override
-  String get foodCategory => 'CATEGORY';
-
-  @override
   String get rotationAddRest => 'Rustdag toevoegen';
 
   @override
@@ -6195,129 +5469,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get trainAnyway => 'Toch trainen';
 
   @override
-  String get miniRest => 'Rust bij rest-pause en cluster';
-
-  @override
-  String get miniRestHint => 'Voor rest-pause- of clustersets';
-
-  @override
-  String get gymPass => 'Sportschoolpas';
-
-  @override
-  String get gymPassEmpty => 'Bewaar hier de code van je sportschool en kom binnen zonder pasje';
-
-  @override
-  String get gymPassAdd => 'Pas toevoegen';
-
-  @override
-  String get gymPassScan => 'Maak een foto van de code';
-
-  @override
-  String get gymPassScanHint => 'Met de camera van je telefoon';
-
-  @override
-  String get gymPassPhoto => 'Uit een foto of screenshot';
-
-  @override
-  String get gymPassPhotoHint => 'Bijvoorbeeld een screenshot uit de app van je sportschool';
-
-  @override
-  String get gymPassType => 'Typ het nummer';
-
-  @override
-  String get gymPassTypeHint => 'Voor streepjescodes: het nummer eronder';
-
-  @override
-  String get gymPassNotFound => 'Geen QR-code op die afbeelding. Probeer een scherpere of typ het nummer.';
-
-  @override
-  String get gymPassName => 'Naam van de sportschool';
-
-  @override
-  String get gymPassDefaultName => 'Mijn sportschool';
-
-  @override
-  String get gymPassCode => 'Code';
-
-  @override
-  String get gymPassFormat => 'Soort code';
-
-  @override
-  String get gymPassInvalid => 'Dat nummer past niet bij dit soort code';
-
-  @override
-  String get gymPassShowHint => 'Houd het bij de scanner. De helderheid gaat vanzelf omhoog.';
-
-  @override
-  String get gymPassDeleted => 'Pas verwijderd';
-
-  @override
-  String get gymPassEdit => 'Pas bewerken';
-
-  @override
-  String get gymPassShow => 'Laten zien bij de ingang';
-
-  @override
-  String get gymPassPrivate => 'Blijft alleen op je telefoon. Er wordt niets geüpload.';
-
-  @override
-  String get gymPassColor => 'Kleur';
-
-  @override
-  String get gymPassRescan => 'Code opnieuw lezen';
-
-  @override
-  String get gymPassReading => 'Code lezen…';
-
-  @override
-  String get gymPassSettingHint => 'Je sportschoolpas in je profiel';
-
-  @override
-  String get gymPassMember => 'Lid';
-
-  @override
-  String get widgetHintActivity => 'Je kaart met trainingsdagen';
-
-  @override
-  String get widgetHintStats => 'Reeks, volume en sessies van deze week';
-
-  @override
-  String get widgetHintBody => 'De spieren die je hebt getraind';
-
-  @override
-  String get widgetHintToday => 'In één oogopslag: heb je vandaag getraind?';
-
-  @override
-  String get widgetHintWeek => 'Je weekplan, dag voor dag';
-
-  @override
-  String get supportHintBug => 'Vertel me op GitHub wat er misging';
-
-  @override
-  String get supportHintFeature => 'Stel een idee voor de app voor';
-
-  @override
-  String get supportHintStar => 'Helpt meer mensen hem te vinden';
-
-  @override
-  String get supportHintCoffee => 'Steunt de ontwikkeling. Gratis en zonder advertenties';
-
-  @override
-  String get bodyweightNoteHint => 'Voeg een notitie toe: hoe je je voelt, wat je probeert… (optioneel)';
-
-  @override
-  String exerciseUnitSwitch(String unit) {
-    return '$unit gebruiken voor deze oefening';
-  }
-
-  @override
-  String get onbUnitsWhy =>
-      'Voor gewichten, maten en afstanden. Je kunt het altijd wijzigen in Instellingen.';
-
-  @override
-  String get tplArnold => 'Borst en rug, schouders en armen, benen. De klassieke zesdaagse split.';
-
-  @override
   String get healthTitle => 'Gezondheid';
 
   @override
@@ -6331,7 +5482,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get healthPickHint =>
-      'Choose what to read from Health Connect. Android asks once per item. Your data never leaves this phone. While Health data is on, your workouts are also written to Health Connect as exercise sessions.';
+      'Kies wat je uit Health Connect haalt. Android vraagt het één keer per waarde. Het wordt alleen gelezen en verlaat nooit je telefoon.';
 
   @override
   String get healthGroupHeart => 'Hart';
@@ -6380,6 +5531,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get healthNoData => 'Nog geen gegevens';
+
+  @override
+  String get healthReadFailed => 'Kon niet worden gelezen';
 
   @override
   String get healthAllow => 'Tik om toe te staan';
@@ -6526,66 +5680,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get awardsPickHint => 'Tik op de medailles die je op je profiel wilt';
-
-  @override
-  String get quickAddAmount => 'How much you had';
-
-  @override
-  String get homeCardsTitle => 'Kaarten op Start';
-
-  @override
-  String get homeCardsHint => 'Wat je aanzet, verschijnt op Start';
-
-  @override
-  String get homeCardFocus => 'Vandaag';
-
-  @override
-  String get homeCardSteps => 'Stappen';
-
-  @override
-  String get homeCardWeek => 'Deze week';
-
-  @override
-  String get homeCardRoutines => 'Routines';
-
-  @override
-  String get homeCardRecommended => 'Aanbevolen';
-
-  @override
-  String get textSizeSetting => 'Tekstgrootte';
-
-  @override
-  String get textSizeSmall => 'Klein';
-
-  @override
-  String get textSizeNormal => 'Normaal';
-
-  @override
-  String get textSizeLarge => 'Groot';
-
-  @override
-  String get textSizeHint => 'Bovenop de tekstgrootte van je telefoon';
-
-  @override
-  String get calmMotionSetting => 'Minder animaties';
-
-  @override
-  String get calmMotionHint => 'Schermen verschijnen zonder in te schuiven';
-
-  @override
-  String get dishArchive => 'Archive';
-
-  @override
-  String get dishUnarchive => 'Restore';
-
-  @override
-  String get dishArchivedToast => 'Dish archived';
-
-  @override
-  String get filterShowLabel => 'Tonen';
-
-  @override
-  String get healthReadFailed => 'Kon niet worden gelezen';
 
   @override
   String get gymPassPicture => 'Een foto van de code bewaren';
@@ -8018,6 +7112,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get autoProgressReps => 'Add reps';
 
   @override
+  String get autoProgressHint =>
+      'When you start a workout, Kangtu fills in the next step for each exercise. With Add reps you add one rep per set up to 12, then the weight goes up and you start again at 8. You can still tune each exercise on its page.';
+
+  @override
   String get noteFolders => 'Folders';
 
   @override
@@ -8172,229 +7270,64 @@ class AppLocalizationsNl extends AppLocalizations {
   String get voiceAnd => 'and';
 
   @override
-  String get rehabPromptIntro =>
-      'You are an exercise-rehabilitation assistant. Based on my situation, my current plan and recent training feedback below, give me a progressive rehabilitation plan I can carry out on my own; if a plan already exists, adjust that plan directly.';
-
-  @override
-  String get rehabPromptSecProfile => 'About me';
-
-  @override
-  String rehabPromptProfileLine(String sex, String age, String height, String weight) {
-    return '- Sex / age / height / weight: $sex, age $age, $height, $weight';
+  String updateAvailable(Object v) {
+    return 'Version $v is available';
   }
 
   @override
-  String rehabPromptRecent(String n) {
-    return '- Sessions in the last 30 days: $n';
+  String get updateChecking => 'Checking for updates…';
+
+  @override
+  String get updateDownloadFailed => 'Download failed. Please try again later.';
+
+  @override
+  String get updateDownloading => 'Downloading update…';
+
+  @override
+  String get updateFailed => 'Update check failed. Please try again later.';
+
+  @override
+  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String updateLatest(Object v) {
+    return 'You\'re on the latest version ($v)';
   }
 
   @override
-  String rehabPromptDaysPerWeek(String n) {
-    return '- Training days available per week: $n';
-  }
+  String get updateNetNote =>
+      'Checking for updates uses the network; otherwise the app stays fully offline and your data never leaves the phone.';
 
   @override
-  String rehabPromptGear(String gear) {
-    return '- Available equipment: $gear';
-  }
+  String get updateNow => 'Download & install';
 
   @override
-  String rehabPromptGoals(String goals) {
-    return '- Rehabilitation goals: $goals';
-  }
+  String get updateOpenPage => 'Open releases page';
 
   @override
-  String get rehabPromptSecIssue => 'Current problem';
+  String get updateTitle => 'Check for updates';
 
   @override
-  String rehabPromptArea(String area) {
-    return '- Area: $area';
-  }
+  String get updateRetry => 'Retry';
 
   @override
-  String rehabPromptDuration(String duration) {
-    return '- How long I have had it: $duration';
-  }
+  String get updateChecksumFailed =>
+      'The downloaded file failed its integrity check, so it was discarded. Please use the releases page instead.';
 
   @override
-  String rehabPromptPain(String pain) {
-    return '- Current discomfort level: $pain/10';
-  }
+  String get updateVerifyFailed =>
+      'The downloaded file is not signed by the same key as this app; installation was refused.';
 
   @override
-  String rehabPromptFactors(String factors) {
-    return '- Aggravating / relieving factors: $factors';
-  }
+  String get updateAvailableShort => 'Update available';
 
   @override
-  String get rehabPromptFlagNone => '- Safety screening: no red flags found';
+  String get appName => 'Kangtu';
 
   @override
-  String rehabPromptFlagHit(String flags) {
-    return '- Safety screening, red flags present: $flags';
-  }
-
-  @override
-  String get rehabPromptSecDoctor => 'Doctor\'s diagnosis and instructions';
-
-  @override
-  String rehabPromptDx(String dx) {
-    return '- Diagnosis: $dx';
-  }
-
-  @override
-  String rehabPromptIcd(String code) {
-    return ' (ICD: $code)';
-  }
-
-  @override
-  String rehabPromptVisit(String date) {
-    return '- Visit date: $date';
-  }
-
-  @override
-  String rehabPromptOrders(String text) {
-    return '- Doctor\'s instructions, verbatim: $text';
-  }
-
-  @override
-  String rehabPromptAdvisedCare(String text) {
-    return '- Treatments / exercises the doctor advised: $text';
-  }
-
-  @override
-  String rehabPromptRestrictions(String text) {
-    return '- Restrictions and contraindications (must be followed): $text';
-  }
-
-  @override
-  String rehabPromptImaging(String text) {
-    return '- Imaging / test findings: $text';
-  }
-
-  @override
-  String rehabPromptFollowUp(String date) {
-    return '- Follow-up appointment: $date';
-  }
-
-  @override
-  String get rehabPromptSecPlan => 'Current plan';
-
-  @override
-  String get rehabPromptNoPlan =>
-      'No plan yet (create one in the routines field as described under output requirements)';
-
-  @override
-  String get rehabPromptSecFeedback => 'Recent training feedback';
-
-  @override
-  String get rehabPromptNoFeedback => 'No training feedback recorded';
-
-  @override
-  String get rehabPromptSecOutput => 'Output requirements';
-
-  @override
-  String get rehabPromptRule1 => '1. Output a single JSON object only, with no extra prose.';
-
-  @override
-  String get rehabPromptRule2 => '2. Put \"cautions + stop rules\" in the advice field (a string).';
-
-  @override
-  String get rehabPromptRule3 =>
-      '3. If the \"Current plan\" section is empty, give a whole new plan in the routines field, copying the template structure below:';
-
-  @override
-  String get rehabPromptRule4 =>
-      '4. If the \"Current plan\" section is not empty, give changes to the current plan in an adjust array (use an empty array [] if nothing needs changing), copying the structure below:';
-
-  @override
-  String get rehabPromptAdjustSet =>
-      '   - set: field may only be weight / sets / reps / rest; value is the new target value.';
-
-  @override
-  String get rehabPromptAdjustRemove => '   - remove: delete that exercise from the plan.';
-
-  @override
-  String get rehabPromptAdjustAdd =>
-      '   - add: add an exercise to the plan; sets / reps / weight are optional.';
-
-  @override
-  String get rehabPromptAdjustRoutine =>
-      '   - routine may be omitted (omitted = applies to every current plan).';
-
-  @override
-  String get rehabPromptRule5 =>
-      '5. Take exercise names from the \"Exercise library\" list below (English names) so they match the app\'s library automatically.';
-
-  @override
-  String get rehabPromptRule6 =>
-      '6. Keep intensity conservative: never aggravate symptoms; pain during training must stay at or below 3/10; mobility first, then stability, then strength.';
-
-  @override
-  String rehabPromptRule7(String stopRules) {
-    return '7. The advice field must include: $stopRules';
-  }
-
-  @override
-  String get rehabPromptRule8Doctor =>
-      '8. When the \"Doctor\'s diagnosis and instructions\" section is present, give a plan even if the safety gate has not passed: you may output routines/adjust, but you must strictly follow the listed restrictions and contraindications and must not schedule any forbidden movement; if it conflicts with the doctor\'s instructions, the doctor\'s instructions win.';
-
-  @override
-  String get rehabPromptRule8Gate =>
-      '8. If the safety gate has not passed, give the advice field only and output neither routines nor adjust.';
-
-  @override
-  String get rehabPromptSecLibrary =>
-      'Exercise library — English name (localised name) | muscle group | equipment | difficulty | mode';
-
-  @override
-  String get rehabListSep => ', ';
-
-  @override
-  String get rehabSemiSep => '; ';
-
-  @override
-  String get rehabFbDefaultArea => 'discomfort';
-
-  @override
-  String rehabFbPainWithArea(String area, String n) {
-    return '$area $n/10 discomfort';
-  }
-
-  @override
-  String rehabFbNote(String text) {
-    return 'Note: $text';
-  }
-
-  @override
-  String get rehabFbNoDetail => '(no detail)';
-
-  @override
-  String rehabFbLine(String date, String body) {
-    return '- $date: $body';
-  }
-
-  @override
-  String get rehabMissGateAdjust => 'Safety gate not passed — every plan adjustment was ignored.';
-
-  @override
-  String get rehabMissNoLinkedPlan =>
-      'This record has no linked plan, so the adjustments could not be applied.';
-
-  @override
-  String rehabMissNoSuchPlan(String name) {
-    return 'Plan \"$name\" does not exist.';
-  }
-
-  @override
-  String get rehabMissGateReply => 'Safety gate not passed — the plan and the adjustments were ignored.';
-
-  @override
-  String get baselineUnitRep => 'rep';
-
-  @override
-  String get baselineUnitSec => 'sec';
-
-  @override
-  String get defaultAthleteName => 'Athlete';
+  String get updateVerifyUnavailable =>
+      'Could not verify the downloaded file signature on this device. Please download from the releases page instead.';
 }

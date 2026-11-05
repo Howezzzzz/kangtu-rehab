@@ -188,71 +188,6 @@ mixin RoutinesState on FitCore, LibraryState {
         if (multiPlan) ...?planExtras[weekday],
       ];
 
-  // ---- 排期周期（Plan Cycle）----
-  PlanCycle? cycleOf(String routineId) => planCycles[routineId];
-
-  /// 只清「周计划」体系里对该例程的引用（weeklyPlan / planExtras / planMoves）。
-  /// 与 [_unplanRoutine] 的区别：不动轮转（rotationIds）、不动 activeRoutineId。
-  void _unplanWeekly(String id) {
-    for (final day in [...weeklyPlan.keys]) {
-      if (weeklyPlan[day] != id) continue;
-      final extras = planExtras[day];
-      if (extras != null && extras.isNotEmpty) {
-        weeklyPlan[day] = extras.removeAt(0); // 顺位顶上，该日仍有主计划
-        if (extras.isEmpty) planExtras.remove(day);
-      } else {
-        weeklyPlan.remove(day);
-      }
-    }
-    for (final extras in planExtras.values) {
-      extras.remove(id);
-    }
-    planExtras.removeWhere((_, v) => v.isEmpty);
-    // 与 _unplanRoutine 一致：只摘掉该例程，保留空列表（表示这一天已被挪空）
-    for (final ids in planMoves.values) {
-      ids.remove(id);
-    }
-  }
-
-  void setCycle(String routineId, PlanCycle c) {
-    planCycles[routineId] = c;
-    // 融合 2.3 / M2：开启周期＝这个例程的排期改由周期接管，顺手清掉它在旧
-    // 「周计划」里的残留。否则 routinesOn 把两套命中取并集，之后改周期仍会
-    // 按旧日子出现＝幽灵训练日。轮转是另一套系统（优先级更高），这里不动。
-    _unplanWeekly(routineId);
-    persistNow();
-    notifyListeners();
-  }
-
-  void clearCycle(String routineId) {
-    if (planCycles.remove(routineId) == null) return;
-    persistNow();
-    notifyListeners();
-  }
-
-  /// 续一轮：新周期从上一轮到期日接续，轮次 +1。
-  void advanceCycle(String routineId) {
-    final c = planCycles[routineId];
-    if (c == null) return;
-    planCycles[routineId] = c.nextRound();
-    persistNow();
-    notifyListeners();
-  }
-
-  /// 本轮已完成次数（自本轮起始日以来的该计划训练记录）。
-  int cycleDoneSessions(String routineId) {
-    final c = planCycles[routineId];
-    if (c == null) return 0;
-    return sessions
-        .where((s) => s.routineId == routineId && !PlanCycle.dayOnly(s.day).isBefore(c.start))
-        .length;
-  }
-
-  int cycleExpected(String routineId) {
-    final c = planCycles[routineId];
-    return c == null ? 0 : c.weeks * c.perWeek;
-  }
-
   static String _moveKey(DateTime d) =>
       '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
@@ -356,21 +291,9 @@ mixin RoutinesState on FitCore, LibraryState {
   @override
   bool hasPlanOn(DateTime day) => routinesOn(day).isNotEmpty;
 
-  /// 当日计划：轮转开启时按轮转返回；否则用（含改期覆盖的）周日计划 + 周期（Plan Cycle）补入。
-  List<Routine> routinesOn(DateTime day) {
-    if (rotating) return _rotationOn(day);
-    // 融合 2.3 / M2：带计划周期的例程只按周期命中——即便老存档里它还残留在
-    // 周计划里（写侧 setCycle 已清，这里是读侧双保险），也不再按周计划出现。
-    final ids = <String>[
-      for (final id in planIdsFor(day))
-        if (!planCycles.containsKey(id)) id,
-    ];
-    for (final e in planCycles.entries) {
-      if (e.value.isTrainingDay(day) && !ids.contains(e.key)) ids.add(e.key);
-    }
-    // ISS-151：归档例程不得再被 planCycles 补入（否则永久占位、当日永远打不了勾）
-    return [for (final id in ids) ?_routine(id)].where((r) => !r.archived).toList();
-  }
+  List<Routine> routinesOn(DateTime day) =>
+      rotating ? _rotationOn(day) : [for (final id in planIdsFor(day)) ?_routine(id)];
+
   void setRotation(bool on) {
     if (rotation == on) return;
     rotation = on;
@@ -628,26 +551,6 @@ mixin RoutinesState on FitCore, LibraryState {
     made.alts.addAll({for (final e in source.alts.entries) e.key: [...e.value]});
     made.group = source.group;
     made.color = source.color;
-    // RISK-045/049：连计划配置一起复制，并为其建独立进度实例（克隆源当前值，不归零）
-    if (source.prog.isNotEmpty) {
-      made.prog.addAll({for (final e in source.prog.entries) e.key: e.value.copyWith()});
-      final srcInst = source.progInst == null ? null : programStates[source.progInst!];
-      final nid = 'pi${DateTime.now().millisecondsSinceEpoch}x${programStates.length}';
-      final clone = ProgState(
-        tpl: srcInst?.tpl ?? '',
-        week: srcInst?.week ?? 0,
-        lastAdv: srcInst?.lastAdv ?? 0,
-      );
-      if (srcInst != null) {
-        clone.w.addAll(srcInst.w);
-        clone.tm.addAll(srcInst.tm);
-        clone.fails.addAll(srcInst.fails);
-        clone.reps.addAll(srcInst.reps);
-        clone.tmSet.addAll(srcInst.tmSet);
-      }
-      programStates[nid] = clone;
-      made.progInst = nid;
-    }
     _persist();
     notifyListeners();
     return copy;
@@ -677,13 +580,8 @@ mixin RoutinesState on FitCore, LibraryState {
   }
 
   void _dropRoutine(String id) {
-    final doomedInst = _routine(id)?.progInst;
     _unplanRoutine(id);
     routines.removeWhere((r) => r.id == id);
-    planCycles.remove(id);
-    if (doomedInst != null && !routines.any((r) => r.progInst == doomedInst)) {
-      programStates.remove(doomedInst);
-    }
     _fixRotationNext();
     for (final p in savedPlans) {
       p.drop(id);
@@ -722,10 +620,6 @@ mixin RoutinesState on FitCore, LibraryState {
       r.plan.remove(exId);
       r.rest.remove(exId);
       r.chained.remove(exId);
-      r.prog.remove(exId); // 计划周期：移除动作时清 ProgSpec，避免孤儿 spec 继续写 plan（ISS-153）
-      // RISK-055：若该动作已从本实例的所有例程移除，清掉实例里的残留状态
-      // （否则换走再换回会带着过期 TM/重量/失败数复活，且 tmSet 会压掉校准提示）
-      if (r.progInst != null) _pruneInstState(r.progInst!, exId);
       r.alts.remove(exId);
     } else {
       r.exerciseIds.add(exId);
@@ -784,27 +678,6 @@ mixin RoutinesState on FitCore, LibraryState {
     final rest = r.rest.remove(from);
     if (rest != null) r.rest[to] = rest;
     if (r.chained.remove(from)) r.chained.add(to);
-    // ISS-155：连 prog 一并迁移（否则新动作失去计划驱动、旧 spec 变孤儿继续写 plan）
-    final prog = r.prog.remove(from);
-    if (prog != null) {
-      r.prog[to] = prog;
-      final inst = r.progInst == null ? null : programStates[r.progInst!];
-      if (inst != null) {
-        // ISS-158：渐进状态一同播种到新动作 id（否则 cycle TM 回落 40、linear 计划重量为空）
-        final w = inst.w[from];
-        if (w != null) inst.w[to] = w;
-        final tm = inst.tm[from];
-        if (tm != null) inst.tm[to] = tm;
-        final fails = inst.fails[from];
-        if (fails != null) inst.fails[to] = fails;
-        final reps = inst.reps[from];
-        if (reps != null) inst.reps[to] = reps;
-        if (inst.tmSet.contains(from)) inst.tmSet.add(to);
-        buildInitialPlan(r, to, prog, inst);
-      }
-    }
-    // RISK-055：换走的旧动作若已不再被本实例任何例程引用，清掉它的残留状态
-    if (r.progInst != null) _pruneInstState(r.progInst!, from);
     final alts = r.alts.remove(from);
     if (alts != null) {
       final kept = [for (final a in alts) if (a != to) a];
@@ -835,87 +708,6 @@ mixin RoutinesState on FitCore, LibraryState {
     notifyListeners();
   }
 
-  /// 计划引擎(prog)的步进：取该动作所属（非归档）例程的 spec.stepKg（首个匹配）。
-  double? progStepOf(String exId) {
-    for (final r in routines) {
-      if (r.archived) continue;
-      final spec = r.prog[exId];
-      if (spec != null) return spec.stepKg;
-    }
-    return null;
-  }
-
-  /// 调计划的"步进"（改 spec.stepKg，与上游 progressStep 解耦——ISS-155）。
-  void bumpProgStep(String exId, int dir) {
-    var changed = false;
-    for (final r in routines) {
-      if (r.archived) continue;
-      final spec = r.prog[exId];
-      if (spec == null) continue;
-      final cur = toDisplayWeight(spec.stepKg);
-      final next = (cur + dir * weightStep / 2).clamp(weightStep / 2, weightStep * 8);
-      r.prog[exId] = spec.copyWith(stepKg: fromDisplayWeight(next));
-      // 步进只影响“后续推进”，无需重建当前 plan（改后下次完训生效）
-      changed = true;
-    }
-    if (changed) {
-      _persist();
-      notifyListeners();
-    }
-  }
-
-  /// 周期(cycle)动作的训练最大值(kg)；无则返回 null。
-  double? progTmOf(String exId) {
-    for (final r in routines) {
-      if (r.archived) continue;
-      final spec = r.prog[exId];
-      if (spec == null || !spec.isCycle) continue;
-      final inst = r.progInst == null ? null : programStates[r.progInst!];
-      if (inst != null) return inst.tm[exId] ?? estimateTrainingMax(this, exId) ?? 40;
-    }
-    return null;
-  }
-
-  /// 该 TM 是否还是“自动估算/默认 40”（未被用户确认过）→ UI 提示偏低、可手调。
-  bool progTmUnconfirmed(String exId) {
-    for (final r in routines) {
-      if (r.archived) continue;
-      final spec = r.prog[exId];
-      if (spec == null || !spec.isCycle) continue;
-      final inst = r.progInst == null ? null : programStates[r.progInst!];
-      if (inst == null) return true;
-      // 已确认（用户手调过）→ 确定；否则回落旧启发式，兼容升级前无 tmSet 的老数据（ISS-160）
-      if (inst.tmSet.contains(exId)) return false;
-      final tm = inst.tm[exId];
-      if (tm == null || tm == 40) return true;
-      final est = estimateTrainingMax(this, exId);
-      return est != null && (tm - est).abs() < 0.01;
-    }
-    return false;
-  }
-
-  /// 手调周期动作的训练最大值，并同步重建该动作在各家族例程里的周期 plan。
-  void bumpProgTm(String exId, int dir) {
-    var changed = false;
-    for (final r in routines) {
-      if (r.archived) continue;
-      final spec = r.prog[exId];
-      if (spec == null || !spec.isCycle) continue;
-      final inst = r.progInst == null ? null : programStates[r.progInst!];
-      if (inst == null) continue;
-      final cur = toDisplayWeight(inst.tm[exId] ?? estimateTrainingMax(this, exId) ?? 40);
-      final next = (cur + dir * weightStep).clamp(weightStep, weightStep * 40);
-      inst.tm[exId] = fromDisplayWeight(next);
-      inst.tmSet.add(exId); // 用户已确认过
-      changed = true;
-      rebuildCyclePlan(r, exId, spec, inst);
-    }
-    if (changed) {
-      _persist();
-      notifyListeners();
-    }
-  }
-
   VoidCallback? removeRoutineExercise(String routineId, String exId) {
     final r = _routine(routineId);
     if (r == null) return null;
@@ -925,15 +717,6 @@ mixin RoutinesState on FitCore, LibraryState {
     final plan = r.plan[exId];
     final rest = r.rest[exId];
     final chained = r.chained.contains(exId);
-    final prog = r.prog[exId];
-    // RISK-055：toggle 移除时可能清掉实例残留；撤销需一并还原（否则撤销就丢状态）
-    final instId = r.progInst;
-    final instBefore = instId == null ? null : programStates[instId];
-    final snapW = instBefore?.w[exId];
-    final snapTm = instBefore?.tm[exId];
-    final snapFails = instBefore?.fails[exId];
-    final snapReps = instBefore?.reps[exId];
-    final snapTmSet = instBefore?.tmSet.contains(exId) ?? false;
     final alts = r.alts[exId];
     toggleRoutineExercise(routineId, exId);
     return () {
@@ -944,38 +727,10 @@ mixin RoutinesState on FitCore, LibraryState {
       if (plan != null) back.plan[exId] = plan;
       if (rest != null) back.rest[exId] = rest;
       if (chained) back.chained.add(exId);
-      if (prog != null) back.prog[exId] = prog; // ISS-155：撤销一并恢复 ProgSpec
-      // RISK-055：还原被清掉的实例状态
-      final inst = instId == null ? null : programStates[instId];
-      if (inst != null) {
-        if (snapW != null) inst.w[exId] = snapW;
-        if (snapTm != null) inst.tm[exId] = snapTm;
-        if (snapFails != null) inst.fails[exId] = snapFails;
-        if (snapReps != null) inst.reps[exId] = snapReps;
-        if (snapTmSet) inst.tmSet.add(exId);
-      }
       if (alts != null) back.alts[exId] = alts;
       _persist();
       notifyListeners();
     };
-  }
-
-  /// RISK-055：动作已从某渐进实例(progInst)的所有（非归档）例程移除后，
-  /// 清掉它在实例中的残留状态（工作重量/训练最大值/失败数/目标次数/已确认标记）。
-  /// 不清的话：换走再换回（或加进同实例的别的例程）会带着过期状态复活，
-  /// 残留的 tmSet 还会压掉「TM 偏低、建议校准」的提示。
-  void _pruneInstState(String instId, String exId) {
-    for (final r in routines) {
-      if (r.archived || r.progInst != instId) continue;
-      if (r.exerciseIds.contains(exId) || r.prog.containsKey(exId)) return; // 仍有用例在使用
-    }
-    final inst = programStates[instId];
-    if (inst == null) return;
-    inst.w.remove(exId);
-    inst.tm.remove(exId);
-    inst.fails.remove(exId);
-    inst.reps.remove(exId);
-    inst.tmSet.remove(exId);
   }
 
   int routineSets(Routine r, String exId) {
@@ -1007,24 +762,6 @@ mixin RoutinesState on FitCore, LibraryState {
   void setRoutineSetCount(String routineId, String exId, int n) {
     final r = _routine(routineId);
     if (r == null || !r.exerciseIds.contains(exId)) return;
-    // RISK-051：prog 驱动时同步写 spec.sets，否则下次 rebuild 被恢复
-    final spec = r.prog[exId];
-    if (spec != null) {
-      if (spec.isCycle) return; // 周期动作组数由周表决定，编辑无效 → 直接忽略
-      for (final rr in routines) {
-        if (rr.archived) continue;
-        final sp = rr.prog[exId];
-        if (sp == null) continue;
-        final sp2 = sp.copyWith(sets: n.clamp(1, 12));
-        rr.prog[exId] = sp2;
-        final inst = rr.progInst == null ? null : programStates[rr.progInst!];
-        if (sp2.isCycle) {
-          if (inst != null) rebuildCyclePlan(rr, exId, sp2, inst);
-        } else {
-          rebuildSimplePlan(rr, exId, sp2);
-        }
-      }
-    }
     r.sets[exId] = n.clamp(1, 12);
     _persist();
     notifyListeners();
@@ -1061,32 +798,6 @@ mixin RoutinesState on FitCore, LibraryState {
   void bumpRoutineSets(String routineId, String exId, int delta) {
     final r = _routine(routineId);
     if (r == null || !r.exerciseIds.contains(exId)) return;
-    // RISK-050/051：prog 驱动的动作其组数写回 spec.sets（否则 rebuild 会抹掉，且 531 各组数不同会被“删组”误砍）
-    final spec = r.prog[exId];
-    if (spec != null) {
-      if (spec.isCycle) return; // 周期动作组数由周表决定，编辑无效 → 直接忽略
-      final n = (spec.sets + delta).clamp(1, 12);
-      if (n != spec.sets) {
-        for (final rr in routines) {
-          if (rr.archived) continue;
-          final sp = rr.prog[exId];
-          if (sp == null) continue;
-          final sp2 = sp.copyWith(sets: n);
-          rr.prog[exId] = sp2;
-          rr.sets[exId] = n;
-          // 立刻重建 plan，否则下次开练仍按旧组数（改了不生效）
-          final inst = rr.progInst == null ? null : programStates[rr.progInst!];
-          if (sp2.isCycle) {
-            if (inst != null) rebuildCyclePlan(rr, exId, sp2, inst);
-          } else {
-            rebuildSimplePlan(rr, exId, sp2);
-          }
-        }
-        _persist();
-        notifyListeners();
-      }
-      return;
-    }
     final planned = r.plan[exId];
     if (planned != null && planned.isNotEmpty) {
       final next = [...planned];
