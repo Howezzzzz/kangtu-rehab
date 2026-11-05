@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ic_launcher_background">#0C0B0A</color>
+    <!-- 品牌规范：Pale mint field #EEF9F7（渐变 #EEF9F7 → #D2EDE9 的另一端用于图标底） -->
+    <color name="kangtu_field">#EEF9F7</color>
 </resources>

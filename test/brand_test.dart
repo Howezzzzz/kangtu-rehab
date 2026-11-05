@@ -87,4 +87,16 @@ void main() {
       expect(File(f).existsSync(), isTrue, reason: '缺图标资源：$f');
     }
   });
+
+  test('按品牌规范：启动背景用薄荷场，不是默认纯白', () {
+    for (final f in ['android/app/src/main/res/drawable/launch_background.xml',
+                     'android/app/src/main/res/drawable-v21/launch_background.xml']) {
+      final x = File(f).readAsStringSync();
+      expect(x.contains('@android:color/white'), isFalse, reason: '$f 还是默认白底（规范：薄荷场 #EEF9F7）');
+      expect(x, contains('kangtu_field'));
+    }
+    final colors = File('android/app/src/main/res/values/colors.xml').readAsStringSync();
+    expect(colors, contains('kangtu_field'));
+    expect(colors, contains('#EEF9F7'), reason: '薄荷场应为规范里的 #EEF9F7');
+  });
 }
