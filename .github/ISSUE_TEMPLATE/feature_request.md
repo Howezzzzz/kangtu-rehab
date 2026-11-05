@@ -11,6 +11,6 @@ detail as you can — the clearer it is, the easier it is to build.
 If another app already does it, name it or drop a screenshot. If it's your
 own idea, just describe it well. Write freely.
 
-Note: GymMane is fully offline and asks for no INTERNET permission, so
+Note: 康途 只在手动点「检查更新」时联网（其余全程离线），所以
 anything needing a server, an account or cloud sync is out of scope.
 -->

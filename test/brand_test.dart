@@ -118,4 +118,41 @@ void main() {
     expect(File('lib/services/local_store.dart').readAsStringSync(), contains("'gymmane_v1'"),
         reason: '存储键被改了 —— 这会丢掉所有本地数据');
   });
+
+  test('配置与商店元数据里不留旧品牌；截图不留上游界面；版本显示必须动态', () {
+    final hits = <String>[];
+    for (final d in ['.github', 'fastlane']) {
+      final dir = Directory(d);
+      if (!dir.existsSync()) continue;
+      for (final f in dir.listSync(recursive: true).whereType<File>()) {
+        if (f.path.endsWith('.png') || f.path.endsWith('.jpg') || f.path.endsWith('.webp')) continue;
+        String txt;
+        try { txt = f.readAsStringSync(); } catch (_) { continue; }
+        for (final line in txt.split('\n')) {
+          if (line.contains('InlitX')) continue; // GPL 署名行放行
+          if (line.contains('GymMane')) hits.add('${f.path}: ${line.trim()}');
+        }
+      }
+    }
+    expect(hits, isEmpty, reason: '这些地方还写着旧品牌：\n${hits.join("\n")}');
+
+    // 上游商店截图应已清除（README 里那批也删过了）
+    for (final d in ['fastlane/metadata/android/en-US/images', 'fastlane/metadata/android/es-ES/images']) {
+      final ps = Directory('$d/phoneScreenshots');
+      expect(ps.existsSync() && ps.listSync().isNotEmpty, isFalse, reason: '$ps 还留着上游应用截图');
+    }
+    expect(File('README.md').readAsStringSync().contains('screenshots/store/'), isFalse);
+
+    // 版本号必须动态取，不能写死（CI 每次发版都会自增构建号）
+    final about = File('lib/screens/about_screen.dart').readAsStringSync();
+    expect(about, contains('PackageInfo.fromPlatform()'),
+        reason: '关于页版本号应动态取 PackageInfo（写死会与真实版本脱节）');
+    // 上游的应用图标不应再被引用
+    for (final f in Directory('lib').listSync(recursive: true).whereType<File>()) {
+      if (f.path.endsWith('.dart')) {
+        expect(f.readAsStringSync().contains('assets/img/app_icon.png'), isFalse,
+            reason: '${f.path} 仍引用上游应用图标');
+      }
+    }
+  });
 }

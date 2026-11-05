@@ -10,8 +10,11 @@ import '../theme/app_theme.dart';
 import '../widgets/brand_mark.dart';
 import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 import '../widgets/update_flow.dart';
 
+/// 兜底用（PackageInfo 取不到时，例如极早期启动）；正常显示的是系统里的真实版本+构建号。
 const kAppVersion = '2.0.0';
 const _kAuthor = 'InlitX';
 const _kAuthorUrl = 'https://github.com/InlitX';
@@ -120,7 +123,8 @@ class AboutScreen extends StatelessWidget {
                 Text(t.appName,
                     style: AppTheme.f(33, weight: FontWeight.w800, color: gc.text, letterSpacing: -0.5)),
                 const SizedBox(height: 10),
-                // 版本徽标 = 检查更新入口（版本号旁边最自然）；有新版时带一个小圆点
+                // 版本徽标 = 检查更新入口（版本号旁边最自然）；有新版时带一个小圆点。
+                // 版本号**动态取**（PackageInfo）：CI 每次发版都会自增构建号，写死常量会与真实版本脱节。
                 InkWell(
                   onTap: () => checkForUpdates(context),
                   borderRadius: BorderRadius.circular(100),
@@ -133,8 +137,16 @@ class AboutScreen extends StatelessWidget {
                           color: gc.bgRaised2,
                           borderRadius: BorderRadius.circular(100),
                         ),
-                        child: Text(t.version(kAppVersion),
-                            style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textSecondary)),
+                        child: FutureBuilder<PackageInfo>(
+                          future: PackageInfo.fromPlatform(),
+                          builder: (_, snap) {
+                            final v = snap.hasData
+                                ? '${snap.data!.version} (${snap.data!.buildNumber})'
+                                : kAppVersion;
+                            return Text(t.version(v),
+                                style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textSecondary));
+                          },
+                        ),
                       ),
                       if (build != null) ...[
                         const SizedBox(width: 8),

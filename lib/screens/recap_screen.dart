@@ -1994,7 +1994,7 @@ class RecapCard extends StatelessWidget {
   Widget _mark(GymColors gc) => Row(mainAxisSize: MainAxisSize.min, children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(5),
-          child: Image.asset('assets/img/app_icon.png', width: 20, height: 20),
+          child: Image.asset('assets/img/brand_full.png', width: 20, height: 20),
         ),
         const SizedBox(width: 7),
         Text(t.appName, style: AppTheme.f(14, weight: FontWeight.w900, color: gc.text, letterSpacing: -0.2, height: 1)),

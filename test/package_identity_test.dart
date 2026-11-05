@@ -64,7 +64,7 @@ void main() {
   test('全库不得再出现旧包名', () {
     final hits = <String>[];
     // README 也要扫（分发徽章曾指向旧包名的商店页）；docs/ 是上游多语言文档、已加横幅注明，故排除
-    for (final d in ['lib', 'test', 'android', 'README.md']) {
+    for (final d in ['lib', 'test', 'android', '.github', 'README.md']) {
       final dir = Directory(d);
       final files = dir.existsSync()
           ? dir.listSync(recursive: true).whereType<File>()
