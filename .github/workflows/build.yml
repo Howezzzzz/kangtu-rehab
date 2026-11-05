@@ -8,7 +8,9 @@ name: build-apk
 #   ② 这是本环境**唯一**能拿到真实 Android 构建的地方（本地沙箱无 Android SDK）；
 #   ③ check 门禁卡在「加构建号」之前：测试红了连版本号都不加（零副作用）。
 #
-# 上游自带的 .github/workflows/build-apk.yml（F-Droid 可复现构建配方）保持不动，本文件另加。
+# 上游自带的 build-apk.yml 已删除：它是第二条能发版的流水线，却不 bump 构建号、不回写清单
+# （用它发的版，应用内更新器永远看不到），且 Flutter 版本与我们不同 —— 留一条权威流水线即可。
+# 有守门锁「只有本文件可以发版」。
 
 on:
   push:

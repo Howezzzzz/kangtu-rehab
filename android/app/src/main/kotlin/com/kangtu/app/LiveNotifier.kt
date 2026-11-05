@@ -59,7 +59,7 @@ object LiveNotifier {
         val nm = ctx.getSystemService(NotificationManager::class.java) ?: return
         val now = System.currentTimeMillis()
 
-        val name = a["title"] as? String ?: "GymMane"
+        val name = a["title"] as? String ?: "康途"
         val detail = a["detail"] as? String ?: ""
         val restLabel = a["restLabel"] as? String ?: ""
         val next = a["next"] as? String

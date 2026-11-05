@@ -130,6 +130,7 @@ void main() {
         try { txt = f.readAsStringSync(); } catch (_) { continue; }
         for (final line in txt.split('\n')) {
           if (line.contains('InlitX')) continue; // GPL 署名行放行
+          if (line.contains('上游 GymMane') || line.contains('upstream GymMane')) continue; // 正当引用上游项目名
           if (line.contains('GymMane')) hits.add('${f.path}: ${line.trim()}');
         }
       }
@@ -154,5 +155,20 @@ void main() {
             reason: '${f.path} 仍引用上游应用图标');
       }
     }
+  });
+
+  test('只允许 build.yml 发版（防第二条发布线：会给出更新器看不到的版本）', () {
+    final wf = Directory('.github/workflows');
+    final publishers = <String>[];
+    for (final f in wf.listSync().whereType<File>()) {
+      final t = f.readAsStringSync();
+      if (t.contains('action-gh-release') || t.contains('gh release create') || t.contains('gh release upload')) {
+        publishers.add(f.path);
+      }
+    }
+    expect(publishers, ['.github/workflows/build.yml'],
+        reason: '发布线必须唯一（且必须回写 app_version.json）：$publishers');
+    expect(File('.github/workflows/build.yml').readAsStringSync(), contains('app_version.json'),
+        reason: '唯一的发布线必须回写更新清单');
   });
 }
