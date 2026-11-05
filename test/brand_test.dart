@@ -99,4 +99,23 @@ void main() {
     expect(colors, contains('kangtu_field'));
     expect(colors, contains('#EEF9F7'), reason: '薄荷场应为规范里的 #EEF9F7');
   });
+
+  test('上游遗留命名已清（图标/默认文件名/资源引用）；存储键必须保持不变', () {
+    final legacy = <String>[];
+    for (final d in ['android', 'lib']) {
+      for (final f in Directory(d).listSync(recursive: true).whereType<File>()) {
+        if (f.path.contains('/build/') || f.path.endsWith('.png') || f.path.endsWith('.webp')) continue;
+        String txt;
+        try { txt = f.readAsStringSync(); } catch (_) { continue; }
+        // 同时查「引用」与「文件名」：上次漏了 drawable 下的 ic_live_tracker.xml，被 CI 的 AAPT 抓出来
+        if (txt.contains('ic_stat_gymmane') || txt.contains('"gymmane.png"')) legacy.add(f.path);
+      }
+    }
+    expect(legacy, isEmpty, reason: '仍有上游遗留命名/引用：${legacy.join(", ")}');
+    for (final f in Directory('android/app/src/main/res').listSync(recursive: true).whereType<File>()) {
+      expect(f.path.contains('ic_stat_gymmane'), isFalse, reason: '图标文件未改名：${f.path}');
+    }
+    expect(File('lib/services/local_store.dart').readAsStringSync(), contains("'gymmane_v1'"),
+        reason: '存储键被改了 —— 这会丢掉所有本地数据');
+  });
 }

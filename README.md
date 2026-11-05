@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="docs/screenshots/banner-en.png" alt="GymMane — Lift. Log it. Grow." width="860" />
+<img src="docs/screenshots/banner-kangtu.png" alt="康途 Kangtu — Rehab &amp; Fitness" width="860" />
 
 <br/>
 
-<img src="docs/screenshots/icon.png" width="94" alt="GymMane" />
+<img src="assets/img/brand_full.png" width="94" alt="康途 Kangtu" />
 
 # GymMane
 
@@ -37,42 +37,8 @@ Tap the muscles you want to train, log your sets and watch your numbers go up.
 <br/>
 <br/>
 
-<img src="docs/screenshots/store/en/01-hero.jpg" width="196" alt="Lift. Log it. Grow." />
-<img src="docs/screenshots/store/en/02-train.jpg" width="196" alt="Tap the muscle, get the session" />
-<img src="docs/screenshots/store/en/03-rest.jpg" width="196" alt="Tick the set, rest rings itself" />
-<img src="docs/screenshots/store/en/04-progress.jpg" width="196" alt="Progress from your own sets" />
 
-<img src="docs/screenshots/store/en/05-library.jpg" width="196" alt="500+ exercises with animations" />
-<img src="docs/screenshots/store/en/10-nutrition.jpg" width="196" alt="What you eat, at a glance" />
-<img src="docs/screenshots/store/en/06-privacy.jpg" width="196" alt="No account. No internet. No smoke." />
 
-<details>
-<summary><sub><b>Plain screenshots</b>, every screen straight off the phone</sub></summary>
-<br/>
-
-<img src="docs/screenshots/mock/01-home.png" width="215" alt="Today" />
-<img src="docs/screenshots/mock/03-train.png" width="215" alt="Body map" />
-<img src="docs/screenshots/mock/04-session.png" width="215" alt="Live session" />
-<img src="docs/screenshots/mock/02-progress.png" width="215" alt="Progress" />
-
-<sub><b>Today</b> &nbsp;·&nbsp; <b>Body map</b> &nbsp;·&nbsp; <b>Live session</b> &nbsp;·&nbsp; <b>Progress</b></sub>
-
-<br/>
-<br/>
-
-<img src="docs/screenshots/mock/05-history.png" width="215" alt="History" />
-<img src="docs/screenshots/mock/06-library.png" width="215" alt="Library" />
-<img src="docs/screenshots/mock/07-routines.png" width="215" alt="Routines" />
-<img src="docs/screenshots/mock/08-settings.png" width="215" alt="Settings" />
-
-<img src="docs/screenshots/mock/09-notes.png" width="215" alt="Journal" />
-<img src="docs/screenshots/mock/10-places.png" width="215" alt="Places" />
-<img src="docs/screenshots/mock/11-body.png" width="215" alt="Muscle timeline" />
-<img src="docs/screenshots/mock/12-profile.png" width="215" alt="Profile" />
-
-<sub><b>History</b> &nbsp;·&nbsp; <b>Library</b> &nbsp;·&nbsp; <b>Routines</b> &nbsp;·&nbsp; <b>Settings</b></sub>
-
-</details>
 
 </div>
 
