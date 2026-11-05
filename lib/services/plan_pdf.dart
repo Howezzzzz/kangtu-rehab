@@ -58,7 +58,7 @@ String _slug(String s) =>
     s.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '-').replaceAll(RegExp(r'^-+|-+$'), '');
 
 Future<Uint8List> buildPlanPdf(List<Routine> routines, {bool week = false, DateTime? now}) async {
-  final runner = await _loadImage('assets/img/runner.png');
+  final runner = await _loadImage('assets/img/brand_full.png');
   final arts = <String, ExerciseArtData>{};
   for (final r in routines) {
     for (final id in r.exerciseIds) {

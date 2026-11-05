@@ -5,7 +5,7 @@ String reportRangeLabel(RangeReport r) => r.from.year == r.to.year
     : '${t.shortDateYear(r.from)} – ${t.shortDateYear(r.to)}';
 
 Future<Uint8List> buildReportPdf(RangeReport r, {DateTime? now}) async {
-  final runner = await _loadImage('assets/img/runner.png');
+  final runner = await _loadImage('assets/img/brand_full.png');
   final doc = _ReportDoc(runner, rtl: const {'ar', 'fa'}.contains(appLanguage));
   doc.layReport(r, now ?? DateTime.now());
   final pages = await _rasterize(doc);

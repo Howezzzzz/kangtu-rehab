@@ -70,4 +70,21 @@ void main() {
     }
     expect(hits, isEmpty, reason: hits.join('; '));
   });
+
+  test('不再引用上游的 runner.png，且启动图标资源齐全', () {
+    final hits = <String>[];
+    for (final f in Directory('lib').listSync(recursive: true).whereType<File>()) {
+      if (f.path.endsWith('.dart') && f.readAsStringSync().contains('runner.png')) hits.add(f.path);
+    }
+    expect(File('assets/img/runner.png').existsSync(), isFalse, reason: '上游那张跑者图应已移除');
+    expect(hits, isEmpty, reason: '这些文件还在引用 runner.png：${hits.join(", ")}');
+    for (final f in [
+      'android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png',
+      'android/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png',
+      'android/app/src/main/res/drawable-xxxhdpi/ic_stat_gymmane.png',
+      'android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml',
+    ]) {
+      expect(File(f).existsSync(), isTrue, reason: '缺图标资源：$f');
+    }
+  });
 }

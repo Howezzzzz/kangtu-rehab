@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/brand_mark.dart';
 import '../widgets/body_map.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
@@ -2310,7 +2311,7 @@ class SessionScreen extends StatelessWidget {
               bottom: -6,
               child: Opacity(
                 opacity: 0.45,
-                child: Image.asset('assets/img/runner.png', fit: BoxFit.fitHeight),
+                child: BrandMark(fit: BoxFit.fitHeight),
               ),
             ),
             Padding(
