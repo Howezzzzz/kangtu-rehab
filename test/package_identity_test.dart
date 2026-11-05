@@ -66,7 +66,7 @@ void main() {
     // README 也要扫（分发徽章曾指向旧包名的商店页）；docs/ 是上游多语言文档、已加横幅注明，故排除
     for (final d in ['lib', 'test', 'android', 'README.md']) {
       final dir = Directory(d);
-      final files = dir.existsSync() && dir is Directory
+      final files = dir.existsSync()
           ? dir.listSync(recursive: true).whereType<File>()
           : [File(d)].where((f) => f.existsSync());
       for (final f in files) {

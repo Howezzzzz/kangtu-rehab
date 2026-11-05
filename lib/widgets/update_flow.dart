@@ -15,7 +15,6 @@ import '../services/update_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 import 'liquid_notch.dart';
-import 'ui_kit.dart';
 
 /// 上次检查发现的新版本构建号（null = 未发现 / 已是最新）→ 入口上显示一个小圆点。
 /// 只在用户**主动检查过**之后才有值，不做任何后台轮询。
