@@ -29,6 +29,12 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
+    // AGP 8 起 BuildConfig 默认不生成；Kotlin 里用 BuildConfig.APPLICATION_ID 派生
+    // 广播 action 前缀（改包名自动跟随），故显式开启。
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.kangtu.app"
         minSdk = 24
