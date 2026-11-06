@@ -886,8 +886,8 @@ class _NavBarState extends State<_NavBar> {
                   child: GlassSurface(
                     radius: h / 2,
                     blur: 30,
-                    // 玻璃 tint 用 surface token（原为自造灰 #131313）
-                    tint: fit.dark ? context.gc.bgRaised.withValues(alpha: 0.72) : null,
+                    // 不再覆盖 tint：GlassSurface 自己的默认就是 token
+                    // （bgRaised，深 66% / 浅 74%）。原先是硬写自造灰 #131313@72% 把默认值盖掉了。
                     child: const SizedBox.expand(),
                   ),
                 ),
