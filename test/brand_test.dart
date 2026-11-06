@@ -255,4 +255,25 @@ void main() {
     expect(hits, isEmpty, reason: '不应再引用上游插画 runner.png（见品牌规范/适配口径-样式随上游只改配色.md 例外 1）：${hits.join('、')}');
     expect(File('assets/img/runner.png').existsSync(), isFalse, reason: '上游插画资产应已移除');
   });
+
+  test('LOGO 资产规格：四形态 512×512；启动/状态图标各密度尺寸正确', () {
+    // 规范 §05：512 画板（四形态 PNG）；§01/§05：自适应前景 108dp、传统图标 48dp、状态栏 24dp。
+    int pngSize(String path) {
+      final b = File(path).readAsBytesSync();
+      expect(b.length > 24, isTrue, reason: '$path 不是有效 PNG');
+      return (b[16] << 24) | (b[17] << 16) | (b[18] << 8) | b[19];
+    }
+    for (final f in ['brand_full', 'brand_inverted', 'brand_mono', 'brand_knockout']) {
+      expect(pngSize('assets/img/$f.png'), 512, reason: '$f.png 应为 512×512');
+    }
+    const fg = {'mdpi': 108, 'hdpi': 162, 'xhdpi': 216, 'xxhdpi': 324, 'xxxhdpi': 432};
+    const legacy = {'mdpi': 48, 'hdpi': 72, 'xhdpi': 96, 'xxhdpi': 144, 'xxxhdpi': 192};
+    const stat = {'mdpi': 24, 'hdpi': 36, 'xhdpi': 48, 'xxhdpi': 72, 'xxxhdpi': 96};
+    fg.forEach((d, px) => expect(pngSize('android/app/src/main/res/drawable-$d/ic_launcher_foreground.png'), px,
+        reason: '前景 $d 应为 ${px}px（108dp）'));
+    legacy.forEach((d, px) => expect(pngSize('android/app/src/main/res/mipmap-$d/ic_launcher.png'), px,
+        reason: '传统图标 $d 应为 ${px}px（48dp）'));
+    stat.forEach((d, px) => expect(pngSize('android/app/src/main/res/drawable-$d/ic_stat_kangtu.png'), px,
+        reason: '状态栏图标 $d 应为 ${px}px（24dp）'));
+  });
 }
