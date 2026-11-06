@@ -1752,10 +1752,11 @@ class AppLocalizationsKo extends AppLocalizations {
   String get freeForeverWhy => '구독 없음, 광고 없음, 유료 잠금 없음.';
 
   @override
-  String get fullyOffline => '100% 오프라인';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => '계정도 서버도 없습니다. 운동 데이터는 이 휴대전화 밖으로 나가지 않습니다.';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => '데이터는 사용자의 것입니다';
@@ -1803,7 +1804,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get welcomeKicker => '환영합니다';
 
   @override
-  String get welcomeBlurb => '모든 데이터는 휴대전화에 남습니다. 계정, 인터넷, 결제가 필요 없습니다.';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => '시작';
@@ -3112,10 +3114,11 @@ class AppLocalizationsKo extends AppLocalizations {
   String get stepsGrant => '탭해서 Health Connect에서 허용하기';
 
   @override
-  String get stepsInfoRead => '걸음 수만 읽어요. 다른 건 읽지 않고 Health Connect에 쓰지도 않아요.';
+  String get stepsInfoRead =>
+      'This card only reads your step count. Other Health Connect reads and writes are described under Health data.';
 
   @override
-  String get stepsInfoLocal => '걸음 수는 휴대폰에만 남아요. Kangtu은 인터넷에 연결하지 않아요.';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => '설정이나 Health Connect에서 언제든 끌 수 있어요.';

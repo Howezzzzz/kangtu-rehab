@@ -127,4 +127,36 @@ void main() {
       }
     }
   });
+
+  test('非主要语种不得自带隐私披露键（必须回落到准确的英文）', () {
+    // ISS-2xx：13 个非主要语种曾保留上游译文，内容是假的（如 de「schreibt nichts in
+    // Health Connect」、ru「никогда не подключается к интернету」）。字面短语扫描只覆盖
+    // en/zh/zh_Hant/es，扫不到别的语言 → 这里改成「结构性」断言：这些键根本不许出现。
+    const primary = {'en', 'zh', 'zh_Hant', 'es'};
+    const guarded = ['stepsInfoRead', 'stepsInfoLocal', 'fullyOffline', 'fullyOfflineWhy', 'welcomeBlurb', 'healthPickHint'];
+    final bad = <String>[];
+    for (final f in Directory('lib/l10n').listSync().whereType<File>().where((f) => f.path.endsWith('.arb'))) {
+      final code = f.uri.pathSegments.last.replaceAll('app_', '').replaceAll('.arb', '');
+      if (primary.contains(code)) continue;
+      final data = jsonDecode(f.readAsStringSync()) as Map<String, dynamic>;
+      for (final k in guarded) {
+        if (data.containsKey(k)) bad.add('$code.$k');
+      }
+    }
+    expect(bad, isEmpty, reason: '非主要语种不得自带披露键（要回落到准确英文）：${bad.join('、')}');
+  });
+
+  test('es 的披露键必须是西语准确文案，不得直接沿用英文', () {
+    final en = arb('en');
+    final es = arb('es');
+    final same = <String>[];
+    for (final k in ['stepsInfoRead', 'stepsInfoLocal', 'fullyOffline', 'fullyOfflineWhy', 'welcomeBlurb']) {
+      final v = es[k];
+      expect(v, isA<String>(), reason: 'es 必须自带 $k（es 是主要语种，不靠回落）');
+      if (v == en[k]) same.add(k);
+    }
+    expect(same, isEmpty, reason: 'es 这些键与英文完全相同，疑似忘了翻译：${same.join('、')}');
+    expect(RegExp(r'actualizacion', caseSensitive: false).hasMatch('${es['fullyOfflineWhy']}'), isTrue,
+        reason: 'es.fullyOfflineWhy 应说明「只有检查更新会联网」');
+  });
 }

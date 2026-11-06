@@ -51,8 +51,8 @@ class SessionScreen extends StatelessWidget {
     );
   }
 
-  Widget _deloadNote(GymColors gc) {
-    final auto = fit.session?.lightened ?? false;
+  Widget _deloadNote(GymColors gc, WorkoutSession s) {
+    final auto = s.lightened;
     return Container(
         padding: const EdgeInsets.fromLTRB(14, 10, 8, 10),
         decoration: BoxDecoration(color: gc.bgRaised, borderRadius: BorderRadius.circular(16)),
@@ -101,7 +101,7 @@ class SessionScreen extends StatelessWidget {
         _progressStrip(context, gc, s, locked),
         const SizedBox(height: 16),
         if (s.deload) ...[
-          _deloadNote(gc),
+          _deloadNote(gc, s),
           const SizedBox(height: 14),
         ],
         _ExerciseStage(
@@ -311,7 +311,7 @@ class SessionScreen extends StatelessWidget {
         _listStats(gc, s),
         const SizedBox(height: 16),
         if (s.deload) ...[
-          _deloadNote(gc),
+          _deloadNote(gc, s),
           const SizedBox(height: 12),
         ],
         for (var i = 0; i < s.exercises.length; i++) ...[
@@ -561,13 +561,14 @@ class SessionScreen extends StatelessWidget {
                     showNotchToast(context, t.superset,
                         subtitle: t.supersetHint, icon: PhosphorIconsFill.link, accent: gc.brass);
                   }),
-                OptionItem(t.lightSession,
-                    icon: PhosphorIconsRegular.feather,
-                    selected: s.deload,
-                    onTap: () {
-                      Navigator.pop(sheet);
-                      fit.toggleLightSession();
-                    }),
+                if (!(s.lightened && !fit.canSkipDeload))
+                  OptionItem(t.lightSession,
+                      icon: PhosphorIconsRegular.feather,
+                      selected: s.deload,
+                      onTap: () {
+                        Navigator.pop(sheet);
+                        fit.toggleLightSession();
+                      }),
                 if (s.exercises.length > 1)
                   OptionItem(t.dropExerciseAction, icon: PhosphorIconsRegular.trash, danger: true, onTap: () {
                     Navigator.pop(sheet);

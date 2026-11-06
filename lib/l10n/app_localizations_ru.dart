@@ -1839,10 +1839,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get freeForeverWhy => 'Без подписок, рекламы и платных ограничений.';
 
   @override
-  String get fullyOffline => 'Полностью офлайн';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => 'Без аккаунта и серверов. Твои тренировки не покидают этот телефон.';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => 'Данные — твои';
@@ -1898,7 +1899,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get welcomeKicker => 'ДОБРО ПОЖАЛОВАТЬ В';
 
   @override
-  String get welcomeBlurb => 'Всё остаётся на твоём телефоне. Без аккаунта, без интернета, без оплаты.';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => 'НАЧАТЬ';
@@ -3284,10 +3286,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get stepsInfoRead =>
-      'Читает только число шагов. Больше ничего не читает и ничего не пишет в Health Connect.';
+      'This card only reads your step count. Other Health Connect reads and writes are described under Health data.';
 
   @override
-  String get stepsInfoLocal => 'Шаги остаются на телефоне. Kangtu никогда не подключается к интернету.';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => 'Можно отключить в любой момент в Настройках или в Health Connect.';

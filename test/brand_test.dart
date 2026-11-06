@@ -185,4 +185,12 @@ void main() {
     // 正例：台湾用词应当存在（防整文件被误替换成别的口径）
     expect(arb.contains('資料') || arb.contains('伺服器'), isTrue);
   });
+
+  test('关于页「源代码」必须指向本仓库，且不得把上游 Ko-fi 当成自己的', () {
+    final about = File('lib/screens/about_screen.dart').readAsStringSync();
+    expect(about.contains('Howezzzzz/kangtu-rehab'), isTrue, reason: '关于页来源应指向本仓库');
+    expect(about.contains('InlitX/GymMane'), isFalse, reason: '来源链接不得再指向上游仓库');
+    expect(about.contains('ko-fi.com/inlitx'), isFalse, reason: '「请我喝咖啡」不得指向上游作者的 Ko-fi');
+    expect(about.contains("'InlitX'"), isTrue, reason: 'GPL 署名（作者 InlitX）必须保留');
+  });
 }

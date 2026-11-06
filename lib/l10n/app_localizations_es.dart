@@ -1789,11 +1789,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get freeForeverWhy => 'Sin suscripción, sin anuncios, nada escondido tras un muro de pago.';
 
   @override
-  String get fullyOffline => 'Offline first';
+  String get fullyOffline => 'Primero sin conexión';
 
   @override
   String get fullyOfflineWhy =>
-      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
+      'Sin cuenta y sin servidores. Lo único que usa la red es la búsqueda de actualizaciones: lee la versión y no envía ninguno de tus datos.';
 
   @override
   String get yoursToTake => 'Tus datos son tuyos';
@@ -1843,7 +1843,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get welcomeBlurb =>
-      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
+      'Todo se queda en tu teléfono. Sin cuenta y sin pagos; solo la búsqueda de actualizaciones usa la red.';
 
   @override
   String get welcomeStart => 'EMPEZAR';
@@ -3197,7 +3197,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta tarjeta solo lee tu recuento de pasos. Las demás lecturas y escrituras en Health Connect se describen en Datos de salud.';
 
   @override
-  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
+  String get stepsInfoLocal =>
+      'Tus pasos se quedan en tu teléfono. Kangtu solo se conecta a internet para buscar actualizaciones.';
 
   @override
   String get stepsInfoOff => 'Puedes quitarlo cuando quieras, en Ajustes o en Health Connect.';

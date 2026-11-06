@@ -1781,10 +1781,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get freeForeverWhy => 'لا اشتراك ولا إعلانات ولا ميزات محجوبة بالدفع.';
 
   @override
-  String get fullyOffline => '100% دون اتصال';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => 'لا حساب ولا خادم. تمارينك لا تغادر هذا الهاتف أبدًا.';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => 'بياناتك ملكك';
@@ -1833,7 +1834,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get welcomeKicker => 'مرحبًا بك في';
 
   @override
-  String get welcomeBlurb => 'كل شيء يبقى على هاتفك. لا حساب ولا إنترنت ولا دفع.';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => 'ابدأ';
@@ -3186,10 +3188,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get stepsGrant => 'اضغط للسماح بذلك في Health Connect';
 
   @override
-  String get stepsInfoRead => 'يقرأ عدد خطواتك فقط. لا يقرأ أي شيء آخر ولا يكتب في Health Connect.';
+  String get stepsInfoRead =>
+      'This card only reads your step count. Other Health Connect reads and writes are described under Health data.';
 
   @override
-  String get stepsInfoLocal => 'تبقى خطواتك على هاتفك. Kangtu لا يتصل بالإنترنت أبدًا.';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => 'يمكنك إيقافه متى شئت من الإعدادات أو من Health Connect.';

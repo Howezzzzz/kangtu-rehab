@@ -317,3 +317,7 @@ repsRightCol
 repsLeftTitle
 repsRightTitle
 sidesReps
+stepsInfoLocal
+fullyOffline
+fullyOfflineWhy
+welcomeBlurb

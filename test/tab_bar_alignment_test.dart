@@ -3,7 +3,9 @@
 //   `clamp(0, 40)`，而 Row 用 spaceBetween 会均分更大的剩余空间 → 宽屏（>约 468dp）
 //   气泡落后于图标（实测 600dp 偏 -21px、800dp 偏 -71px）。
 // 修复：`_gap` 不设上限 + Row 改用显式 SizedBox(width: _gap) 间隙（气泡与图标共用同一 gap）。
-// 本测试跨多种宽度断言偏差≈0；**若把 spaceBetween 或上限截断改回来，这里会红**。
+// 本测试跨多种宽度断言偏差≈0。注意（2026-11-06 变异实测）：单独把 `_gap` 上限加回 40
+// 或单独改回 spaceBetween，都**不会**红——因为「气泡」与「真图标」仍共用同一个 `_gap`，
+// 只是整条栏不再铺满。只有让两者用上**不同**的间隙值（= 原始 bug 的组合）才会红。
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/app/gymmane_app.dart';

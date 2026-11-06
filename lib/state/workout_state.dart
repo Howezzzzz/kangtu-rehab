@@ -604,6 +604,9 @@ mixin WorkoutState on FitCore, SettingsState, LibraryState, PlacesState, StatsSt
         skipDeload();
         return;
       }
+      // 自动降载（lightened）且已经开始做了 → 重量已按降载改过、无法还原，
+      // 此时取消标记会让这次减载数据混进进阶基线（会话表里的开关与 _deloadNote 必须一致）。
+      if (s.lightened) return;
       s.deload = false;
       s.lightened = false;
     } else {

@@ -452,6 +452,10 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
       l = left ?? l;
       r = right ?? r;
       reps = l! < r! ? l : r;
+    } else {
+      // 非分侧组：忽略传入的单侧值，避免「只给一侧」被序列化时静默丢弃
+      l = null;
+      r = null;
     }
     e.sets[i] = LoggedSet(
       reps ?? old.reps,
@@ -840,7 +844,7 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
   List<({int reps, double kg, DateTime date})> repRecords(String id) {
     if (modeOf(id).isNotEmpty || isRepsOnly(id) || isAssisted(id)) return const [];
     final best = <int, ({double kg, DateTime date})>{};
-    for (final h in exerciseHistory(id)) {
+    for (final h in progressHistory(id)) {
       for (final st in h.ex.workingSets) {
         if (st.reps <= 0 || st.weight <= 0) continue;
         final had = best[st.reps];

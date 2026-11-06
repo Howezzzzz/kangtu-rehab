@@ -1791,10 +1791,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get freeForeverWhy => 'Abonelik yok, reklam yok, ücret duvarı yok.';
 
   @override
-  String get fullyOffline => '%100 çevrimdışı';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => 'Hesap yok, sunucu yok. Antrenman verilerin bu telefondan asla çıkmaz.';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => 'Verilerin sana ait';
@@ -1843,7 +1844,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get welcomeKicker => 'HOŞ GELDİN';
 
   @override
-  String get welcomeBlurb => 'Her şey telefonunda kalır. Hesap yok, internet yok, ödeme yok.';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => 'BAŞLA';
@@ -3196,10 +3198,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get stepsInfoRead =>
-      'Yalnızca adım sayını okur. Başka hiçbir şey okumaz ve Health Connect\'e yazmaz.';
+      'This card only reads your step count. Other Health Connect reads and writes are described under Health data.';
 
   @override
-  String get stepsInfoLocal => 'Adımların telefonunda kalır. Kangtu asla internete bağlanmaz.';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => 'İstediğin zaman Ayarlar\'dan veya Health Connect\'ten kapatabilirsin.';

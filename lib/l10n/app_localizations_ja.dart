@@ -1739,10 +1739,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get freeForeverWhy => 'サブスクなし、広告なし、課金でロックされる機能なし。';
 
   @override
-  String get fullyOffline => '100%オフライン';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => 'アカウントもサーバーも不要。ワークアウトデータはこの端末から出ません。';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => 'データはあなたのもの';
@@ -1790,7 +1791,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get welcomeKicker => 'ようこそ';
 
   @override
-  String get welcomeBlurb => 'すべて端末内に保存。アカウント不要、インターネット不要、支払いなし。';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => '始める';
@@ -3102,10 +3104,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get stepsGrant => 'タップして Health Connect で許可';
 
   @override
-  String get stepsInfoRead => '歩数だけを読み取ります。それ以外は読まず、Health Connect に書き込むこともありません。';
+  String get stepsInfoRead =>
+      'This card only reads your step count. Other Health Connect reads and writes are described under Health data.';
 
   @override
-  String get stepsInfoLocal => '歩数は端末内に残ります。Kangtu はインターネットに接続しません。';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => '設定または Health Connect でいつでもオフにできます。';
