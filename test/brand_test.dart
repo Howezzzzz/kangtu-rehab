@@ -171,4 +171,18 @@ void main() {
     expect(File('.github/workflows/build.yml').readAsStringSync(), contains('app_version.json'),
         reason: '唯一的发布线必须回写更新清单');
   });
+
+  test('zh_Hant 统一走台湾用词（不得混入港式/大陆式）', () {
+    // 背景：文件基础是台湾调（資料/裡/螢幕/影片/伺服器…），但曾混进「服務器/網絡/數據」
+    //（多为康途自己后写的字符串）。选定台湾繁体后，这里把「不许混」钉死。
+    const hkCn = ['服務器', '網絡', '數據', '軟件', '熒幕', '內存', '硬盤', '打印', '裏'];
+    final arb = File('lib/l10n/app_zh_Hant.arb').readAsStringSync();
+    final hits = <String>[];
+    for (final w in hkCn) {
+      if (arb.contains(w)) hits.add(w);
+    }
+    expect(hits, isEmpty, reason: 'zh_Hant 混入了港式/大陆式用词：${hits.join("、")}（应统一为台湾用词）');
+    // 正例：台湾用词应当存在（防整文件被误替换成别的口径）
+    expect(arb.contains('資料') || arb.contains('伺服器'), isTrue);
+  });
 }

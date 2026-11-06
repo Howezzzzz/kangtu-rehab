@@ -8764,7 +8764,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get fullyOffline => '離線優先';
 
   @override
-  String get fullyOfflineWhy => '無賬號、無服務器。唯一聯網的是「檢查更新」，只讀版本資訊、不發送你的任何數據。';
+  String get fullyOfflineWhy => '無賬號、無伺服器。唯一聯網的是「檢查更新」，只讀版本資訊、不發送你的任何資料。';
 
   @override
   String get yoursToTake => '資料屬於你';
@@ -8811,7 +8811,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get welcomeKicker => '歡迎使用';
 
   @override
-  String get welcomeBlurb => '所有數據均儲存在你的手機上。無賬號、無任何費用；只有「檢查更新」會用到網絡。';
+  String get welcomeBlurb => '所有資料均儲存在你的手機上。無賬號、無任何費用；只有「檢查更新」會用到網路。';
 
   @override
   String get welcomeStart => '開始';
@@ -8846,7 +8846,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get onbNameWhy => '僅用於稱呼你。永遠不會離開你的手機。';
 
   @override
-  String get onbBodyTitle => '一些數據';
+  String get onbBodyTitle => '一些資料';
 
   @override
   String get onbBodyWhy => '這些資料用於計算器，你可以隨時在設定中修改。';
@@ -13102,7 +13102,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get updateNetNote => '檢查更新會聯網；除此之外，康途全程離線，數據只留在本機。';
+  String get updateNetNote => '檢查更新會聯網；除此之外，康途全程離線，資料只留在本機。';
 
   @override
   String get updateNow => '下載並安裝';
