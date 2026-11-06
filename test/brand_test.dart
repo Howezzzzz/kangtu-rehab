@@ -208,4 +208,18 @@ void main() {
     expect(RegExp(r"themePref\s*==\s*'amoled'").hasMatch(settings), isTrue,
         reason: '只有选中 AMOLED 时才换说明');
   });
+
+  test('禁止自造中性灰回归（规范：不得在实现时自造 hex）', () {
+    // 2026-11-06：app_shell 的背板/胶囊曾用自造灰 #16161A / #3A3A3E / #131313，
+    // 已改为 GymColors 的派生 `backdrop` 与 bgRaised 透明度。这里钉死不许回来。
+    const banned = ['0xFF16161A', '0xFF3A3A3E', '0xFF131313'];
+    final hits = <String>[];
+    for (final f in Directory('lib').listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'))) {
+      final t = f.readAsStringSync();
+      for (final b in banned) {
+        if (t.contains(b)) hits.add('${f.path} → $b');
+      }
+    }
+    expect(hits, isEmpty, reason: '自造中性灰不得回归：${hits.join('、')}');
+  });
 }

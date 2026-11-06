@@ -370,7 +370,8 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
           child: AnnotatedRegion<SystemUiOverlayStyle>(
             value: fit.dark ? _overlayDark : _overlayLight,
             child: ColoredBox(
-              color: fit.dark ? const Color(0xFF16161A) : const Color(0xFF3A3A3E),
+              // 规范 v1.5：不得自造 hex；背板用场色的派生（§06.3 色调抬升/下沉）
+              color: context.gc.backdrop,
               child: ValueListenableBuilder<double>(
               valueListenable: sheetRecede,
               child: RepaintBoundary(
@@ -501,7 +502,7 @@ class _AppShellState extends State<AppShell> with WidgetsBindingObserver, Single
                       painter: _Corners(
                         scale: 1 - 0.08 * p,
                         radius: 32 * p,
-                        color: fit.dark ? const Color(0xFF16161A) : const Color(0xFF3A3A3E),
+                        color: context.gc.backdrop,
                       ),
                     ),
                   ),
@@ -885,7 +886,8 @@ class _NavBarState extends State<_NavBar> {
                   child: GlassSurface(
                     radius: h / 2,
                     blur: 30,
-                    tint: fit.dark ? const Color(0xFF131313).withValues(alpha: 0.72) : null,
+                    // 玻璃 tint 用 surface token（原为自造灰 #131313）
+                    tint: fit.dark ? context.gc.bgRaised.withValues(alpha: 0.72) : null,
                     child: const SizedBox.expand(),
                   ),
                 ),

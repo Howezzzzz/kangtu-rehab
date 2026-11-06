@@ -77,6 +77,12 @@ class GymColors extends ThemeExtension<GymColors> {
   /// 规范 v1.5 §06：焦点环色（--color-focus）· 2 px 环 + 2 px 偏移 · 两种场底均 ≥3:1。
   final Color focus;
 
+  /// 面板/抽屉打开时**页面后退的背板**色（原先是自造灰 #16161A / #3A3A3E，违反
+  /// 「不得在实现时自造 hex」）。规范没有该 token，故按 §06.3「抬升/下沉靠色调」**派生**：
+  /// 场色叠一层黑（浅 10% / 深 30%），两种主题都得到同一色系的更深一档。
+  Color get backdrop =>
+      Color.alphaBlend(Colors.black.withValues(alpha: pageBg.computeLuminance() > 0.5 ? 0.10 : 0.30), pageBg);
+
   /// 语义别名（v1.5 命名 → 本仓既有命名）：原始语义色**只作图形**。
   Color get success => sage;
   Color get warning => warn;
