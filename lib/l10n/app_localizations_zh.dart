@@ -7051,6 +7051,95 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get updateVerifyUnavailable => '本机无法校验下载包的签名；请改用发布页下载安装。';
+
+  @override
+  String get repRecordsTitle => '各次数的最佳重量';
+
+  @override
+  String suppUnitCapsule(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 粒');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitPill(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 片');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitScoop(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 勺');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitDrop(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 滴');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitServing(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 份');
+    return '$_temp0';
+  }
+
+  @override
+  String get suppUnitIu => 'IU';
+
+  @override
+  String get suppLeft => '剩余';
+
+  @override
+  String get suppLeftHint => '选填';
+
+  @override
+  String suppLeftFor(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '还剩 $n 天');
+    return '$_temp0';
+  }
+
+  @override
+  String suppForDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天');
+    return '$_temp0';
+  }
+
+  @override
+  String get suppRanOut => '已用完';
+
+  @override
+  String get lightSession => '轻量训练';
+
+  @override
+  String get lightSessionHint => '会记入历史与统计，但不影响下次的目标。';
+
+  @override
+  String get lightSessionNote => '不计入渐进';
+
+  @override
+  String get lightSessionOff => '关闭';
+
+  @override
+  String get eachSideRepsHint => '左右分开记录次数，渐进以较弱的一侧为准。';
+
+  @override
+  String get repsLeftCol => '左次数';
+
+  @override
+  String get repsRightCol => '右次数';
+
+  @override
+  String get repsLeftTitle => '左侧次数';
+
+  @override
+  String get repsRightTitle => '右侧次数';
+
+  @override
+  String sidesReps(int l, int r) {
+    return '左$l 右$r';
+  }
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -13130,4 +13219,93 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get updateVerifyUnavailable => '本機無法校驗下載包的簽名；請改用發布頁下載安裝。';
+
+  @override
+  String get repRecordsTitle => '各次數的最佳重量';
+
+  @override
+  String suppUnitCapsule(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 粒');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitPill(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 錠');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitScoop(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 匙');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitDrop(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 滴');
+    return '$_temp0';
+  }
+
+  @override
+  String suppUnitServing(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 份');
+    return '$_temp0';
+  }
+
+  @override
+  String get suppUnitIu => 'IU';
+
+  @override
+  String get suppLeft => '剩餘';
+
+  @override
+  String get suppLeftHint => '選填';
+
+  @override
+  String suppLeftFor(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '還剩 $n 天');
+    return '$_temp0';
+  }
+
+  @override
+  String suppForDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n 天');
+    return '$_temp0';
+  }
+
+  @override
+  String get suppRanOut => '已用完';
+
+  @override
+  String get lightSession => '輕量訓練';
+
+  @override
+  String get lightSessionHint => '會記入歷史與統計，但不影響下次的目標。';
+
+  @override
+  String get lightSessionNote => '不計入漸進';
+
+  @override
+  String get lightSessionOff => '關閉';
+
+  @override
+  String get eachSideRepsHint => '左右分開記錄次數，漸進以較弱的一側為準。';
+
+  @override
+  String get repsLeftCol => '左次數';
+
+  @override
+  String get repsRightCol => '右次數';
+
+  @override
+  String get repsLeftTitle => '左側次數';
+
+  @override
+  String get repsRightTitle => '右側次數';
+
+  @override
+  String sidesReps(int l, int r) {
+    return '左$l 右$r';
+  }
 }
