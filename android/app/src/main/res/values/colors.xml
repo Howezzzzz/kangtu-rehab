@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#E7F5F1</color>
-    <!-- 品牌规范：Pale mint field #EEF9F7（渐变 #EEF9F7 → #D2EDE9 的另一端用于图标底） -->
+    <color name="ic_launcher_background">#EEF9F7</color>
+    <!-- 品牌规范 v1.5 §04：Pale mint field #EEF9F7（自适应图标底色 = 场色；原 #E7F5F1 既非上游也非规范值） -->
     <color name="kangtu_field">#EEF9F7</color>
 </resources>
