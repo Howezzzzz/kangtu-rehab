@@ -505,7 +505,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: dark
-                    ? [Color.lerp(gc.bg, Colors.black, 0.5)!, Color.lerp(gc.bg, gc.bgRaised, 0.4)!]
+                    ? [gc.backdrop, gc.bgRaised]
                     : [gc.bgRaised2, gc.bg],
               ),
             ),

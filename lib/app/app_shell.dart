@@ -1028,7 +1028,8 @@ class _NavBarState extends State<_NavBar> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [gc.accent, gc.brass],
+            // 规范 v1.5：No teal-on-orange → 换成同一色系（青系）内的渐变，形态不变
+            colors: [gc.accent, gc.emberDeep],
           ),
           shape: BoxShape.circle,
           boxShadow: [

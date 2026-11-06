@@ -439,7 +439,10 @@ class HomeExtrasShowcase extends StatelessWidget {
             child: Row(children: [
               Expanded(
                 flex: 64,
-                child: DecoratedBox(decoration: BoxDecoration(gradient: LinearGradient(colors: [gc.accent, gc.brass]))),
+                child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        // 规范 v1.5：No teal-on-orange → 橙系内渐变
+                        gradient: LinearGradient(colors: [gc.brass, gc.accentInk]))),
               ),
               Expanded(flex: 36, child: ColoredBox(color: gc.bgRaised)),
             ]),

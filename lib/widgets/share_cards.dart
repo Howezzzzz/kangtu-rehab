@@ -137,7 +137,8 @@ class ShareCard extends StatelessWidget {
               shaderCallback: (r) => LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [gc.accent, gc.brass],
+                // 规范 v1.5：No teal-on-orange → 橙系内渐变（渐变遮罩形态保留）
+                colors: [gc.brass, gc.accentInk],
               ).createShader(r),
               child: Text('${fit.currentStreak}',
                   style: AppTheme.f(104, weight: FontWeight.w800, color: gc.text, height: 1, letterSpacing: -5)

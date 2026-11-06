@@ -222,4 +222,26 @@ void main() {
     }
     expect(hits, isEmpty, reason: '自造中性灰不得回归：${hits.join('、')}');
   });
+
+  test('规范 v1.5 明文禁止 teal-on-orange：同一组渐变色标里不得同时出现青与橙', () {
+    // 「No teal-on-orange, no orange-on-teal. Both sit at similar luminance and fail contrast at every size.」
+    // 判定范围：**同一个渐变/色标列表内部**（不相邻的独立用色、彩色纸屑、奖牌色这类不算）。
+    final teal = RegExp(r'\bgc\.accent\b');
+    final orange = RegExp(r'\bgc\.brass\b');
+    // 只看**渐变构造器**里的色标（彩屑 celebrate(colors: …) 这类"一组多色"不算：
+    // 规范针对的是相邻两色对比不足，彩屑不是相邻的色面）
+    final listRe = RegExp(r'(?:Linear|Radial|Sweep)Gradient\([^;]{0,300}?colors:\s*\[([^\]]*)\]',
+        multiLine: true, dotAll: true);
+    final hits = <String>[];
+    for (final f in Directory('lib').listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'))) {
+      final t = f.readAsStringSync();
+      for (final m in listRe.allMatches(t)) {
+        final seg = m.group(1)!;
+        if (teal.hasMatch(seg) && orange.hasMatch(seg)) {
+          hits.add('${f.path}: ${seg.trim().replaceAll(RegExp(r"\s+"), " ")}');
+        }
+      }
+    }
+    expect(hits, isEmpty, reason: '同一渐变色标里不得青橙同框：${hits.join("、")}');
+  });
 }

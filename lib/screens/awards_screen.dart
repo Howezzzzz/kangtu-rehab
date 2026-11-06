@@ -123,7 +123,8 @@ class _AwardsScreenState extends State<AwardsScreen> {
                 Container(
                   width: box.maxWidth * v.clamp(0.02, 1.0),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [gc.accent, gc.brass]),
+                    // 规范 v1.5：No teal-on-orange → 橙系（momentum）内渐变
+                    gradient: LinearGradient(colors: [gc.brass, gc.accentInk]),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
