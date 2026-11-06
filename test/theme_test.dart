@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/l10n/l10n.dart';
 import 'package:gymmane/services/local_store.dart';
 import 'package:gymmane/state/fit_state.dart';
+import 'package:gymmane/app/pixel_shift.dart';
 import 'package:gymmane/theme/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -171,6 +172,22 @@ void main() {
         expect(contrast(c.pageBg, c.border), lessThan(3.0), reason: '分隔线属非文字元素，不追求对比度');
         expect(rgb(c.border), isNot(rgb(c.pageBg)), reason: '分隔线不能与场同色');
       }
+    });
+  
+
+    test('§06.2 防烧屏：AMOLED 例外下要有「周期性微移静态 chrome」，且幅度有界', () {
+      // 规范原文：shift static UI chrome periodically against burn-in.
+      // 实现：lib/app/pixel_shift.dart（纯函数 pixelShiftOffset + PixelShift 包装器），
+      // 仅 AMOLED 主题生效；幅度默认 3 px、轮换周期 4 分钟。
+      final src = File('lib/app/pixel_shift.dart').readAsStringSync();
+      expect(src.contains("fit.themePref == 'amoled'"), isTrue,
+          reason: '微移必须只在 AMOLED 主题下生效（规范的例外条款只覆盖 AMOLED）');
+      expect(src.contains('Timer.periodic'), isTrue, reason: '需要周期触发（否则不会随时间轮换）');
+      expect(src.contains("didChangeAppLifecycleState"), isTrue, reason: '回前台要按当前时间基复位');
+      expect(kPixelShiftAmplitude, lessThanOrEqualTo(4), reason: '幅度必须小（否则界面会被挪歪）');
+      // 底部导航栏（最长时间驻留的 chrome）必须真的接上
+      final shell = File('lib/app/app_shell.dart').readAsStringSync();
+      expect(shell.contains('PixelShift('), isTrue, reason: '底栏要套上 PixelShift');
     });
   });
 }

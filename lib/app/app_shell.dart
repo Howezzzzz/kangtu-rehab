@@ -53,6 +53,7 @@ import '../widgets/health_cards.dart';
 import '../widgets/liquid_notch.dart';
 import '../widgets/start_countdown.dart';
 import '../widgets/ui_kit.dart';
+import 'pixel_shift.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
@@ -856,8 +857,11 @@ class _NavBarState extends State<_NavBar> {
 
   @override
   Widget build(BuildContext context) {
-
-    return SizedBox(height: height, child: _bar(context, height));
+    // 规范 v1.5 §06.2：AMOLED 例外下要求「周期性微移静态 chrome 防烧屏」。
+    // PixelShift 仅在 AMOLED 主题生效（其余主题原样返回），幅度 ±3 px、每 4 分钟一格。
+    return PixelShift(
+      child: SizedBox(height: height, child: _bar(context, height)),
+    );
   }
 
   Widget _bar(BuildContext context, double h) {
