@@ -251,7 +251,7 @@ void main() {
     });
 
     test('自动降载且已开练：不允许取消「轻量」标记（重量已改、无法还原）', () {
-      final id = startWith('Barbell Bench Press');
+      startWith('Barbell Bench Press');
       final s = fit.session!;
       s.deload = true;
       s.lightened = true;
