@@ -17,12 +17,18 @@ class AppTheme {
     final base = ThemeData(brightness: brightness, useMaterial3: true, fontFamily: sans);
     return base.copyWith(
       scaffoldBackgroundColor: gc.bg,
+      // 规范 v1.5 §06：焦点环 2 px + 2 px 偏移，色取 --color-focus（两种场底均 ≥3:1）
+      focusColor: gc.focus,
       colorScheme: base.colorScheme.copyWith(
         surface: gc.bgRaised,
         primary: gc.accent,
         onPrimary: gc.onEmber,
         onSurface: gc.text,
-        error: const Color(0xFFE5563B),
+        // 规范 v1.5：「不要在实现时自造 hex」——错误色用 token（原为硬编码 #E5563B）
+        error: gc.danger,
+        secondary: gc.brass,
+        outline: gc.border,
+        surfaceContainerHighest: gc.bgRaised2,
       ),
       textTheme: base.textTheme.apply(
         fontFamily: sans,

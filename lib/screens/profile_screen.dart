@@ -28,11 +28,16 @@ import 'settings_screen.dart';
 
 const List<String> kProfileBadges = ['gold', 'blue', 'green'];
 
-Color badgeColor(String id) => switch (id) {
-      'blue' => const Color(0xFF4A9EEB),
-      'green' => const Color(0xFF54B979),
-      _ => const Color(0xFFE8B84B),
-    };
+/// 徽章色（规范 v1.5：**两色一底、不得引入第三组色相**）。
+/// 原为自造蓝/绿/金三色 hex，改为规范 token：brand-ink / success / accent。
+Color badgeColor(String id, [GymColors? colors]) {
+  final c = colors ?? GymColors.light;
+  return switch (id) {
+    'blue' => c.emberDeep,
+    'green' => c.success,
+    _ => c.brass,
+  };
+}
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -871,7 +876,7 @@ class _ProfileHeader extends SliverPersistentHeaderDelegate {
         ),
         if (p.badge.isNotEmpty) ...[
           const SizedBox(width: 5),
-          Icon(PhosphorIconsFill.sealCheck, size: 14, color: badgeColor(p.badge)),
+          Icon(PhosphorIconsFill.sealCheck, size: 14, color: badgeColor(p.badge, gc)),
         ],
       ],
     );
@@ -892,7 +897,7 @@ class _ProfileHeader extends SliverPersistentHeaderDelegate {
             ),
             if (p.badge.isNotEmpty) ...[
               const SizedBox(width: 7),
-              Icon(PhosphorIconsFill.sealCheck, size: 19, color: badgeColor(p.badge)),
+              Icon(PhosphorIconsFill.sealCheck, size: 19, color: badgeColor(p.badge, gc)),
             ],
           ],
         ),

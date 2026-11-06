@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// 规范 v1.5 §06：「禁用态 = 该 token 的 38% 不透明度，**不得**另造灰色 hex」。
+const double kDisabledOpacity = 0.38;
+
 @immutable
 class GymColors extends ThemeExtension<GymColors> {
   const GymColors({
@@ -28,6 +31,10 @@ class GymColors extends ThemeExtension<GymColors> {
     required this.info,
     required this.warn,
     required this.danger,
+    required this.successInk,
+    required this.warningInk,
+    required this.errorInk,
+    required this.focus,
   });
 
   final Color pageBg;
@@ -60,6 +67,21 @@ class GymColors extends ThemeExtension<GymColors> {
   final Color warn;
   final Color danger;
 
+  /// 规范 v1.5 §06.1：语义色的**正文级**定版变体（--color-success-ink /
+  /// --color-warning-ink / --color-error-ink）。原始语义色只够图形级
+  /// （success 3.4:1 / warning 2.9:1 / error 4.6:1 于白底），状态**文字**一律用 ink 变体。
+  final Color successInk;
+  final Color warningInk;
+  final Color errorInk;
+
+  /// 规范 v1.5 §06：焦点环色（--color-focus）· 2 px 环 + 2 px 偏移 · 两种场底均 ≥3:1。
+  final Color focus;
+
+  /// 语义别名（v1.5 命名 → 本仓既有命名）：原始语义色**只作图形**。
+  Color get success => sage;
+  Color get warning => warn;
+  Color get error => danger;
+
   static const dark = GymColors(
     pageBg: Color(0xFF0B2321),
     bg: Color(0xFF0B2321),
@@ -86,16 +108,22 @@ class GymColors extends ThemeExtension<GymColors> {
     info: Color(0xFF7BEDE4),
     warn: Color(0xFFF5C451),
     danger: Color(0xFFFF8078),
+    successInk: Color(0xFF4ADE9E),
+    warningInk: Color(0xFFF5C451),
+    errorInk: Color(0xFFFF8078),
+    focus: Color(0xFF2CD4C9),
   );
 
-  // AMOLED：**规范外的扩展** —— 规范要求暗色场用深青墨 #0B2321（不是纯黑），
-  // 此处只把「场」换成真纯黑省电，其余 token 全部沿用规范 dark 值（有守门锁）。
+  // AMOLED（规范 v1.5 §06.2 的 sanctioned exception）：
+  // 相对 dark **只改 4 个 token** —— 场换真纯黑（像素关闭），阶梯整体上抬一步：
+  //   场 #000000 · surface #0B2321 · surface-2 #143A35 · divider #1B4640
+  // 其余 token 全部沿用 dark 值（文字天花板 #E8F4F2，**永不 #FFFFFF**）。
   static const amoled = GymColors(
     pageBg: Color(0xFF000000),
     bg: Color(0xFF000000),
-    bgRaised: Color(0xFF143A35),
-    bgRaised2: Color(0xFF1B4640),
-    border: Color(0xFF21504A),
+    bgRaised: Color(0xFF0B2321),
+    bgRaised2: Color(0xFF143A35),
+    border: Color(0xFF1B4640),
     navBg: Color(0xE6000000),
     text: Color(0xFFE8F4F2),
     textSecondary: Color(0xFF9FBDB8),
@@ -116,6 +144,10 @@ class GymColors extends ThemeExtension<GymColors> {
     info: Color(0xFF7BEDE4),
     warn: Color(0xFFF5C451),
     danger: Color(0xFFFF8078),
+    successInk: Color(0xFF4ADE9E),
+    warningInk: Color(0xFFF5C451),
+    errorInk: Color(0xFFFF8078),
+    focus: Color(0xFF2CD4C9),
   );
 
   static const light = GymColors(
@@ -144,6 +176,10 @@ class GymColors extends ThemeExtension<GymColors> {
     info: Color(0xFF007C76),
     warn: Color(0xFFC98A12),
     danger: Color(0xFFD2413A),
+    successInk: Color(0xFF137A52),
+    warningInk: Color(0xFF8A6000),
+    errorInk: Color(0xFFA82F2A),
+    focus: Color(0xFF007C76),
   );
 
   @override
@@ -173,6 +209,10 @@ class GymColors extends ThemeExtension<GymColors> {
     Color? info,
     Color? warn,
     Color? danger,
+    Color? successInk,
+    Color? warningInk,
+    Color? errorInk,
+    Color? focus,
   }) {
     return GymColors(
       pageBg: pageBg ?? this.pageBg,
@@ -200,6 +240,10 @@ class GymColors extends ThemeExtension<GymColors> {
       info: info ?? this.info,
       warn: warn ?? this.warn,
       danger: danger ?? this.danger,
+      successInk: successInk ?? this.successInk,
+      warningInk: warningInk ?? this.warningInk,
+      errorInk: errorInk ?? this.errorInk,
+      focus: focus ?? this.focus,
     );
   }
 
@@ -233,6 +277,10 @@ class GymColors extends ThemeExtension<GymColors> {
       info: c(info, other.info),
       warn: c(warn, other.warn),
       danger: c(danger, other.danger),
+      successInk: c(successInk, other.successInk),
+      warningInk: c(warningInk, other.warningInk),
+      errorInk: c(errorInk, other.errorInk),
+      focus: c(focus, other.focus),
     );
   }
 }

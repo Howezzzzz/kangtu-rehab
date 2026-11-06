@@ -2303,8 +2303,9 @@ class _ProfileSheetState extends State<_ProfileSheet> {
                   PhosphorIconsFill.sealCheck,
                   size: fit.profile.badge == id ? 26 : 22,
                   color: fit.profile.badge == id
-                      ? badgeColor(id)
-                      : badgeColor(id).withValues(alpha: 0.32),
+                      ? badgeColor(id, gc)
+                      // 规范 v1.5：禁用/未选态 = 该 token 的 38% 不透明度（原来写死 0.32）
+                      : badgeColor(id, gc).withValues(alpha: kDisabledOpacity),
                 ),
               ),
             ),
