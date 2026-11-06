@@ -244,4 +244,15 @@ void main() {
     }
     expect(hits, isEmpty, reason: '同一渐变色标里不得青橙同框：${hits.join("、")}');
   });
+
+  test('明文例外：不再引用上游插画 runner.png（品牌标替换为有意设计，勿还原）', () {
+    // Howe 2026-11-06 19:10 定：5 处品牌露出位用本品牌标 BrandMark，不还原上游插画。
+    // 本守门防「后续上游同步」或「顺手还原」把插画引用带回来。
+    final hits = <String>[];
+    for (final f in Directory('lib').listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'))) {
+      if (f.readAsStringSync().contains('runner.png')) hits.add(f.path);
+    }
+    expect(hits, isEmpty, reason: '不应再引用上游插画 runner.png（见品牌规范/适配口径-样式随上游只改配色.md 例外 1）：${hits.join('、')}');
+    expect(File('assets/img/runner.png').existsSync(), isFalse, reason: '上游插画资产应已移除');
+  });
 }
