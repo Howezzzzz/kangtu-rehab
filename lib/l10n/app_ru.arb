@@ -1539,7 +1539,6 @@
   "healthSetting": "Данные о здоровье",
   "healthSettingHint": "Данные Health Connect в Прогрессе",
   "healthPickTitle": "Данные о здоровье",
-  "healthPickHint": "Выберите, что брать из Health Connect. Android спросит один раз для каждого. Данные только читаются и не покидают телефон.",
   "healthGroupHeart": "Сердце",
   "healthGroupVitals": "Показатели",
   "healthGroupActivity": "Активность",

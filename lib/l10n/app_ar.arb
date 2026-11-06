@@ -1419,7 +1419,6 @@
   "healthSetting": "بيانات الصحة",
   "healthSettingHint": "بيانات Health Connect في التقدم",
   "healthPickTitle": "بيانات الصحة",
-  "healthPickHint": "اختر ما تريد جلبه من Health Connect. يطلب Android الإذن مرة واحدة لكل عنصر. تُقرأ فقط ولا تغادر هاتفك أبدًا.",
   "healthGroupHeart": "القلب",
   "healthGroupVitals": "المؤشرات الحيوية",
   "healthGroupActivity": "النشاط",

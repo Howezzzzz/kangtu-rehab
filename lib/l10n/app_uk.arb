@@ -1419,7 +1419,6 @@
   "healthSetting": "Дані про здоров'я",
   "healthSettingHint": "Дані Health Connect у Прогресі",
   "healthPickTitle": "Дані про здоров'я",
-  "healthPickHint": "Виберіть, що брати з Health Connect. Android запитає один раз для кожного. Дані лише читаються й ніколи не залишають телефон.",
   "healthGroupHeart": "Серце",
   "healthGroupVitals": "Показники",
   "healthGroupActivity": "Активність",

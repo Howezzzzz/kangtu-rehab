@@ -1419,7 +1419,6 @@
   "healthSetting": "Gesundheitsdaten",
   "healthSettingHint": "Health-Connect-Daten in Fortschritt",
   "healthPickTitle": "Gesundheitsdaten",
-  "healthPickHint": "Wähle, was aus Health Connect geholt wird. Android fragt einmal pro Wert. Es wird nur gelesen und verlässt nie dein Handy.",
   "healthGroupHeart": "Herz",
   "healthGroupVitals": "Vitalwerte",
   "healthGroupActivity": "Aktivität",

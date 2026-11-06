@@ -1724,10 +1724,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get freeForeverWhy => '无订阅、无广告、无付费功能。';
 
   @override
-  String get fullyOffline => '完全离线';
+  String get fullyOffline => '离线优先';
 
   @override
-  String get fullyOfflineWhy => '无账号、无服务器。';
+  String get fullyOfflineWhy => '无账号、无服务器。唯一联网的是「检查更新」，只读版本信息、不发送你的任何数据。';
 
   @override
   String get yoursToTake => '数据归你所有';
@@ -1774,7 +1774,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get welcomeKicker => '欢迎使用';
 
   @override
-  String get welcomeBlurb => '所有数据均保存在你的手机上。无账号、无网络连接要求、无任何费用。';
+  String get welcomeBlurb => '所有数据均保存在你的手机上。无账号、无任何费用；只有「检查更新」会用到网络。';
 
   @override
   String get welcomeStart => '立即开始';
@@ -1891,7 +1891,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String daysShort(int n) {
-    return '${n}d';
+    return '$n天';
   }
 
   @override
@@ -3063,10 +3063,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stepsGrant => '点按以在 Health Connect 中允许';
 
   @override
-  String get stepsInfoRead => '只读取步数。不读取其他任何内容，也不会写入 Health Connect。';
+  String get stepsInfoRead => '这一项只读取步数。应用对 Health Connect 的其他读取与写入，见「健康数据」里的说明。';
 
   @override
-  String get stepsInfoLocal => '步数只保存在手机上。康途 从不联网。';
+  String get stepsInfoLocal => '步数只保存在手机上。康途仅在检查更新时联网。';
 
   @override
   String get stepsInfoOff => '可随时在设置或 Health Connect 中关闭。';
@@ -3661,7 +3661,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get suppVitaminD => '维生素 D';
 
   @override
-  String get suppOmega3 => 'Omega-3';
+  String get suppOmega3 => '欧米伽-3';
 
   @override
   String get suppMagnesium => '镁';
@@ -5275,7 +5275,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get healthPickTitle => '健康数据';
 
   @override
-  String get healthPickHint => '选择要从 Health Connect 读取的项目。Android 会为每一项询问一次。数据只读取，永远不会离开手机。';
+  String get healthPickHint =>
+      '选择要从 Health Connect 读取的项目。Android 会为每一项询问一次。数据不会离开手机。开启「健康数据」后，你的训练也会作为运动记录写回 Health Connect。';
 
   @override
   String get healthGroupHeart => '心脏';
@@ -7022,7 +7023,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get updateNetNote => '检查更新会联网；除此之外，本应用全程离线，数据只留在本机。';
+  String get updateNetNote => '检查更新会联网；除此之外，康途全程离线，数据只留在本机。';
 
   @override
   String get updateNow => '下载并安装';
@@ -7327,7 +7328,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gymPassMember => '會員';
 
   @override
-  String get widgetHintActivity => '你的訓練日分布圖';
+  String get widgetHintActivity => '你的訓練日分佈圖';
 
   @override
   String get widgetHintStats => '本週連續天數、訓練量與次數';
@@ -7568,7 +7569,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get muscleSplit => '肌群分布';
+  String get muscleSplit => '肌群分佈';
 
   @override
   String get personalRecords => '個人紀錄';
@@ -8077,7 +8078,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String timelineWindow(String from, String to) {
-    return '$from – $to';
+    return '$from 至 $to';
   }
 
   @override
@@ -8551,10 +8552,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get toolNameRm => '1RM';
+  String get toolNameRm => '極限重量 (1RM)';
 
   @override
-  String get toolNameBmi => 'BMI';
+  String get toolNameBmi => 'BMI 指數';
 
   @override
   String get toolNameCal => '卡路里';
@@ -8760,10 +8761,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get freeForeverWhy => '無訂閱、無廣告、沒有付費鎖定功能。';
 
   @override
-  String get fullyOffline => '100% 離線';
+  String get fullyOffline => '離線優先';
 
   @override
-  String get fullyOfflineWhy => '不需帳號、不連伺服器。你的訓練資料永遠不會離開這支手機。';
+  String get fullyOfflineWhy => '無賬號、無服務器。唯一聯網的是「檢查更新」，只讀版本資訊、不發送你的任何數據。';
 
   @override
   String get yoursToTake => '資料屬於你';
@@ -8810,7 +8811,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get welcomeKicker => '歡迎使用';
 
   @override
-  String get welcomeBlurb => '所有資料都留在手機上。不需帳號、不需網路、不用付費。';
+  String get welcomeBlurb => '所有數據均儲存在你的手機上。無賬號、無任何費用；只有「檢查更新」會用到網絡。';
 
   @override
   String get welcomeStart => '開始';
@@ -10116,10 +10117,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get stepsGrant => '點按以在 Health Connect 中允許';
 
   @override
-  String get stepsInfoRead => '只讀取步數。不讀取其他任何內容，也不會寫入 Health Connect。';
+  String get stepsInfoRead => '這一項只讀取步數。應用對 Health Connect 的其他讀取與寫入，見「健康資料」裡的說明。';
 
   @override
-  String get stepsInfoLocal => '步數只保存在手機上。康途 從不連網。';
+  String get stepsInfoLocal => '步數只儲存在手機上。康途僅在檢查更新時聯網。';
 
   @override
   String get stepsInfoOff => '可隨時在設定或 Health Connect 中關閉。';
@@ -10714,7 +10715,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get suppVitaminD => '維生素 D';
 
   @override
-  String get suppOmega3 => 'Omega-3';
+  String get suppOmega3 => '歐米伽-3';
 
   @override
   String get suppMagnesium => '鎂';
@@ -11396,7 +11397,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get nutritionAboutLocalTitle => '一切都在你的手機上';
 
   @override
-  String get nutritionAboutLocal => 'App 內建 500 多種附照片的食物。你可以新增自己的食物、更換照片、編輯數值。和 康途 的其他部分一樣，一切都留在你的手機上。';
+  String get nutritionAboutLocal => 'App 內建 500 多種附照片的食物。你可以新增自己的食物、更換照片、編輯數值。和 Kangtu 的其他部分一樣，一切都留在你的手機上。';
 
   @override
   String get nutritionAboutBetaTitle => '仍是測試版';
@@ -11898,7 +11899,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get healthPickTitle => '健康資料';
 
   @override
-  String get healthPickHint => '選擇要從 Health Connect 讀取的項目。Android 會為每一項詢問一次。資料只會讀取，永遠不會離開手機。';
+  String get healthPickHint =>
+      '選擇要從 Health Connect 讀取的項目。Android 會為每一項詢問一次。資料不會離開手機。開啟「健康資料」後，你的訓練也會作為運動記錄寫回 Health Connect。';
 
   @override
   String get healthGroupHeart => '心臟';
@@ -11994,7 +11996,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get sessionPhotosAdd => '新增照片';
 
   @override
-  String get sessionPhotosHint => '也會保存在「你的照片」中。';
+  String get sessionPhotosHint => '也會儲存在「你的照片」中。';
 
   @override
   String get ladderTitle => '進階';
@@ -12142,10 +12144,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get allTimeLifted => '總舉重量';
 
   @override
-  String get pctBodyweight => '體重占比';
+  String get pctBodyweight => '體重佔比';
 
   @override
-  String get ofBodyweight => '占你體重';
+  String get ofBodyweight => '佔你體重';
 
   @override
   String get recoveryStateMid => '恢復中';
@@ -12296,7 +12298,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get weightStack => '配重片';
 
   @override
-  String get weightStackHint => '這台器材真實的重量。+ 和 −、進階和減量只會落在這些值上。';
+  String get weightStackHint => '這臺器材真實的重量。+ 和 −、進階和減量只會落在這些值上。';
 
   @override
   String get weightStackOff => '關閉:一般重量級距';
@@ -12819,7 +12821,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String recapDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '分布在$n天', one: '只在1天');
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '分佈在$n天', one: '只在1天');
     return '$_temp0';
   }
 
@@ -13100,7 +13102,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get updateNetNote => '檢查更新會聯網；除此之外，本應用全程離線，數據只留在本機。';
+  String get updateNetNote => '檢查更新會聯網；除此之外，康途全程離線，數據只留在本機。';
 
   @override
   String get updateNow => '下載並安裝';

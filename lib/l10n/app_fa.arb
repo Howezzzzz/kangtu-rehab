@@ -1419,7 +1419,6 @@
   "healthSetting": "داده‌های سلامت",
   "healthSettingHint": "داده‌های Health Connect در پیشرفت",
   "healthPickTitle": "داده‌های سلامت",
-  "healthPickHint": "انتخاب کن چه چیزی از Health Connect بیاید. اندروید برای هر کدام یک بار اجازه می‌خواهد. فقط خوانده می‌شود و هرگز از گوشی خارج نمی‌شود.",
   "healthGroupHeart": "قلب",
   "healthGroupVitals": "علائم حیاتی",
   "healthGroupActivity": "فعالیت",

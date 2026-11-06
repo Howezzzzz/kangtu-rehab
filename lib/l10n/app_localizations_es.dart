@@ -1789,10 +1789,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get freeForeverWhy => 'Sin suscripción, sin anuncios, nada escondido tras un muro de pago.';
 
   @override
-  String get fullyOffline => 'Totalmente sin conexión';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => 'Sin cuenta, sin servidores. Tu entreno no sale de este móvil.';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => 'Tus datos son tuyos';
@@ -1841,7 +1842,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get welcomeKicker => 'TE DAMOS LA BIENVENIDA A';
 
   @override
-  String get welcomeBlurb => 'Todo se queda en tu móvil. Sin cuenta, sin internet, sin pagar nada.';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => 'EMPEZAR';
@@ -3191,10 +3193,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get stepsGrant => 'Toca para permitirlo en Health Connect';
 
   @override
-  String get stepsInfoRead => 'Solo lee tu número de pasos. Nunca lee nada más ni escribe en Health Connect.';
+  String get stepsInfoRead =>
+      'Esta tarjeta solo lee tu recuento de pasos. Las demás lecturas y escrituras en Health Connect se describen en Datos de salud.';
 
   @override
-  String get stepsInfoLocal => 'Tus pasos se quedan en el móvil. Kangtu nunca se conecta a internet.';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => 'Puedes quitarlo cuando quieras, en Ajustes o en Health Connect.';
@@ -5488,7 +5491,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get healthPickHint =>
-      'Elige qué traer de Health Connect. Android pide permiso una vez para cada uno. Solo se lee y nunca sale del móvil.';
+      'Elige qué leer de Health Connect. Android pregunta una vez por elemento. Tus datos nunca salen de este teléfono. Mientras «Datos de salud» esté activo, tus entrenamientos también se escriben en Health Connect como sesiones de ejercicio.';
 
   @override
   String get healthGroupHeart => 'Corazón';

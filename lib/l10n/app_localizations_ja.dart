@@ -5329,7 +5329,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get healthPickHint =>
-      'Health Connect から取り込む項目を選んでください。Android が項目ごとに一度だけ許可を求めます。読み取るだけで、端末の外には出ません。';
+      'Choose what to read from Health Connect. Android asks once per item. Your data never leaves this phone. While Health data is on, your workouts are also written to Health Connect as exercise sessions.';
 
   @override
   String get healthGroupHeart => '心臓';

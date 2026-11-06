@@ -1419,7 +1419,6 @@
   "healthSetting": "Sağlık verileri",
   "healthSettingHint": "Health Connect verileri İlerleme'de",
   "healthPickTitle": "Sağlık verileri",
-  "healthPickHint": "Health Connect'ten neyin alınacağını seç. Android her biri için bir kez sorar. Yalnızca okunur ve telefonundan asla çıkmaz.",
   "healthGroupHeart": "Kalp",
   "healthGroupVitals": "Yaşamsal değerler",
   "healthGroupActivity": "Aktivite",

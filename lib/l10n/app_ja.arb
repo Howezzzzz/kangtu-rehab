@@ -1419,7 +1419,6 @@
   "healthSetting": "健康データ",
   "healthSettingHint": "Health Connect のデータを進捗に",
   "healthPickTitle": "健康データ",
-  "healthPickHint": "Health Connect から取り込む項目を選んでください。Android が項目ごとに一度だけ許可を求めます。読み取るだけで、端末の外には出ません。",
   "healthGroupHeart": "心臓",
   "healthGroupVitals": "バイタル",
   "healthGroupActivity": "アクティビティ",

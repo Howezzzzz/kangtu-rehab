@@ -3301,13 +3301,13 @@ abstract class AppLocalizations {
   /// No description provided for @fullyOffline.
   ///
   /// In en, this message translates to:
-  /// **'Fully offline'**
+  /// **'Offline first'**
   String get fullyOffline;
 
   /// No description provided for @fullyOfflineWhy.
   ///
   /// In en, this message translates to:
-  /// **'No account, no servers. Your training never leaves this phone.'**
+  /// **'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.'**
   String get fullyOfflineWhy;
 
   /// No description provided for @yoursToTake.
@@ -3391,7 +3391,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeBlurb.
   ///
   /// In en, this message translates to:
-  /// **'Everything stays on your phone. No account, no internet, nothing to pay.'**
+  /// **'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.'**
   String get welcomeBlurb;
 
   /// No description provided for @welcomeStart.
@@ -5779,13 +5779,13 @@ abstract class AppLocalizations {
   /// No description provided for @stepsInfoRead.
   ///
   /// In en, this message translates to:
-  /// **'It only reads your step count. It never reads anything else or writes to Health Connect.'**
+  /// **'This card only reads your step count. Other Health Connect reads and writes are described under Health data.'**
   String get stepsInfoRead;
 
   /// No description provided for @stepsInfoLocal.
   ///
   /// In en, this message translates to:
-  /// **'Your steps stay on your phone. Kangtu never connects to the internet.'**
+  /// **'Your steps stay on your phone. Kangtu only goes online to check for updates.'**
   String get stepsInfoLocal;
 
   /// No description provided for @stepsInfoOff.
@@ -9709,7 +9709,7 @@ abstract class AppLocalizations {
   /// No description provided for @healthPickHint.
   ///
   /// In en, this message translates to:
-  /// **'Pick what to bring from Health Connect. Android asks once for each one. It\'s only read, and it never leaves your phone.'**
+  /// **'Choose what to read from Health Connect. Android asks once per item. Your data never leaves this phone. While Health data is on, your workouts are also written to Health Connect as exercise sessions.'**
   String get healthPickHint;
 
   /// No description provided for @healthGroupHeart.

@@ -1419,7 +1419,6 @@
   "healthSetting": "건강 데이터",
   "healthSettingHint": "Health Connect 데이터를 진행 상황에",
   "healthPickTitle": "건강 데이터",
-  "healthPickHint": "Health Connect에서 가져올 항목을 골라요. Android가 항목마다 한 번씩 물어봐요. 읽기만 하고 휴대폰 밖으로 나가지 않아요.",
   "healthGroupHeart": "심장",
   "healthGroupVitals": "활력 징후",
   "healthGroupActivity": "활동",

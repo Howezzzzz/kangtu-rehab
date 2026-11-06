@@ -1789,10 +1789,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get freeForeverWhy => 'No subscription, no ads, nothing locked behind a paywall.';
 
   @override
-  String get fullyOffline => 'Fully offline';
+  String get fullyOffline => 'Offline first';
 
   @override
-  String get fullyOfflineWhy => 'No account, no servers. Your training never leaves this phone.';
+  String get fullyOfflineWhy =>
+      'No account, no servers. The only thing that uses the network is \"Check for updates\" — it reads version info only and never sends your data.';
 
   @override
   String get yoursToTake => 'Your data is yours';
@@ -1841,7 +1842,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeKicker => 'WELCOME TO';
 
   @override
-  String get welcomeBlurb => 'Everything stays on your phone. No account, no internet, nothing to pay.';
+  String get welcomeBlurb =>
+      'Everything stays on your phone. No account, nothing to pay; only \"Check for updates\" uses the network.';
 
   @override
   String get welcomeStart => 'GET STARTED';
@@ -3186,10 +3188,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stepsInfoRead =>
-      'It only reads your step count. It never reads anything else or writes to Health Connect.';
+      'This card only reads your step count. Other Health Connect reads and writes are described under Health data.';
 
   @override
-  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu never connects to the internet.';
+  String get stepsInfoLocal => 'Your steps stay on your phone. Kangtu only goes online to check for updates.';
 
   @override
   String get stepsInfoOff => 'Turn it off anytime in Settings or in Health Connect.';
@@ -5447,7 +5449,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get healthPickHint =>
-      'Pick what to bring from Health Connect. Android asks once for each one. It\'s only read, and it never leaves your phone.';
+      'Choose what to read from Health Connect. Android asks once per item. Your data never leaves this phone. While Health data is on, your workouts are also written to Health Connect as exercise sessions.';
 
   @override
   String get healthGroupHeart => 'Heart';

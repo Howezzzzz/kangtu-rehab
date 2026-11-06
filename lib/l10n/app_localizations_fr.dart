@@ -5498,7 +5498,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get healthPickHint =>
-      'Choisis ce que tu importes de Health Connect. Android demande une fois pour chacun. C\'est seulement lu et ça ne quitte jamais ton téléphone.';
+      'Choose what to read from Health Connect. Android asks once per item. Your data never leaves this phone. While Health data is on, your workouts are also written to Health Connect as exercise sessions.';
 
   @override
   String get healthGroupHeart => 'Cœur';

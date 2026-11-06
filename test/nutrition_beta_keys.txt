@@ -293,3 +293,5 @@ updateVerifyFailed
 updateAvailableShort
 appName
 updateVerifyUnavailable
+healthPickHint
+stepsInfoRead

@@ -1419,7 +1419,6 @@
   "healthSetting": "Gezondheidsgegevens",
   "healthSettingHint": "Health Connect-gegevens in Voortgang",
   "healthPickTitle": "Gezondheidsgegevens",
-  "healthPickHint": "Kies wat je uit Health Connect haalt. Android vraagt het één keer per waarde. Het wordt alleen gelezen en verlaat nooit je telefoon.",
   "healthGroupHeart": "Hart",
   "healthGroupVitals": "Vitale waarden",
   "healthGroupActivity": "Activiteit",
