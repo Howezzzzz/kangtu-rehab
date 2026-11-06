@@ -7426,4 +7426,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String sidesReps(int l, int r) {
     return 'L$l R$r';
   }
+
+  @override
+  String get amoledHint =>
+      'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.';
 }

@@ -12915,6 +12915,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'L{l} R{r}'**
   String sidesReps(int l, int r);
+
+  /// No description provided for @amoledHint.
+  ///
+  /// In en, this message translates to:
+  /// **'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.'**
+  String get amoledHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

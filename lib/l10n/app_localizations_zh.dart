@@ -7140,6 +7140,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String sidesReps(int l, int r) {
     return '左$l 右$r';
   }
+
+  @override
+  String get amoledHint => '真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -13308,4 +13311,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String sidesReps(int l, int r) {
     return '左$l 右$r';
   }
+
+  @override
+  String get amoledHint => '真黑在 OLED 螢幕上較省電；不建議長時間停留以減少烙印風險。';
 }

@@ -101,7 +101,9 @@ class SettingsScreen extends StatelessWidget {
                     ],
                     () => fit.themePref,
                     fit.setThemePref,
-                    hint: t.themeAutoHint,
+                    // 规范 v1.5 §06.2：AMOLED 真黑是 sanctioned exception（省电/常亮场景）。
+                    // 名字保留「AMOLED」，但选中时给出定位说明（已按 C 方案处理并经 Howe 签字）。
+                    hint: fit.themePref == 'amoled' ? t.amoledHint : t.themeAutoHint,
                   ),
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,

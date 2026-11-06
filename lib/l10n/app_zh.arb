@@ -1867,5 +1867,7 @@
   "repsRightCol": "右次数",
   "repsLeftTitle": "左侧次数",
   "repsRightTitle": "右侧次数",
-  "sidesReps": "左{l} 右{r}"
+  "sidesReps": "左{l} 右{r}",
+
+  "amoledHint": "真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。"
 }

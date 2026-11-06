@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -192,5 +193,19 @@ void main() {
     expect(about.contains('InlitX/GymMane'), isFalse, reason: '来源链接不得再指向上游仓库');
     expect(about.contains('ko-fi.com/inlitx'), isFalse, reason: '「请我喝咖啡」不得指向上游作者的 Ko-fi');
     expect(about.contains("'InlitX'"), isTrue, reason: 'GPL 署名（作者 InlitX）必须保留');
+  });
+
+  test('AMOLED（规范 v1.5 sanctioned exception）：名字保留 + 选中时必须给出定位说明', () {
+    // 1) 名字仍是 AMOLED（Howe 2026-11-06 定：保留原名，只加定位说明）
+    for (final code in ['en', 'zh', 'zh_Hant']) {
+      final arb = jsonDecode(File('lib/l10n/app_$code.arb').readAsStringSync()) as Map<String, dynamic>;
+      expect('${arb['amoledTheme']}', contains('AMOLED'), reason: '$code 的主题名必须仍含 AMOLED');
+      expect(arb['amoledHint'], isA<String>(), reason: '$code 必须自带 AMOLED 定位说明（不靠回落）');
+    }
+    // 2) 设置页必须真的把它接上（选中 amoled 时用 amoledHint）
+    final settings = File('lib/screens/settings_screen.dart').readAsStringSync();
+    expect(settings.contains('t.amoledHint'), isTrue, reason: '设置页要把 AMOLED 说明接上');
+    expect(RegExp(r"themePref\s*==\s*'amoled'").hasMatch(settings), isTrue,
+        reason: '只有选中 AMOLED 时才换说明');
   });
 }

@@ -321,3 +321,4 @@ stepsInfoLocal
 fullyOffline
 fullyOfflineWhy
 welcomeBlurb
+amoledHint
