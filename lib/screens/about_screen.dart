@@ -12,6 +12,8 @@ import '../widgets/entrance.dart';
 import '../widgets/ui_kit.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../services/update_service.dart';
+
 import '../widgets/update_flow.dart';
 
 /// 兜底用（PackageInfo 取不到时，例如极早期启动）；正常显示的是系统里的真实版本+构建号。
@@ -140,8 +142,12 @@ class AboutScreen extends StatelessWidget {
                         child: FutureBuilder<PackageInfo>(
                           future: PackageInfo.fromPlatform(),
                           builder: (_, snap) {
+                            // 构建号要**归一化**：ABI 拆包给 versionCode 加了 ×10+ABI 码
+                            // （见 build.gradle.kts 的 versionCodeOverride），
+                            // 直接显示会变成 2.0.0 (372) —— 应该显示 2.0.0 (37)。
                             final v = snap.hasData
-                                ? '${snap.data!.version} (${snap.data!.buildNumber})'
+                                ? '${snap.data!.version} '
+                                    '(${UpdateService.buildNumberFromVersionCode(int.tryParse(snap.data!.buildNumber) ?? 0)})'
                                 : kAppVersion;
                             return Text(t.version(v),
                                 style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textSecondary));

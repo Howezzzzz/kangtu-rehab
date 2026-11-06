@@ -218,12 +218,29 @@ jobs:
           set -e
           TAG="${{ steps.v.outputs.tag }}"
           TITLE="康途 ${{ steps.v.outputs.name }} (${{ steps.v.outputs.build }})"
+          # 上传带重试：GitHub 的资产接口偶发 5xx，而 --clobber 是「先删后传」，
+          # 中途失败会把资产删掉不补回来（2026-11-06 实测把 armeabi-v7a 弄丢过一次）。
+          upload() {
+            for i in 1 2 3 4 5; do
+              if gh release upload "$TAG" apks/*.apk --clobber 2>&1 | tee /tmp/up.log; then
+                return 0
+              fi
+              echo "::warning::release upload 第 $i 次失败，重试…"
+              sleep $((i * 5))
+            done
+            echo "::error::release upload 连续 5 次失败"; return 1
+          }
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" apks/*.apk --clobber
+            upload
             gh release edit "$TAG" --title "$TITLE" --notes-file notes.md --prerelease
           else
             gh release create "$TAG" apks/*.apk --title "$TITLE" --notes-file notes.md --prerelease
           fi
+          # 事后校验：三个 ABI 资产必须都在（防「删掉没传回」静默发生）
+          for a in arm64-v8a armeabi-v7a x86_64; do
+            gh release view "$TAG" --json assets -q '.assets[].name' | grep -qx "kangtu-$a.apk" \
+              || { echo "::error::missing asset kangtu-$a.apk"; exit 1; }
+          done
 
       - name: Write back assets/app_version.json
         run: |
