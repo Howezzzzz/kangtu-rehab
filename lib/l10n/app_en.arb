@@ -2551,5 +2551,7 @@
   "sidesReps": "L{l} R{r}",
   "@sidesReps": {"placeholders": {"l": {"type": "int"}, "r": {"type": "int"}}},
 
-  "amoledHint": "True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk."
+  "amoledHint": "True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.",
+
+  "progSchemeTitle": "Weight progression"
 }

@@ -7143,6 +7143,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get amoledHint => '真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。';
+
+  @override
+  String get progSchemeTitle => '重量进阶';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -13314,4 +13317,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get amoledHint => '真黑在 OLED 螢幕上較省電；不建議長時間停留以減少烙印風險。';
+
+  @override
+  String get progSchemeTitle => '重量進階';
 }

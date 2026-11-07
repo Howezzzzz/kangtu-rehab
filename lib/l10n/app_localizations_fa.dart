@@ -7357,4 +7357,7 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get amoledHint =>
       'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.';
+
+  @override
+  String get progSchemeTitle => 'Weight progression';
 }

@@ -1869,5 +1869,7 @@
   "repsRightTitle": "右側次數",
   "sidesReps": "左{l} 右{r}",
 
-  "amoledHint": "真黑在 OLED 螢幕上較省電；不建議長時間停留以減少烙印風險。"
+  "amoledHint": "真黑在 OLED 螢幕上較省電；不建議長時間停留以減少烙印風險。",
+
+  "progSchemeTitle": "重量進階"
 }

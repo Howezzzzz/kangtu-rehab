@@ -1869,5 +1869,7 @@
   "repsRightTitle": "右侧次数",
   "sidesReps": "左{l} 右{r}",
 
-  "amoledHint": "真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。"
+  "amoledHint": "真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。",
+
+  "progSchemeTitle": "重量进阶"
 }

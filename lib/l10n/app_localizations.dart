@@ -12921,6 +12921,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.'**
   String get amoledHint;
+
+  /// No description provided for @progSchemeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight progression'**
+  String get progSchemeTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
