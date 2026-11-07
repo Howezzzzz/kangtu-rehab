@@ -1070,7 +1070,7 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           Text(items[i].$2,
                               style: AppTheme.f(14.5,
-                                  weight: FontWeight.w500, color: danger != null && i >= danger ? gc.danger : gc.text)),
+                                  weight: FontWeight.w500, color: danger != null && i >= danger ? gc.errorInk : gc.text)),
                           if (hints != null && i < hints.length) ...[
                             const SizedBox(height: 2),
                             Text(hints[i],

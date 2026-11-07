@@ -186,7 +186,7 @@ class _MeasureRow extends StatelessWidget {
                                 '${change > 0 ? '+' : ''}${fmt(change)}',
                                 style: AppTheme.s(12.5,
                                     weight: FontWeight.w600,
-                                    color: change > 0 ? gc.sage : gc.accent),
+                                    color: change > 0 ? gc.successInk : gc.accent),
                               ),
                             ),
                           ],
@@ -419,9 +419,9 @@ class _MeasureSheetState extends State<_MeasureSheet> {
                       child: SizedBox(
                         height: 44,
                         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Icon(PhosphorIconsRegular.trash, size: 16, color: gc.danger),
+                          Icon(PhosphorIconsRegular.trash, size: 16, color: gc.errorInk),
                           const SizedBox(width: 8),
-                          Text(t.measureDelete, style: AppTheme.f(14, weight: FontWeight.w600, color: gc.danger)),
+                          Text(t.measureDelete, style: AppTheme.f(14, weight: FontWeight.w600, color: gc.errorInk)),
                         ]),
                       ),
                     ),

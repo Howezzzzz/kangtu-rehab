@@ -154,10 +154,10 @@ class _MonthCard extends StatelessWidget {
             const SizedBox(height: 3),
             Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(delta > 0 ? PhosphorIconsBold.arrowUp : PhosphorIconsBold.arrowDown,
-                  size: 10, color: delta > 0 ? gc.sage : gc.textTertiary),
+                  size: 10, color: delta > 0 ? gc.successInk : gc.textTertiary),
               const SizedBox(width: 2),
               Text('${delta.abs()}',
-                  style: AppTheme.f(10.5, weight: FontWeight.w700, color: delta > 0 ? gc.sage : gc.textTertiary)),
+                  style: AppTheme.f(10.5, weight: FontWeight.w700, color: delta > 0 ? gc.successInk : gc.textTertiary)),
             ]),
           ],
         ]),

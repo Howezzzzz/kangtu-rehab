@@ -475,7 +475,7 @@ class HomeScreen extends StatelessWidget {
                   : off != null
                       ? Icon(dayOffIcon(off), size: 15, color: gc.textSecondary)
                       : fit.restOn(date)
-                          ? Icon(PhosphorIconsFill.bed, size: 14, color: gc.sage)
+                          ? Icon(PhosphorIconsFill.bed, size: 14, color: gc.successInk)
                           : null,
             ),
           ],

@@ -649,7 +649,7 @@ class RoutinesScreen extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTheme.f(11.5,
                             weight: isNext ? FontWeight.w700 : FontWeight.w500,
-                            color: isNext ? gc.sage : gc.textTertiary),
+                            color: isNext ? gc.successInk : gc.textTertiary),
                       ),
                     ],
                   ),

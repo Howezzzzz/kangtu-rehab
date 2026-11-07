@@ -90,7 +90,7 @@ class _BatchCard extends StatelessWidget {
               value: b.leftShare,
               minHeight: 6,
               backgroundColor: gc.bgRaised2,
-              color: gc.warn,
+              color: gc.warningInk,
             ),
           ),
           const SizedBox(height: 7),
@@ -202,11 +202,11 @@ class _BatchEditorState extends State<_BatchEditor> {
         ),
       GhostButton(label: t.prepAddIngredient, icon: PhosphorIconsBold.plus, onTap: _add),
       const SizedBox(height: 16),
-      _NumberField(label: t.prepCookedWeight, controller: _cooked, color: gc.warn, suffix: _amtUnit(false)),
+      _NumberField(label: t.prepCookedWeight, controller: _cooked, color: gc.warningInk, suffix: _amtUnit(false)),
       const SizedBox(height: 6),
       Text(
         _missingWeight ? t.prepNeedWeight : t.prepCookedHint(fmt(_raw.roundToDouble())),
-        style: AppTheme.s(11.5, color: _missingWeight ? gc.danger : gc.textTertiary, height: 1.4),
+        style: AppTheme.s(11.5, color: _missingWeight ? gc.errorInk : gc.textTertiary, height: 1.4),
       ),
       if (_items.isNotEmpty) ...[
         const SizedBox(height: 14),
@@ -219,7 +219,7 @@ class _BatchEditorState extends State<_BatchEditor> {
         Center(
           child: TextButton(
             onPressed: _delete,
-            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
           ),
         ),
       ],

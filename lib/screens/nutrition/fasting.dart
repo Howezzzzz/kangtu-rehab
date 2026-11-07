@@ -126,7 +126,7 @@ class _FastingCardState extends State<_FastingCard> {
               Text(line,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTheme.s(12, color: reached ? gc.sage : gc.textSecondary, height: 1.3)),
+                  style: AppTheme.s(12, color: reached ? gc.successInk : gc.textSecondary, height: 1.3)),
             ]),
           ),
         ]),

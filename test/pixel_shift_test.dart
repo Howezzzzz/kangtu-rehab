@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/app/pixel_shift.dart';
+import 'package:gymmane/services/local_store.dart';
+import 'package:gymmane/state/fit_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// 规范 v1.5 §06.2「shift static UI chrome periodically against burn-in」的实现自测。
 ///
@@ -11,6 +15,8 @@ import 'package:gymmane/app/pixel_shift.dart';
 /// - 必须**真的在动**（8 个周期内不止一个位置，且 8 周期后回到起点）；
 /// - 必须是**整数像素**（亚像素位移对烧屏无意义且渲染发虚）。
 void main() {
+  group('widget 层（PixelShift 包装器）', _widgetTests);
+
   test('幅度有界：|dx|、|dy| 不超过 amplitude，且不超过硬上限', () {
     for (var amp = 0; amp <= 6; amp++) {
       for (var k = 0; k < 200; k++) {
@@ -62,5 +68,46 @@ void main() {
     expect(kPixelShiftPeriodMinutes, greaterThanOrEqualTo(1));
     expect(pixelShiftOffset(DateTime(2026, 11, 6)),
         pixelShiftOffset(DateTime(2026, 11, 6), amplitude: kPixelShiftAmplitude, periodMinutes: kPixelShiftPeriodMinutes));
+  });
+}
+
+// ---- widget 层：覆盖 PixelShift 的 build/lifecycle/定时器（逻辑变更行覆盖率门禁）----
+void _widgetTests() {
+  testWidgets('非 AMOLED 不位移；切到 AMOLED 立即生效且幅度 ≤3；dispose 不留定时器', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await Store.instance.init();
+    fit.resetAllData();
+    fit.onboarded = true;
+    fit.setThemePref('light');
+
+    Widget wrap() => const MaterialApp(home: Scaffold(body: PixelShift(child: SizedBox(width: 20, height: 20))));
+    Finder inner() => find.descendant(of: find.byType(PixelShift), matching: find.byType(Transform));
+
+    await tester.pumpWidget(wrap());
+    await tester.pump();
+    expect(inner(), findsNothing, reason: '非 AMOLED 主题不做位移（规范只允许 AMOLED 例外）');
+
+    fit.setThemePref('amoled');           // 订阅 fit → 应立即生效
+    await tester.pump();
+    final tf = tester.widget<Transform>(inner());
+    final o = Offset(tf.transform.getTranslation().x, tf.transform.getTranslation().y);
+    expect(o.dx.abs(), lessThanOrEqualTo(3), reason: '位移幅度必须 ≤3 px');
+    expect(o.dy.abs(), lessThanOrEqualTo(3));
+
+    await tester.pump(const Duration(minutes: 1));   // 触发定时器回调（覆盖 _refresh 的定时路径）
+    fit.setThemePref('light');
+    await tester.pump();
+    expect(inner(), findsNothing, reason: '切回浅色后应复位');
+
+    // 回前台立即复位（覆盖 didChangeAppLifecycleState 分支）
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    await tester.pump();
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pump();
+    expect(find.descendant(of: find.byType(PixelShift), matching: find.byType(Transform)), findsNothing,
+        reason: '切回浅色后即使回前台也不应再位移');
+
+    await tester.pump(const Duration(milliseconds: 600));  // 让应用自身的防抖持久化定时器（400ms）跑完
+    await tester.pumpWidget(const SizedBox());        // dispose：PixelShift 的定时器必须被取消（否则报 pending timer）
   });
 }

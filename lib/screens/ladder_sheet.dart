@@ -166,7 +166,7 @@ class _LadderSheetState extends State<_LadderSheet> {
               if (here) ...[
                 const SizedBox(height: 2),
                 Text(t.ladderInRoutine.toUpperCase(),
-                    style: AppTheme.f(9.5, weight: FontWeight.w700, color: gc.sage, letterSpacing: 1)),
+                    style: AppTheme.f(9.5, weight: FontWeight.w700, color: gc.successInk, letterSpacing: 1)),
               ],
             ]),
           ),

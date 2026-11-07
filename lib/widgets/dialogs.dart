@@ -56,7 +56,7 @@ Future<bool> askConfirm(
       actions: [
         dialogAction(cancelLabel ?? t.cancel, gc.textSecondary, () => Navigator.of(dctx).pop(false),
             strong: false),
-        dialogAction(confirmLabel, danger ? gc.danger : gc.accent, () => Navigator.of(dctx).pop(true)),
+        dialogAction(confirmLabel, danger ? gc.errorInk : gc.accent, () => Navigator.of(dctx).pop(true)),
       ],
     ),
   );

@@ -228,7 +228,7 @@ class _ExerciseHistorySheetState extends State<ExerciseHistorySheet> {
                           size: 12, color: up ? gc.sage : gc.accent),
                       const SizedBox(width: 4),
                       Text('${delta >= 0 ? '+' : ''}${fmt((shownDelta * 10).round() / 10)}${_relative ? ' %' : ''}',
-                          style: AppTheme.s(11.5, weight: FontWeight.w700, color: up ? gc.sage : gc.accent)),
+                          style: AppTheme.s(11.5, weight: FontWeight.w700, color: up ? gc.successInk : gc.accent)),
                     ]),
                   ),
                 ),

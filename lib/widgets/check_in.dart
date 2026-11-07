@@ -33,7 +33,7 @@ class CheckInCard extends StatelessWidget {
         icon: PhosphorIconsRegular.moon,
         label: t.checkInSleep,
         value: session.sleep,
-        color: gc.sage,
+        color: gc.successInk,
         onPick: (v) => fit.rateSession(session, sleep: true, value: v),
       ),
       const SizedBox(height: 12),

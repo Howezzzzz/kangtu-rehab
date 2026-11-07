@@ -181,7 +181,7 @@ class _PlanImportSheetState extends State<_PlanImportSheet> {
               if (preview.missed.isNotEmpty) ...[
                 const SizedBox(height: 4),
                 Text(t.aiMissing(preview.missed.length),
-                    style: AppTheme.f(12, weight: FontWeight.w600, color: gc.warn)),
+                    style: AppTheme.f(12, weight: FontWeight.w600, color: gc.warningInk)),
                 const SizedBox(height: 4),
                 Text(preview.missed.join(' · '),
                     style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textTertiary, height: 1.4)),
@@ -215,7 +215,7 @@ class _PlanImportSheetState extends State<_PlanImportSheet> {
               if (allOwned) ...[
                 const SizedBox(height: 12),
                 Row(children: [
-                  Icon(PhosphorIconsRegular.checkCircle, size: 16, color: gc.sage),
+                  Icon(PhosphorIconsRegular.checkCircle, size: 16, color: gc.successInk),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(t.importAlreadyHave,
@@ -235,7 +235,7 @@ class _PlanImportSheetState extends State<_PlanImportSheet> {
             ] else if (_text.text.trim().isNotEmpty) ...[
               const SizedBox(height: 16),
               Row(children: [
-                Icon(PhosphorIconsRegular.warningCircle, size: 16, color: gc.warn),
+                Icon(PhosphorIconsRegular.warningCircle, size: 16, color: gc.warningInk),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(t.nothingToImport,
@@ -314,7 +314,7 @@ class _PlanImportSheetState extends State<_PlanImportSheet> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
             decoration: BoxDecoration(color: gc.sageSoft, borderRadius: BorderRadius.circular(100)),
-            child: Text(t.importOwned, style: AppTheme.f(11, weight: FontWeight.w700, color: gc.sage)),
+            child: Text(t.importOwned, style: AppTheme.f(11, weight: FontWeight.w700, color: gc.successInk)),
           ),
         ],
       ]),

@@ -70,6 +70,8 @@ void main() {
         '--color-focus': rgb(c.focus),
       };
 
+  group('v1.5 字段完整性（copyWith/lerp/派生态）与 §06.1 消费点', _copyLerpTests);
+
   group('§06 token 表对齐（读规范交付的 json）+ §06.1/§06.2/§06.3 规则', () {
     setUp(() async {
       SharedPreferences.setMockInitialValues({});
@@ -189,5 +191,69 @@ void main() {
       final shell = File('lib/app/app_shell.dart').readAsStringSync();
       expect(shell.contains('PixelShift('), isTrue, reason: '底栏要套上 PixelShift');
     });
+  });
+}
+
+// 覆盖 GymColors 新增字段的 copyWith / lerp（逻辑变更行覆盖率门禁）
+void _copyLerpTests() {
+  test('copyWith / lerp 必须处理 v1.5 新增的四个字段（否则主题切换会丢字段）', () {
+    final a = GymColors.light;
+    final b = GymColors.light.copyWith(
+        successInk: const Color(0xFF010203), warningInk: const Color(0xFF040506),
+        errorInk: const Color(0xFF070809), focus: const Color(0xFF0A0B0C));
+    expect(b.successInk, const Color(0xFF010203));
+    expect(b.warningInk, const Color(0xFF040506));
+    expect(b.errorInk, const Color(0xFF070809));
+    expect(b.focus, const Color(0xFF0A0B0C));
+    expect(a.successInk, isNot(b.successInk), reason: 'copyWith 前原对象不应被改');
+
+    final mid = a.lerp(GymColors.dark, 0.5);
+    expect(mid.successInk, Color.lerp(a.successInk, GymColors.dark.successInk, 0.5));
+    expect(mid.focus, Color.lerp(a.focus, GymColors.dark.focus, 0.5));
+    expect(GymColors.light.lerp(null, 0.5).focus, GymColors.light.focus, reason: 'other 为 null 时返回自身');
+  });
+
+  test('派生色 backdrop 有界：是场色叠黑（浅 10% / 深 30%），且不等于场色本身', () {
+    for (final c in [GymColors.light, GymColors.dark]) {
+      final b = c.backdrop;
+      expect(b, isNot(c.pageBg), reason: '背板必须比场更深一档');
+      expect(b.r, lessThanOrEqualTo(c.pageBg.r));
+      expect(b.g, lessThanOrEqualTo(c.pageBg.g));
+      expect(b.b, lessThanOrEqualTo(c.pageBg.b));
+    }
+    // AMOLED 例外：场已经是纯黑，再叠黑仍是纯黑 → backdrop == 场色（这是正确的，不是缺陷）
+    expect(GymColors.amoled.backdrop, GymColors.amoled.pageBg,
+        reason: 'AMOLED 的场已是 #000000，背板无可再深 → 与场同色');
+  });
+
+  test('§06.1 消费点：文字样式不得用原始语义色（括号配平精确判定）', () {
+    // 规范：Semantic hues are graphic-scale only（success 3.4 / warning 2.9 / error 4.6 于白底）；
+    // 状态**文字**一律用 --color-*-ink（5.3~6.8:1）。本守门锁定「消费点」，防止只改 token 不改用点。
+    // 用括号配平扫出 AppTheme.f(...)/AppTheme.s(...) 的完整调用段，避免把后面的图标用色误算进来。
+    final raw = RegExp(r'gc\.(warn|sage|danger)(?!\w)');
+    final call = RegExp(r'AppTheme\.[fs]\(');
+    final hits = <String>[];
+    for (final f in Directory('lib').listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'))) {
+      final t = f.readAsStringSync();
+      for (final m in call.allMatches(t)) {
+        var depth = 1, i = m.end;
+        while (i < t.length && depth > 0) {
+          final ch = t[i];
+          if (ch == '(') {
+            depth++;
+          } else if (ch == ')') {
+            depth--;
+          }
+          i++;
+        }
+        final seg = t.substring(m.start, i);
+        final mm = raw.firstMatch(seg);
+        if (mm != null) {
+          final line = '\n'.allMatches(t.substring(0, m.start)).length + 1;
+          hits.add('${f.path}:$line → ${mm.group(0)}');
+        }
+      }
+    }
+    expect(hits, isEmpty, reason: '文字样式须用 ink 变体（warningInk/successInk/errorInk）：${hits.join("、")}');
   });
 }

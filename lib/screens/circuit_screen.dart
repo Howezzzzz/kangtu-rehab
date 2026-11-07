@@ -383,7 +383,7 @@ class _CircuitEditorState extends State<_CircuitEditor> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                         child: Text(_c.roundRest == 0 ? t.noRestTimer : _secs(_c.roundRest),
-                            style: AppTheme.f(14, weight: FontWeight.w700, color: gc.sage)),
+                            style: AppTheme.f(14, weight: FontWeight.w700, color: gc.successInk)),
                       ),
                     ),
                   ),
@@ -430,7 +430,7 @@ class _CircuitEditorState extends State<_CircuitEditor> {
                   child: SizedBox(
                     height: 46,
                     child: Center(
-                      child: Text(t.delete, style: AppTheme.f(14, weight: FontWeight.w600, color: gc.danger)),
+                      child: Text(t.delete, style: AppTheme.f(14, weight: FontWeight.w600, color: gc.errorInk)),
                     ),
                   ),
                 ),

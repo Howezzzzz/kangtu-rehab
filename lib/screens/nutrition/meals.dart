@@ -434,7 +434,7 @@ class _MealTabsState extends State<_MealTabs> {
               label: t.quickAdd,
               size: 50,
               onTap: () => showQuickAddSheet(context, meal),
-              child: Icon(PhosphorIconsBold.lightning, size: 19, color: gc.warn),
+              child: Icon(PhosphorIconsBold.lightning, size: 19, color: gc.warningInk),
             ),
           ]),
         ]),
@@ -577,7 +577,7 @@ Future<void> showMealMenu(BuildContext context, Meal meal, List<FoodEntry> shown
                   onTap: () => fit.restoreEntries(gone),
                 );
               },
-              child: Text(t.mealClear, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+              child: Text(t.mealClear, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
             ),
           ),
         ],
@@ -766,7 +766,7 @@ class _RecipeSheetState extends State<_RecipeSheet> {
           ),
           TextButton(
             onPressed: _delete,
-            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
           ),
         ]),
     ]);

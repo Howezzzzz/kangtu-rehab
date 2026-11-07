@@ -742,7 +742,7 @@ class _TodayPlanCard extends StatelessWidget {
               ),
             )
           else
-            Icon(PhosphorIconsFill.checkCircle, size: 22, color: gc.sage),
+            Icon(PhosphorIconsFill.checkCircle, size: 22, color: gc.successInk),
         ]),
       ),
     );

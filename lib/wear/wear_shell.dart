@@ -819,11 +819,11 @@ class WearSession extends StatelessWidget {
                   decoration: BoxDecoration(color: gc.textTertiary, shape: BoxShape.circle),
                 ),
                 Icon(fit.sessionPaused ? PhosphorIconsFill.play : PhosphorIconsFill.pause,
-                    size: 10, color: fit.sessionPaused ? gc.warn : gc.textTertiary),
+                    size: 10, color: fit.sessionPaused ? gc.warningInk : gc.textTertiary),
                 const SizedBox(width: 4),
                 Text(fit.elapsedLabel,
                     style: AppTheme.f(12,
-                        weight: FontWeight.w700, color: fit.sessionPaused ? gc.warn : gc.textSecondary)),
+                        weight: FontWeight.w700, color: fit.sessionPaused ? gc.warningInk : gc.textSecondary)),
               ]),
             ),
           ),
@@ -1073,9 +1073,9 @@ class WearSession extends StatelessWidget {
                 width: 22,
                 height: 22,
                 decoration: BoxDecoration(
-                  color: st.done ? gc.sage : Colors.transparent,
+                  color: st.done ? gc.successInk : Colors.transparent,
                   shape: BoxShape.circle,
-                  border: Border.all(color: st.done ? gc.sage : gc.textTertiary, width: 1.6),
+                  border: Border.all(color: st.done ? gc.successInk : gc.textTertiary, width: 1.6),
                 ),
                 child: st.done ? const Icon(PhosphorIconsBold.check, size: 12, color: Colors.white) : null,
               ),
@@ -1135,7 +1135,7 @@ class WearSession extends StatelessWidget {
     final prs = fit.gamification ? fit.summaryPrs : 0;
     return WearPage(children: [
       Center(
-        child: Icon(PhosphorIconsFill.checkCircle, size: 28, color: gc.sage),
+        child: Icon(PhosphorIconsFill.checkCircle, size: 28, color: gc.successInk),
       ),
       const SizedBox(height: 6),
       Center(

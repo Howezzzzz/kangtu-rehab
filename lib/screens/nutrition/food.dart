@@ -807,7 +807,7 @@ class _LeftAfter extends StatelessWidget {
         Flexible(
           child: Text(text,
               textAlign: TextAlign.center,
-              style: AppTheme.f(11.5, weight: FontWeight.w600, color: over ? gc.warn : gc.textTertiary)),
+              style: AppTheme.f(11.5, weight: FontWeight.w600, color: over ? gc.warningInk : gc.textTertiary)),
         ),
       ]),
     );
@@ -881,7 +881,7 @@ class _ValueRows extends StatelessWidget {
           if (approx) ...[
             Icon(PhosphorIconsBold.approximateEquals, size: 12, color: gc.warn),
             const SizedBox(width: 4),
-            Text(t.approxValues, style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.warn)),
+            Text(t.approxValues, style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.warningInk)),
             const SizedBox(width: 10),
           ],
           if (onEdit != null)
@@ -1348,7 +1348,7 @@ class _EntrySheetState extends State<_EntrySheet> {
               onTap: () => fit.restoreEntry(gone),
             );
           },
-          child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+          child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
         ),
       ]),
     ]);
@@ -1517,7 +1517,7 @@ class _MacroInputs extends StatelessWidget {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(t.kcalFromMacros('$est ${fit.energyUnit}'),
-                            style: AppTheme.f(12, weight: FontWeight.w600, color: typed > 0 ? gc.warn : gc.textSecondary)),
+                            style: AppTheme.f(12, weight: FontWeight.w600, color: typed > 0 ? gc.warningInk : gc.textSecondary)),
                       ),
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
@@ -2195,7 +2195,7 @@ class _FoodEditorState extends State<_FoodEditor> with _StickerDrafts {
       const SizedBox(height: 8),
       if (_extras) ...[
         Row(children: [
-          Expanded(child: _NumberField(label: t.fiberLabel.toUpperCase(), controller: _fi, color: gc.sage)),
+          Expanded(child: _NumberField(label: t.fiberLabel.toUpperCase(), controller: _fi, color: gc.successInk)),
           const SizedBox(width: 8),
           Expanded(child: _NumberField(label: t.sugarLabel.toUpperCase(), controller: _su, color: gc.warn)),
           const SizedBox(width: 8),
@@ -2209,9 +2209,9 @@ class _FoodEditorState extends State<_FoodEditor> with _StickerDrafts {
             style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.textTertiary, letterSpacing: 1.4)),
         const SizedBox(height: 8),
         Row(children: [
-          Expanded(child: _NumberField(label: t.fatSaturated.toUpperCase(), controller: _sat, color: gc.warn)),
+          Expanded(child: _NumberField(label: t.fatSaturated.toUpperCase(), controller: _sat, color: gc.warningInk)),
           const SizedBox(width: 8),
-          Expanded(child: _NumberField(label: t.fatTrans.toUpperCase(), controller: _trans, color: gc.danger)),
+          Expanded(child: _NumberField(label: t.fatTrans.toUpperCase(), controller: _trans, color: gc.errorInk)),
         ]),
         const SizedBox(height: 8),
         Row(children: [
@@ -2274,7 +2274,7 @@ class _FoodEditorState extends State<_FoodEditor> with _StickerDrafts {
           ),
           TextButton(
             onPressed: _delete,
-            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
           ),
         ]),
       ],

@@ -656,7 +656,7 @@ class _RoutineEditScreenState extends State<RoutineEditScreen> {
               if (fit.ladderIn(routine, ex.id) case final ladder?) ...[
                 const SizedBox(height: 2),
                 Text('${t.ladderTitle} · ${ladder.indexOf(ex.id) + 1}/${ladder.length}'.toUpperCase(),
-                    style: AppTheme.f(9.5, weight: FontWeight.w700, color: gc.sage, letterSpacing: 1)),
+                    style: AppTheme.f(9.5, weight: FontWeight.w700, color: gc.successInk, letterSpacing: 1)),
               ],
               const SizedBox(height: 2),
               FittedBox(

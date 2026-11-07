@@ -218,7 +218,7 @@ class AlertsShowcase extends StatelessWidget {
       w: 150,
       h: 170,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Icon(PhosphorIconsRegular.bellRinging, size: 44, color: gc.sage),
+        Icon(PhosphorIconsRegular.bellRinging, size: 44, color: gc.successInk),
         const Spacer(),
         _big(gc, '18:30'),
         const SizedBox(height: 4),
@@ -328,7 +328,7 @@ class AlertsShowcase extends StatelessWidget {
       w: 150,
       h: 110,
       child: Row(children: [
-        Icon(PhosphorIconsRegular.hourglassMedium, size: 30, color: gc.sage),
+        Icon(PhosphorIconsRegular.hourglassMedium, size: 30, color: gc.successInk),
         const SizedBox(width: 10),
         _big(gc, '16 h', size: 26),
       ]),
@@ -384,7 +384,7 @@ class AlertsShowcase extends StatelessWidget {
                       ),
                       child: Text(_letter(d),
                           style: AppTheme.f(11.5,
-                              weight: FontWeight.w800, color: const {1, 3, 5}.contains(d) ? gc.sage : gc.textTertiary)),
+                              weight: FontWeight.w800, color: const {1, 3, 5}.contains(d) ? gc.successInk : gc.textTertiary)),
                     ),
                 ]),
               ),
@@ -564,7 +564,7 @@ class HomeExtrasShowcase extends StatelessWidget {
             ]),
           ),
         ]),
-        _stack(40, [streak, sleep, medalLocked, _iconTile(gc, PhosphorIconsRegular.path, '4,2', 'km', gc.sage),
+        _stack(40, [streak, sleep, medalLocked, _iconTile(gc, PhosphorIconsRegular.path, '4,2', 'km', gc.successInk),
             _iconTile(gc, PhosphorIconsRegular.trophy, '3', '', gc.brass)]),
       ],
     );

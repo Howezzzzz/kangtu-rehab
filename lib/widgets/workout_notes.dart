@@ -318,7 +318,7 @@ class _WorkoutNoteEditorState extends State<_WorkoutNoteEditor> {
         Center(
           child: TextButton(
             onPressed: _delete,
-            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
           ),
         ),
       ],

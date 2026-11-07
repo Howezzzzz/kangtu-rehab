@@ -395,7 +395,7 @@ class SessionScreen extends StatelessWidget {
                   Text(t.catalogName(ex.id, ex.name),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTheme.f(16, weight: FontWeight.w800, color: done ? gc.sage : gc.text, height: 1.15)),
+                      style: AppTheme.f(16, weight: FontWeight.w800, color: done ? gc.successInk : gc.text, height: 1.15)),
                   const SizedBox(height: 3),
                   Row(children: [
                     if (linked) ...[
@@ -1862,7 +1862,7 @@ class SessionScreen extends StatelessWidget {
                         Icon(PhosphorIconsRegular.trash, size: 16, color: gc.danger),
                         const SizedBox(width: 8),
                         Text(t.deleteSet,
-                            style: AppTheme.f(14, weight: FontWeight.w600, color: gc.danger)),
+                            style: AppTheme.f(14, weight: FontWeight.w600, color: gc.errorInk)),
                       ]),
                     ),
                   ),
@@ -2259,7 +2259,7 @@ class SessionScreen extends StatelessWidget {
   }
 
   Future<void> _saveRoutine(BuildContext context) async {
-    final accent = context.gc.sage;
+    final accent = context.gc.successInk;
     final routine = fit.sessionRoutine;
     if (routine != null) {
       if (!await _confirmRoutineChanges(context, routine) || !context.mounted) return;
@@ -2309,7 +2309,7 @@ class SessionScreen extends StatelessWidget {
                 Text(t.saveChangesBody,
                     style: AppTheme.f(13.5, weight: FontWeight.w500, color: gc.textSecondary, height: 1.45)),
                 const SizedBox(height: 12),
-                for (final e in changes.added) row(PhosphorIconsBold.plus, gc.sage, exerciseName(e)),
+                for (final e in changes.added) row(PhosphorIconsBold.plus, gc.successInk, exerciseName(e)),
                 for (final e in changes.removed) row(PhosphorIconsBold.minus, gc.danger, exerciseName(e)),
                 if (changes.reordered) row(PhosphorIconsBold.arrowsDownUp, gc.brass, t.routineOrderChanged),
                 for (final c in changes.sets)
@@ -2458,7 +2458,7 @@ class SessionScreen extends StatelessWidget {
               style: AppTheme.f(11, weight: FontWeight.w600, color: gc.textSecondary, letterSpacing: 0.4)),
         ),
         Text('${up ? '+' : ''}$pct%',
-            style: AppTheme.f(16, weight: FontWeight.w700, color: up ? gc.sage : gc.textSecondary)),
+            style: AppTheme.f(16, weight: FontWeight.w700, color: up ? gc.successInk : gc.textSecondary)),
       ]),
     );
   }
@@ -2495,7 +2495,7 @@ class SessionScreen extends StatelessWidget {
                   Icon(PhosphorIconsBold.trendUp, size: 13, color: gc.sage),
                   const SizedBox(width: 6),
                   Text(t.levelUpKicker,
-                      style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.sage, letterSpacing: 1.4)),
+                      style: AppTheme.f(10.5, weight: FontWeight.w700, color: gc.successInk, letterSpacing: 1.4)),
                 ]),
                 const SizedBox(height: 4),
                 Text(exerciseName(level.to),
@@ -2529,7 +2529,7 @@ class SessionScreen extends StatelessWidget {
               child: Text(inRoutine ? t.levelUpSwap(fit.routineTitle(fit.sessionRoutine!)) : t.levelUpSee,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTheme.f(14, weight: FontWeight.w700, color: gc.sage)),
+                  style: AppTheme.f(14, weight: FontWeight.w700, color: gc.successInk)),
             ),
           ),
           const SizedBox(height: 2),
@@ -3037,7 +3037,7 @@ Widget _overviewRow(BuildContext sheet, GymColors gc, WorkoutSession s, int i) {
                 Row(children: [
                   Text(t.setsDoneOf(done, e.sets.length),
                       style: AppTheme.f(11.5,
-                          weight: FontWeight.w500, color: all ? gc.sage : gc.textSecondary)),
+                          weight: FontWeight.w500, color: all ? gc.successInk : gc.textSecondary)),
                   if (current) ...[
                     Text(' · ', style: AppTheme.f(11.5, color: gc.textTertiary)),
                     Text(t.nowLabel,
@@ -3323,7 +3323,7 @@ class _TuneCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTheme.f(11.5,
-                          weight: FontWeight.w600, color: vote == 0 ? gc.textSecondary : gc.sage, height: 1.3)),
+                          weight: FontWeight.w600, color: vote == 0 ? gc.textSecondary : gc.successInk, height: 1.3)),
                 ),
         ),
         const SizedBox(height: 8),
@@ -3429,9 +3429,9 @@ class _ExtrasCardState extends State<_ExtrasCard> {
                     duration: const Duration(milliseconds: 200),
                     child: _added.contains(e.id)
                         ? Row(key: const ValueKey('done'), mainAxisSize: MainAxisSize.min, children: [
-                            Icon(PhosphorIconsBold.check, size: 13, color: gc.sage),
+                            Icon(PhosphorIconsBold.check, size: 13, color: gc.successInk),
                             const SizedBox(width: 5),
-                            Text(t.addedToRoutine, style: AppTheme.f(12.5, weight: FontWeight.w700, color: gc.sage)),
+                            Text(t.addedToRoutine, style: AppTheme.f(12.5, weight: FontWeight.w700, color: gc.successInk)),
                           ])
                         : Row(key: const ValueKey('add'), mainAxisSize: MainAxisSize.min, children: [
                             Icon(PhosphorIconsBold.plus, size: 13, color: gc.text),

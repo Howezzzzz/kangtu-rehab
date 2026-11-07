@@ -864,7 +864,10 @@ mixin StatsState on FitCore, ToolsState, LibraryState, SettingsState, TimelineSt
   List<({int reps, double kg, DateTime date})> repRecords(String id) {
     if (modeOf(id).isNotEmpty || isRepsOnly(id) || isAssisted(id)) return const [];
     final best = <int, ({double kg, DateTime date})>{};
-    for (final h in progressHistory(id)) {
+    // ISS-244（回退）：本方法属**记录族**（与 exerciseRecord/bestSet/bestWorkout/_personalRecords 同族，
+    // 那些都用 exerciseHistory）。轻量训练只从**进阶族**（stallStreak/lastSetsFor → progressHistory）剔除；
+    // 昨天误把它对齐到进阶族，属"对齐错族"，已按上游语义回退。
+    for (final h in exerciseHistory(id)) {
       for (final st in h.ex.workingSets) {
         if (st.reps <= 0 || st.weight <= 0) continue;
         final had = best[st.reps];

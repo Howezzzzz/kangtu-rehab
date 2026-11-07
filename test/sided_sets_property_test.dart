@@ -238,7 +238,7 @@ void main() {
       expect(s.lightened, isFalse);
     });
 
-    test('轻量训练（自动降载）的记录不得进入「按次数的最佳重量」', () {
+    test('记录族 vs 进阶族：「按次数的最佳重量」走记录族（含轻量训练）；进阶族才剔除轻量', () {
       final id = fit.matchExerciseByName('Barbell Bench Press')!.id;
       fit.sessions.add(LoggedSession(DateTime.now().subtract(const Duration(days: 3)), 1200,
           [LoggedExercise(id, id, 'chest', [LoggedSet(10, 100)])]));
@@ -246,8 +246,14 @@ void main() {
       fit.sessions.add(LoggedSession(DateTime.now().subtract(const Duration(days: 1)), 900,
           [LoggedExercise(id, id, 'chest', [LoggedSet(15, 40)])], deload: true));
       final ladder = fit.repRecords(id);
-      expect(ladder.any((r) => r.reps == 15), isFalse, reason: '轻量训练的 15 次不该成为记录');
+      // 记录族（repRecords/exerciseRecord/bestSet/bestWorkout）统计**全部**已记录组；
+      // 只有进阶族（stallStreak/lastSetsFor → progressHistory）把轻量训练剔除。
       expect(ladder.map((r) => r.reps), contains(10));
+      expect(ladder.any((r) => r.reps == 15), isTrue, reason: '轻量训练的 15 次属"做过的记录"，应出现在记录族里');
+      // 反证：进阶族必须剔除它 —— 轻量训练不得改变「上次的有效组」（真断言，不是恒真式）
+      final last = fit.lastSetsFor(id);
+      expect(last, isNotEmpty);
+      expect(last.first.weight, 100, reason: '进阶族取的是非轻量的那次（100kg），不是轻量的 40kg');
     });
 
     test('自动降载且已开练：不允许取消「轻量」标记（重量已改、无法还原）', () {

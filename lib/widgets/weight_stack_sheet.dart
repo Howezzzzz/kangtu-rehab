@@ -179,7 +179,7 @@ class _WeightStackSheetState extends State<_WeightStackSheet> {
                     HapticFeedback.selectionClick();
                     _save(const []);
                   },
-                  child: Text(t.stackClear, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+                  child: Text(t.stackClear, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
                 ),
               ),
           ],

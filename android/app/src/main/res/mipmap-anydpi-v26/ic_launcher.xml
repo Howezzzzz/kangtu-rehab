@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
   <background android:drawable="@color/ic_launcher_background"/>
-  <!-- 与上游一致：前景需留 inset，否则图形（本仓占画布约 78%）会被 launcher 遮罩裁切。
-       安全区只保证中心约 66.7% 可见；16% inset 后本仓图形约 65% ✓ -->
+  <!-- 与上游一致：前景需留 inset，否则前景图形可能被 launcher 遮罩裁切。
+       安全区只保证中心约 66.7% 可见；叠加 16% inset 后本仓前景图形约 62%（PIL 实测）✓ -->
   <foreground>
       <inset
           android:drawable="@drawable/ic_launcher_foreground"

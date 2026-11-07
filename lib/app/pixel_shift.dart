@@ -69,6 +69,8 @@ class _PixelShiftState extends State<PixelShift> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // 订阅全局状态：切换主题（例如切到 AMOLED）时**立即**生效，不必等下一次定时器
+    fit.addListener(_refresh);
     _refresh();
     // 每分钟只做一次"是否跨周期"的极轻量检查（UI 由 AnimatedBuilder 承担，开销可忽略）
     _timer = Timer.periodic(const Duration(minutes: 1), (_) => _refresh());
@@ -77,6 +79,7 @@ class _PixelShiftState extends State<PixelShift> with WidgetsBindingObserver {
   @override
   void dispose() {
     _timer?.cancel();
+    fit.removeListener(_refresh);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

@@ -59,7 +59,7 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(t.fullyOffline.toUpperCase(),
-                          style: AppTheme.f(12, weight: FontWeight.w700, color: gc.sage, letterSpacing: 1.4)),
+                          style: AppTheme.f(12, weight: FontWeight.w700, color: gc.successInk, letterSpacing: 1.4)),
                     ),
                   ]),
                   const SizedBox(height: 10),
@@ -179,7 +179,7 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: gc.bgRaised,
-        border: Border.all(color: good ? gc.sage : gc.border),
+        border: Border.all(color: good ? gc.successInk : gc.border),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -191,7 +191,7 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
                 : good
                     ? '${t.routinesAdded(_routines)} · ${t.exerciseCount(_added)}'
                     : t.planNothing,
-            style: AppTheme.f(13.5, weight: FontWeight.w600, color: good ? gc.sage : gc.text),
+            style: AppTheme.f(13.5, weight: FontWeight.w600, color: good ? gc.successInk : gc.text),
           ),
           if (_missed.isNotEmpty) ...[
             const SizedBox(height: 8),
@@ -218,7 +218,7 @@ class _AiPlanScreenState extends State<AiPlanScreen> {
     await Clipboard.setData(ClipboardData(text: fit.planRequestText()));
     if (!mounted) return;
     showNotchToast(context, t.copiedDone,
-        subtitle: t.aiStepAsk, icon: PhosphorIconsFill.copy, accent: context.gc.sage);
+        subtitle: t.aiStepAsk, icon: PhosphorIconsFill.copy, accent: context.gc.successInk);
   }
 
   Future<void> _export() async {

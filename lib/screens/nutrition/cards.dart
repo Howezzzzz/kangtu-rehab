@@ -68,7 +68,7 @@ class _HeroCard extends StatelessWidget {
                 size: 13, color: training ? gc.accent : gc.sage),
             const SizedBox(width: 6),
             Text(training ? t.trainingDay : t.restDay,
-                style: AppTheme.f(12, weight: FontWeight.w700, color: training ? gc.accent : gc.sage)),
+                style: AppTheme.f(12, weight: FontWeight.w700, color: training ? gc.accent : gc.successInk)),
           ]),
           const SizedBox(height: 10),
         ],
@@ -81,7 +81,7 @@ class _HeroCard extends StatelessWidget {
               stroke: 12,
               child: Column(mainAxisSize: MainAxisSize.min, children: [
                 Text(left >= 0 ? t.kcalRemaining : t.kcalOver,
-                    style: AppTheme.f(12, weight: FontWeight.w600, color: left >= 0 ? gc.textSecondary : gc.danger)),
+                    style: AppTheme.f(12, weight: FontWeight.w600, color: left >= 0 ? gc.textSecondary : gc.errorInk)),
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: RollingText('${left.abs()}', style: AppTheme.f(34, weight: FontWeight.w800, color: gc.text, height: 1.15)),
@@ -90,7 +90,7 @@ class _HeroCard extends StatelessWidget {
                     style: AppTheme.f(11.5, weight: FontWeight.w600, color: gc.textSecondary)),
               ]),
             ),
-            side(PhosphorIconsFill.fire, gc.warn, '${fit.energyOf(burned)}', t.kcalBurned),
+            side(PhosphorIconsFill.fire, gc.warningInk, '${fit.energyOf(burned)}', t.kcalBurned),
           ]),
         if (macros.isNotEmpty) ...[
           if (fit.trackerOn(Tracker.calories)) const SizedBox(height: 20),
@@ -353,7 +353,7 @@ class _QualityCard extends StatelessWidget {
         ]),
         if (total.protein > 0) ...[
           const SizedBox(height: 12),
-          _SplitBar(parts: [(total.animal, gc.warn), (total.plant, gc.sage)], height: 6),
+          _SplitBar(parts: [(total.animal, gc.warningInk), (total.plant, gc.sage)], height: 6),
           const SizedBox(height: 10),
           Row(children: [
             Expanded(child: source(PhosphorIconsFill.cow, gc.warn, t.proteinAnimalShort, total.animal)),
@@ -457,11 +457,11 @@ class _AminoRadar extends CustomPainter {
         text: TextSpan(children: [
           TextSpan(
             text: '${_aminoShort[i]}\n',
-            style: AppTheme.f(9, weight: FontWeight.w700, color: low ? gc.danger : gc.textTertiary, height: 1.1),
+            style: AppTheme.f(9, weight: FontWeight.w700, color: low ? gc.errorInk : gc.textTertiary, height: 1.1),
           ),
           TextSpan(
             text: '${(scores[i] * 100).round()}',
-            style: AppTheme.f(9.5, weight: FontWeight.w800, color: low ? gc.danger : gc.textSecondary, height: 1.1),
+            style: AppTheme.f(9.5, weight: FontWeight.w800, color: low ? gc.errorInk : gc.textSecondary, height: 1.1),
           ),
         ]),
         textAlign: TextAlign.center,
@@ -540,18 +540,18 @@ class _FatTypesCard extends StatelessWidget {
           Text('${_g(total.fat)} g', style: AppTheme.f(13, weight: FontWeight.w800, color: gc.text)),
         ]),
         const SizedBox(height: 14),
-        _SplitBar(parts: [(total.sat, gc.warn), (total.trans, gc.danger), (total.mono, gc.sage), (total.poly, gc.info)]),
+        _SplitBar(parts: [(total.sat, gc.warningInk), (total.trans, gc.errorInk), (total.mono, gc.successInk), (total.poly, gc.info)]),
         const SizedBox(height: 14),
         Row(children: [
-          legend(gc.warn, t.fatSaturated, total.sat),
-          if (total.trans > 0) legend(gc.danger, t.fatTrans, total.trans),
-          legend(gc.sage, t.fatMono, total.mono),
+          legend(gc.warningInk, t.fatSaturated, total.sat),
+          if (total.trans > 0) legend(gc.errorInk, t.fatTrans, total.trans),
+          legend(gc.successInk, t.fatMono, total.mono),
           legend(gc.info, t.fatPoly, total.poly),
         ]),
         if (of == null) ...[
           const SizedBox(height: 12),
           Text(t.satLimitLine(_g(total.sat), limit),
-              style: AppTheme.f(11.5, weight: FontWeight.w600, color: over ? gc.danger : gc.textTertiary)),
+              style: AppTheme.f(11.5, weight: FontWeight.w600, color: over ? gc.errorInk : gc.textTertiary)),
         ],
       ]),
     );
@@ -971,7 +971,7 @@ class _SupplementsCard extends StatelessWidget {
           Expanded(child: _kicker(gc, t.supplementsLabel)),
           if (due.isNotEmpty)
             Text('$done/${due.length}',
-                style: AppTheme.f(13, weight: FontWeight.w800, color: done == due.length ? gc.sage : gc.textSecondary)),
+                style: AppTheme.f(13, weight: FontWeight.w800, color: done == due.length ? gc.successInk : gc.textSecondary)),
         ]),
         const SizedBox(height: 10),
         if (list.isEmpty) ...[
@@ -1171,7 +1171,7 @@ class _SupplementRow extends StatelessWidget {
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                    color: taken ? gc.sage : Colors.transparent,
+                    color: taken ? gc.successInk : Colors.transparent,
                     shape: BoxShape.circle,
                     border: Border.all(color: taken ? gc.sage : gc.border, width: 2),
                   ),
@@ -1671,7 +1671,7 @@ class _SupplementEditorState extends State<_SupplementEditor> with _StickerDraft
           ),
           TextButton(
             onPressed: _remove,
-            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.danger)),
+            child: Text(t.delete, style: AppTheme.f(13, weight: FontWeight.w700, color: gc.errorInk)),
           ),
         ]),
       ],
