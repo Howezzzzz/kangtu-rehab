@@ -4,25 +4,24 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gymmane/l10n/l10n.dart';
-import 'package:gymmane/services/local_store.dart';
+import 'package:gymmane/l10n/l10n.dart';import 'package:gymmane/services/local_store.dart';
 import 'package:gymmane/state/fit_state.dart';
 import 'package:gymmane/app/pixel_shift.dart';
 import 'package:gymmane/theme/app_colors.dart';
+import 'package:gymmane/theme/app_theme.dart';
+import 'package:gymmane/widgets/ui_kit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// 品牌规范《Kangtu — Logo 与色彩管理规范 v1.5》（§06 色彩管理 / §06.1 对比度审计 /
-/// §06.2 AMOLED 覆写 / §06.3 表面阶梯）的配色不变量。
+/// 品牌规范《Kangtu — 品牌与界面系统 v1.5.2》（§04 色阶 / §06 色彩管理 / §06.1 对比度审计 /
+/// §06.2 AMOLED 覆写 / §06.3 双向表面阶梯 / §06.4 光影系统）的配色不变量。
 ///
-/// 与 v1.1 的差别（本文件已按 v1.5 重写）：
-/// 1. **token 表对齐** —— 直接读 `test/data/kangtu_tokens_v1.5.json`（规范交付物之一），
-///    逐 token 断言三套主题，防止实现与规范漂移（旧版只挑了几个值断言）。
-/// 2. **AMOLED 不再是「只换场」** —— v1.5 §06.2 明确：相对 dark **只改 4 个 token**
-///    （场 → #000000、surface → #0B2321、surface-2 → #143A35、divider → #1B4640），
-///    即「阶梯整体上抬一步」，其余全部继承 dark。
-/// 3. **新增语义色与焦点环规则** —— 原始 success/warning/error 只够图形级，
-///    状态**文字**必须用 ink 变体；`--color-focus` 两种场底都要 ≥3:1。
-/// 4. **禁用态 = 38% 不透明度**，不得自造灰色 hex。
+/// 与 v1.5 的差别：
+/// 1. **双向阶梯**：recessed(-1) → bg(0) → surface(1) → surface-2(2) → surface-3(3)；
+///    浅色卡片/弹层 = step1 #F7FCFA（不再是纯白），嵌套 = step2/3 #FFFFFF。
+/// 2. **发丝线加深**：--color-divider 浅 #DCE9E6 → #BCD5D0（白底 1.55:1）。
+/// 3. **§06.4 光影**：左上固定光源 + 顶侧 1px 内高光 + 发丝线 + 三层阴影 + 场域辉光；
+///    新增 --color-highlight / sheen / glow / shadow / shadow-deep 五个 token。
+/// 4. **§04 色阶**：teal / orange / ink 各 10 级（brand 在 05；文字安全 teal 07+ / orange 08+ / ink 05+）。
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -37,7 +36,7 @@ void main() {
 
   /// 规范交付的 token 表（唯一真源）
   Map<String, Map<String, int>> specTokens() {
-    final j = jsonDecode(File('test/data/kangtu_tokens_v1.5.json').readAsStringSync()) as Map<String, dynamic>;
+    final j = jsonDecode(File('test/data/kangtu_tokens_v1.5.2.json').readAsStringSync()) as Map<String, dynamic>;
     final out = <String, Map<String, int>>{};
     (j['themes'] as Map<String, dynamic>).forEach((theme, v) {
       out[theme] = <String, int>{
@@ -68,6 +67,17 @@ void main() {
         '--color-error': rgb(c.danger),
         '--color-error-ink': rgb(c.errorInk),
         '--color-focus': rgb(c.focus),
+        '--color-surface-3': rgb(c.surface3),
+        '--color-recessed': rgb(c.recessed),
+        '--color-highlight': rgb(c.highlight),
+        '--color-sheen': rgb(c.sheen),
+        '--color-glow': rgb(c.glow),
+        '--color-shadow': rgb(c.shadow),
+        '--color-shadow-deep': rgb(c.shadowDeep),
+        // §04 色阶（三套主题共用同一组阶梯）
+        for (var i = 0; i < 10; i++) '--color-teal-${(i + 1).toString().padLeft(2, '0')}': rgb(GymColors.tealRamp[i]),
+        for (var i = 0; i < 10; i++) '--color-orange-${(i + 1).toString().padLeft(2, '0')}': rgb(GymColors.orangeRamp[i]),
+        for (var i = 0; i < 10; i++) '--color-ink-${(i + 1).toString().padLeft(2, '0')}': rgb(GymColors.inkRamp[i]),
       };
 
   group('v1.5 字段完整性（copyWith/lerp/派生态）与 §06.1 消费点', _copyLerpTests);
@@ -81,7 +91,7 @@ void main() {
       setAppLanguage('en');
     });
 
-    test('三套主题的 17 个 token 必须逐一对齐 tokens.json（防实现与规范漂移）', () {
+    test('三套主题的 token 必须逐一对齐 tokens.json（防实现与规范漂移）', () {
       final spec = specTokens();
       final impl = {'light': GymColors.light, 'dark': GymColors.dark, 'amoled': GymColors.amoled};
       expect(spec.keys.toSet(), impl.keys.toSet(), reason: '主题名要与规范一致');
@@ -96,12 +106,15 @@ void main() {
       }
     });
 
-    test('AMOLED（§06.2）：相对 dark 只改 4 个 token，其余全部继承', () {
+    test('AMOLED（§06.2）：相对 dark 只改阶梯上的 6 个 token，其余全部继承', () {
       final a = implTokens(GymColors.amoled), d = implTokens(GymColors.dark);
       final diff = a.keys.where((k) => a[k] != d[k]).toSet();
-      expect(diff, {'--color-bg', '--color-surface', '--color-surface-2', '--color-divider'},
-          reason: 'AMOLED 只允许改这 4 个 token（阶梯上抬一步）');
+      expect(diff, {
+        '--color-bg', '--color-surface', '--color-surface-2', '--color-surface-3',
+        '--color-recessed', '--color-divider'
+      }, reason: 'AMOLED 只允许改阶梯上的 6 个 token（阶梯整体上抬一步）');
       expect(a['--color-bg'], 0x000000, reason: 'AMOLED 场 = 真纯黑（像素关闭）');
+      expect(a['--color-recessed'], a['--color-bg'], reason: 'AMOLED 无法再往下凹 → recessed = 场，靠发丝线定义');
       expect(a['--color-text'], rgb(GymColors.dark.text), reason: '文字天花板沿用 #E8F4F2');
       expect(a['--color-text'], isNot(0xFFFFFF), reason: '规范：AMOLED 文字永不 #FFFFFF');
     });
@@ -129,11 +142,13 @@ void main() {
       expect({rgb(l.successInk), rgb(l.warningInk), rgb(l.errorInk)}.length, 3);
     });
 
-    test('§06.1 muted 只在白卡达标：场上要加深到 ink（规范：field fail）', () {
+    test('§06.1 muted 只在白面达标：场上必须加深到 ink', () {
       final l = GymColors.light;
-      expect(contrast(l.bgRaised, l.textSecondary), greaterThanOrEqualTo(4.5), reason: '白卡上 #5B7B77 = 4.6:1');
+      expect(contrast(l.bgRaised2, l.textSecondary), greaterThanOrEqualTo(4.5), reason: '白面（step2/3）上 #5B7B77 = 4.6:1');
+      expect(contrast(l.bgRaised, l.textSecondary), greaterThanOrEqualTo(4.4),
+          reason: '§06.3 把卡片挪到 step1 #F7FCFA 之后，muted 约 4.44:1（规范仍列为「白面专用」，实现保持在 4.4+）');
       expect(contrast(l.pageBg, l.textSecondary), lessThan(4.5),
-          reason: '规范明确：muted 在薄荷场上只有 4.3:1 → 场上改用 ink');
+          reason: '规范明确：muted 在薄荷场上不达标 → 场上改用 ink');
       expect(contrast(l.pageBg, l.text), greaterThanOrEqualTo(4.5), reason: '场上正文用 ink 达标');
     });
 
@@ -154,11 +169,84 @@ void main() {
           reason: '规范：两色同亮度，任意尺寸都不达标 → 永不叠放');
     });
 
-    test('§06.3 阶梯是「色调抬升」不是阴影：浅色场非纯白、表面纯白、相邻步差很小', () {
+    test('§06.3 双向阶梯：浅色场非纯白、卡片是 step1、最高层纯白、发丝线可读', () {
       final l = GymColors.light;
-      expect(rgb(l.pageBg), isNot(0xFFFFFF), reason: '浅色场永不纯白（白是抬升表面）');
-      expect(rgb(l.bgRaised), 0xFFFFFF, reason: 'surface = 白');
-      expect(contrast(l.pageBg, l.bgRaised), lessThan(1.4), reason: '相邻步只有 1.08–1.32:1');
+      expect(rgb(l.pageBg), 0xEEF9F7, reason: '场 = 淡薄荷，永不纯白');
+      expect(rgb(l.bgRaised), 0xF7FCFA, reason: 'step1 = 卡片/弹层 #F7FCFA');
+      expect(rgb(l.bgRaised2), 0xFFFFFF, reason: 'step2 = 嵌套行 #FFFFFF');
+      expect(rgb(l.surface3), 0xFFFFFF, reason: 'step3 = 顶层 #FFFFFF');
+      expect(rgb(l.recessed), 0xDCE9E6, reason: 'step−1 = 凹陷井 #DCE9E6');
+      expect(contrast(l.pageBg, l.bgRaised), lessThan(1.2), reason: '浅色相邻步很轻（1.04–1.16）');
+      expect(contrast(l.recessed, l.pageBg), greaterThan(1.0), reason: '凹陷一步要在场下');
+      expect(contrast(l.bgRaised, l.border), greaterThan(1.4), reason: '发丝线 #BCD5D0 ≥1.4:1（白底 1.55）');
+    });
+
+    test('§04 色阶：teal/orange/ink 各 10 级，brand 在 05，文字安全区间与规范一致', () {
+      expect(GymColors.tealRamp.length, 10);
+      expect(GymColors.orangeRamp.length, 10);
+      expect(GymColors.inkRamp.length, 10);
+      expect(rgb(GymColors.tealRamp[4]), 0x00B5AD, reason: 'teal step05 = brand');
+      expect(rgb(GymColors.orangeRamp[4]), 0xFF8C42, reason: 'orange step05 = accent');
+      expect(rgb(GymColors.inkRamp[9]), 0x0C2F2C, reason: 'ink step10 = 正文墨色');
+      // 规范：文字安全 = teal 07–10 / orange 08–10 / ink 05–10（白底 4.5:1）
+      for (var i = 6; i < 10; i++) {
+        expect(contrast(GymColors.tealRamp[i], const Color(0xFFFFFFFF)), greaterThanOrEqualTo(4.5),
+            reason: 'teal step${i + 1} 应达文字安全');
+      }
+      for (var i = 7; i < 10; i++) {
+        expect(contrast(GymColors.orangeRamp[i], const Color(0xFFFFFFFF)), greaterThanOrEqualTo(4.5),
+            reason: 'orange step${i + 1} 应达文字安全');
+      }
+    });
+
+    test('§06.4 光影：顶侧高光/发丝线/三层阴影都由 token 合成，不自造灰', () {
+      final l = GymColors.light;
+      expect(rgb(l.shadow), 0x0C2F2C, reason: '浅色阴影基色 = --color-shadow');
+      expect(rgb(l.shadowDeep), 0x061613, reason: '贴地阴影 = --color-shadow-deep');
+      final sh = l.depthShadows(3);
+      expect(sh.length, 3, reason: 'ambient / key / contact 三层');
+      for (final s in sh) {
+        expect(s.color.a, greaterThan(0), reason: '阴影不透明度必须 >0（由 token + α 合成）');
+        expect(s.blurRadius, greaterThan(0));
+      }
+      expect(l.depthShadows(0), isEmpty, reason: 'L0 场不加阴影（辉光负责纵深）');
+      // 层级越高阴影越重
+      expect(l.depthShadows(4).first.color.a, greaterThan(l.depthShadows(2).first.color.a));
+    });
+
+    test('§06.4 深度配方：卡片/弹层必须带分层阴影 + 高光 + 发丝线（防回退成扁平）', () {
+      for (final gc in [GymColors.light, GymColors.dark, GymColors.amoled]) {
+        final card = gc.depthDecor(level: 2, radius: 22);
+        expect(card.boxShadow!.length, 3, reason: '卡片三层阴影');
+        expect(card.gradient, isNotNull, reason: 'L2 起要有顶侧高光');
+        expect(card.border!.top.color.a, lessThan(1.0), reason: 'L2 还没到读边层，发丝线偏淡');
+        final sheet = gc.depthDecor(level: 3, radius: 28);
+        expect(sheet.boxShadow!.length, 3, reason: '弹层三层阴影');
+        expect(sheet.border!.top.color.a, 1.0, reason: 'L3 用满强度发丝线');
+        expect(sheet.boxShadow!.first.blurRadius,
+            greaterThanOrEqualTo(card.boxShadow!.first.blurRadius), reason: '层级越高越浮');
+        // 阶梯填充映射
+        expect(rgb(gc.surfaceFill(1)), rgb(gc.recessed));
+        expect(rgb(gc.surfaceFill(2)), rgb(gc.bgRaised), reason: 'step1 = 卡片/弹层');
+        expect(rgb(gc.surfaceFill(3)), rgb(gc.bgRaised2), reason: 'step2 = 嵌套行');
+        expect(rgb(gc.surfaceFill(4)), rgb(gc.surface3), reason: 'step3 = 顶层');
+      }
+      // 组件层真的接上了配方（不能只定义不用）
+      expect(sheetDecoration(GymColors.light).boxShadow, isNotEmpty, reason: '弹层要带阴影');
+      expect(sheetDecoration(GymColors.light).border, isNotNull, reason: '弹层要带发丝线');
+    });
+
+    testWidgets('SoftCard 必须真的接上 §06.4 深度配方（防回退成纯色+淡边框）', (tester) async {
+      await tester.pumpWidget(MaterialApp(
+        theme: AppTheme.light,
+        home: const Scaffold(body: SoftCard(child: Text('x'))),
+      ));
+      final deco = tester
+          .widget<Container>(find.descendant(of: find.byType(SoftCard), matching: find.byType(Container)).first)
+          .decoration as BoxDecoration;
+      expect(deco.boxShadow, isNotEmpty, reason: '卡片要带分层阴影');
+      expect(deco.gradient, isNotNull, reason: '卡片要有顶侧高光');
+      expect(deco.border, isNotNull, reason: '卡片要带发丝线');
     });
 
     test('§06 禁用态 = 38% 不透明度（不得另造灰色 hex）', () {

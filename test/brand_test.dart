@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gymmane/l10n/l10n.dart';
@@ -275,5 +276,52 @@ void main() {
         reason: '传统图标 $d 应为 ${px}px（48dp）'));
     stat.forEach((d, px) => expect(pngSize('android/app/src/main/res/drawable-$d/ic_stat_kangtu.png'), px,
         reason: '状态栏图标 $d 应为 ${px}px（24dp）'));
+  });
+
+  test('图标资产：透明层不得带烘焙白底，图形必须占满安全区（≤安全区上限）', () async {
+    Future<ui.Image> load(String p) async {
+      final codec = await ui.instantiateImageCodec(File(p).readAsBytesSync());
+      return (await codec.getNextFrame()).image;
+    }
+
+    // 这些文件历史上踩过两个坑：
+    //   ① 导出管线按 PDF 默认白底栅格化 → 「透明层」实际 38%~100% 是不透明白（手机上看就是白块）
+    //   ② 图形只占画布 ~56%，再叠 XML inset 后只剩 42%（缩在中间一小坨）
+    for (final p in [
+      'android/app/src/main/res/drawable-mdpi/ic_launcher_foreground.png',
+      'android/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png',
+      'android/app/src/main/res/drawable-xxxhdpi/ic_stat_kangtu.png',
+      'assets/img/brand_full.png',
+      'assets/img/brand_knockout.png',
+    ]) {
+      final im = await load(p);
+      final px = (await im.toByteData(format: ui.ImageByteFormat.rawRgba))!.buffer.asUint8List();
+      final w = im.width, h = im.height;
+      int alpha(int x, int y) => px[(y * w + x) * 4 + 3];
+      expect(alpha(1, 1), 0, reason: '$p 左上角必须透明（不得烘焙白底）');
+      expect(alpha(w - 2, 1), 0, reason: '$p 右上角必须透明');
+      expect(alpha(1, h - 2), 0, reason: '$p 左下角必须透明');
+      expect(alpha(w - 2, h - 2), 0, reason: '$p 右下角必须透明');
+
+      var minx = w, miny = h, maxx = -1, maxy = -1;
+      for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          if (alpha(x, y) > 8) {
+            if (x < minx) minx = x;
+            if (x > maxx) maxx = x;
+            if (y < miny) miny = y;
+            if (y > maxy) maxy = y;
+          }
+        }
+      }
+      expect(maxx, greaterThan(0), reason: '$p 不能是空图');
+      if (w >= 100) {
+        final fw = (maxx - minx + 1) / w, fh = (maxy - miny + 1) / h;
+        expect(fw, lessThanOrEqualTo(0.78), reason: '$p 图形越出安全区（§05：64–448）');
+        expect(fh, lessThanOrEqualTo(0.78), reason: '$p 图形越出安全区（§05：64–448）');
+        expect([fw, fh].reduce((a, b) => a > b ? a : b), greaterThanOrEqualTo(0.70),
+            reason: '$p 图形要占满安全区（历史 bug：只占 ~56%）');
+      }
+    }
   });
 }

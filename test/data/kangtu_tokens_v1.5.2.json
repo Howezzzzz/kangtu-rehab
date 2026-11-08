@@ -1,0 +1,331 @@
+{
+  "name": "Kangtu design tokens",
+  "version": "1.5.2",
+  "colorSpace": "sRGB",
+  "source": "§04 tonal ramps + §06 token table",
+  "themes": {
+    "light": {
+      "--color-bg": "#EEF9F7",
+      "--color-surface": "#F7FCFA",
+      "--color-surface-2": "#FFFFFF",
+      "--color-surface-3": "#FFFFFF",
+      "--color-recessed": "#DCE9E6",
+      "--color-text": "#0C2F2C",
+      "--color-text-muted": "#5B7B77",
+      "--color-brand": "#00B5AD",
+      "--color-brand-ink": "#007C76",
+      "--color-accent": "#FF8C42",
+      "--color-accent-ink": "#A94B10",
+      "--color-divider": "#BCD5D0",
+      "--color-success": "#1B9E6B",
+      "--color-success-ink": "#137A52",
+      "--color-warning": "#C98A12",
+      "--color-warning-ink": "#8A6000",
+      "--color-error": "#D2413A",
+      "--color-error-ink": "#A82F2A",
+      "--color-focus": "#007C76",
+      "--color-teal-01": "#E9F8F5",
+      "--color-teal-02": "#CBECE6",
+      "--color-teal-03": "#9ADBD1",
+      "--color-teal-04": "#55C8BC",
+      "--color-teal-05": "#00B5AD",
+      "--color-teal-06": "#00938B",
+      "--color-teal-07": "#007C76",
+      "--color-teal-08": "#005F5A",
+      "--color-teal-09": "#0B3D39",
+      "--color-teal-10": "#0B2321",
+      "--color-orange-01": "#FFF2E8",
+      "--color-orange-02": "#FFE0C4",
+      "--color-orange-03": "#FFC49B",
+      "--color-orange-04": "#FFA061",
+      "--color-orange-05": "#FF8C42",
+      "--color-orange-06": "#ED7526",
+      "--color-orange-07": "#D15E17",
+      "--color-orange-08": "#A94B10",
+      "--color-orange-09": "#7C360A",
+      "--color-orange-10": "#3A1B04",
+      "--color-ink-01": "#E4F1EE",
+      "--color-ink-02": "#C6DED8",
+      "--color-ink-03": "#A2C9C1",
+      "--color-ink-04": "#7BAFA7",
+      "--color-ink-05": "#5B7B77",
+      "--color-ink-06": "#4E6B67",
+      "--color-ink-07": "#35605B",
+      "--color-ink-08": "#244F4A",
+      "--color-ink-09": "#163C38",
+      "--color-ink-10": "#0C2F2C",
+      "--color-highlight": "#FFFFFF",
+      "--color-sheen": "#FFFFFF",
+      "--color-glow": "#00B5AD",
+      "--color-shadow": "#0C2F2C",
+      "--color-shadow-deep": "#061613"
+    },
+    "dark": {
+      "--color-bg": "#0B2321",
+      "--color-surface": "#143A35",
+      "--color-surface-2": "#1B4640",
+      "--color-surface-3": "#245C54",
+      "--color-recessed": "#061613",
+      "--color-text": "#E8F4F2",
+      "--color-text-muted": "#9FBDB8",
+      "--color-brand": "#2CD4C9",
+      "--color-brand-ink": "#7BEDE4",
+      "--color-accent": "#FFA061",
+      "--color-accent-ink": "#FFC49B",
+      "--color-divider": "#2F6A61",
+      "--color-success": "#4ADE9E",
+      "--color-success-ink": "#4ADE9E",
+      "--color-warning": "#F5C451",
+      "--color-warning-ink": "#F5C451",
+      "--color-error": "#FF8078",
+      "--color-error-ink": "#FF8078",
+      "--color-focus": "#2CD4C9",
+      "--color-teal-01": "#E9F8F5",
+      "--color-teal-02": "#CBECE6",
+      "--color-teal-03": "#9ADBD1",
+      "--color-teal-04": "#55C8BC",
+      "--color-teal-05": "#00B5AD",
+      "--color-teal-06": "#00938B",
+      "--color-teal-07": "#007C76",
+      "--color-teal-08": "#005F5A",
+      "--color-teal-09": "#0B3D39",
+      "--color-teal-10": "#0B2321",
+      "--color-orange-01": "#FFF2E8",
+      "--color-orange-02": "#FFE0C4",
+      "--color-orange-03": "#FFC49B",
+      "--color-orange-04": "#FFA061",
+      "--color-orange-05": "#FF8C42",
+      "--color-orange-06": "#ED7526",
+      "--color-orange-07": "#D15E17",
+      "--color-orange-08": "#A94B10",
+      "--color-orange-09": "#7C360A",
+      "--color-orange-10": "#3A1B04",
+      "--color-ink-01": "#E4F1EE",
+      "--color-ink-02": "#C6DED8",
+      "--color-ink-03": "#A2C9C1",
+      "--color-ink-04": "#7BAFA7",
+      "--color-ink-05": "#5B7B77",
+      "--color-ink-06": "#4E6B67",
+      "--color-ink-07": "#35605B",
+      "--color-ink-08": "#244F4A",
+      "--color-ink-09": "#163C38",
+      "--color-ink-10": "#0C2F2C",
+      "--color-highlight": "#A8E6DF",
+      "--color-sheen": "#7BEDE4",
+      "--color-glow": "#2CD4C9",
+      "--color-shadow": "#000000",
+      "--color-shadow-deep": "#000000"
+    },
+    "amoled": {
+      "--color-bg": "#000000",
+      "--color-surface": "#0B2321",
+      "--color-surface-2": "#143A35",
+      "--color-surface-3": "#1B4640",
+      "--color-recessed": "#000000",
+      "--color-text": "#E8F4F2",
+      "--color-text-muted": "#9FBDB8",
+      "--color-brand": "#2CD4C9",
+      "--color-brand-ink": "#7BEDE4",
+      "--color-accent": "#FFA061",
+      "--color-accent-ink": "#FFC49B",
+      "--color-divider": "#245C54",
+      "--color-success": "#4ADE9E",
+      "--color-success-ink": "#4ADE9E",
+      "--color-warning": "#F5C451",
+      "--color-warning-ink": "#F5C451",
+      "--color-error": "#FF8078",
+      "--color-error-ink": "#FF8078",
+      "--color-focus": "#2CD4C9",
+      "--color-teal-01": "#E9F8F5",
+      "--color-teal-02": "#CBECE6",
+      "--color-teal-03": "#9ADBD1",
+      "--color-teal-04": "#55C8BC",
+      "--color-teal-05": "#00B5AD",
+      "--color-teal-06": "#00938B",
+      "--color-teal-07": "#007C76",
+      "--color-teal-08": "#005F5A",
+      "--color-teal-09": "#0B3D39",
+      "--color-teal-10": "#0B2321",
+      "--color-orange-01": "#FFF2E8",
+      "--color-orange-02": "#FFE0C4",
+      "--color-orange-03": "#FFC49B",
+      "--color-orange-04": "#FFA061",
+      "--color-orange-05": "#FF8C42",
+      "--color-orange-06": "#ED7526",
+      "--color-orange-07": "#D15E17",
+      "--color-orange-08": "#A94B10",
+      "--color-orange-09": "#7C360A",
+      "--color-orange-10": "#3A1B04",
+      "--color-ink-01": "#E4F1EE",
+      "--color-ink-02": "#C6DED8",
+      "--color-ink-03": "#A2C9C1",
+      "--color-ink-04": "#7BAFA7",
+      "--color-ink-05": "#5B7B77",
+      "--color-ink-06": "#4E6B67",
+      "--color-ink-07": "#35605B",
+      "--color-ink-08": "#244F4A",
+      "--color-ink-09": "#163C38",
+      "--color-ink-10": "#0C2F2C",
+      "--color-highlight": "#A8E6DF",
+      "--color-sheen": "#7BEDE4",
+      "--color-glow": "#2CD4C9",
+      "--color-shadow": "#000000",
+      "--color-shadow-deep": "#000000"
+    }
+  },
+  "ramps": {
+    "teal": [
+      "#E9F8F5",
+      "#CBECE6",
+      "#9ADBD1",
+      "#55C8BC",
+      "#00B5AD",
+      "#00938B",
+      "#007C76",
+      "#005F5A",
+      "#0B3D39",
+      "#0B2321"
+    ],
+    "orange": [
+      "#FFF2E8",
+      "#FFE0C4",
+      "#FFC49B",
+      "#FFA061",
+      "#FF8C42",
+      "#ED7526",
+      "#D15E17",
+      "#A94B10",
+      "#7C360A",
+      "#3A1B04"
+    ],
+    "ink": [
+      "#E4F1EE",
+      "#C6DED8",
+      "#A2C9C1",
+      "#7BAFA7",
+      "#5B7B77",
+      "#4E6B67",
+      "#35605B",
+      "#244F4A",
+      "#163C38",
+      "#0C2F2C"
+    ],
+    "brandStep": 5,
+    "textSafe": {
+      "teal": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "orange": [
+        8,
+        9,
+        10
+      ],
+      "ink": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "graphicScale": {
+      "teal": [
+        6
+      ],
+      "orange": [
+        7
+      ]
+    },
+    "outlinedStep": {
+      "teal": 5,
+      "orange": 5,
+      "ink": 10
+    }
+  },
+  "rules": {
+    "orangeArea": {
+      "nominal": 0.05,
+      "hardCap": 0.1
+    },
+    "focus": {
+      "widthPx": 2,
+      "offsetPx": 2,
+      "minContrast": 3.0
+    },
+    "disabledOpacity": 0.38,
+    "textMinContrast": 4.5,
+    "graphicsMinContrast": 3.0,
+    "surfaceLadder": "recessed(-1) -> bg(0) -> surface(1) -> surface-2(2) -> surface-3(3)",
+    "exceptions": [
+      "AMOLED true black: AOD / wearable / battery-critical only"
+    ]
+  },
+  "lightAndShadow": {
+    "direction": "upper-left",
+    "signals": [
+      "surface tint",
+      "top highlight",
+      "hairline",
+      "layered shadow",
+      "ambient field glow"
+    ],
+    "shadowLayers": [
+      {
+        "name": "ambient",
+        "blurPx": [
+          40,
+          64
+        ],
+        "offsetYPx": 12,
+        "alpha": {
+          "light": 0.1,
+          "dark": 0.38
+        }
+      },
+      {
+        "name": "key",
+        "blurPx": [
+          14,
+          20
+        ],
+        "offsetYPx": 4,
+        "alpha": {
+          "light": 0.09,
+          "dark": 0.3
+        }
+      },
+      {
+        "name": "contact",
+        "blurPx": [
+          2,
+          3
+        ],
+        "offsetYPx": 1,
+        "alpha": {
+          "light": 0.12,
+          "dark": 0.36
+        }
+      }
+    ],
+    "depthLevels": [
+      "L0 field",
+      "L1 inset",
+      "L2 card",
+      "L3 sheet",
+      "L4 top layer"
+    ],
+    "compositing": {
+      "depth": "multiply",
+      "light": "screen"
+    },
+    "rules": [
+      "never invent a grey shadow hex",
+      "no pure-black overlays except AMOLED",
+      "gradients on field and sheen only, never on text"
+    ]
+  }
+}

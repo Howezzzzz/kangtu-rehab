@@ -11,14 +11,14 @@ import 'svg_icon.dart';
 
 const kSheetRadius = 28.0;
 
-BoxDecoration sheetDecoration(GymColors gc) => BoxDecoration(
-      color: gc.bgRaised,
-      border: Border.all(color: gc.border.withValues(alpha: 0.6)),
+/// §06.4 弹层（L3）：阶梯填充 + 顶侧 1px 内高光 + 1px 发丝线 + 分层阴影。
+BoxDecoration sheetDecoration(GymColors gc) => gc.depthDecor(
+      level: 3,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(kSheetRadius)),
     );
 
 ShapeBorder sheetShape(GymColors gc) => RoundedRectangleBorder(
-      side: BorderSide(color: gc.border.withValues(alpha: 0.6)),
+      side: BorderSide(color: gc.border),
       borderRadius: const BorderRadius.vertical(top: Radius.circular(kSheetRadius)),
     );
 
@@ -134,14 +134,11 @@ class SoftCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gc = context.gc;
+    final deco = gc.depthDecor(level: 2, radius: radius, color: color);
     return Container(
       padding: padding,
       clipBehavior: clip ? Clip.antiAlias : Clip.none,
-      decoration: BoxDecoration(
-        color: color ?? gc.bgRaised,
-        border: Border.all(color: borderColor ?? gc.border),
-        borderRadius: BorderRadius.circular(radius),
-      ),
+      decoration: borderColor == null ? deco : deco.copyWith(border: Border.all(color: borderColor!)),
       child: child,
     );
   }

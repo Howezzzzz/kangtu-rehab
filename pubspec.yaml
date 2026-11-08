@@ -40,12 +40,15 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.1
 
+# 注：Android 图标以手工提交的 mipmap/drawable 为准（ICON 由 kangtu_mark_export.py 导出）。
+# 本段仅作一键重生入口；底色用主题场色 #EEF9F7（规范 §04 mint field），
+# 切勿写成旧版的 #0C0B0A（那是上一代深底 logo）。
 flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
   image_path: "assets/icon/ic_1024.png"
-  adaptive_icon_background: "#0C0B0A"
+  adaptive_icon_background: "#EEF9F7"
   adaptive_icon_foreground: "assets/icon/ic_fg_1024.png"
   min_sdk_android: 21
 
