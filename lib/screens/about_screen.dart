@@ -17,7 +17,7 @@ import '../services/update_service.dart';
 import '../widgets/update_flow.dart';
 
 /// 兜底用（PackageInfo 取不到时，例如极早期启动）；正常显示的是系统里的真实版本+构建号。
-const kAppVersion = '2.0.0';
+const kAppVersion = '2.1.0';
 const _kAuthor = 'InlitX';
 const _kAuthorUrl = 'https://github.com/InlitX';
 const _kRepoUrl = 'https://github.com/Howezzzzz/kangtu-rehab';

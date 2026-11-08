@@ -2810,7 +2810,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get planFormatNotes =>
-      'Usa los nombres de los ejercicios tal cual aparecen en la lista. \"sets\", \"reps\", \"weight\" (en la unidad indicada), \"rest\" en segundos y \"days\" son opcionales. \"superset\": true une un ejercicio con el siguiente. Para varias semanas, agrupa las rutinas dentro de \"weeks\" como en el segundo ejemplo.';
+      'Usa los nombres de los ejercicios tal cual aparecen en la lista. \"sets\", \"reps\", \"weight\" (en la unidad indicada), \"rest\" en segundos y \"days\" son opcionales. En los ejercicios marcados como cardio o time en la lista, usa \"time\" (segundos, o como \"30:00\") y \"distance\" (en km) en lugar de \"reps\"; para cambiarlos serie a serie, ponlos dentro de \"plan\". \"superset\": true une un ejercicio con el siguiente. Para varias semanas, agrupa las rutinas dentro de \"weeks\" como en el segundo ejemplo.';
 
   @override
   String get planSets => 'Planificar series';
@@ -7443,4 +7443,171 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get progSchemeTitle => 'Progresión de peso';
+
+  @override
+  String get groupMoveUp => 'Subir el grupo';
+
+  @override
+  String get groupMoveDown => 'Bajar el grupo';
+
+  @override
+  String get mealAiRow => 'Pedir a una IA';
+
+  @override
+  String get mealAiRowHint => 'Copia la petición y pega la respuesta';
+
+  @override
+  String get mealAiTitle => 'Comidas con IA';
+
+  @override
+  String get mealAiSubtitle => 'Vale con cualquier IA. La app sigue sin conexión.';
+
+  @override
+  String get mealAiStepAsk => 'Pedir';
+
+  @override
+  String get mealAiStepPaste => 'Pegar';
+
+  @override
+  String get mealAiWholeDay => 'Todo el día';
+
+  @override
+  String get mealAiTarget => 'Objetivo';
+
+  @override
+  String mealAiLeft(String kcal, int protein) {
+    return 'Hoy te quedan $kcal y $protein g de proteína';
+  }
+
+  @override
+  String get mealAiStyle => 'Tus gustos';
+
+  @override
+  String get mealAiTagProtein => 'Alto en proteína';
+
+  @override
+  String get mealAiTagVeggie => 'Vegetariano';
+
+  @override
+  String get mealAiTagVegan => 'Vegano';
+
+  @override
+  String get mealAiTagNoGluten => 'Sin gluten';
+
+  @override
+  String get mealAiTagNoLactose => 'Sin lactosa';
+
+  @override
+  String get mealAiTagQuick => 'Rápido';
+
+  @override
+  String get mealAiTagNoCook => 'Sin cocinar';
+
+  @override
+  String get mealAiTagCheap => 'Barato';
+
+  @override
+  String get mealAiNotesHint => 'Tengo en casa… no me gusta… alergias…';
+
+  @override
+  String get mealAiOptions => 'Opciones';
+
+  @override
+  String get mealAiCopy => 'Copiar petición';
+
+  @override
+  String get mealAiCopied => 'Petición copiada';
+
+  @override
+  String get mealAiCopiedHint => 'Pégala en tu IA y vuelve aquí con la respuesta';
+
+  @override
+  String get mealAiShowText => 'Ver la petición';
+
+  @override
+  String get mealAiHideText => 'Ocultar la petición';
+
+  @override
+  String get mealAiPasteHint => 'Pega aquí la respuesta de la IA';
+
+  @override
+  String get mealAiReview => 'Revisar respuesta';
+
+  @override
+  String get mealAiUnreadable => 'No he encontrado alimentos en ese texto';
+
+  @override
+  String get mealAiUnreadableHint =>
+      'Pídele a la IA que envíe solo el JSON, en un bloque de código y con el formato de la petición.';
+
+  @override
+  String get mealAiCopyFix => 'Copiar esa frase';
+
+  @override
+  String mealAiOption(int n) {
+    return 'Opción $n';
+  }
+
+  @override
+  String mealAiAddTo(String meal) {
+    return 'Añadir a $meal';
+  }
+
+  @override
+  String get mealAiAddDay => 'Añadir a hoy';
+
+  @override
+  String get mealAiAddPick => 'Añadir';
+
+  @override
+  String mealAiAdded(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n alimentos añadidos',
+      one: '1 alimento añadido',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mealAiSaveRecipe => 'Guardar como receta';
+
+  @override
+  String get mealAiSavePlan => 'Guardar como plan';
+
+  @override
+  String get mealAiRecipeSaved => 'Receta guardada';
+
+  @override
+  String get mealAiPlanSaved => 'Plan guardado';
+
+  @override
+  String get mealAiFlagEstimated => 'Estimado por la IA';
+
+  @override
+  String get mealAiFlagAdjusted => 'Calorías corregidas según los macros';
+
+  @override
+  String get mealAiFlagDoubtful => 'No cuadra, revísalo';
+
+  @override
+  String get mealAiFlagNoValues => 'Sin valores nutricionales';
+
+  @override
+  String get mealAiFlagNoAmount => 'Sin cantidad';
+
+  @override
+  String get mealAiTruncated => 'La respuesta parece cortada. He guardado los alimentos completos.';
+
+  @override
+  String get mealAiAmount => 'Cantidad';
+
+  @override
+  String mealAiTargetLine(String kcal) {
+    return 'Objetivo $kcal';
+  }
+
+  @override
+  String get mealAiNothingChosen => 'Activa al menos un alimento';
 }

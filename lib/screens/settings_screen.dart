@@ -290,7 +290,7 @@ class SettingsScreen extends StatelessWidget {
                     gc,
                     PhosphorIconsRegular.barbell,
                     t.weightStepSetting,
-                    [for (final s in fit.weightSteps) ('$s', '${fmt(s)} ${fit.units}', PhosphorIconsRegular.barbell)],
+                    [for (final s in fit.weightSteps) ('$s', ltr('${fmt(s)} ${fit.units}'), PhosphorIconsRegular.barbell)],
                     () => '${fit.weightStep}',
                     (v) => fit.setWeightStep(double.parse(v)),
                     rowHint: t.weightStepHint,
@@ -1508,7 +1508,7 @@ class SettingsScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: AppTheme.f(12, weight: FontWeight.w500, color: gc.textSecondary, height: 1.4)),
               ] else ...[
-              Row(
+              Directionality(textDirection: TextDirection.ltr, child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   StepperControl(
@@ -1535,7 +1535,7 @@ class SettingsScreen extends StatelessWidget {
                     onInc: () => setSheet(() => minutes = (minutes + 15) % 1440),
                   ),
                 ],
-              ),
+              )),
               const SizedBox(height: 8),
               Text(_clockLabel(sheet, minutes),
                   textAlign: TextAlign.center,
@@ -2303,6 +2303,7 @@ class _ProfileSheetState extends State<_ProfileSheet> {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Icon(
                   PhosphorIconsFill.sealCheck,
+                  textDirection: TextDirection.ltr,
                   size: fit.profile.badge == id ? 26 : 22,
                   color: fit.profile.badge == id
                       ? badgeColor(id, gc)
