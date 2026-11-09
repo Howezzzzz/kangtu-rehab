@@ -315,12 +315,19 @@ void main() {
         }
       }
       expect(maxx, greaterThan(0), reason: '$p 不能是空图');
-      if (w >= 100) {
+      if (w >= 90) {
         final fw = (maxx - minx + 1) / w, fh = (maxy - miny + 1) / h;
-        expect(fw, lessThanOrEqualTo(0.78), reason: '$p 图形越出安全区（§05：64–448）');
-        expect(fh, lessThanOrEqualTo(0.78), reason: '$p 图形越出安全区（§05：64–448）');
-        expect([fw, fh].reduce((a, b) => a > b ? a : b), greaterThanOrEqualTo(0.70),
-            reason: '$p 图形要占满安全区（历史 bug：只占 ~56%）');
+        final big = [fw, fh].reduce((a, b) => a > b ? a : b);
+        if (p.contains('ic_launcher_foreground') || p.contains('ic_stat_')) {
+          // 自适应前景/状态图标：画板×0.8889（安全区 64–448 → 安卓可见区 72/108）
+          // 图形本体 ink 约 69%~71%；再大（如按全画板 1:1 = 76%）圆形/方圆遮罩会切边、观感过大。
+          expect(big, lessThanOrEqualTo(0.73), reason: '$p 图形超出安卓遮罩可见区（安全区未映射到 72/108）');
+          expect(big, greaterThanOrEqualTo(0.55), reason: '$p 图形太小（历史上只剩 42%）');
+        } else {
+          // 应用内品牌图：按品牌规范 §05 安全区（四边 12.5% → 内容 ≤ 75%）
+          expect(big, lessThanOrEqualTo(0.78), reason: '$p 图形越出安全区（§05：64–448）');
+          expect(big, greaterThanOrEqualTo(0.70), reason: '$p 图形要占满安全区（历史 bug：只占 ~56%）');
+        }
       }
     }
   });
