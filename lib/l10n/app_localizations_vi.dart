@@ -7123,68 +7123,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get voiceAnd => 'và';
 
   @override
-  String updateAvailable(Object v) {
-    return 'Version $v is available';
-  }
-
-  @override
-  String get updateChecking => 'Checking for updates…';
-
-  @override
-  String get updateDownloadFailed => 'Download failed. Please try again later.';
-
-  @override
-  String get updateDownloading => 'Downloading update…';
-
-  @override
-  String get updateFailed => 'Update check failed. Please try again later.';
-
-  @override
-  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
-
-  @override
-  String get updateLater => 'Later';
-
-  @override
-  String updateLatest(Object v) {
-    return 'You\'re on the latest version ($v)';
-  }
-
-  @override
-  String get updateNetNote =>
-      'Checking for updates uses the network; otherwise the app stays fully offline and your data never leaves the phone.';
-
-  @override
-  String get updateNow => 'Download & install';
-
-  @override
-  String get updateOpenPage => 'Open releases page';
-
-  @override
-  String get updateTitle => 'Check for updates';
-
-  @override
-  String get updateRetry => 'Retry';
-
-  @override
-  String get updateChecksumFailed =>
-      'The downloaded file failed its integrity check, so it was discarded. Please use the releases page instead.';
-
-  @override
-  String get updateVerifyFailed =>
-      'The downloaded file is not signed by the same key as this app; installation was refused.';
-
-  @override
-  String get updateAvailableShort => 'Update available';
-
-  @override
-  String get appName => 'Kangtu';
-
-  @override
-  String get updateVerifyUnavailable =>
-      'Could not verify the downloaded file signature on this device. Please download from the releases page instead.';
-
-  @override
   String get repRecordsTitle => 'Best weight by reps';
 
   @override
@@ -7278,10 +7216,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String sidesReps(int l, int r) {
     return 'L$l R$r';
   }
-
-  @override
-  String get amoledHint =>
-      'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.';
 
   @override
   String get progSchemeTitle => 'Weight progression';
@@ -7452,4 +7386,127 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get mealAiNothingChosen => 'Turn on at least one food';
+
+  @override
+  String updateAvailable(Object v) {
+    return 'Version $v is available';
+  }
+
+  @override
+  String get updateChecking => 'Checking for updates…';
+
+  @override
+  String get updateDownloadFailed => 'Download failed. Please try again later.';
+
+  @override
+  String get updateDownloading => 'Downloading update…';
+
+  @override
+  String get updateFailed => 'Update check failed. Please try again later.';
+
+  @override
+  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String updateLatest(Object v) {
+    return 'You\'re on the latest version ($v)';
+  }
+
+  @override
+  String get updateNetNote =>
+      'Checking for updates uses the network; otherwise the app stays fully offline and your data never leaves the phone.';
+
+  @override
+  String get updateNow => 'Download & install';
+
+  @override
+  String get updateOpenPage => 'Open releases page';
+
+  @override
+  String get updateTitle => 'Check for updates';
+
+  @override
+  String get updateRetry => 'Retry';
+
+  @override
+  String get updateChecksumFailed =>
+      'The downloaded file failed its integrity check, so it was discarded. Please use the releases page instead.';
+
+  @override
+  String get updateVerifyFailed =>
+      'The downloaded file is not signed by the same key as this app; installation was refused.';
+
+  @override
+  String get updateAvailableShort => 'Update available';
+
+  @override
+  String get appName => 'Kangtu';
+
+  @override
+  String get updateVerifyUnavailable =>
+      'Could not verify the downloaded file signature on this device. Please download from the releases page instead.';
+
+  @override
+  String get amoledHint =>
+      'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.';
+
+  @override
+  String get cholesterolLabel => 'Cholesterol';
+
+  @override
+  String get mealAiFlagMatched => 'Same as a food you saved';
+
+  @override
+  String get mealAiNotSame => 'Not the same';
+
+  @override
+  String get homeOrderRow => 'Order of sections';
+
+  @override
+  String get homeOrderHint => 'Hold and drag to change the order of Home.';
+
+  @override
+  String get homeOrderFolders => 'Shortcuts';
+
+  @override
+  String get equipNew => 'New';
+
+  @override
+  String get equipNewTitle => 'New equipment';
+
+  @override
+  String get equipNewHint => 'e.g. Weight belt';
+
+  @override
+  String get homeOrderWeekdays => 'Week checks';
+
+  @override
+  String get repsMaxTitle => 'Reps up to';
+
+  @override
+  String get repsRangeHint => 'Long press the reps to set a range like 8-12.';
+
+  @override
+  String get repsRangeClear => 'Remove range';
+
+  @override
+  String get noteLinksLabel => 'LINKS';
+
+  @override
+  String get noteLinkAdd => 'Add link';
+
+  @override
+  String get noteLinkEdit => 'Edit link';
+
+  @override
+  String get noteLinkNameHint => 'Name';
+
+  @override
+  String get noteLinkUrlHint => 'Web address';
+
+  @override
+  String get noteLinkInvalid => 'That address doesn\'t look right';
 }

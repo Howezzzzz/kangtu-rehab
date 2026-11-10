@@ -935,8 +935,6 @@
   "groupRename": "重命名分组",
   "groupUngroup": "取消分组,保留计划",
   "groupDeleteAll": "删除分组及其计划",
-  "groupMoveUp": "上移分组",
-  "groupMoveDown": "下移分组",
   "groupDeleteTitle": "删除“{name}”?",
   "groupDeleteBody": "将删除{count}。训练记录会保留。",
   "tplRr": "r/bodyweightfitness 的经典计划:每周三天全身训练。变轻松了就进阶到下一级。",
@@ -1829,6 +1827,8 @@
   "recapFoodWaterLabel": "饮水/天",
   "recapFoodTimes": "{n, plural, other{{n}天}}",
   "recapFoodStarKicker": "本月食物",
+  "groupMoveUp": "上移分组",
+  "groupMoveDown": "下移分组",
   "updateAvailable": "发现新版本 {v}",
   "updateChecking": "正在检查更新…",
   "updateDownloadFailed": "下载失败，请稍后再试。",
@@ -1847,7 +1847,6 @@
   "updateAvailableShort": "有新版本",
   "appName": "康途",
   "updateVerifyUnavailable": "本机无法校验下载包的签名；请改用发布页下载安装。",
-
   "repRecordsTitle": "各次数的最佳重量",
   "suppUnitCapsule": "{n, plural, other{{n} 粒}}",
   "suppUnitPill": "{n, plural, other{{n} 片}}",
@@ -1870,11 +1869,8 @@
   "repsLeftTitle": "左侧次数",
   "repsRightTitle": "右侧次数",
   "sidesReps": "左{l} 右{r}",
-
   "amoledHint": "真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。",
-
   "progSchemeTitle": "重量进阶",
-
   "quickAddAmount": "记录了多少",
   "dishArchive": "归档",
   "dishUnarchive": "恢复",
@@ -2197,5 +2193,24 @@
   "mealAiTruncated": "回答似乎被截断了。我保留了完整的食物。",
   "mealAiAmount": "份量",
   "mealAiTargetLine": "目标 {kcal}",
-  "mealAiNothingChosen": "至少打开一种食物"
+  "mealAiNothingChosen": "至少打开一种食物",
+  "cholesterolLabel": "胆固醇",
+  "mealAiFlagMatched": "与你已保存的食物相同",
+  "mealAiNotSame": "不完全一样",
+  "homeOrderRow": "板块顺序",
+  "homeOrderHint": "长按拖动可调整首页板块顺序",
+  "homeOrderFolders": "快捷方式",
+  "equipNew": "新增",
+  "equipNewTitle": "新器材",
+  "equipNewHint": "例如：负重腰带",
+  "homeOrderWeekdays": "每周检查",
+  "repsMaxTitle": "次数上限",
+  "repsRangeHint": "长按次数可设置范围，如 8-12",
+  "repsRangeClear": "移除范围",
+  "noteLinksLabel": "链接",
+  "noteLinkAdd": "添加链接",
+  "noteLinkEdit": "编辑链接",
+  "noteLinkNameHint": "名称",
+  "noteLinkUrlHint": "网址",
+  "noteLinkInvalid": "这个网址看起来不对"
 }

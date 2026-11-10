@@ -9,6 +9,7 @@ autoProgressReps
 autoProgressRowHint
 autoProgressSetting
 autoProgressWeight
+cholesterolLabel
 countsAsWater
 countsAsWaterHint
 createFoodNamed
@@ -118,10 +119,12 @@ mealAiCopyFix
 mealAiFlagAdjusted
 mealAiFlagDoubtful
 mealAiFlagEstimated
+mealAiFlagMatched
 mealAiFlagNoAmount
 mealAiFlagNoValues
 mealAiHideText
 mealAiLeft
+mealAiNotSame
 mealAiNotesHint
 mealAiNothingChosen
 mealAiOption

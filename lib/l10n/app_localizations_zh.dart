@@ -6966,64 +6966,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get voiceAnd => '和';
 
   @override
-  String updateAvailable(Object v) {
-    return '发现新版本 $v';
-  }
-
-  @override
-  String get updateChecking => '正在检查更新…';
-
-  @override
-  String get updateDownloadFailed => '下载失败，请稍后再试。';
-
-  @override
-  String get updateDownloading => '正在下载更新包…';
-
-  @override
-  String get updateFailed => '检查更新失败，请稍后再试。';
-
-  @override
-  String get updateInstallHint => '下载完成；若系统提示，请允许「安装未知应用」以完成更新。';
-
-  @override
-  String get updateLater => '稍后';
-
-  @override
-  String updateLatest(Object v) {
-    return '已是最新版本（当前 $v）';
-  }
-
-  @override
-  String get updateNetNote => '检查更新会联网；除此之外，康途全程离线，数据只留在本机。';
-
-  @override
-  String get updateNow => '下载并安装';
-
-  @override
-  String get updateOpenPage => '打开发布页';
-
-  @override
-  String get updateTitle => '检查更新';
-
-  @override
-  String get updateRetry => '重试';
-
-  @override
-  String get updateChecksumFailed => '下载文件校验未通过，已丢弃。请改用发布页下载。';
-
-  @override
-  String get updateVerifyFailed => '下载包的签名与当前应用不一致，已拒绝安装。';
-
-  @override
-  String get updateAvailableShort => '有新版本';
-
-  @override
-  String get appName => '康途';
-
-  @override
-  String get updateVerifyUnavailable => '本机无法校验下载包的签名；请改用发布页下载安装。';
-
-  @override
   String get repRecordsTitle => '各次数的最佳重量';
 
   @override
@@ -7111,9 +7053,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String sidesReps(int l, int r) {
     return '左$l 右$r';
   }
-
-  @override
-  String get amoledHint => '真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。';
 
   @override
   String get progSchemeTitle => '重量进阶';
@@ -7278,6 +7217,124 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get mealAiNothingChosen => '至少打开一种食物';
+
+  @override
+  String updateAvailable(Object v) {
+    return '发现新版本 $v';
+  }
+
+  @override
+  String get updateChecking => '正在检查更新…';
+
+  @override
+  String get updateDownloadFailed => '下载失败，请稍后再试。';
+
+  @override
+  String get updateDownloading => '正在下载更新包…';
+
+  @override
+  String get updateFailed => '检查更新失败，请稍后再试。';
+
+  @override
+  String get updateInstallHint => '下载完成；若系统提示，请允许「安装未知应用」以完成更新。';
+
+  @override
+  String get updateLater => '稍后';
+
+  @override
+  String updateLatest(Object v) {
+    return '已是最新版本（当前 $v）';
+  }
+
+  @override
+  String get updateNetNote => '检查更新会联网；除此之外，康途全程离线，数据只留在本机。';
+
+  @override
+  String get updateNow => '下载并安装';
+
+  @override
+  String get updateOpenPage => '打开发布页';
+
+  @override
+  String get updateTitle => '检查更新';
+
+  @override
+  String get updateRetry => '重试';
+
+  @override
+  String get updateChecksumFailed => '下载文件校验未通过，已丢弃。请改用发布页下载。';
+
+  @override
+  String get updateVerifyFailed => '下载包的签名与当前应用不一致，已拒绝安装。';
+
+  @override
+  String get updateAvailableShort => '有新版本';
+
+  @override
+  String get appName => '康途';
+
+  @override
+  String get updateVerifyUnavailable => '本机无法校验下载包的签名；请改用发布页下载安装。';
+
+  @override
+  String get amoledHint => '真黑在 OLED 屏上更省电；不建议长时间停留以减少烧屏风险。';
+
+  @override
+  String get cholesterolLabel => '胆固醇';
+
+  @override
+  String get mealAiFlagMatched => '与你已保存的食物相同';
+
+  @override
+  String get mealAiNotSame => '不完全一样';
+
+  @override
+  String get homeOrderRow => '板块顺序';
+
+  @override
+  String get homeOrderHint => '长按拖动可调整首页板块顺序';
+
+  @override
+  String get homeOrderFolders => '快捷方式';
+
+  @override
+  String get equipNew => '新增';
+
+  @override
+  String get equipNewTitle => '新器材';
+
+  @override
+  String get equipNewHint => '例如：负重腰带';
+
+  @override
+  String get homeOrderWeekdays => '每周检查';
+
+  @override
+  String get repsMaxTitle => '次数上限';
+
+  @override
+  String get repsRangeHint => '长按次数可设置范围，如 8-12';
+
+  @override
+  String get repsRangeClear => '移除范围';
+
+  @override
+  String get noteLinksLabel => '链接';
+
+  @override
+  String get noteLinkAdd => '添加链接';
+
+  @override
+  String get noteLinkEdit => '编辑链接';
+
+  @override
+  String get noteLinkNameHint => '名称';
+
+  @override
+  String get noteLinkUrlHint => '网址';
+
+  @override
+  String get noteLinkInvalid => '这个网址看起来不对';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -14259,64 +14316,6 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get voiceAnd => '和';
 
   @override
-  String updateAvailable(Object v) {
-    return '發現新版本 $v';
-  }
-
-  @override
-  String get updateChecking => '正在檢查更新…';
-
-  @override
-  String get updateDownloadFailed => '下載失敗，請稍後再試。';
-
-  @override
-  String get updateDownloading => '正在下載更新包…';
-
-  @override
-  String get updateFailed => '檢查更新失敗，請稍後再試。';
-
-  @override
-  String get updateInstallHint => '下載完成；若系統提示，請允許「安裝未知應用」以完成更新。';
-
-  @override
-  String get updateLater => '稍後';
-
-  @override
-  String updateLatest(Object v) {
-    return '已是最新版本（當前 $v）';
-  }
-
-  @override
-  String get updateNetNote => '檢查更新會聯網；除此之外，康途全程離線，資料只留在本機。';
-
-  @override
-  String get updateNow => '下載並安裝';
-
-  @override
-  String get updateOpenPage => '打開發布頁';
-
-  @override
-  String get updateTitle => '檢查更新';
-
-  @override
-  String get updateRetry => '重試';
-
-  @override
-  String get updateChecksumFailed => '下載檔案校驗未通過，已丟棄。請改用發布頁下載。';
-
-  @override
-  String get updateVerifyFailed => '下載包的簽名與當前應用不一致，已拒絕安裝。';
-
-  @override
-  String get updateAvailableShort => '有新版本';
-
-  @override
-  String get appName => '康途';
-
-  @override
-  String get updateVerifyUnavailable => '本機無法校驗下載包的簽名；請改用發布頁下載安裝。';
-
-  @override
   String get repRecordsTitle => '各次數的最佳重量';
 
   @override
@@ -14404,9 +14403,6 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String sidesReps(int l, int r) {
     return '左$l 右$r';
   }
-
-  @override
-  String get amoledHint => '真黑在 OLED 螢幕上較省電；不建議長時間停留以減少烙印風險。';
 
   @override
   String get progSchemeTitle => '重量進階';
@@ -14571,4 +14567,122 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get mealAiNothingChosen => '至少開啟一種食物';
+
+  @override
+  String updateAvailable(Object v) {
+    return '發現新版本 $v';
+  }
+
+  @override
+  String get updateChecking => '正在檢查更新…';
+
+  @override
+  String get updateDownloadFailed => '下載失敗，請稍後再試。';
+
+  @override
+  String get updateDownloading => '正在下載更新包…';
+
+  @override
+  String get updateFailed => '檢查更新失敗，請稍後再試。';
+
+  @override
+  String get updateInstallHint => '下載完成；若系統提示，請允許「安裝未知應用」以完成更新。';
+
+  @override
+  String get updateLater => '稍後';
+
+  @override
+  String updateLatest(Object v) {
+    return '已是最新版本（當前 $v）';
+  }
+
+  @override
+  String get updateNetNote => '檢查更新會聯網；除此之外，康途全程離線，資料只留在本機。';
+
+  @override
+  String get updateNow => '下載並安裝';
+
+  @override
+  String get updateOpenPage => '打開發布頁';
+
+  @override
+  String get updateTitle => '檢查更新';
+
+  @override
+  String get updateRetry => '重試';
+
+  @override
+  String get updateChecksumFailed => '下載檔案校驗未通過，已丟棄。請改用發布頁下載。';
+
+  @override
+  String get updateVerifyFailed => '下載包的簽名與當前應用不一致，已拒絕安裝。';
+
+  @override
+  String get updateAvailableShort => '有新版本';
+
+  @override
+  String get appName => '康途';
+
+  @override
+  String get updateVerifyUnavailable => '本機無法校驗下載包的簽名；請改用發布頁下載安裝。';
+
+  @override
+  String get amoledHint => '真黑在 OLED 螢幕上較省電；不建議長時間停留以減少烙印風險。';
+
+  @override
+  String get cholesterolLabel => '膽固醇';
+
+  @override
+  String get mealAiFlagMatched => '與你已保存的食物相同';
+
+  @override
+  String get mealAiNotSame => '不完全一樣';
+
+  @override
+  String get homeOrderRow => '板塊順序';
+
+  @override
+  String get homeOrderHint => '長按拖動可調整首頁板塊順序';
+
+  @override
+  String get homeOrderFolders => '快捷方式';
+
+  @override
+  String get equipNew => '新增';
+
+  @override
+  String get equipNewTitle => '新器材';
+
+  @override
+  String get equipNewHint => '例如：負重腰帶';
+
+  @override
+  String get homeOrderWeekdays => '每週檢查';
+
+  @override
+  String get repsMaxTitle => '次數上限';
+
+  @override
+  String get repsRangeHint => '長按次數可設置範圍，如 8-12';
+
+  @override
+  String get repsRangeClear => '移除範圍';
+
+  @override
+  String get noteLinksLabel => '連結';
+
+  @override
+  String get noteLinkAdd => '添加連結';
+
+  @override
+  String get noteLinkEdit => '編輯連結';
+
+  @override
+  String get noteLinkNameHint => '名稱';
+
+  @override
+  String get noteLinkUrlHint => '網址';
+
+  @override
+  String get noteLinkInvalid => '這個網址看起來不對';
 }

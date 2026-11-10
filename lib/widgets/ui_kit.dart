@@ -804,6 +804,7 @@ class StepperControl extends StatelessWidget {
     required this.onDec,
     required this.onInc,
     this.onEdit,
+    this.onLongPress,
     this.minWidth = 70,
     this.btnSize = 30,
     this.gap = 14,
@@ -815,6 +816,7 @@ class StepperControl extends StatelessWidget {
   final VoidCallback onDec;
   final VoidCallback onInc;
   final VoidCallback? onEdit;
+  final VoidCallback? onLongPress;
   final double minWidth;
   final double btnSize;
   final double gap;
@@ -840,7 +842,7 @@ class StepperControl extends StatelessWidget {
       child: RollingText(value, style: AppTheme.f(fontSize, weight: FontWeight.w700, color: gc.text)),
     );
     if (onEdit != null) {
-      label = GestureDetector(behavior: HitTestBehavior.opaque, onTap: onEdit, child: label);
+      label = GestureDetector(behavior: HitTestBehavior.opaque, onTap: onEdit, onLongPress: onLongPress, child: label);
     }
     return Ltr(
       child: Row(

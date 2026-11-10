@@ -2810,7 +2810,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get planFormatNotes =>
-      'Usa los nombres de los ejercicios tal cual aparecen en la lista. \"sets\", \"reps\", \"weight\" (en la unidad indicada), \"rest\" en segundos y \"days\" son opcionales. En los ejercicios marcados como cardio o time en la lista, usa \"time\" (segundos, o como \"30:00\") y \"distance\" (en km) en lugar de \"reps\"; para cambiarlos serie a serie, ponlos dentro de \"plan\". \"superset\": true une un ejercicio con el siguiente. Para varias semanas, agrupa las rutinas dentro de \"weeks\" como en el segundo ejemplo.';
+      'Usa los nombres de los ejercicios tal cual aparecen en la lista. \"sets\", \"reps\" (un número o un rango como \"8-12\"), \"weight\" (en la unidad indicada), \"rest\" en segundos y \"days\" son opcionales. En los ejercicios marcados como cardio o time en la lista, usa \"time\" (segundos, o como \"30:00\") y \"distance\" (en km) en lugar de \"reps\"; para dar a cada serie sus propios valores, ponlos en \"plan\", una entrada por serie con sus propios \"reps\" y \"weight\" (añade \"type\": \"warmup\" para las series de calentamiento). \"superset\": true une un ejercicio con el siguiente. Para varias semanas, agrupa las rutinas dentro de \"weeks\" como en el segundo ejemplo.';
 
   @override
   String get planSets => 'Planificar series';
@@ -7280,68 +7280,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get voiceAnd => 'y';
 
   @override
-  String updateAvailable(Object v) {
-    return 'Version $v is available';
-  }
-
-  @override
-  String get updateChecking => 'Checking for updates…';
-
-  @override
-  String get updateDownloadFailed => 'Download failed. Please try again later.';
-
-  @override
-  String get updateDownloading => 'Downloading update…';
-
-  @override
-  String get updateFailed => 'Update check failed. Please try again later.';
-
-  @override
-  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
-
-  @override
-  String get updateLater => 'Later';
-
-  @override
-  String updateLatest(Object v) {
-    return 'You\'re on the latest version ($v)';
-  }
-
-  @override
-  String get updateNetNote =>
-      'Checking for updates uses the network; otherwise the app stays fully offline and your data never leaves the phone.';
-
-  @override
-  String get updateNow => 'Download & install';
-
-  @override
-  String get updateOpenPage => 'Open releases page';
-
-  @override
-  String get updateTitle => 'Check for updates';
-
-  @override
-  String get updateRetry => 'Retry';
-
-  @override
-  String get updateChecksumFailed =>
-      'The downloaded file failed its integrity check, so it was discarded. Please use the releases page instead.';
-
-  @override
-  String get updateVerifyFailed =>
-      'The downloaded file is not signed by the same key as this app; installation was refused.';
-
-  @override
-  String get updateAvailableShort => 'Update available';
-
-  @override
-  String get appName => 'Kangtu';
-
-  @override
-  String get updateVerifyUnavailable =>
-      'Could not verify the downloaded file signature on this device. Please download from the releases page instead.';
-
-  @override
   String get repRecordsTitle => 'Mejor peso por reps';
 
   @override
@@ -7436,10 +7374,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String sidesReps(int l, int r) {
     return 'I$l D$r';
   }
-
-  @override
-  String get amoledHint =>
-      'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.';
 
   @override
   String get progSchemeTitle => 'Progresión de peso';
@@ -7610,4 +7544,127 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mealAiNothingChosen => 'Activa al menos un alimento';
+
+  @override
+  String updateAvailable(Object v) {
+    return 'Version $v is available';
+  }
+
+  @override
+  String get updateChecking => 'Checking for updates…';
+
+  @override
+  String get updateDownloadFailed => 'Download failed. Please try again later.';
+
+  @override
+  String get updateDownloading => 'Downloading update…';
+
+  @override
+  String get updateFailed => 'Update check failed. Please try again later.';
+
+  @override
+  String get updateInstallHint => 'Downloaded. If prompted, allow \"install unknown apps\" to finish.';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String updateLatest(Object v) {
+    return 'You\'re on the latest version ($v)';
+  }
+
+  @override
+  String get updateNetNote =>
+      'Checking for updates uses the network; otherwise the app stays fully offline and your data never leaves the phone.';
+
+  @override
+  String get updateNow => 'Download & install';
+
+  @override
+  String get updateOpenPage => 'Open releases page';
+
+  @override
+  String get updateTitle => 'Check for updates';
+
+  @override
+  String get updateRetry => 'Retry';
+
+  @override
+  String get updateChecksumFailed =>
+      'The downloaded file failed its integrity check, so it was discarded. Please use the releases page instead.';
+
+  @override
+  String get updateVerifyFailed =>
+      'The downloaded file is not signed by the same key as this app; installation was refused.';
+
+  @override
+  String get updateAvailableShort => 'Update available';
+
+  @override
+  String get appName => 'Kangtu';
+
+  @override
+  String get updateVerifyUnavailable =>
+      'Could not verify the downloaded file signature on this device. Please download from the releases page instead.';
+
+  @override
+  String get amoledHint =>
+      'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.';
+
+  @override
+  String get cholesterolLabel => 'Colesterol';
+
+  @override
+  String get mealAiFlagMatched => 'Igual que un alimento tuyo';
+
+  @override
+  String get mealAiNotSame => 'No es el mismo';
+
+  @override
+  String get homeOrderRow => 'Orden de las secciones';
+
+  @override
+  String get homeOrderHint => 'Mantén y arrastra para cambiar el orden de Inicio.';
+
+  @override
+  String get homeOrderFolders => 'Accesos';
+
+  @override
+  String get equipNew => 'Nuevo';
+
+  @override
+  String get equipNewTitle => 'Material nuevo';
+
+  @override
+  String get equipNewHint => 'p. ej. Cinturón de lastre';
+
+  @override
+  String get homeOrderWeekdays => 'Checks semanales';
+
+  @override
+  String get repsMaxTitle => 'Repeticiones hasta';
+
+  @override
+  String get repsRangeHint => 'Mantén pulsadas las repeticiones para poner un rango como 8-12.';
+
+  @override
+  String get repsRangeClear => 'Quitar rango';
+
+  @override
+  String get noteLinksLabel => 'ENLACES';
+
+  @override
+  String get noteLinkAdd => 'Añadir enlace';
+
+  @override
+  String get noteLinkEdit => 'Editar enlace';
+
+  @override
+  String get noteLinkNameHint => 'Nombre';
+
+  @override
+  String get noteLinkUrlHint => 'Dirección web';
+
+  @override
+  String get noteLinkInvalid => 'Esa dirección no parece válida';
 }

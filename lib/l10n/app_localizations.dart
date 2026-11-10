@@ -5109,7 +5109,7 @@ abstract class AppLocalizations {
   /// No description provided for @planFormatNotes.
   ///
   /// In en, this message translates to:
-  /// **'Use the exercise names exactly as they appear in the list. \"sets\", \"reps\", \"weight\" (in the unit given), \"rest\" in seconds and \"days\" are optional. For exercises marked cardio or time in the list, use \"time\" (seconds, or like \"30:00\") and \"distance\" (in km) instead of \"reps\"; to change them set by set, put them inside \"plan\". \"superset\": true links an exercise with the next one. For several weeks, group the routines inside \"weeks\" like the second example.'**
+  /// **'Use the exercise names exactly as they appear in the list. \"sets\", \"reps\" (a number or a range like \"8-12\"), \"weight\" (in the unit given), \"rest\" in seconds and \"days\" are optional. For exercises marked cardio or time in the list, use \"time\" (seconds, or like \"30:00\") and \"distance\" (in km) instead of \"reps\"; to give each set its own values, list them in \"plan\", one entry per set with its own \"reps\" and \"weight\" (add \"type\": \"warmup\" for warm-up sets). \"superset\": true links an exercise with the next one. For several weeks, group the routines inside \"weeks\" like the second example.'**
   String get planFormatNotes;
 
   /// No description provided for @planSets.
@@ -12678,114 +12678,6 @@ abstract class AppLocalizations {
   /// **'and'**
   String get voiceAnd;
 
-  /// No description provided for @updateAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Version {v} is available'**
-  String updateAvailable(Object v);
-
-  /// No description provided for @updateChecking.
-  ///
-  /// In en, this message translates to:
-  /// **'Checking for updates…'**
-  String get updateChecking;
-
-  /// No description provided for @updateDownloadFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Download failed. Please try again later.'**
-  String get updateDownloadFailed;
-
-  /// No description provided for @updateDownloading.
-  ///
-  /// In en, this message translates to:
-  /// **'Downloading update…'**
-  String get updateDownloading;
-
-  /// No description provided for @updateFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Update check failed. Please try again later.'**
-  String get updateFailed;
-
-  /// No description provided for @updateInstallHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Downloaded. If prompted, allow \"install unknown apps\" to finish.'**
-  String get updateInstallHint;
-
-  /// No description provided for @updateLater.
-  ///
-  /// In en, this message translates to:
-  /// **'Later'**
-  String get updateLater;
-
-  /// No description provided for @updateLatest.
-  ///
-  /// In en, this message translates to:
-  /// **'You\'re on the latest version ({v})'**
-  String updateLatest(Object v);
-
-  /// No description provided for @updateNetNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Checking for updates uses the network; otherwise the app stays fully offline and your data never leaves the phone.'**
-  String get updateNetNote;
-
-  /// No description provided for @updateNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Download & install'**
-  String get updateNow;
-
-  /// No description provided for @updateOpenPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Open releases page'**
-  String get updateOpenPage;
-
-  /// No description provided for @updateTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Check for updates'**
-  String get updateTitle;
-
-  /// No description provided for @updateRetry.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get updateRetry;
-
-  /// No description provided for @updateChecksumFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'The downloaded file failed its integrity check, so it was discarded. Please use the releases page instead.'**
-  String get updateChecksumFailed;
-
-  /// No description provided for @updateVerifyFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'The downloaded file is not signed by the same key as this app; installation was refused.'**
-  String get updateVerifyFailed;
-
-  /// No description provided for @updateAvailableShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Update available'**
-  String get updateAvailableShort;
-
-  /// No description provided for @appName.
-  ///
-  /// In en, this message translates to:
-  /// **'Kangtu'**
-  String get appName;
-
-  /// No description provided for @updateVerifyUnavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not verify the downloaded file signature on this device. Please download from the releases page instead.'**
-  String get updateVerifyUnavailable;
-
   /// No description provided for @repRecordsTitle.
   ///
   /// In en, this message translates to:
@@ -12917,12 +12809,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'L{l} R{r}'**
   String sidesReps(int l, int r);
-
-  /// No description provided for @amoledHint.
-  ///
-  /// In en, this message translates to:
-  /// **'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.'**
-  String get amoledHint;
 
   /// No description provided for @progSchemeTitle.
   ///
@@ -13229,6 +13115,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Turn on at least one food'**
   String get mealAiNothingChosen;
+
+  /// No description provided for @updateAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {v} is available'**
+  String updateAvailable(Object v);
+
+  /// No description provided for @updateChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking for updates…'**
+  String get updateChecking;
+
+  /// No description provided for @updateDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed. Please try again later.'**
+  String get updateDownloadFailed;
+
+  /// No description provided for @updateDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading update…'**
+  String get updateDownloading;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Update check failed. Please try again later.'**
+  String get updateFailed;
+
+  /// No description provided for @updateInstallHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded. If prompted, allow \"install unknown apps\" to finish.'**
+  String get updateInstallHint;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// No description provided for @updateLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re on the latest version ({v})'**
+  String updateLatest(Object v);
+
+  /// No description provided for @updateNetNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking for updates uses the network; otherwise the app stays fully offline and your data never leaves the phone.'**
+  String get updateNetNote;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Download & install'**
+  String get updateNow;
+
+  /// No description provided for @updateOpenPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Open releases page'**
+  String get updateOpenPage;
+
+  /// No description provided for @updateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get updateTitle;
+
+  /// No description provided for @updateRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get updateRetry;
+
+  /// No description provided for @updateChecksumFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The downloaded file failed its integrity check, so it was discarded. Please use the releases page instead.'**
+  String get updateChecksumFailed;
+
+  /// No description provided for @updateVerifyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The downloaded file is not signed by the same key as this app; installation was refused.'**
+  String get updateVerifyFailed;
+
+  /// No description provided for @updateAvailableShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Update available'**
+  String get updateAvailableShort;
+
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'Kangtu'**
+  String get appName;
+
+  /// No description provided for @updateVerifyUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not verify the downloaded file signature on this device. Please download from the releases page instead.'**
+  String get updateVerifyUnavailable;
+
+  /// No description provided for @amoledHint.
+  ///
+  /// In en, this message translates to:
+  /// **'True black saves power on OLED screens. Avoid long, static sessions to reduce burn-in risk.'**
+  String get amoledHint;
+
+  /// No description provided for @cholesterolLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cholesterol'**
+  String get cholesterolLabel;
+
+  /// No description provided for @mealAiFlagMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as a food you saved'**
+  String get mealAiFlagMatched;
+
+  /// No description provided for @mealAiNotSame.
+  ///
+  /// In en, this message translates to:
+  /// **'Not the same'**
+  String get mealAiNotSame;
+
+  /// No description provided for @homeOrderRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Order of sections'**
+  String get homeOrderRow;
+
+  /// No description provided for @homeOrderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold and drag to change the order of Home.'**
+  String get homeOrderHint;
+
+  /// No description provided for @homeOrderFolders.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortcuts'**
+  String get homeOrderFolders;
+
+  /// No description provided for @equipNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get equipNew;
+
+  /// No description provided for @equipNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New equipment'**
+  String get equipNewTitle;
+
+  /// No description provided for @equipNewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Weight belt'**
+  String get equipNewHint;
+
+  /// No description provided for @homeOrderWeekdays.
+  ///
+  /// In en, this message translates to:
+  /// **'Week checks'**
+  String get homeOrderWeekdays;
+
+  /// No description provided for @repsMaxTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reps up to'**
+  String get repsMaxTitle;
+
+  /// No description provided for @repsRangeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Long press the reps to set a range like 8-12.'**
+  String get repsRangeHint;
+
+  /// No description provided for @repsRangeClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove range'**
+  String get repsRangeClear;
+
+  /// No description provided for @noteLinksLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'LINKS'**
+  String get noteLinksLabel;
+
+  /// No description provided for @noteLinkAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add link'**
+  String get noteLinkAdd;
+
+  /// No description provided for @noteLinkEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit link'**
+  String get noteLinkEdit;
+
+  /// No description provided for @noteLinkNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get noteLinkNameHint;
+
+  /// No description provided for @noteLinkUrlHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Web address'**
+  String get noteLinkUrlHint;
+
+  /// No description provided for @noteLinkInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That address doesn\'t look right'**
+  String get noteLinkInvalid;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
